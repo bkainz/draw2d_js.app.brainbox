@@ -1,5 +1,5 @@
 {
-  "name": "draw2d_js.app.starterkit_simple",
+  "name": "draw2d_js.app.digital_training_studio",
   "version": "0.0.1",
   "homepage": "https://github.com/freegroup/draw2d_js.app.starterkit_simple",
   "authors": [
@@ -7,7 +7,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "draw2d": "~5.5.2",
-    "jquery.browser": "~0.0.7"
+    "draw2d": "~6.1.0",
+    "jquery.browser": "~0.0.7",
+    "bootstrap": "^3.3.6",
+    "shufflejs": "^3.1.1"
   }
 }

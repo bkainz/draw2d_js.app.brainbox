@@ -17,6 +17,7 @@ module.exports = function (grunt) {
                     './bower_components/shifty/dist/shifty.min.js',
                     './bower_components/draw2d/dist/patched_raphael.js',
                     './bower_components/jquery/jquery.min.js',
+                    './bower_components/shufflejs/dist/jquery.shuffle.modernizr.min.js',
                     './bower_components/draw2d/dist/jquery.autoresize.js',
                     './bower_components/draw2d/dist/jquery-touch_punch.js',
                     './bower_components/draw2d/dist/jquery.contextmenu.js',
@@ -34,7 +35,14 @@ module.exports = function (grunt) {
                     './assets/javascript/main.js'
                 ],
                 dest: './dist/assets/javascript/app.js'
+            },
+            css:{
+                src:[
+                    './bower_components/bootstrap/dist/css/bootstrap.min.css'
+                ],
+                dest: './dist/assets/stylesheets/dependencies.css'
             }
+
         },
 
         copy: {
@@ -43,7 +51,14 @@ module.exports = function (grunt) {
                 cwd: 'src/',
                 src: '**/*.html',
                 dest: 'dist/'
-            }
+            },
+            bootstrap:{
+                expand: true,
+                cwd: 'bower_components/bootstrap/dist',
+                src: ['**/*'],
+                dest: 'dist/lib/bootstrap'
+            },
+
         },
 
         less: {
@@ -77,6 +92,12 @@ module.exports = function (grunt) {
                     livereload: true
                 }
             },
+            html: {
+                files: [
+                    './src/*.html'
+                ],
+                tasks: ['copy:application']
+            },
 
             less: {
                 files: [
@@ -107,7 +128,5 @@ module.exports = function (grunt) {
     // Task definition
     grunt.registerTask('default', ['jshint', 'concat', 'less', 'copy']);
     grunt.registerTask('publish', ['jshint', 'concat', 'less', 'copy', 'gh-pages']);
-
-
 };
 

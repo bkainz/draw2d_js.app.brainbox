@@ -1,0 +1,97 @@
+
+.vertical-text {
+  transform: rotate(-90deg);
+  white-space: nowrap;
+  top: 200px;
+  left: 20px;
+  font-size: 50px;
+  color:white;
+}
+
+
+body {
+
+  #layout {
+
+    .nav-tabs {
+      li {
+
+        a {
+          background-color: transparent;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+          }
+        }
+      }
+
+      .active{
+        background-color:white;
+        .glyphicon {
+          color: #333;
+        }
+      }
+    }
+
+    #leftTabStrip {
+      background-color: #8F98A7;
+      .leftTab {
+      }
+    }
+    #leftTabStrip:after {
+      content: "Digital Training Studio";
+      transform: rotate(-90deg) translate(-196px, -177px);
+      font-size: 46px;
+      color: white;
+      white-space: nowrap;
+      opacity: 0.4;
+    }
+
+    .tab-content {
+
+      .tab-pane {
+        background-color: #fff;
+
+        .workspace {
+
+          .palette {
+            box-shadow: 4px 0px 9px -4px rgba(74, 74, 74, 0.74);
+            border-right: 1px solid rgba(74, 74, 74, 0.5);
+
+            .title {
+              background-color: #51CDD1;
+              color: white;
+              font-size: 25px;
+              line-height: 45px;
+              right: 0px;
+              top: 30px;
+              position: absolute;
+              min-width: 120px;
+              padding-left: 20px;
+            }
+          }
+          .toolbar {
+            background: -moz-linear-gradient(355deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* ff3.6+ */
+            background: -webkit-gradient(linear, left top, right top, color-stop(18%, rgba(253,183,3,1)), color-stop(19%, rgba(252,182,3,1)), color-stop(100%, rgba(249,152,17,1))); /* safari4+,chrome */
+            background: -webkit-linear-gradient(355deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* safari5.1+,chrome10+ */
+            background: -o-linear-gradient(355deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* opera 11.10+ */
+            background: -ms-linear-gradient(355deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* ie10+ */
+            background: linear-gradient(95deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* w3c */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FDB703', endColorstr='#F99811',GradientType=1 ); /* ie6-9 */
+          }
+          .content {
+
+            .canvas {
+
+            }
+          }
+      }
+      }
+    }
+
+  }
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+  border:0;
+}

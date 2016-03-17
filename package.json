@@ -1,5 +1,5 @@
 {
-  "name": "draw2d_js.app.starterkit_simple",
+  "name": "draw2d_js.app.digital_training_studio",
   "version": "0.0.1",
   "description": "Draw2D HTML5 getting started demo application",
   "main": "index.html",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/freegroup/draw2d_js.app.starterkit_simple.git"
+    "url": "https://github.com/freegroup/draw2d_js.app.digital_training_studio.git"
   },
   "keywords": [
     "diagramming",
@@ -19,7 +19,7 @@
   "author": "Andreas Herz (FreeGroup)",
   "license": "GPL",
   "bugs": {
-    "url": "https://github.com/freegroup/draw2d_js.app.starterkit_simple/issues"
+    "url": "https://github.com/freegroup/draw2d_js.app.digital_training_studio/issues"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
