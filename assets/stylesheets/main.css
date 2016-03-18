@@ -11,15 +11,9 @@ body #layout {
 }
 body #layout .nav-tabs {
   float: left;
-  border-bottom: 0;
 }
 body #layout .nav-tabs li {
   float: none;
-  margin: 0;
-}
-body #layout .nav-tabs li a {
-  margin-right: 0;
-  border: 0;
 }
 body #layout #leftTabStrip {
   height: 100%;
@@ -31,6 +25,7 @@ body #layout #leftTabStrip {
 body #layout #leftTabStrip .leftTab {
   border-radius: 0 !important;
   height: 60px;
+  width: 60px;
 }
 body #layout .tab-content {
   position: relative;
@@ -49,21 +44,31 @@ body #layout .tab-content .tab-pane .workspace .palette {
   width: 250px;
   padding: 0;
 }
+body #layout .tab-content .tab-pane .workspace .palette #filter {
+  position: absolute;
+  top: 115px;
+  height: 30px;
+  left: 2px;
+  width: 246px;
+}
 body #layout .tab-content .tab-pane .workspace .palette .title {
   right: 0px;
   top: 30px;
   position: absolute;
 }
-body #layout .tab-content .tab-pane .workspace .palette #paletteElements {
+body #layout .tab-content .tab-pane .workspace .palette .paletteElementsContainer {
   position: absolute;
-  width: 250px;
+  width: 248px;
   margin: 0;
   padding: 0;
   top: 150px;
   bottom: 0px;
   overflow: auto;
 }
-body #layout .tab-content .tab-pane .workspace .palette #paletteElements .mix {
+body #layout .tab-content .tab-pane .workspace .palette .paletteElementsContainer #paletteElements {
+  width: 248px;
+}
+body #layout .tab-content .tab-pane .workspace .palette .paletteElementsContainer #paletteElements .mix {
   height: 125px;
   border: 1px solid #f0f0f0;
   /* to avoid doubling the border of the grid */
@@ -104,20 +109,38 @@ body #layout .tab-content .active {
   font-size: 50px;
   color: white;
 }
-body #layout .nav-tabs li a {
-  background-color: transparent;
+.leftTab.folder {
+  -webkit-mask: url(../images/folder.svg) no-repeat center center;
+  mask: url(../images/folder.svg) no-repeat center center;
 }
-body #layout .nav-tabs li a:hover {
+.leftTab.edit {
+  -webkit-mask: url(../images/edit.svg) no-repeat center center;
+  mask: url(../images/edit.svg) no-repeat center center;
+}
+.leftTab.setting {
+  -webkit-mask: url(../images/settings.svg) no-repeat center center;
+  mask: url(../images/settings.svg) no-repeat center center;
+}
+body #layout .nav-tabs {
+  background-color: #8F98A7;
+}
+body #layout .nav-tabs li a {
+  padding: 0;
+  background-color: white;
+  width: 50px;
+  height: 50px;
+}
+body #layout .nav-tabs li:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 body #layout .nav-tabs .active {
   background-color: white;
 }
-body #layout .nav-tabs .active .glyphicon {
-  color: #333;
+body #layout .nav-tabs .active a {
+  background-color: #1C9BAB;
 }
-body #layout #leftTabStrip {
-  background-color: #8F98A7;
+body #layout .nav-tabs .active:hover {
+  background-color: white;
 }
 body #layout #leftTabStrip:after {
   content: "Digital Training Studio";
@@ -165,4 +188,31 @@ body #layout .tab-content .tab-pane .workspace .toolbar {
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
   border: 0;
+}
+.shadow {
+  width: 110px;
+  padding: 0;
+  margin-left: 20px;
+}
+.figure {
+  padding-left: 40px;
+  padding-top: 15px;
+  text-align: center;
+}
+.figure .icon {
+  background-color: #1C9BAB;
+  color: #1C9BAB;
+  height: 70px;
+  width: 70px;
+  cursor: pointer;
+}
+.figure .label {
+  color: black;
+  font-weight: 100;
+  font-size: 15px;
+  letter-spacing: 5px;
+}
+.gate_and .icon {
+  -webkit-mask: url(../images/palette_AND.svg) no-repeat center center;
+  mask: url(../images/palette_AND.svg) no-repeat center center;
 }
