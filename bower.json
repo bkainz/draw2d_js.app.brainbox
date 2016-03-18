@@ -10,6 +10,8 @@
     "draw2d": "~6.1.0",
     "jquery.browser": "~0.0.7",
     "bootstrap": "^3.3.6",
-    "shufflejs": "^3.1.1"
+    "shufflejs": "^3.1.1",
+    "jquery-placeholder": "^2.3.1",
+    "jquery-ui": "^1.11.4"
   }
 }

@@ -21,6 +21,7 @@ module.exports = function (grunt) {
                     './bower_components/draw2d/dist/jquery.autoresize.js',
                     './bower_components/draw2d/dist/jquery-touch_punch.js',
                     './bower_components/draw2d/dist/jquery.contextmenu.js',
+                    './bower_components/draw2d/dist/jquery.placeholder.min.js',
                     './bower_components/draw2d/dist/rgbcolor.js',
                     './bower_components/draw2d/dist/patched_canvg.js',
                     './bower_components/draw2d/dist/patched_Class.js',
@@ -32,7 +33,8 @@ module.exports = function (grunt) {
             },
             application: {
                 src: [
-                    './assets/javascript/main.js'
+                    './src/assets/javascript/main.js',
+                    './src/assets/javascript/Gate_AND.js'
                 ],
                 dest: './dist/assets/javascript/app.js'
             },
@@ -46,6 +48,12 @@ module.exports = function (grunt) {
         },
 
         copy: {
+            svg: {
+                expand: true,
+                cwd: 'src/',
+                src: '**/*.svg',
+                dest: 'dist/'
+            },
             application: {
                 expand: true,
                 cwd: 'src/',
@@ -58,6 +66,12 @@ module.exports = function (grunt) {
                 src: ['**/*'],
                 dest: 'dist/lib/bootstrap'
             },
+            bootstrap:{
+                expand: true,
+                cwd: 'bower_components/jquery-ui/',
+                src: ['**/*'],
+                dest: 'dist/lib/jquery-ui'
+            }
 
         },
 
