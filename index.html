@@ -5,24 +5,37 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+    <link type="text/css" rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="./lib/bootstrap/css/bootstrap-theme.min.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/stylesheets/dependencies.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/stylesheets/main.css" />
+
     <SCRIPT src="./assets/javascript/dependencies.js"></SCRIPT>
+    <SCRIPT src="./lib/bootstrap/js/bootstrap.min.js"></SCRIPT>
     <SCRIPT src="./assets/javascript/app.js"></SCRIPT>
 
     <script type="text/javascript">
 
         $(window).load(function () {
 
+            var $grid = $("#paletteElements");
 
-            var canvas = new draw2d.Canvas("gfx_holder");
-
-            canvas.add( new draw2d.shape.basic.Oval(),100,100);
-            canvas.add( new draw2d.shape.basic.Rectangle(),120,150);
-
-            canvas.add( new draw2d.shape.node.Start(), 80,80);
+            var canvas = new draw2d.Canvas("draw2dCanvas");
+       //     canvas.setScrollArea($("#draw2dCanvasWrapper"));
+            canvas.installEditPolicy(new draw2d.policy.canvas.ShowGridEditPolicy());
             canvas.add( new draw2d.shape.node.Start(), 50,50);
-
-            canvas.add( new draw2d.shape.node.End(), 150,150);
             canvas.add( new draw2d.shape.node.End(), 350,250);
+
+
+            // Advanced filtering
+            $('#filter').on('keyup change', function() {
+                var val = this.value.toLowerCase();
+                $grid.shuffle('shuffle', function($el, shuffle) {
+                    var text = $.trim( $el.text() ).toLowerCase();
+                    console.log(text);
+                    return text.indexOf(val) !== -1;
+                });
+            });
 
         });
 
@@ -31,8 +44,62 @@
 </head>
 
 <body>
-<div  onselectstart="javascript:/*IE8 hack*/return false" id="gfx_holder" style="width:1500px; height:1500px;">
-</div>
+<div id="layout">
+        <ul class="nav nav-tabs" id="leftTabStrip">
+            <li               ><a href="#a" class="leftTab"  data-toggle="tab"><span class="glyphicon glyphicon-heart"></span></a></li>
+            <li class="active"><a href="#b" class="leftTab"  data-toggle="tab"><span class="glyphicon glyphicon-star"></span></a></li>
+            <li               ><a href="#c" class="leftTab"  data-toggle="tab"><span class="glyphicon glyphicon-headphones"></span></a></li>
+        </ul>
+
+
+        <div class="tab-content">
+
+
+            <div class="tab-pane" id="a">
+                What's your Favorite?
+            </div>
+
+            <div class="tab-pane active" id="b">
+                <div class="workspace">
+                    <div class="palette ">
+                        <span class="title">Edit</span>
+                        <input type="text" id="filter">
+                        <div id="paletteElements" class="row ">
+                            <div  data-groups='["xwallpaper","3d"]' class="mix col-md-6">andreas</div>
+                            <div  data-groups='["ywallpaper","3d"]'  class="mix col-md-6">and</div>
+                            <div  data-groups='["ywallpaper","3d"]'  class="mix col-md-6">gate 1</div>
+                            <div  data-groups='["wallpaper","3d"]'  class="mix col-md-6">gate 2</div>
+                            <div  data-groups='["wallpaper","3d"]'  class="mix col-md-6">and 2</div>
+                            <div  data-groups='["wallpaper","3d"]'  class="mix col-md-6">and 3</div>
+                            <div class="mix col-md-6">1</div>
+                            <div class="mix col-md-6">1</div>
+                            <div class="mix col-md-6">1</div>
+                            <div class="mix col-md-6">1</div>
+                            <div class="mix col-md-6">1</div>
+                            <div class="mix col-md-6">1</div>
+                            <div class="mix col-md-6">1</div>
+                            <div class="mix col-md-6">1</div>
+                            <div class="mix col-md-6">1</div>
+                        </div>
+                    </div>
+                    <div class="toolbar">
+
+                    </div>
+                    <div class="content" id="draw2dCanvasWrapper">
+                        <div class="canvas" id="draw2dCanvas">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="tab-pane" id="c">
+                CCCCThirdamuno, .
+            </div>
+        </div><!-- /tab-content -->
+
+</div><!-- /container -->
+
 
 
 </body>

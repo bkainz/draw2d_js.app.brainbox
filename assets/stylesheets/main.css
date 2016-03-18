@@ -1,10 +1,168 @@
 body {
-  background: #cc594a;
-  color: #b8cc24;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
-button {
-  background: #8bc5ff;
+body #layout {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
-div {
-  background: #6f3596;
+body #layout .nav-tabs {
+  float: left;
+  border-bottom: 0;
+}
+body #layout .nav-tabs li {
+  float: none;
+  margin: 0;
+}
+body #layout .nav-tabs li a {
+  margin-right: 0;
+  border: 0;
+}
+body #layout #leftTabStrip {
+  height: 100%;
+  position: absolute;
+  width: 60px;
+  padding-top: 60px;
+  overflow: hidden;
+}
+body #layout #leftTabStrip .leftTab {
+  border-radius: 0 !important;
+  height: 60px;
+}
+body #layout .tab-content {
+  position: relative;
+  margin-left: 60px;
+  height: 100%;
+}
+body #layout .tab-content .tab-pane {
+  display: none;
+  padding: 0px;
+  height: 100%;
+  position: relative;
+}
+body #layout .tab-content .tab-pane .workspace .palette {
+  position: absolute;
+  height: 100%;
+  width: 250px;
+  padding: 0;
+}
+body #layout .tab-content .tab-pane .workspace .palette .title {
+  right: 0px;
+  top: 30px;
+  position: absolute;
+}
+body #layout .tab-content .tab-pane .workspace .palette #paletteElements {
+  position: absolute;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  top: 150px;
+  bottom: 0px;
+  overflow: auto;
+}
+body #layout .tab-content .tab-pane .workspace .palette #paletteElements .mix {
+  height: 125px;
+  border: 1px solid #f0f0f0;
+  /* to avoid doubling the border of the grid */
+  margin: -1px 0 0 -1px;
+}
+body #layout .tab-content .tab-pane .workspace .toolbar {
+  position: absolute;
+  height: 60px;
+  right: 0;
+  top: 0;
+  left: 250px;
+}
+body #layout .tab-content .tab-pane .workspace .content {
+  position: absolute;
+  right: 0px;
+  top: 60px;
+  bottom: 0px;
+  left: 250px;
+  overflow: scroll;
+}
+body #layout .tab-content .tab-pane .workspace .content .canvas {
+  width: 3000px;
+  height: 3000px;
+}
+body #layout .tab-content .active {
+  display: block;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  border: 0;
+}
+.vertical-text {
+  transform: rotate(-90deg);
+  white-space: nowrap;
+  top: 200px;
+  left: 20px;
+  font-size: 50px;
+  color: white;
+}
+body #layout .nav-tabs li a {
+  background-color: transparent;
+}
+body #layout .nav-tabs li a:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+body #layout .nav-tabs .active {
+  background-color: white;
+}
+body #layout .nav-tabs .active .glyphicon {
+  color: #333;
+}
+body #layout #leftTabStrip {
+  background-color: #8F98A7;
+}
+body #layout #leftTabStrip:after {
+  content: "Digital Training Studio";
+  transform: rotate(-90deg) translate(-196px, -177px);
+  font-size: 46px;
+  color: white;
+  white-space: nowrap;
+  opacity: 0.4;
+}
+body #layout .tab-content .tab-pane {
+  background-color: #fff;
+}
+body #layout .tab-content .tab-pane .workspace .palette {
+  box-shadow: 4px 0px 9px -4px rgba(74, 74, 74, 0.74);
+  border-right: 1px solid rgba(74, 74, 74, 0.5);
+}
+body #layout .tab-content .tab-pane .workspace .palette .title {
+  background-color: #51CDD1;
+  color: white;
+  font-size: 25px;
+  line-height: 45px;
+  right: 0px;
+  top: 30px;
+  position: absolute;
+  min-width: 120px;
+  padding-left: 20px;
+}
+body #layout .tab-content .tab-pane .workspace .toolbar {
+  background: -moz-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
+  /* ff3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(18%, #fdb703), color-stop(19%, #fcb603), color-stop(100%, #f99811));
+  /* safari4+,chrome */
+  background: -webkit-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
+  /* safari5.1+,chrome10+ */
+  background: -o-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
+  /* opera 11.10+ */
+  background: -ms-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
+  /* ie10+ */
+  background: linear-gradient(95deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
+  /* w3c */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FDB703', endColorstr='#F99811', GradientType=1);
+  /* ie6-9 */
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  border: 0;
 }
