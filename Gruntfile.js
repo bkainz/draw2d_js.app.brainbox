@@ -48,6 +48,12 @@ module.exports = function (grunt) {
         },
 
         copy: {
+            svg: {
+                expand: true,
+                cwd: 'src/',
+                src: '**/*.svg',
+                dest: 'dist/'
+            },
             application: {
                 expand: true,
                 cwd: 'src/',
