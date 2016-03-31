@@ -11,9 +11,15 @@ body #layout {
 }
 body #layout .nav-tabs {
   float: left;
+  border-bottom: 0;
 }
 body #layout .nav-tabs li {
   float: none;
+  margin: 0;
+}
+body #layout .nav-tabs li a {
+  margin-right: 0;
+  border: 0;
 }
 body #layout #leftTabStrip {
   height: 100%;
@@ -25,7 +31,6 @@ body #layout #leftTabStrip {
 body #layout #leftTabStrip .leftTab {
   border-radius: 0 !important;
   height: 60px;
-  width: 60px;
 }
 body #layout .tab-content {
   position: relative;
@@ -44,31 +49,28 @@ body #layout .tab-content .tab-pane .workspace .palette {
   width: 250px;
   padding: 0;
 }
-body #layout .tab-content .tab-pane .workspace .palette #filter {
-  position: absolute;
-  top: 115px;
-  height: 30px;
-  left: 2px;
-  width: 246px;
-}
 body #layout .tab-content .tab-pane .workspace .palette .title {
   right: 0px;
   top: 30px;
   position: absolute;
 }
-body #layout .tab-content .tab-pane .workspace .palette .paletteElementsContainer {
+body #layout .tab-content .tab-pane .workspace .palette #filter {
+  top: 90px;
   position: absolute;
-  width: 248px;
+  font-size: 20px;
+  width: 245px;
+  left: 2px;
+}
+body #layout .tab-content .tab-pane .workspace .palette #paletteElements {
+  position: absolute;
+  width: 250px;
   margin: 0;
   padding: 0;
   top: 150px;
   bottom: 0px;
   overflow: auto;
 }
-body #layout .tab-content .tab-pane .workspace .palette .paletteElementsContainer #paletteElements {
-  width: 248px;
-}
-body #layout .tab-content .tab-pane .workspace .palette .paletteElementsContainer #paletteElements .mix {
+body #layout .tab-content .tab-pane .workspace .palette #paletteElements .mix {
   height: 125px;
   border: 1px solid #f0f0f0;
   /* to avoid doubling the border of the grid */
@@ -101,6 +103,7 @@ body #layout .tab-content .active {
 .nav-tabs > li.active > a:focus {
   border: 0;
 }
+
 .vertical-text {
   transform: rotate(-90deg);
   white-space: nowrap;
@@ -189,30 +192,7 @@ body #layout .tab-content .tab-pane .workspace .toolbar {
 .nav-tabs > li.active > a:focus {
   border: 0;
 }
-.shadow {
-  width: 110px;
-  padding: 0;
-  margin-left: 20px;
-}
-.figure {
-  padding-left: 40px;
-  padding-top: 15px;
+
+.pallette_item {
   text-align: center;
-}
-.figure .icon {
-  background-color: #1C9BAB;
-  color: #1C9BAB;
-  height: 70px;
-  width: 70px;
-  cursor: pointer;
-}
-.figure .label {
-  color: black;
-  font-weight: 100;
-  font-size: 15px;
-  letter-spacing: 5px;
-}
-.gate_and .icon {
-  -webkit-mask: url(../images/palette_AND.svg) no-repeat center center;
-  mask: url(../images/palette_AND.svg) no-repeat center center;
 }
