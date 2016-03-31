@@ -83,6 +83,11 @@ body #layout .tab-content .tab-pane .workspace .toolbar {
   top: 0;
   left: 250px;
 }
+body #layout .tab-content .tab-pane .workspace .toolbar .github {
+  float: right;
+  padding-right: 20px;
+  height: 60px;
+}
 body #layout .tab-content .tab-pane .workspace .content {
   position: absolute;
   right: 0px;
