@@ -10,18 +10,19 @@ module.exports = function (grunt) {
         // Task configuration
         concat: {
             options: {
-                separator: ';'
+                separator: grunt.util.linefeed + ';' + grunt.util.linefeed
             },
             libs: {
                 src: [
                     './bower_components/shifty/dist/shifty.min.js',
                     './bower_components/draw2d/dist/patched_raphael.js',
                     './bower_components/jquery/jquery.min.js',
+                    './bower_components/jquery-ui/jquery-ui.min.js',
+                    './bower_components/jsrender/jsrender.min.js',
                     './bower_components/shufflejs/dist/jquery.shuffle.modernizr.min.js',
                     './bower_components/draw2d/dist/jquery.autoresize.js',
                     './bower_components/draw2d/dist/jquery-touch_punch.js',
                     './bower_components/draw2d/dist/jquery.contextmenu.js',
-                    './bower_components/draw2d/dist/jquery.placeholder.min.js',
                     './bower_components/draw2d/dist/rgbcolor.js',
                     './bower_components/draw2d/dist/patched_canvg.js',
                     './bower_components/draw2d/dist/patched_Class.js',
@@ -33,8 +34,7 @@ module.exports = function (grunt) {
             },
             application: {
                 src: [
-                    './src/assets/javascript/main.js',
-                    './src/assets/javascript/Gate_AND.js'
+                    './src/assets/javascript/**/*.js'
                 ],
                 dest: './dist/assets/javascript/app.js'
             },
@@ -48,12 +48,6 @@ module.exports = function (grunt) {
         },
 
         copy: {
-            svg: {
-                expand: true,
-                cwd: 'src/',
-                src: '**/*.svg',
-                dest: 'dist/'
-            },
             application: {
                 expand: true,
                 cwd: 'src/',
@@ -66,12 +60,6 @@ module.exports = function (grunt) {
                 src: ['**/*'],
                 dest: 'dist/lib/bootstrap'
             },
-            bootstrap:{
-                expand: true,
-                cwd: 'bower_components/jquery-ui/',
-                src: ['**/*'],
-                dest: 'dist/lib/jquery-ui'
-            }
 
         },
 
@@ -81,7 +69,11 @@ module.exports = function (grunt) {
                     compress: false
                 },
                 files: {
-                    "./dist/assets/stylesheets/main.css": "./src/assets/stylesheets/main.less"
+                    "./dist/assets/stylesheets/main.css": [
+                        "./src/assets/stylesheets/layout.less",
+                        "./src/assets/stylesheets/style.less",
+                        "./src/assets/stylesheets/palette.less"
+                    ]
                 }
             }
         },
@@ -101,7 +93,7 @@ module.exports = function (grunt) {
                 files: [
                     './src/assets/javascript/**/*.js'
                 ],
-                tasks: ['concat:appliction'],
+                tasks: ['concat:application'],
                 options: {
                     livereload: true
                 }

@@ -15,10 +15,22 @@ body {
 
     .nav-tabs {
       float: left;
+      border-bottom: 0;
       li {
         float: none;
+        margin: 0;
+
+        a {
+          margin-right: 0;
+          border: 0;
+
+          &:hover {
+          }
+        }
       }
 
+      .active .glyphicon {
+      }
     }
 
     #leftTabStrip {
@@ -30,7 +42,6 @@ body {
       .leftTab {
         border-radius: 0 !important;
         height: @tabSize;
-        width: @tabSize;
       }
     }
 
@@ -53,37 +64,34 @@ body {
             width: @paletteWidth;
             padding: 0;
 
-            #filter{
-              position: absolute;
-              top: 115px;
-              height: 30px;
-              left:2px;
-              width: (@paletteWidth)-4;
-            }
-
             .title {
               right: 0px;
               top: 30px;
               position: absolute;
             }
-            .paletteElementsContainer {
+            #filter{
+              top: 90px;
               position: absolute;
-              width: (@paletteWidth)-2;
-              margin: 0;
-              padding: 0;
-              top: 150px;
-              bottom: 0px;
-              overflow: auto;
-              #paletteElements {
-                width: (@paletteWidth)-2;
-                .mix {
-                  height: @paletteWidth/2;
-                  border: 1px solid #f0f0f0;
-                  /* to avoid doubling the border of the grid */
-                  margin: -1px 0 0 -1px;
-                }
-              }
+              font-size: 20px;
+              width: (@paletteWidth)-5;
+              left: 2px;
             }
+
+            #paletteElements{
+              position:absolute;
+              width:@paletteWidth;
+              margin:0;
+              padding:0;
+              top:150px;
+              bottom:0px;
+              overflow:auto;
+              .mix{
+                height:@paletteWidth/2;
+                border:1px solid #f0f0f0;
+                /* to avoid doubling the border of the grid */
+                margin: -1px 0 0 -1px;
+              }
+             }
           }
           .toolbar {
             position:absolute;
