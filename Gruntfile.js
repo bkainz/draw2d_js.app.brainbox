@@ -10,19 +10,23 @@ module.exports = function (grunt) {
         // Task configuration
         concat: {
             options: {
-                separator: grunt.util.linefeed + ';' + grunt.util.linefeed
+                separator: grunt.util.linefeed + ';' + grunt.util.linefeed,
+                failOnMissing: true
             },
             libs: {
+                nonull: true,
                 src: [
                     './bower_components/shifty/dist/shifty.min.js',
                     './bower_components/draw2d/dist/patched_raphael.js',
-                    './bower_components/jquery/jquery.min.js',
+                    './bower_components/jquery/dist/jquery.min.js',
                     './bower_components/jquery-ui/jquery-ui.min.js',
                     './bower_components/jsrender/jsrender.min.js',
                     './bower_components/shufflejs/dist/jquery.shuffle.modernizr.min.js',
                     './bower_components/draw2d/dist/jquery.autoresize.js',
                     './bower_components/draw2d/dist/jquery-touch_punch.js',
                     './bower_components/draw2d/dist/jquery.contextmenu.js',
+                    './bower_components/octokat/dist/octokat.js',
+                    './bower_components/hogan.js/web/1.0.0/hogan.min.js',
                     './bower_components/draw2d/dist/rgbcolor.js',
                     './bower_components/draw2d/dist/patched_canvg.js',
                     './bower_components/draw2d/dist/patched_Class.js',
@@ -40,8 +44,7 @@ module.exports = function (grunt) {
             },
             css:{
                 src:[
-                    './bower_components/bootstrap/dist/css/bootstrap.min.css'
-                ],
+                 ],
                 dest: './dist/assets/stylesheets/dependencies.css'
             }
 
@@ -65,8 +68,7 @@ module.exports = function (grunt) {
                 cwd: 'bower_components/bootstrap/dist',
                 src: ['**/*'],
                 dest: 'dist/lib/bootstrap'
-            },
-
+            }
         },
 
         less: {
@@ -76,9 +78,14 @@ module.exports = function (grunt) {
                 },
                 files: {
                     "./dist/assets/stylesheets/main.css": [
-                        "./src/assets/stylesheets/layout.less",
-                        "./src/assets/stylesheets/style.less",
-                        "./src/assets/stylesheets/palette.less"
+                        "./src/assets/less/file.less",
+                        "./src/assets/less/layout.less",
+                        "./src/assets/less/style.less",
+                        "./src/assets/less/palette.less",
+                        "./src/assets/less/file_dialog.less",
+                        "./src/assets/less/file_open_dialog.less",
+                        "./src/assets/less/file_save_dialog.less",
+                        "./src/assets/less/file_saveas_dialog.less"
                     ]
                 }
             }
@@ -113,7 +120,7 @@ module.exports = function (grunt) {
 
             less: {
                 files: [
-                    "./src/assets/stylesheets/**/*.less"
+                    "./src/assets/less/**/*.less"
                 ],
                 tasks: ['less'],
                 options: {

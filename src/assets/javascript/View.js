@@ -16,7 +16,10 @@ var View = draw2d.Canvas.extend({
         var _this = this;
 
         this._super(id, 2000,2000);
+        this.grid =  new draw2d.policy.canvas.ShowGridEditPolicy(20);
 
+
+        this.installEditPolicy( this.grid);
     },
 
     /**

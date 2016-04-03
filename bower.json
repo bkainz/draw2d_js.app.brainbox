@@ -12,6 +12,8 @@
     "bootstrap": "^3.3.6",
     "shufflejs": "^3.1.1",
     "jsrender": "^0.9.74",
-    "jquery-ui": "^1.11.4"
+    "jquery-ui": "^1.11.4",
+    "octokat": "^0.4.17",
+    "hogan.js": "hogan#^3.0.2"
   }
 }

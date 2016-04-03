@@ -1,0 +1,32 @@
+@import "colors.less";
+
+.githubFileDialog {
+
+  .githubNavigation{
+
+    *[data-draw2d="true"]{
+       font-weight:bold;
+       color:@tintColor;
+    }
+
+    .glyphicon, .fa {
+      font-size: 20px;
+      padding-right: 10px;
+      color:@tintColor;
+    }
+
+    a.list-group-item:hover {
+      text-decoration: underline;
+    }
+
+    *[data-draw2d="false"][data-type="file"]{
+      color:gray;
+      cursor:default;
+      text-decoration: none !important;
+      .fa{
+        color:gray;
+      }
+    }
+  }
+}
+
