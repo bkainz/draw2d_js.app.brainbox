@@ -2,10 +2,10 @@
   {
     "type": "draw2d_circuit_gate_AND",
     "id": "72ee693a-15c1-64af-e32e-04a951e70e25",
-    "x": 116,
-    "y": 137,
-    "width": 60,
-    "height": 61,
+    "x": 121,
+    "y": 127,
+    "width": 83,
+    "height": 67,
     "alpha": 1,
     "angle": 0,
     "userData": {},
@@ -34,6 +34,23 @@
     "dasharray": null
   },
   {
+    "type": "draw2d_circuit_gate_AND",
+    "id": "963be4cb-9757-2786-e600-96118094f27c",
+    "x": 260,
+    "y": 103,
+    "width": 60,
+    "height": 61,
+    "alpha": 1,
+    "angle": 0,
+    "userData": {},
+    "cssClass": "draw2d_circuit_gate_AND",
+    "bgColor": "none",
+    "color": "#1B1B1B",
+    "stroke": 0,
+    "radius": 0,
+    "dasharray": null
+  },
+  {
     "type": "draw2d.Connection",
     "id": "64e1a249-0d1e-1525-691d-017e2c412d8e",
     "alpha": 1,
@@ -47,8 +64,8 @@
     "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
     "vertex": [
       {
-        "x": 171,
-        "y": 167.5
+        "x": 197.08333333333331,
+        "y": 160.5
       },
       {
         "x": 441,
