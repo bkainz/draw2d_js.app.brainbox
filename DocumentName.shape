@@ -15,5 +15,55 @@
     "stroke": 0,
     "radius": 0,
     "dasharray": null
+  },
+  {
+    "type": "draw2d_circuit_gate_empty",
+    "id": "00058b9d-2917-69e6-5359-d1c5a5f89178",
+    "x": 436,
+    "y": 218,
+    "width": 60,
+    "height": 61,
+    "alpha": 1,
+    "angle": 0,
+    "userData": {},
+    "cssClass": "draw2d_circuit_gate_empty",
+    "bgColor": "none",
+    "color": "#1B1B1B",
+    "stroke": 0,
+    "radius": 0,
+    "dasharray": null
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "64e1a249-0d1e-1525-691d-017e2c412d8e",
+    "alpha": 1,
+    "angle": 0,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 2,
+    "color": "#129CE4",
+    "outlineStroke": 0,
+    "outlineColor": "none",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "vertex": [
+      {
+        "x": 171,
+        "y": 167.5
+      },
+      {
+        "x": 441,
+        "y": 229
+      }
+    ],
+    "router": "draw2d.layout.connection.DirectRouter",
+    "radius": 3,
+    "source": {
+      "node": "72ee693a-15c1-64af-e32e-04a951e70e25",
+      "port": "hybrid2"
+    },
+    "target": {
+      "node": "00058b9d-2917-69e6-5359-d1c5a5f89178",
+      "port": "hybrid0"
+    }
   }
 ]
