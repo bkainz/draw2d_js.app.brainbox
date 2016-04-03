@@ -4,8 +4,8 @@
     "id": "72ee693a-15c1-64af-e32e-04a951e70e25",
     "x": 121,
     "y": 127,
-    "width": 83,
-    "height": 67,
+    "width": 53,
+    "height": 57,
     "alpha": 1,
     "angle": 0,
     "userData": {},
@@ -64,8 +64,8 @@
     "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
     "vertex": [
       {
-        "x": 197.08333333333331,
-        "y": 160.5
+        "x": 169.58333333333334,
+        "y": 155.5
       },
       {
         "x": 441,
