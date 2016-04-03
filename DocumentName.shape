@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "type": "draw2d_circuit_gate_AND",
+    "id": "72ee693a-15c1-64af-e32e-04a951e70e25",
+    "x": 116,
+    "y": 137,
+    "width": 60,
+    "height": 61,
+    "alpha": 1,
+    "angle": 0,
+    "userData": {},
+    "cssClass": "draw2d_circuit_gate_AND",
+    "bgColor": "none",
+    "color": "#1B1B1B",
+    "stroke": 0,
+    "radius": 0,
+    "dasharray": null
+  }
+]
