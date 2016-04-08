@@ -32,6 +32,7 @@ module.exports = function (grunt) {
                     './bower_components/draw2d/dist/patched_Class.js',
                     './bower_components/draw2d/dist/json2.js',
                     './bower_components/draw2d/dist/pathfinding-browser.min.js',
+                    './bower_components/bootstrap-growl/jquery.bootstrap-growl.js',
                     './bower_components/draw2d/dist/draw2d.js'
                 ],
                 dest: './dist/assets/javascript/dependencies.js'
@@ -51,16 +52,22 @@ module.exports = function (grunt) {
         },
 
         copy: {
-            svg: {
+            img: {
                 expand: true,
-                cwd: 'src/',
-                src: '**/*.svg',
-                dest: 'dist/'
+                cwd: 'src/assets/images',
+                src: ['*.svg', '*.png'],
+                dest: 'dist/assets/images'
+            },
+            ionicons:{
+                expand: true,
+                cwd: 'bower_components/Ionicons/',
+                src: ['./css/*', "./fonts/*"],
+                dest: './dist/lib/ionicons'
             },
             application: {
                 expand: true,
                 cwd: 'src/',
-                src: '**/*.html',
+                src: ['**/*.html'],
                 dest: 'dist/'
             },
             bootstrap:{

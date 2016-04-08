@@ -61,6 +61,13 @@ var Palette = Class.extend(
                 }
             });
 
+            $('.draw2d_droppable').on('mouseover', function(){
+                $(this).parent().addClass('glowBorder');
+            }).on('mouseout', function(){
+                $(this).parent().removeClass('glowBorder');
+            });
+
+
         });
 
     }

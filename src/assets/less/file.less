@@ -1,25 +1,118 @@
+/* Chrome, Safari, Opera */
+@-webkit-keyframes zoom {
+  0%{
+    transform:scale(1)
+  }
+  25%{
+    transform:scale(1.5)
+  }
+  50%{
+    transform:scale(2)
+  }
+  75%{
+    transform:scale(1.5)
+  }
+  100%{
+    transform:scale(1)
+  }
+}
+
+/* Standard syntax */
+@keyframes zoom {
+  0%{
+    transform:scale(1)
+  }
+  25%{
+    transform:scale(1.5)
+  }
+  50%{
+    transform:scale(2)
+  }
+  75%{
+    transform:scale(1.5)
+  }
+  100%{
+    transform:scale(1)
+  }
+}
+
 
 
 #file{
 
+  overflow:auto;
   padding:30px !important;
+  background-image: url(../images/bg.png);
+  background-size: cover;
 
-  strong {
-    font-weight: 600;
+  .teaser{
+    margin-bottom: 40px;
+    background-size:cover;
+    padding-bottom: 0;
+    width:100%;
+    overflow:hidden;
+    position:relative;
+    .image{
+      animation: 190s linear 1s normal none infinite zoom;
+      background-image: url(../images/teaser.png);
+      background-position: center center;
+      background-size: cover;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      opacity:0.0;
+    }
+    .title{
+      position:absolute;
+      right:20px;
+      top: 20px;
+      color:white;
+      font-weight:100;
+      font-size:20px;
+    }
+    .headline{
+      background: #ba141a;
+      font-size: 20px;
+      font-weight: 100;
+      color: white;
+      width: 220px;
+      position: relative;
+      padding: 30px;
+      margin-top: 30px;
+      bottom: 0px;
+      padding-bottom:60px;
+    }
+
   }
-
-
   .tile {
     width: 100%;
-    display: inline-block;
     box-sizing: border-box;
     background: #fff;
-    padding: 20px;
     margin-bottom: 30px;
+    cursor:pointer;
+
+    .description {
+      margin-top: 30px;
+      background-color:rgba(255,255,255,0.3);
+      padding:10px;
+    }
+
+    .title{
+      font-size: 30px;
+      padding-top: 30px;
+      font-weight: 200;
+      color:rgba(255,255,255,0.9);
+
+    }
+
+    .icon{
+      width:130px;
+      font-size:90px;
+      text-align: center;
+      padding-top:20px;
+    }
   }
-  .tile .title {
-    margin-top: 0px;
-  }
+
   .tile.purple, .tile.blue, .tile.red, .tile.orange, .tile.green {
     color: #fff;
   }

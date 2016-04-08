@@ -32,14 +32,13 @@ var Application = Class.extend(
         this.storage = new BackendStorage();
         this.palette = new Palette(this);
         this.view    = new View(this, "draw2dCanvas");
+        this.loggedIn = false;
 
         $("#appLogin").on("click", function(){
             _this.login();
         });
 
         $("#fileOpen").on("click", function(){
-            $("#leftTabStrip .edit").click();
-
             _this.fileOpen();
         });
 
@@ -57,13 +56,10 @@ var Application = Class.extend(
         if (code!==null) {
             $.getJSON(conf.githubAuthenticateCallback+code, function(data) {
                 _this.storage.connect(data.token, $.proxy(function(success){
-        //            _this.toolbar.onLogginStatusChanged(success);
-                    console.log(success);
+                    _this.loggedIn = success;
                 },this));
             });
         }
-
-
     },
 
 
@@ -101,6 +97,12 @@ var Application = Class.extend(
 
     fileSave: function()
     {
+        if(this.loggedIn!==true){
+            this.loginFirstMessage();
+            return;
+        }
+
+
         if(this.storage.currentFileHandle===null) {
             new FileSaveAs(this.storage).show(this.view);
         }
@@ -112,13 +114,19 @@ var Application = Class.extend(
 
     fileOpen: function()
     {
-        this.fileNew();
+        if(this.loggedIn!==true){
+            this.loginFirstMessage();
+            return;
+        }
 
         new FileOpen(this.storage).show(
 
             // success callback
             $.proxy(function(fileData){
                 try{
+                    _this.fileNew();
+                    $("#leftTabStrip .edit").click();
+
                     this.view.clear();
                     var reader = new draw2d.io.json.Reader();
                     reader.unmarshal(this.view, fileData);
@@ -128,6 +136,16 @@ var Application = Class.extend(
                     this.view.reset();
                 }
             },this));
+    },
+
+
+    loginFirstMessage:function(){
+        $.bootstrapGrowl("You must first login into GITHUB to open a file from there!", {
+            type: 'danger',
+            align: 'center',
+            width: 'auto',
+            allow_dismiss: false
+        });
     }
 
 
