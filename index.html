@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="./lib/ionicons/css/ionicons.min.css" />
     <link type="text/css" rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet" href="./lib/bootstrap/css/bootstrap-theme.min.css" />
     <link type="text/css" rel="stylesheet" href="./assets/stylesheets/dependencies.css" />
     <link type="text/css" rel="stylesheet" href="./assets/stylesheets/main.css" />
 
@@ -16,10 +17,10 @@
     <SCRIPT src="http://freegroup.github.io/draw2d_js.shapes/assets/shapes/index.js"></SCRIPT>
 
     <script type="text/javascript">
-
+var app = null;
         $(window).load(function () {
 
-            var app = new Application();
+             app = new Application();
         });
 
     </script>
@@ -29,20 +30,82 @@
 <body>
 <div id="layout">
         <ul class="nav nav-tabs" id="leftTabStrip">
-            <li               ><a href="#a" class="leftTab folder"   data-toggle="tab"></a></li>
-            <li class="active"><a href="#b" class="leftTab edit"     data-toggle="tab"></a></li>
-            <li               ><a href="#c" class="leftTab setting"  data-toggle="tab"></a></li>
+            <li class="active"><a href="#file"     class="leftTab folder"   data-toggle="tab"></a></li>
+            <li               ><a href="#editor"   class="leftTab edit"     data-toggle="tab"></a></li>
+            <li               ><a href="#settings" class="leftTab setting"  data-toggle="tab"></a></li>
         </ul>
 
 
         <div class="tab-content">
 
 
-            <div class="tab-pane" id="a">
-                What's your Favorite?
+            <div class="tab-pane active fade in" id="file">
+                <div class="teaser">
+                    <div class="image"></div>
+                    <div class="headline">
+                        Teach logic gates and digital circuits effectively with Digital Training Studio.
+                    </div>
+                    <div class="title">Digital Training Studio</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="tile purple container-fluid " id="appLogin">
+                            <div class="row">
+                                <img class="col-xs-6 col-sm-6 col-md-6 icon" src="assets/images/octocat.svg" >
+
+                                <span class="col-xs-6 col-sm-6 col-md-6 title">Login</span>
+                            </div>
+                            <div class="row description">
+                                <div class="col-md-12">Login into Github to save and load files</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="tile red container-fluid " id="fileOpen">
+                            <h3 class="title">File open</h3>
+                            <p>Open a document from your Github repositry.</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="tile orange container-fluid " id="fileNew">
+                            <h3 class="title">File new</h3>
+                            <p>Open a new document to edit</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="tile red container-fluid " id="">
+                            <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6  ion-ios-person-outline icon"></div>
+
+                            <span class="col-xs-6 col-sm-6 col-md-6 title">About</span>
+                            </div>
+                            <div class="row description">
+                                <div class="col-md-12">Information about the developer</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-8 col-md-8">
+                        <div class="tile green container-fluid " id="appHelp">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6 ion-ios-help-outline icon"></div>
+
+                                <span class="col-xs-6 col-sm-6 col-md-6 title">Help</span>
+                            </div>
+                            <div class="row description">
+                                <div class="col-md-12">Introduction to digital circuits</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="tab-pane active" id="b">
+
+
+            <div class="tab-pane fade" id="editor">
                 <div class="workspace">
                     <div class="palette ">
                         <span class="title">Edit</span>
@@ -52,6 +115,7 @@
                         </div>
                     </div>
                     <div class="toolbar">
+                        <span id="fileSave" class="ion-ios-cloud-upload-outline icon"></span>
                         <a href="https://github.com/freegroup/draw2d_js.app.digital_training_studio" target="_blank"><img  class="github" src="assets/images/octocat.svg" title="Clone project on github"></a>
 
                     </div>
@@ -63,9 +127,11 @@
             </div>
 
 
-            <div class="tab-pane" id="c">
+            <div class="tab-pane fade" id="settings">
                 CCCCThirdamuno, .
             </div>
+
+
         </div><!-- /tab-content -->
 
 </div><!-- /container -->
@@ -73,12 +139,167 @@
 <script id="shapeTemplate" type="text/x-jsrender">
 {{for shapes}}
     <div  data-name='{{:name}}' class="mix col-md-6 pallette_item">
+    <div class="glow">
         <img data-shape="{{:name}}"   class="draw2d_droppable" height="80" src="http://freegroup.github.io/draw2d_js.shapes/assets/shapes/{{:name}}.png">
-        {{:basename}}
+        <div>{{:basename}}</div>
+        </div>
     </div>
 {{/for}}
 </script>
 
+
+
+
+<!--
+  # Save Dialog
+  #
+  #
+-->
+<div id="githubSaveFileDialog" class="modal fade githubFileDialog" tabindex="-1">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="media-heading">Save on GitHub</h4>
+            </div>
+            <div class="modal-body">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <a href="#">
+                            <img class="media-object githubFilePreview" src="assets/images/octocat.svg">
+                        </a>
+                    </div>
+                    <div class="media-body">
+
+                        <form class="form-horizontal">
+                            <br>
+                            <br>
+                            <fieldset>
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <input type="text"
+                                               class="form-control floating-label githubFileName"
+                                               value=""
+                                               disabled="true"
+                                                >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <input type="text"
+                                               class="form-control floating-label githubCommitMessage"
+                                               value=""
+                                               autofocus
+                                               placeholder="commit message"
+                                                >
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="row"></div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal">Abort</button>
+                <button class="btn btn-primary okButton"><span>Save</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--
+  # GitHub File select/open dialog
+  #
+  -->
+<div id="githubFileSelectDialog" class="modal fade githubFileDialog" tabindex="-1">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="media-heading">File Open...</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="list-group githubNavigation">
+                    <!-- FileList here -->
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal">Abort</button>
+                <button class="btn btn-primary okButton"><span>Open</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--
+  # FileSaveAs Dialog
+  #
+  -->
+<div id="githubFileSaveAsDialog" class="modal fade githubFileDialog" tabindex="-1">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="media-heading">Save on GitHub</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="list-group githubNavigation">
+                    <!-- FileList here -->
+                </div>
+
+
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <a href="#">
+                            <img class="media-object githubFilePreview" src="assets/images/octocat.svg">
+                        </a>
+                    </div>
+                    <div class="media-body">
+
+                        <form class="form-horizontal">
+                            <br>
+                            <br>
+                            <fieldset>
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <input type="text"
+                                               class="form-control floating-label githubFileName"
+                                               value=""
+                                               placeholder="enter filename"
+                                                >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <input type="text"
+                                               class="form-control floating-label githubCommitMessage"
+                                               value=""
+                                               autofocus
+                                               placeholder="commit message"
+                                                >
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="row"></div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal">Abort</button>
+                <button class="btn btn-primary okButton"><span>Save</span></button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>

@@ -1,3 +1,145 @@
+/* Chrome, Safari, Opera */
+@-webkit-keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.5);
+  }
+  50% {
+    transform: scale(2);
+  }
+  75% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+/* Standard syntax */
+@keyframes zoom {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.5);
+  }
+  50% {
+    transform: scale(2);
+  }
+  75% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+#file {
+  overflow: auto;
+  padding: 30px !important;
+  background-image: url(../images/bg.png);
+  background-size: cover;
+}
+#file .teaser {
+  margin-bottom: 40px;
+  background-size: cover;
+  padding-bottom: 0;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+#file .teaser .image {
+  animation: 190s linear 1s normal none infinite zoom;
+  background-image: url(../images/teaser.png);
+  background-position: center center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0.0;
+}
+#file .teaser .title {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  color: white;
+  font-weight: 100;
+  font-size: 20px;
+}
+#file .teaser .headline {
+  background: #ba141a;
+  font-size: 20px;
+  font-weight: 200;
+  color: white;
+  width: 220px;
+  position: relative;
+  padding: 30px;
+  margin-top: 30px;
+  bottom: 0px;
+  padding-bottom: 60px;
+}
+#file .tile {
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+#file .tile .description {
+  margin-top: 30px;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 10px;
+}
+#file .tile .title {
+  font-size: 30px;
+  padding-top: 30px;
+  font-weight: 200;
+  color: rgba(255, 255, 255, 0.9);
+}
+#file .tile .icon {
+  width: 130px;
+  font-size: 90px;
+  text-align: center;
+  padding-top: 20px;
+}
+#file .tile.purple,
+#file .tile.blue,
+#file .tile.red,
+#file .tile.orange,
+#file .tile.green {
+  color: #fff;
+}
+#file .tile.purple {
+  background: #5133AB;
+}
+#file .tile.purple:hover {
+  background: #3e2784;
+}
+#file .tile.red {
+  background: #AC193D;
+}
+#file .tile.red:hover {
+  background: #7f132d;
+}
+#file .tile.green {
+  background: #00A600;
+}
+#file .tile.green:hover {
+  background: #007300;
+}
+#file .tile.blue {
+  background: #2672EC;
+}
+#file .tile.blue:hover {
+  background: #125acd;
+}
+#file .tile.orange {
+  background: #DC572E;
+}
+#file .tile.orange:hover {
+  background: #b8431f;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -86,7 +228,7 @@ body #layout .tab-content .tab-pane .workspace .toolbar {
 body #layout .tab-content .tab-pane .workspace .toolbar .github {
   float: right;
   padding-right: 20px;
-  height: 60px;
+  height: 30px;
 }
 body #layout .tab-content .tab-pane .workspace .content {
   position: absolute;
@@ -145,7 +287,7 @@ body #layout .nav-tabs .active {
   background-color: white;
 }
 body #layout .nav-tabs .active a {
-  background-color: #1C9BAB;
+  background-color: #1c9bab;
 }
 body #layout .nav-tabs .active:hover {
   background-color: white;
@@ -165,6 +307,9 @@ body #layout .tab-content .tab-pane .workspace .palette {
   box-shadow: 4px 0px 9px -4px rgba(74, 74, 74, 0.74);
   border-right: 1px solid rgba(74, 74, 74, 0.5);
 }
+body #layout .tab-content .tab-pane .workspace .palette #filter {
+  outline: none;
+}
 body #layout .tab-content .tab-pane .workspace .palette .title {
   background-color: #51CDD1;
   color: white;
@@ -175,6 +320,21 @@ body #layout .tab-content .tab-pane .workspace .palette .title {
   position: absolute;
   min-width: 120px;
   padding-left: 20px;
+}
+body #layout .tab-content .tab-pane .workspace .palette .pallette_item {
+  padding: 0px;
+}
+body #layout .tab-content .tab-pane .workspace .palette .pallette_item > div {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border: 1px solid transparent;
+}
+body #layout .tab-content .tab-pane .workspace .palette .pallette_item .glowBorder {
+  border: 1px solid #1c9bab;
+}
+body #layout .tab-content .tab-pane .workspace .palette .draw2d_droppable {
+  cursor: move;
 }
 body #layout .tab-content .tab-pane .workspace .toolbar {
   background: -moz-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
@@ -191,6 +351,13 @@ body #layout .tab-content .tab-pane .workspace .toolbar {
   /* w3c */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FDB703', endColorstr='#F99811', GradientType=1);
   /* ie6-9 */
+  padding-left: 35px;
+}
+body #layout .tab-content .tab-pane .workspace .toolbar .icon {
+  font-size: 45px;
+  padding: 5px;
+  cursor: pointer;
+  color: white;
 }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
@@ -200,4 +367,45 @@ body #layout .tab-content .tab-pane .workspace .toolbar {
 
 .pallette_item {
   text-align: center;
+}
+
+.githubFileDialog .githubNavigation *[data-draw2d="true"] {
+  font-weight: bold;
+  color: #1c9bab;
+}
+.githubFileDialog .githubNavigation .glyphicon,
+.githubFileDialog .githubNavigation .fa {
+  font-size: 20px;
+  padding-right: 10px;
+  color: #1c9bab;
+}
+.githubFileDialog .githubNavigation a.list-group-item:hover {
+  text-decoration: underline;
+}
+.githubFileDialog .githubNavigation *[data-draw2d="false"][data-type="file"] {
+  color: gray;
+  cursor: default;
+  text-decoration: none !important;
+}
+.githubFileDialog .githubNavigation *[data-draw2d="false"][data-type="file"] .fa {
+  color: gray;
+}
+
+#githubFileSelectDialog .githubNavigation {
+  height: 300px;
+  overflow: scroll;
+}
+
+#githubSaveFileDialog .githubFilePreview {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+#githubFileSaveAsDialog .githubFilePreview {
+  max-width: 200px;
+  max-height: 200px;
+}
+#githubFileSaveAsDialog .githubNavigation {
+  height: 250px;
+  overflow: scroll;
 }
