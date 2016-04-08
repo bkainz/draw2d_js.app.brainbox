@@ -20,6 +20,44 @@ var View = draw2d.Canvas.extend({
 
 
         this.installEditPolicy( this.grid);
+
+
+        var router = new draw2d.layout.connection.InteractiveManhattanConnectionRouter();
+        router.abortRoutingOnFirstVertexNode=false;
+        var createConnection=function(sourcePort, targetPort){
+            var c = new draw2d.Connection({
+                outlineColor:"#ffffff",
+                outlineStroke:1,
+                color:"#000000",
+                router: router,
+                stroke:1,
+                radius:2
+            });
+            if(sourcePort) {
+                c.setSource(sourcePort);
+                c.setTarget(targetPort);
+            }
+            return c;
+        };
+
+
+        // install a Connection create policy which matches to a "circuit like"
+        // connections
+        //
+        this.installEditPolicy( new draw2d.policy.connection.ComposedConnectionCreatePolicy(
+                [
+                    // create a connection via Drag&Drop of ports
+                    //
+                    new draw2d.policy.connection.DragConnectionCreatePolicy({
+                        createConnection:createConnection
+                    }),
+                    // or via click and point
+                    //
+                    new draw2d.policy.connection.OrthogonalConnectionCreatePolicy({
+                        createConnection:createConnection
+                    })
+                ])
+        );
     },
 
     /**

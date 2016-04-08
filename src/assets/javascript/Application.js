@@ -119,13 +119,13 @@ var Application = Class.extend(
             return;
         }
 
+        $("#leftTabStrip .edit").click();
         new FileOpen(this.storage).show(
 
             // success callback
             $.proxy(function(fileData){
                 try{
-                    _this.fileNew();
-                    $("#leftTabStrip .edit").click();
+                    this.fileNew();
 
                     this.view.clear();
                     var reader = new draw2d.io.json.Reader();
