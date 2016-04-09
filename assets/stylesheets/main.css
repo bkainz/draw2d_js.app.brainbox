@@ -1,38 +1,53 @@
-/* Chrome, Safari, Opera */
-@-webkit-keyframes zoom {
-  0% {
-    transform: scale(1);
-  }
-  25% {
-    transform: scale(1.5);
-  }
-  50% {
-    transform: scale(2);
-  }
-  75% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
+.vertical-text {
+  transform: rotate(-90deg);
+  white-space: nowrap;
+  top: 200px;
+  left: 20px;
+  font-size: 50px;
+  color: white;
 }
-/* Standard syntax */
-@keyframes zoom {
-  0% {
-    transform: scale(1);
-  }
-  25% {
-    transform: scale(1.5);
-  }
-  50% {
-    transform: scale(2);
-  }
-  75% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
+#leftTabStrip:after {
+  content: "Digital Training Studio";
+  transform: rotate(-90deg) translate(-196px, -177px);
+  font-size: 46px;
+  color: white;
+  white-space: nowrap;
+  opacity: 0.4;
+}
+#layout .nav-tabs {
+  background-color: #8F98A7;
+}
+#layout .nav-tabs li a {
+  text-align: center;
+  padding: 0;
+  padding-top: 5px;
+}
+#layout .nav-tabs li:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+#layout .nav-tabs li.active {
+  background-color: white;
+}
+#layout .nav-tabs li.active .folder *[stroke='#000000'] {
+  stroke: #0088d1;
+}
+#layout .nav-tabs li.active .folder *[fill='#000000'] {
+  fill: #0088d1;
+}
+#layout .nav-tabs li.active .edit *[stroke='#000000'] {
+  stroke: #1c9bab;
+}
+#layout .nav-tabs li.active .edit *[fill='#000000'] {
+  fill: #1c9bab;
+}
+#layout .nav-tabs li.active:hover {
+  background-color: white;
+}
+
+.notLoggedIn {
+  opacity: 0.2;
+  transition: all 2s;
+  -webkit-transition: all 2s;
 }
 #file {
   overflow: auto;
@@ -42,29 +57,21 @@
 }
 #file .teaser {
   margin-bottom: 40px;
-  background-size: cover;
   padding-bottom: 0;
   width: 100%;
   overflow: hidden;
   position: relative;
 }
-#file .teaser .image {
-  animation: 190s linear 1s normal none infinite zoom;
-  background-image: url(../images/teaser.png);
-  background-position: center center;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  opacity: 0.0;
-}
 #file .teaser .title {
   position: absolute;
   right: 20px;
   top: 20px;
-  color: white;
-  font-weight: 100;
-  font-size: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 200;
+  font-size: 4vw;
+  left: 250px;
+  white-space: nowrap;
+  text-align: right;
 }
 #file .teaser .headline {
   background: #ba141a;
@@ -84,6 +91,8 @@
   background: #fff;
   margin-bottom: 30px;
   cursor: pointer;
+  transition: all 2s;
+  -webkit-transition: all 2s;
 }
 #file .tile .description {
   margin-top: 30px;
@@ -140,6 +149,74 @@
   background: #b8431f;
 }
 
+.pallette_item {
+  text-align: center;
+}
+body #layout .tab-content .tab-pane {
+  background-color: #fff;
+}
+body #layout .tab-content .tab-pane .workspace .palette {
+  box-shadow: 4px 0px 9px -4px rgba(74, 74, 74, 0.74);
+  border-right: 1px solid rgba(74, 74, 74, 0.5);
+}
+body #layout .tab-content .tab-pane .workspace .palette #filter {
+  outline: none;
+}
+body #layout .tab-content .tab-pane .workspace .palette .title {
+  background-color: #51CDD1;
+  color: white;
+  font-size: 25px;
+  line-height: 45px;
+  right: 0px;
+  top: 30px;
+  position: absolute;
+  min-width: 120px;
+  padding-left: 20px;
+}
+body #layout .tab-content .tab-pane .workspace .palette .pallette_item {
+  padding: 0px;
+}
+body #layout .tab-content .tab-pane .workspace .palette .pallette_item > div {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border: 1px solid transparent;
+}
+body #layout .tab-content .tab-pane .workspace .palette .pallette_item .glowBorder {
+  border: 1px solid #1c9bab;
+}
+body #layout .tab-content .tab-pane .workspace .palette .draw2d_droppable {
+  cursor: move;
+}
+body #layout .tab-content .tab-pane .workspace .toolbar {
+  background: -moz-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
+  /* ff3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(18%, #fdb703), color-stop(19%, #fcb603), color-stop(100%, #f99811));
+  /* safari4+,chrome */
+  background: -webkit-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
+  /* safari5.1+,chrome10+ */
+  background: -o-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
+  /* opera 11.10+ */
+  background: -ms-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
+  /* ie10+ */
+  background: linear-gradient(95deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
+  /* w3c */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FDB703', endColorstr='#F99811', GradientType=1);
+  /* ie6-9 */
+  padding-left: 35px;
+}
+body #layout .tab-content .tab-pane .workspace .toolbar .icon {
+  font-size: 45px;
+  padding: 5px;
+  cursor: pointer;
+  color: white;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  border: 0;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -172,6 +249,7 @@ body #layout #leftTabStrip {
 }
 body #layout #leftTabStrip .leftTab {
   border-radius: 0 !important;
+  width: 60px;
   height: 60px;
 }
 body #layout .tab-content {
@@ -251,133 +329,15 @@ body #layout .tab-content .active {
   border: 0;
 }
 
-.vertical-text {
-  transform: rotate(-90deg);
-  white-space: nowrap;
-  top: 200px;
-  left: 20px;
-  font-size: 50px;
-  color: white;
-}
-.leftTab.folder {
-  -webkit-mask: url(../images/folder.svg) no-repeat center center;
-  mask: url(../images/folder.svg) no-repeat center center;
-}
-.leftTab.edit {
-  -webkit-mask: url(../images/edit.svg) no-repeat center center;
-  mask: url(../images/edit.svg) no-repeat center center;
-}
-.leftTab.setting {
-  -webkit-mask: url(../images/settings.svg) no-repeat center center;
-  mask: url(../images/settings.svg) no-repeat center center;
-}
-body #layout .nav-tabs {
-  background-color: #8F98A7;
-}
-body #layout .nav-tabs li a {
-  padding: 0;
-  background-color: white;
-  width: 50px;
-  height: 50px;
-}
-body #layout .nav-tabs li:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-body #layout .nav-tabs .active {
-  background-color: white;
-}
-body #layout .nav-tabs .active a {
-  background-color: #1c9bab;
-}
-body #layout .nav-tabs .active:hover {
-  background-color: white;
-}
-body #layout #leftTabStrip:after {
-  content: "Digital Training Studio";
-  transform: rotate(-90deg) translate(-196px, -177px);
-  font-size: 46px;
-  color: white;
-  white-space: nowrap;
-  opacity: 0.4;
-}
-body #layout .tab-content .tab-pane {
-  background-color: #fff;
-}
-body #layout .tab-content .tab-pane .workspace .palette {
-  box-shadow: 4px 0px 9px -4px rgba(74, 74, 74, 0.74);
-  border-right: 1px solid rgba(74, 74, 74, 0.5);
-}
-body #layout .tab-content .tab-pane .workspace .palette #filter {
-  outline: none;
-}
-body #layout .tab-content .tab-pane .workspace .palette .title {
-  background-color: #51CDD1;
-  color: white;
-  font-size: 25px;
-  line-height: 45px;
-  right: 0px;
-  top: 30px;
-  position: absolute;
-  min-width: 120px;
-  padding-left: 20px;
-}
-body #layout .tab-content .tab-pane .workspace .palette .pallette_item {
-  padding: 0px;
-}
-body #layout .tab-content .tab-pane .workspace .palette .pallette_item > div {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  border: 1px solid transparent;
-}
-body #layout .tab-content .tab-pane .workspace .palette .pallette_item .glowBorder {
-  border: 1px solid #1c9bab;
-}
-body #layout .tab-content .tab-pane .workspace .palette .draw2d_droppable {
-  cursor: move;
-}
-body #layout .tab-content .tab-pane .workspace .toolbar {
-  background: -moz-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
-  /* ff3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(18%, #fdb703), color-stop(19%, #fcb603), color-stop(100%, #f99811));
-  /* safari4+,chrome */
-  background: -webkit-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
-  /* safari5.1+,chrome10+ */
-  background: -o-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
-  /* opera 11.10+ */
-  background: -ms-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
-  /* ie10+ */
-  background: linear-gradient(95deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
-  /* w3c */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FDB703', endColorstr='#F99811', GradientType=1);
-  /* ie6-9 */
-  padding-left: 35px;
-}
-body #layout .tab-content .tab-pane .workspace .toolbar .icon {
-  font-size: 45px;
-  padding: 5px;
-  cursor: pointer;
-  color: white;
-}
-.nav-tabs > li.active > a,
-.nav-tabs > li.active > a:hover,
-.nav-tabs > li.active > a:focus {
-  border: 0;
-}
-
-.pallette_item {
-  text-align: center;
-}
-
 .githubFileDialog .githubNavigation *[data-draw2d="true"] {
   font-weight: bold;
-  color: #1c9bab;
+  color: #0088d1;
 }
 .githubFileDialog .githubNavigation .glyphicon,
 .githubFileDialog .githubNavigation .fa {
   font-size: 20px;
   padding-right: 10px;
-  color: #1c9bab;
+  color: #0088d1;
 }
 .githubFileDialog .githubNavigation a.list-group-item:hover {
   text-decoration: underline;
