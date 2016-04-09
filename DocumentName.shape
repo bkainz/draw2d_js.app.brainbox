@@ -2,8 +2,8 @@
   {
     "type": "draw2d_circuit_gate_AND",
     "id": "72ee693a-15c1-64af-e32e-04a951e70e25",
-    "x": 121,
-    "y": 127,
+    "x": 348,
+    "y": 58,
     "width": 53,
     "height": 57,
     "alpha": 1,
@@ -69,6 +69,39 @@
   },
   {
     "type": "draw2d.Connection",
+    "id": "64e1a249-0d1e-1525-691d-017e2c412d8e",
+    "alpha": 1,
+    "angle": 0,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 2,
+    "color": "#129CE4",
+    "outlineStroke": 0,
+    "outlineColor": "none",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "vertex": [
+      {
+        "x": 396.5833333333333,
+        "y": 86.5
+      },
+      {
+        "x": 441,
+        "y": 229
+      }
+    ],
+    "router": "draw2d.layout.connection.DirectRouter",
+    "radius": 3,
+    "source": {
+      "node": "72ee693a-15c1-64af-e32e-04a951e70e25",
+      "port": "hybrid2"
+    },
+    "target": {
+      "node": "00058b9d-2917-69e6-5359-d1c5a5f89178",
+      "port": "hybrid0"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
     "id": "44fed624-a8dc-1fd6-779b-af5cd9a273d5",
     "alpha": 1,
     "angle": 0,
@@ -111,39 +144,6 @@
     "target": {
       "node": "00058b9d-2917-69e6-5359-d1c5a5f89178",
       "port": "hybrid1"
-    }
-  },
-  {
-    "type": "draw2d.Connection",
-    "id": "64e1a249-0d1e-1525-691d-017e2c412d8e",
-    "alpha": 1,
-    "angle": 0,
-    "userData": {},
-    "cssClass": "draw2d_Connection",
-    "stroke": 2,
-    "color": "#129CE4",
-    "outlineStroke": 0,
-    "outlineColor": "none",
-    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
-    "vertex": [
-      {
-        "x": 169.58333333333334,
-        "y": 155.5
-      },
-      {
-        "x": 441,
-        "y": 229
-      }
-    ],
-    "router": "draw2d.layout.connection.DirectRouter",
-    "radius": 3,
-    "source": {
-      "node": "72ee693a-15c1-64af-e32e-04a951e70e25",
-      "port": "hybrid2"
-    },
-    "target": {
-      "node": "00058b9d-2917-69e6-5359-d1c5a5f89178",
-      "port": "hybrid0"
     }
   }
 ]
