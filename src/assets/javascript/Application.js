@@ -57,9 +57,31 @@ var Application = Class.extend(
             $.getJSON(conf.githubAuthenticateCallback+code, function(data) {
                 _this.storage.connect(data.token, $.proxy(function(success){
                     _this.loggedIn = success;
+                    if(success) {
+                        $(".notLoggedIn").removeClass("notLoggedIn");
+                    }
                 },this));
             });
         }
+
+
+        /*
+         * Replace all SVG images with inline SVG
+         */
+        $('img.svg').each(function(){
+            var $img = $(this);
+            var imgURL = $img.attr('src');
+
+            jQuery.get(imgURL, function(data) {
+                // Get the SVG tag, ignore the rest
+                var $svg = $(data).find('svg');
+                // Remove any invalid XML tags as per http://validator.w3.org
+                $svg = $svg.removeAttr('xmlns:a');
+                // Replace image with new SVG
+                $img.replaceWith($svg);
+            }, 'xml');
+
+        });
     },
 
 

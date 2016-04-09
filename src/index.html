@@ -17,7 +17,7 @@
     <SCRIPT src="http://freegroup.github.io/draw2d_js.shapes/assets/shapes/index.js"></SCRIPT>
 
     <script type="text/javascript">
-var app = null;
+        var app = null;
         $(window).load(function () {
 
              app = new Application();
@@ -25,14 +25,32 @@ var app = null;
 
     </script>
 
+
 </head>
+
+
 
 <body>
 <div id="layout">
         <ul class="nav nav-tabs" id="leftTabStrip">
-            <li class="active"><a href="#file"     class="leftTab folder"   data-toggle="tab"></a></li>
-            <li               ><a href="#editor"   class="leftTab edit"     data-toggle="tab"></a></li>
-            <li               ><a href="#settings" class="leftTab setting"  data-toggle="tab"></a></li>
+
+            <li class="active">
+                <a href="#file" class="leftTab folder"   data-toggle="tab">
+                    <img class="svg" src="./assets/images/folder.svg">
+                </a>
+            </li>
+
+            <li>
+                <a href="#editor" class="leftTab edit"     data-toggle="tab">
+                    <img class="svg" src="./assets/images/edit.svg">
+                </a>
+            </li>
+
+            <li>
+                <a href="#setting" class="leftTab setting"  data-toggle="tab">
+                    <img class="svg" src="./assets/images/settings.svg">
+                </a>
+            </li>
         </ul>
 
 
@@ -41,7 +59,6 @@ var app = null;
 
             <div class="tab-pane active fade in" id="file">
                 <div class="teaser">
-                    <div class="image"></div>
                     <div class="headline">
                         Teach logic gates and digital circuits effectively with Digital Training Studio.
                     </div>
@@ -60,8 +77,8 @@ var app = null;
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="tile red container-fluid " id="fileOpen">
+                    <div class="col-xs-12 col-sm-6 col-md-4 ">
+                        <div class="tile red container-fluid notLoggedIn" id="fileOpen">
                             <h3 class="title">File open</h3>
                             <p>Open a document from your Github repositry.</p>
                         </div>
@@ -127,8 +144,8 @@ var app = null;
             </div>
 
 
-            <div class="tab-pane fade" id="settings">
-                CCCCThirdamuno, .
+            <div class="tab-pane fade" id="setting">
+                <div>CCCCThirdamuno</div>
             </div>
 
 
@@ -301,6 +318,12 @@ var app = null;
     </div>
 </div>
 
+<div style="display:none">
+
+
+    // SVG_Store_Here
+
+</div>
 
 </body>
 </html>

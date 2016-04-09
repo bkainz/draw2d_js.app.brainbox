@@ -7,6 +7,7 @@ module.exports = function (grunt) {
         // this way we can use things like name and version (pkg.name)
         pkg: grunt.file.readJSON('package.json'),
 
+
         // Task configuration
         concat: {
             options: {
@@ -85,10 +86,10 @@ module.exports = function (grunt) {
                 },
                 files: {
                     "./dist/assets/stylesheets/main.css": [
-                        "./src/assets/less/file.less",
+                        "./src/assets/less/tabmenu.less",
+                        "./src/assets/less/tabpane_file.less",
+                        "./src/assets/less/tabpane_editor.less",
                         "./src/assets/less/layout.less",
-                        "./src/assets/less/style.less",
-                        "./src/assets/less/palette.less",
                         "./src/assets/less/file_dialog.less",
                         "./src/assets/less/file_open_dialog.less",
                         "./src/assets/less/file_save_dialog.less",

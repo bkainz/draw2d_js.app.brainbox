@@ -29,6 +29,8 @@
     "grunt-contrib-less": "~1.0.1",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-gh-pages": "^0.10.0",
+    "grunt-insert": "^0.1.0",
+    "grunt-svgstore": "^1.0.0",
     "jshint-stylish": "latest"
   }
 }
