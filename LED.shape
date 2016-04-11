@@ -1,0 +1,82 @@
+[
+  {
+    "type": "draw2d_circuit_HighLowSource",
+    "id": "7e59b22b-b8d3-a4e0-824b-a2c805c858b8",
+    "x": 61,
+    "y": 115,
+    "width": 64,
+    "height": 35,
+    "alpha": 1,
+    "angle": 0,
+    "userData": {},
+    "cssClass": "draw2d_circuit_HighLowSource",
+    "bgColor": "none",
+    "color": "#1B1B1B",
+    "stroke": 0,
+    "radius": 0,
+    "dasharray": null
+  },
+  {
+    "type": "draw2d_circuit_Led",
+    "id": "3c15f8f0-bc7a-bf48-6bfc-3a1a8813dd5d",
+    "x": 220,
+    "y": 204,
+    "width": 39,
+    "height": 32,
+    "alpha": 1,
+    "angle": 0,
+    "userData": {},
+    "cssClass": "draw2d_circuit_Led",
+    "bgColor": "none",
+    "color": "#1B1B1B",
+    "stroke": 0,
+    "radius": 0,
+    "dasharray": null
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "e37b49ec-012f-93bf-f99c-f1ad423440d0",
+    "alpha": 1,
+    "angle": 0,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 1,
+    "color": "#000000",
+    "outlineStroke": 1,
+    "outlineColor": "#FFFFFF",
+    "policy": "draw2d.policy.line.OrthogonalSelectionFeedbackPolicy",
+    "vertex": [
+      {
+        "x": 120,
+        "y": 132.0889874999998
+      },
+      {
+        "x": 172.5,
+        "y": 132.0889874999998
+      },
+      {
+        "x": 172.5,
+        "y": 220
+      },
+      {
+        "x": 225,
+        "y": 220
+      }
+    ],
+    "router": "draw2d.layout.connection.InteractiveManhattanConnectionRouter",
+    "radius": 2,
+    "routingMetaData": {
+      "routedByUserInteraction": false,
+      "fromDir": 1,
+      "toDir": 3
+    },
+    "source": {
+      "node": "7e59b22b-b8d3-a4e0-824b-a2c805c858b8",
+      "port": "output0"
+    },
+    "target": {
+      "node": "3c15f8f0-bc7a-bf48-6bfc-3a1a8813dd5d",
+      "port": "input0"
+    }
+  }
+]
