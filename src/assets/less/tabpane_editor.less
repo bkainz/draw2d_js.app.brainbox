@@ -6,82 +6,69 @@
   text-align:center;
 }
 
-body
-{
-  #layout
-  {
-    .tab-content {
 
-      .tab-pane {
-        background-color: #fff;
+.workspace {
 
-        .workspace {
+  .palette {
+    box-shadow: 4px 0px 9px -4px rgba(74, 74, 74, 0.74);
+    border-right: 1px solid rgba(74, 74, 74, 0.5);
 
-          .palette {
-            box-shadow: 4px 0px 9px -4px rgba(74, 74, 74, 0.74);
-            border-right: 1px solid rgba(74, 74, 74, 0.5);
-
-            #filter{
-              outline:none;
-            }
-
-            .title {
-              background-color: #51CDD1;
-              color: white;
-              font-size: 25px;
-              line-height: 45px;
-              right: 0px;
-              top: 30px;
-              position: absolute;
-              min-width: 120px;
-              padding-left: 20px;
-            }
-            .pallette_item{
-              padding:0px;
-              >div{
-                width:100%;
-                height:100%;
-                text-align:center;
-                border:1px solid transparent;
-              }
-              .glowBorder{
-                border: 1px solid @tintColorEdit;
-              }
-            }
-            .draw2d_droppable{
-              cursor:move;
-            }
-
-
-          }
-
-          .toolbar {
-            background: -moz-linear-gradient(355deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* ff3.6+ */
-            background: -webkit-gradient(linear, left top, right top, color-stop(18%, rgba(253,183,3,1)), color-stop(19%, rgba(252,182,3,1)), color-stop(100%, rgba(249,152,17,1))); /* safari4+,chrome */
-            background: -webkit-linear-gradient(355deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* safari5.1+,chrome10+ */
-            background: -o-linear-gradient(355deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* opera 11.10+ */
-            background: -ms-linear-gradient(355deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* ie10+ */
-            background: linear-gradient(95deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* w3c */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FDB703', endColorstr='#F99811',GradientType=1 ); /* ie6-9 */
-
-            padding-left:35px;
-            .icon{
-              font-size:45px;
-              padding:5px;
-              cursor:pointer;
-              color:white;
-            }
-          }
-          .content {
-
-            .canvas {
-
-            }
-          }
-      }
-      }
+    #filter{
+      outline:none;
     }
 
+    .title {
+      background-color: @tintColorEdit;
+      color: white;
+      font-size: 25px;
+      line-height: 45px;
+      right: 0px;
+      top: 30px;
+      position: absolute;
+      min-width: 120px;
+      padding-left: 20px;
+    }
+    .pallette_item{
+      padding:0px;
+      >div{
+        width:100%;
+        height:100%;
+        text-align:center;
+        border:1px solid transparent;
+      }
+      .glowBorder{
+        border: 1px solid @tintColorEdit;
+      }
+    }
+    .draw2d_droppable{
+      cursor:move;
+    }
+
+
+  }
+
+  .toolbar {
+    background: -moz-linear-gradient(355deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* ff3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(18%, rgba(253,183,3,1)), color-stop(19%, rgba(252,182,3,1)), color-stop(100%, rgba(249,152,17,1))); /* safari4+,chrome */
+    background: -webkit-linear-gradient(355deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(355deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* opera 11.10+ */
+    background: -ms-linear-gradient(355deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* ie10+ */
+    background: linear-gradient(95deg, rgba(253,183,3,1) 18%, rgba(252,182,3,1) 19%, rgba(249,152,17,1) 100%); /* w3c */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FDB703', endColorstr='#F99811',GradientType=1 ); /* ie6-9 */
+
+    padding-left:35px;
+    .icon{
+      font-size:45px;
+      padding:5px;
+      cursor:pointer;
+      color:white;
+    }
+  }
+  .content {
+
+    .canvas {
+
+    }
   }
 }
 

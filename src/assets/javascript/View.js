@@ -58,6 +58,15 @@ var View = draw2d.Canvas.extend({
                     })
                 ])
         );
+
+
+        $("#editUndo").on("click", function(){
+            _this.getCommandStack().undo();
+        });
+
+        $("#editRedo").on("click", function(){
+            _this.getCommandStack().redo();
+        });
     },
 
     /**
