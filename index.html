@@ -34,19 +34,19 @@
 <div id="layout">
         <ul class="nav nav-tabs" id="leftTabStrip">
 
-            <li class="active">
+            <li id="folder_tab" class="">
                 <a href="#file" class="leftTab folder"   data-toggle="tab">
                     <img class="svg" src="./assets/images/folder.svg">
                 </a>
             </li>
 
-            <li>
+            <li id="edit_tab" class="active">
                 <a href="#editor" class="leftTab edit"     data-toggle="tab">
                     <img class="svg" src="./assets/images/edit.svg">
                 </a>
             </li>
 
-            <li>
+            <li id="setting_tab">
                 <a href="#setting" class="leftTab setting"  data-toggle="tab">
                     <img class="svg" src="./assets/images/settings.svg">
                 </a>
@@ -57,7 +57,7 @@
         <div class="tab-content">
 
 
-            <div class="tab-pane active fade in" id="file">
+            <div class="tab-pane  fade " id="file">
                 <div class="teaser">
                     <div class="headline">
                         Teach logic gates and digital circuits effectively with Digital Training Studio.
@@ -122,7 +122,7 @@
 
 
 
-            <div class="tab-pane fade" id="editor">
+            <div class="tab-pane active fade in" id="editor">
                 <div class="workspace">
                     <div class="palette ">
                         <span class="title">Edit</span>
@@ -133,6 +133,8 @@
                     </div>
                     <div class="toolbar">
                         <span id="fileSave" class="ion-ios-cloud-upload-outline icon"></span>
+                        <span id="editUndo" class="ion-ios-arrow-left icon"></span>
+                        <span id="editRedo" class="ion-ios-arrow-right icon"></span>
                         <a href="https://github.com/freegroup/draw2d_js.app.digital_training_studio" target="_blank"><img  class="github" src="assets/images/octocat.svg" title="Clone project on github"></a>
 
                     </div>
@@ -145,7 +147,7 @@
 
 
             <div class="tab-pane fade" id="setting">
-                <div>CCCCThirdamuno</div>
+                <div>To be defined..</div>
             </div>
 
 
@@ -157,7 +159,7 @@
 {{for shapes}}
     <div  data-name='{{:name}}' class="mix col-md-6 pallette_item">
     <div class="glow">
-        <img data-shape="{{:name}}"   class="draw2d_droppable" height="80" src="http://freegroup.github.io/draw2d_js.shapes/assets/shapes/{{:name}}.png">
+        <img data-shape="{{:name}}" class="draw2d_droppable" src="http://freegroup.github.io/draw2d_js.shapes/assets/shapes/{{:name}}.png">
         <div>{{:basename}}</div>
         </div>
     </div>
