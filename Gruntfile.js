@@ -86,6 +86,7 @@ module.exports = function (grunt) {
                 },
                 files: {
                     "./dist/assets/stylesheets/main.css": [
+                        "./src/assets/less/contextmenu.less",
                         "./src/assets/less/tabmenu.less",
                         "./src/assets/less/tabpane_folder.less",
                         "./src/assets/less/tabpane_editor.less",
