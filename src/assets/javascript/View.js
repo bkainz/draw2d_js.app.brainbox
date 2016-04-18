@@ -15,22 +15,24 @@ var View = draw2d.Canvas.extend({
     {
         var _this = this;
 
-        this._super(id, 2000,2000);
-        this.grid =  new draw2d.policy.canvas.ShowGridEditPolicy(20);
+        this._super(id, 6000,6000);
+        this.simulate = false;
+        this.animationFrameFunc = $.proxy(this._calculate,this);
 
 
-        this.installEditPolicy( this.grid);
-
+        // register this class as event listener for the canvas
+        // CommandStack. This is required to update the state of
+        // the Undo/Redo Buttons.
+        //
+        this.getCommandStack().addEventListener(this);
 
         var router = new draw2d.layout.connection.InteractiveManhattanConnectionRouter();
         router.abortRoutingOnFirstVertexNode=false;
         var createConnection=function(sourcePort, targetPort){
             var c = new draw2d.Connection({
-                outlineColor:"#ffffff",
-                outlineStroke:1,
                 color:"#000000",
                 router: router,
-                stroke:1,
+                stroke:2,
                 radius:2
             });
             if(sourcePort) {
@@ -44,7 +46,7 @@ var View = draw2d.Canvas.extend({
         // install a Connection create policy which matches to a "circuit like"
         // connections
         //
-        this.installEditPolicy( new draw2d.policy.connection.ComposedConnectionCreatePolicy(
+        this.connectionPolicy = new draw2d.policy.connection.ComposedConnectionCreatePolicy(
                 [
                     // create a connection via Drag&Drop of ports
                     //
@@ -56,8 +58,74 @@ var View = draw2d.Canvas.extend({
                     new draw2d.policy.connection.OrthogonalConnectionCreatePolicy({
                         createConnection:createConnection
                     })
-                ])
-        );
+                ]);
+        this.installEditPolicy(this.connectionPolicy);
+
+        // show the ports of the elements only if the mouse cursor is close to the shape.
+        //
+        this.coronaFeedback = new draw2d.policy.canvas.CoronaDecorationPolicy();
+        this.installEditPolicy(this.coronaFeedback);
+
+        // nice grid decoration for the canvas paint area
+        //
+        this.grid =  new draw2d.policy.canvas.ShowGridEditPolicy(20);
+        this.installEditPolicy( this.grid);
+
+        // add some SnapTo policy for better shape/figure alignment
+        //
+        this.installEditPolicy( new draw2d.policy.canvas.SnapToGeometryEditPolicy());
+        this.installEditPolicy( new draw2d.policy.canvas.SnapToCenterEditPolicy());
+        this.installEditPolicy( new draw2d.policy.canvas.SnapToInBetweenEditPolicy());
+
+
+        // Enable Copy&Past for figures
+        //
+        Mousetrap.bind(['ctrl+c', 'command+c'], $.proxy(function (event) {
+            var primarySelection = this.getSelection().getPrimary();
+            if(primarySelection!==null){
+                this.clippboardFigure = primarySelection.clone({excludePorts:true});
+                this.clippboardFigure.translate(5,5);
+            }
+            return false;
+        },this));
+        Mousetrap.bind(['ctrl+v', 'command+v'], $.proxy(function (event) {
+            if(this.clippboardFigure!==null){
+                var cloneToAdd = this.clippboardFigure.clone({excludePorts:true});
+                var command = new draw2d.command.CommandAdd(this, cloneToAdd, cloneToAdd.getPosition());
+                this.getCommandStack().execute(command);
+                this.setCurrentSelection(cloneToAdd);
+            }
+            return false;
+        },this));
+
+
+        // add keyboard support for shape/figure movement
+        //
+        Mousetrap.bind(['left'],function (event) {
+            var diff = _this.getZoom()<0.5?0.5:1;
+            var primarySelection = _this.getSelection().getPrimary();
+            if(primarySelection!==null){ primarySelection.translate(-diff,0);}
+            return false;
+        });
+        Mousetrap.bind(['up'],function (event) {
+            var diff = _this.getZoom()<0.5?0.5:1;
+            var primarySelection = _this.getSelection().getPrimary();
+            if(primarySelection!==null){ primarySelection.translate(0,-diff);}
+            return false;
+        });
+        Mousetrap.bind(['right'],function (event) {
+            var diff = _this.getZoom()<0.5?0.5:1;
+            var primarySelection = _this.getSelection().getPrimary();
+            if(primarySelection!==null){ primarySelection.translate(diff,0);}
+            return false;
+        });
+        Mousetrap.bind(['down'],function (event) {
+            var diff = _this.getZoom()<0.5?0.5:1;
+            var primarySelection = _this.getSelection().getPrimary();
+            if(primarySelection!==null){ primarySelection.translate(0,diff);}
+            return false;
+        });
+
 
 
         $("#editUndo").on("click", function(){
@@ -67,6 +135,21 @@ var View = draw2d.Canvas.extend({
         $("#editRedo").on("click", function(){
             _this.getCommandStack().redo();
         });
+
+
+        $("#simulationStart").on("click", function(){
+            _this.simulationStart();
+            $("#simulationStart").addClass("disabled");
+            $("#simulationStop").removeClass("disabled");
+        });
+
+
+        $("#simulationStop").on("click", function(){
+            _this.simulationStop();
+            $("#simulationStop").addClass("disabled");
+            $("#simulationStart").removeClass("disabled");
+        });
+
     },
 
     /**
@@ -90,5 +173,79 @@ var View = draw2d.Canvas.extend({
         // create a command for the undo/redo support
         var command = new draw2d.command.CommandAdd(this, figure, x, y);
         this.getCommandStack().execute(command);
+    },
+
+
+    simulationStart:function()
+    {
+        this.simulate=true;
+
+        this.installEditPolicy(new SimulationEditPolicy());
+        this.uninstallEditPolicy(this.connectionPolicy);
+        this.uninstallEditPolicy(this.coronaFeedback);
+        this.commonPorts.each(function(i,p){
+            p.setVisible(false);
+        });
+        requestAnimationFrame(this.animationFrameFunc);
+    },
+
+    simulationStop:function() {
+        this.simulate = false;
+        this.commonPorts.each(function(i,p){
+            p.setVisible(true);
+        });
+        this.installEditPolicy(new draw2d.policy.canvas.BoundingboxSelectionPolicy());
+        this.installEditPolicy(this.connectionPolicy);
+        this.installEditPolicy(this.coronaFeedback);
+
+    },
+
+    _calculate:function()
+    {
+        // call the "calculate" method if given to calculate the output-port values
+        //
+        var figures = this.getFigures().clone().grep(function(f){
+            return f['calculate'];
+        });
+        figures.each(function(i,figure){
+            figure.calculate();
+        });
+
+        // transport the value from oututPort to inputPort
+        //
+        this.getLines().each(function(i,line){
+            var outPort = line.getSource();
+            var inPort  = line.getTarget();
+            inPort.setValue(outPort.getValue());
+            line.setColor(outPort.getValue()?"#ff5252":"#0000ff");
+        });
+
+        if(this.simulate===true){
+            requestAnimationFrame(this.animationFrameFunc);
+        }
+    },
+
+    /**
+     * @method
+     * Sent when an event occurs on the command stack. draw2d.command.CommandStackEvent.getDetail()
+     * can be used to identify the type of event which has occurred.
+     *
+     * @template
+     *
+     * @param {draw2d.command.CommandStackEvent} event
+     **/
+    stackChanged:function(event)
+    {
+        $("#editUndo").addClass("disabled");
+        $("#editRedo").addClass("disabled");
+
+        if(event.getStack().canUndo()) {
+            $("#editUndo").removeClass("disabled");
+        }
+
+        if(event.getStack().canRedo()) {
+            $("#editRedo").removeClass("disabled");
+        }
+
     }
 });

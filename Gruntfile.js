@@ -32,6 +32,7 @@ module.exports = function (grunt) {
                     './bower_components/draw2d/dist/patched_canvg.js',
                     './bower_components/draw2d/dist/patched_Class.js',
                     './bower_components/draw2d/dist/json2.js',
+                    './bower_components/mousetrap/mousetrap.min.js',
                     './bower_components/draw2d/dist/pathfinding-browser.min.js',
                     './bower_components/bootstrap-growl/jquery.bootstrap-growl.js',
                     './bower_components/draw2d/dist/draw2d.js'
@@ -87,6 +88,7 @@ module.exports = function (grunt) {
                 files: {
                     "./dist/assets/stylesheets/main.css": [
                         "./src/assets/less/contextmenu.less",
+                        "./src/assets/less/toolbar_editor.less",
                         "./src/assets/less/tabmenu.less",
                         "./src/assets/less/tabpane_folder.less",
                         "./src/assets/less/tabpane_editor.less",

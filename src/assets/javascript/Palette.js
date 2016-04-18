@@ -33,7 +33,10 @@ var Palette = Class.extend(
             $("#paletteElements").html(html);
 
             // Advanced filtering
-            $('#filter').on('keyup change', function () {
+            $('#filter').on('keyup change', function (event) {
+                if(event.keyCode===27){
+                    $('#filter').val("");
+                }
                 var val = this.value.toLowerCase();
                 $grid.shuffle('shuffle', function ($el, shuffle) {
                     var text = $.trim($el.data("name")).toLowerCase();
