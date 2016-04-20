@@ -1,8 +1,28 @@
+@import "colors.less";
+
 .workspace{
   .toolbar {
+    background-color:#EAEFF3;
 
-    .icon.disabled{
-      opacity:0.2;
+    .group{
+      padding-right:20px;
+    }
+
+    .icon{
+      cursor:pointer;
+      border:1px solid transparent;
+      position: relative;
+      display: inline-block;
+      text-align: center;
+      color:#777;
+      font-size:45px;
+      &:hover{
+        border:1px solid @tintColorEdit;
+      }
+      &.disabled{
+        opacity:0.2;
+        border:1px solid transparent;
+      }
     }
   }
 }

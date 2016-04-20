@@ -78,6 +78,8 @@ var View = draw2d.Canvas.extend({
         this.installEditPolicy( new draw2d.policy.canvas.SnapToInBetweenEditPolicy());
 
 
+        this.installEditPolicy(new EditEditPolicy());
+
         // Enable Copy&Past for figures
         //
         Mousetrap.bind(['ctrl+c', 'command+c'], $.proxy(function (event) {
@@ -189,12 +191,13 @@ var View = draw2d.Canvas.extend({
         requestAnimationFrame(this.animationFrameFunc);
     },
 
-    simulationStop:function() {
+    simulationStop:function()
+    {
         this.simulate = false;
         this.commonPorts.each(function(i,p){
             p.setVisible(true);
         });
-        this.installEditPolicy(new draw2d.policy.canvas.BoundingboxSelectionPolicy());
+        this.installEditPolicy(new EditEditPolicy());
         this.installEditPolicy(this.connectionPolicy);
         this.installEditPolicy(this.coronaFeedback);
 
