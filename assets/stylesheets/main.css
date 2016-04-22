@@ -141,6 +141,29 @@
   text-decoration: underline;
 }
 
+.workspace .toolbar {
+  background-color: #EAEFF3;
+}
+.workspace .toolbar .group {
+  padding-right: 20px;
+}
+.workspace .toolbar .icon {
+  cursor: pointer;
+  border: 1px solid transparent;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  color: #777;
+  font-size: 45px;
+}
+.workspace .toolbar .icon:hover {
+  border: 1px solid #1c9bab;
+}
+.workspace .toolbar .icon.disabled {
+  opacity: 0.2;
+  border: 1px solid transparent;
+}
+
 .vertical-text {
   transform: rotate(-90deg);
   white-space: nowrap;
@@ -344,28 +367,13 @@
   cursor: move;
   max-height: 80px;
 }
-.workspace .toolbar {
-  background: -moz-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
-  /* ff3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(18%, #fdb703), color-stop(19%, #fcb603), color-stop(100%, #f99811));
-  /* safari4+,chrome */
-  background: -webkit-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
-  /* safari5.1+,chrome10+ */
-  background: -o-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
-  /* opera 11.10+ */
-  background: -ms-linear-gradient(355deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
-  /* ie10+ */
-  background: linear-gradient(95deg, #fdb703 18%, #fcb603 19%, #f99811 100%);
-  /* w3c */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FDB703', endColorstr='#F99811', GradientType=1);
-  /* ie6-9 */
-  padding-left: 35px;
-}
-.workspace .toolbar .icon {
-  font-size: 45px;
-  padding: 5px;
-  cursor: pointer;
-  color: white;
+.workspace .content .canvas {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
@@ -460,10 +468,16 @@ body #layout .tab-content .tab-pane .workspace .toolbar {
   top: 0;
   left: 250px;
 }
+body #layout .tab-content .tab-pane .workspace .toolbar .icon {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  padding: 0px;
+}
 body #layout .tab-content .tab-pane .workspace .toolbar .github {
   float: right;
   padding-right: 20px;
-  height: 30px;
+  height: 60px;
 }
 body #layout .tab-content .tab-pane .workspace .content {
   position: absolute;
@@ -506,6 +520,20 @@ body #layout .tab-content .active {
 }
 .githubFileDialog .githubNavigation *[data-draw2d="false"][data-type="file"] .fa {
   color: gray;
+}
+
+#codePreviewDialog .modal-content {
+  border-radius: 0;
+}
+#codePreviewDialog .btn-primary {
+  background-color: #1c9bab;
+  border: 0;
+}
+#codePreviewDialog .prettyprint {
+  max-height: 450px;
+  max-height: 250px;
+  overflow: scroll;
+  border-radius: 0;
 }
 
 #githubFileSelectDialog .githubNavigation {
