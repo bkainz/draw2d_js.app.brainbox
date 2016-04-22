@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="./lib/ionicons/css/ionicons.min.css" />
     <link type="text/css" rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="./lib/prettify/src/prettify.css" />
     <link type="text/css" rel="stylesheet" href="./assets/stylesheets/dependencies.css" />
     <link type="text/css" rel="stylesheet" href="./assets/stylesheets/main.css" />
 
     <SCRIPT src="./assets/javascript/dependencies.js"></SCRIPT>
     <SCRIPT src="./lib/bootstrap/js/bootstrap.min.js"></SCRIPT>
+    <script src="./lib/prettify/src/prettify.js"></script>
     <SCRIPT src="./assets/javascript/app.js"></SCRIPT>
     <SCRIPT src="http://freegroup.github.io/draw2d_js.shapes/assets/shapes/index.js"></SCRIPT>
 
@@ -148,7 +150,7 @@
 
                     </div>
                     <div class="content" id="draw2dCanvasWrapper">
-                        <div class="canvas" id="draw2dCanvas">
+                        <div class="canvas" id="draw2dCanvas" oncontextmenu="return false;">
                         </div>
                     </div>
                 </div>
@@ -328,6 +330,34 @@
         </div>
     </div>
 </div>
+
+
+<!--
+  Dialog with behaviour code preview of the shapes
+ -->
+<!--
+  # GitHub File select/open dialog
+  #
+  -->
+<div id="codePreviewDialog" class="modal fade" tabindex="-1">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="media-heading">Shape Behaviour Code</h4>
+            </div>
+            <div class="modal-body">
+                <pre class="prettyprint">
+
+                </pre>
+            </div>
+            <div class="modal-footer">
+                <button class="btn  btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div style="display:none">
 

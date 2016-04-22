@@ -77,6 +77,12 @@ module.exports = function (grunt) {
                 cwd: 'bower_components/bootstrap/dist',
                 src: ['**/*'],
                 dest: 'dist/lib/bootstrap'
+            },
+            prettify:{
+                expand: true,
+                cwd: 'bower_components/google-code-prettify/',
+                src: ['**/*'],
+                dest: 'dist/lib/prettify'
             }
         },
 
@@ -95,6 +101,7 @@ module.exports = function (grunt) {
                         "./src/assets/less/tabpane_setting.less",
                         "./src/assets/less/layout.less",
                         "./src/assets/less/file_dialog.less",
+                        "./src/assets/less/code_dialog.less",
                         "./src/assets/less/file_open_dialog.less",
                         "./src/assets/less/file_save_dialog.less",
                         "./src/assets/less/file_saveas_dialog.less"

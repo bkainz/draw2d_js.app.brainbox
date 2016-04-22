@@ -162,7 +162,7 @@ var Application = Class.extend(
 
 
     loginFirstMessage:function(){
-        $.bootstrapGrowl("You must first login into GITHUB to open a file from there!", {
+        $.bootstrapGrowl("You must first login into GITHUB to use this functionality", {
             type: 'danger',
             align: 'center',
             width: 'auto',
