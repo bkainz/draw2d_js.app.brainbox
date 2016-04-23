@@ -96,8 +96,19 @@ var Application = Class.extend(
         var regexS = "[\\?&]"+name+"=([^&#]*)";
         var regex = new RegExp( regexS );
         var results = regex.exec( window.location.href );
-        if( results === null )
-            return null;
+
+        // the param isn'T part of the normal URL pattern...
+        //
+        if( results === null ) {
+            // maybe it is part in the hash.
+            //
+            regexS = "[\\#]"+name+"=([^&#]*)";
+            regex = new RegExp( regexS );
+            results = regex.exec( window.location.hash );
+            if( results === null ) {
+                return null;
+            }
+        }
 
         return results[1];
     },

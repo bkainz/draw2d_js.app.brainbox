@@ -180,7 +180,7 @@ var View = draw2d.Canvas.extend({
 
         figure.on("contextmenu", function(){
             var pathToFile   = "https://github.com/freegroup/draw2d_js.shapes/blob/master/"+ eval(figure.NAME+".github");
-            var pathToDesign = "http://freegroup.github.io/draw2d_js.app.shape_designer/?file="+ figure.NAME+".shape";
+            var pathToDesign = "http://freegroup.github.io/draw2d_js.app.shape_designer/#file="+ figure.NAME+".shape";
             $.contextMenu({
                 selector: 'body',
                 events:
