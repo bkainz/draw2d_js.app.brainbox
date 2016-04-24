@@ -365,7 +365,15 @@ var SimulationEditPolicy = draw2d.policy.canvas.ReadOnlySelectionPolicy.extend({
     onClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
     {
         if(figure!==null){
-            figure.fireEvent("click", {x:mouseX, y:mouseY, shiftKey:shiftKey, ctrlKey:ctrlKey});
+            figure.fireEvent("click", {
+                figure:figure,
+                x:mouseX,
+                y:mouseY,
+                relX: mouseX-figure.getAbsoluteX(),
+                relY: mouseY-figure.getAbsoluteY(),
+                shiftKey:shiftKey,
+                ctrlKey:ctrlKey});
+
             figure.onClick();
         }
     }

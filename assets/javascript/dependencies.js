@@ -27624,7 +27624,8 @@ draw2d.policy.canvas.WheelZoomPolicy = draw2d.policy.canvas.ZoomPolicy.extend({
      * @param zoomFactor
      * @param animated
      */
-    setZoom: function( zoomFactor, animated){
+    setZoom: function( zoomFactor, animated)
+    {
 
         // determine the center of the current canvas. We try to keep the
         // current center during zoom operation
@@ -27641,20 +27642,20 @@ draw2d.policy.canvas.WheelZoomPolicy = draw2d.policy.canvas.ZoomPolicy.extend({
             var myTweenable = new Tweenable();
             myTweenable.tween({
                 from:     { 'x': this.canvas.zoomFactor  },
-            to:       { 'x': zoomFactor },
-            duration: 300,
-            easing : "easeOutSine",
-            step: function (params) {
-                _this._zoom(params.x, centerX, centerY);
-            },
-            finish: function (state) {
-                _this.debouncedZoomedCallback();
-            }
-        });
-    }
-    else{
-        this._zoom(zoomFactor, {x:centerX, y:centerY});
-        this.debouncedZoomedCallback();
+                to:       { 'x': zoomFactor },
+                duration: 300,
+                easing : "easeOutSine",
+                step: function (params) {
+                    _this._zoom(params.x, centerX, centerY);
+                },
+                finish: function (state) {
+                    _this.debouncedZoomedCallback();
+                }
+            });
+        }
+        else{
+            this._zoom(zoomFactor, {x:centerX, y:centerY});
+            this.debouncedZoomedCallback();
         }
     },
 
@@ -28237,7 +28238,15 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
     onClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
     {
         if(figure!==null){
-            figure.fireEvent("click", {x:mouseX, y:mouseY, shiftKey:shiftKey, ctrlKey:ctrlKey});
+            figure.fireEvent("click", {
+                figure:figure,
+                x:mouseX,
+                y:mouseY,
+                relX: mouseX-figure.getAbsoluteX(),
+                relY: mouseY-figure.getAbsoluteY(),
+                shiftKey:shiftKey,
+                ctrlKey:ctrlKey});
+
             figure.onClick();
         }
     },
@@ -35864,7 +35873,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.13",
+    version : "6.1.16",
     i18n : {
         command : {
             move : "Move Shape",
@@ -37520,7 +37529,14 @@ draw2d.Canvas = Class.extend(
         //
         var figure = this.getBestFigure(x, y);
 
-        this.fireEvent("click", {figure:figure, x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
+        this.fireEvent("click", {
+            figure:figure,
+            x:x,
+            y:y,
+            relX: x-figure.getAbsoluteX(),
+            relY: y-figure.getAbsoluteY(),
+            shiftKey:shiftKey,
+            ctrlKey:ctrlKey});
 
         // forward the event to all install policies as well.
         // (since 3.0.0)
@@ -39455,7 +39471,7 @@ draw2d.Figure = Class.extend({
      * Called when a user clicks on the element.
      * 
      *      // You can alternatively register an event handler with:
-     *      figure.on("click", function(emitter){
+     *      figure.on("click", function(emitter, event){
      *          alert("user click on the figure");
      *      });
      * 
@@ -39473,7 +39489,7 @@ draw2d.Figure = Class.extend({
      * right click with the mouse.
      * 
      *      // Alternatively you register for this event with:
-     *      figure.on("contextmenu", function(emitter){
+     *      figure.on("contextmenu", function(emitter, event){
      *          alert("user press the right mouse button for a context menu");
      *      });
      * 
