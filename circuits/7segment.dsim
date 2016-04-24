@@ -1,0 +1,19 @@
+[
+  {
+    "type": "draw2d_circuit_display_7Segment",
+    "id": "0e227dcf-95a3-0f0b-877b-09027e860745",
+    "x": 295,
+    "y": 189,
+    "width": 65,
+    "height": 102,
+    "alpha": 1,
+    "angle": 0,
+    "userData": {},
+    "cssClass": "draw2d_circuit_display_7Segment",
+    "bgColor": "none",
+    "color": "#1B1B1B",
+    "stroke": 0,
+    "radius": 0,
+    "dasharray": null
+  }
+]
