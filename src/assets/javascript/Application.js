@@ -52,18 +52,9 @@ var Application = Class.extend(
         });
 
 
-        var code = this.getParam("code");
-        if (code!==null) {
-            $.getJSON(conf.githubAuthenticateCallback+code, function(data) {
-                _this.storage.connect(data.token, $.proxy(function(success){
-                    _this.loggedIn = success;
-                    if(success) {
-                        $(".notLoggedIn").removeClass("notLoggedIn");
-                    }
-                },this));
-            });
-        }
-
+        // First check if a valid token is inside the local storage
+        //
+        this.autoLogin();
 
         /*
          * Replace all SVG images with inline SVG
@@ -171,6 +162,47 @@ var Application = Class.extend(
             },this));
     },
 
+
+    autoLogin:function()
+    {
+        var _this = this;
+        var _doIt=function() {
+            var code = _this.getParam("code");
+            if (code !== null) {
+                $.getJSON(conf.githubAuthenticateCallback + code, function (data) {
+                    _this.storage.connect(data.token, function (success) {
+                        if (success) {
+                            _this.localStorage["token"] = data.token;
+                            _this.loggedIn = success;
+                            $(".notLoggedIn").removeClass("notLoggedIn");
+                        }
+                        else {
+                            _this.localStorage.removeItem("token");
+                        }
+
+                    });
+                });
+            }
+        };
+
+        var token = this.localStorage["token"];
+        if(token){
+            _this.storage.connect(token, function(success){
+                _this.loggedIn = success;
+                if(!success){
+                    _doIt();
+                }
+                else{
+                    $(".notLoggedIn").removeClass("notLoggedIn");
+                }
+            });
+        }
+        // or check if we come back from the OAuth redirect
+        //
+        else{
+            _doIt();
+        }
+    },
 
     loginFirstMessage:function(){
         $.bootstrapGrowl("You must first login into GITHUB to use this functionality", {
