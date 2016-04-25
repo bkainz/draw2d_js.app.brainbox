@@ -15,4 +15,4 @@ else{
 conf.fileSuffix  = ".dsim";
 conf.defaultUser = "freegroup";
 conf.defaultRepo = "draw2d_js.app.digital_training_studio";
-conf.defaultPath  = "circuits/";
+conf.defaultPath  = "circuits";

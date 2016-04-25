@@ -22,9 +22,12 @@ BackendStorage = Class.extend({
 
         this.octo.user.fetch(function(param0, user){
             if(user){
-                _this.currentRepository = _this.octo.repos(conf.defaultUser, conf.defaultRepo);
-                _this.currentPath = conf.defaultPath;
-                callback(true);
+               _this.octo.repos(conf.defaultUser, conf.defaultRepo).fetch().then(function(repo){
+                   _this.currentRepository = repo;
+                   _this.currentPath = conf.defaultPath;
+                    callback(true);
+               });
+
             }
             else {
                 callback(false);
