@@ -35,6 +35,7 @@ module.exports = function (grunt) {
                     './bower_components/mousetrap/mousetrap.min.js',
                     './bower_components/draw2d/dist/pathfinding-browser.min.js',
                     './bower_components/bootstrap-growl/jquery.bootstrap-growl.js',
+                    './bower_components/remarkable/dist/remarkable.min.js',
                     './bower_components/draw2d/dist/draw2d.js'
                 ],
                 dest: './dist/assets/javascript/dependencies.js'
@@ -101,6 +102,7 @@ module.exports = function (grunt) {
                         "./src/assets/less/tabpane_setting.less",
                         "./src/assets/less/layout.less",
                         "./src/assets/less/file_dialog.less",
+                        "./src/assets/less/markdown_dialog.less",
                         "./src/assets/less/code_dialog.less",
                         "./src/assets/less/file_open_dialog.less",
                         "./src/assets/less/file_save_dialog.less",

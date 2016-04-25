@@ -196,6 +196,9 @@ var View = draw2d.Canvas.extend({
                         case "design":
                             window.open(pathToDesign);
                             break;
+                        case "help":
+                            new MarkdownDialog().show( eval(figure.NAME+".markdown"));
+                            break;
                         case "bug":
                             var pathToIssues = "https://github.com/freegroup/draw2d_js.shapes/issues/new";
                             var createUrl = pathToIssues+"?title=Error in shape '"+figure.NAME+"'&body="+encodeURIComponent("I found a bug in "+figure.NAME+".\n\nError Description here...\n\n\nLinks to the code;\n[GitHub link]("+pathToFile+")\n[Designer Link]("+pathToDesign+")\n");
@@ -216,6 +219,7 @@ var View = draw2d.Canvas.extend({
                 {
                     "code":    {name: "Show Code"},
                     "design":  {name: "Open in Designer"},
+                    "help":    {name: "Help"},
                     "bug":     {name: "Report a Bug"},
                     "sep1":  "---------",
                     "delete":{name: "Delete"}
