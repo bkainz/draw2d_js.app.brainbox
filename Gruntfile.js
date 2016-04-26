@@ -177,7 +177,20 @@ module.exports = function (grunt) {
                 base: 'dist'
             },
             src: ['**']
+        },
+        run: {
+            options: {
+                // Task-specific options go here.
+            },
+            gitbook: {
+                cmd: 'gitbook',
+                args: [
+                    'build',
+                    './src/assets/help/'
+                ]
+            }
         }
+
     });
 
     // Plugin loading
@@ -188,9 +201,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-gh-pages');
     grunt.loadNpmTasks('grunt-string-replace');
+    grunt.loadNpmTasks('grunt-run');
 
     // Task definition
-    grunt.registerTask('default', ['jshint', 'concat', 'less', 'copy', 'string-replace']);
-    grunt.registerTask('publish', ['jshint', 'concat', 'less', 'copy', 'gh-pages']);
+    grunt.registerTask('default', ['jshint', 'concat', 'less', 'copy', 'run:gitbook','string-replace']);
+    grunt.registerTask('publish', ['jshint', 'concat', 'less', 'copy', 'run:gitbook','string-replace', 'gh-pages']);
+    grunt.registerTask('gitbook', ['run:gitbook']);
 };
 

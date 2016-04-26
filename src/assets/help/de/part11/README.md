@@ -42,3 +42,14 @@ den Wert 1 hat, haben die beiden Eingänge ebenfalls den Wert 1.
 
 ![UND Gatter](img01.png)
 
+
+Hier ist die einfachste `UND-Verknüpfung` gewählt worden, nämlich die 
+mit 2 Eingängen. Tatsächlich gibt es jedoch auch AND-Gatter mit mehr  
+als zwei Eingängen. Die mathematische Logik bleibt dabei aber 
+gleich: 
+
+    Nur wenn alle Eingänge den Wert 1 haben, hat der Ausgang 
+    ebenfalls den Wert 1.
+
+Die UND-Verknüpfung wird auch als **Konjunktion** bezeichnet, was so 
+viel heißt wie **Bindung**.
