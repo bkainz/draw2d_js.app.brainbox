@@ -174,8 +174,8 @@
 }
 #leftTabStrip:after {
   content: "Digital Training Studio";
-  transform: rotate(-90deg) translate(-196px, -177px);
-  font-size: 46px;
+  transform: rotate(-90deg) translate(-160px, -127px);
+  font-size: 34px;
   color: white;
   white-space: nowrap;
   opacity: 0.4;
@@ -220,6 +220,12 @@
 }
 #layout .nav-tabs li.active .setting *[fill='#000000'] {
   fill: #f47a1f;
+}
+#layout .nav-tabs li.active .gitbook *[stroke='#000000'] {
+  stroke: #008cff;
+}
+#layout .nav-tabs li.active .gitbook *[fill='#000000'] {
+  fill: #008cff;
 }
 #layout .nav-tabs li.active:hover {
   background-color: white;
@@ -520,6 +526,91 @@ body #layout .tab-content .active {
 }
 .githubFileDialog .githubNavigation *[data-draw2d="false"][data-type="file"] .fa {
   color: gray;
+}
+
+#markdownDialog .modal-dialog {
+  width: 70%;
+}
+#markdownDialog .modal-content {
+  border-radius: 0;
+}
+#markdownDialog .btn-primary {
+  background-color: #1c9bab;
+  border: 0;
+}
+#markdownDialog .html {
+  min-height: 450px;
+  max-height: 650px;
+  overflow: auto;
+}
+#markdownDialog .html table {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #666;
+  font-size: 12px;
+  text-shadow: 1px 1px 0px #fff;
+  background: #eaebec;
+  margin: 20px;
+  margin-left: 0;
+  border: #ccc 1px solid;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -moz-box-shadow: 0 1px 2px #d1d1d1;
+  -webkit-box-shadow: 0 1px 2px #d1d1d1;
+  box-shadow: 0 1px 2px #d1d1d1;
+}
+#markdownDialog .html table th {
+  padding: 21px 25px 22px 25px;
+  border-top: 1px solid #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+}
+#markdownDialog .html table th:first-child {
+  text-align: left;
+  padding-left: 20px;
+}
+#markdownDialog .html table tr:first-child th:first-child {
+  -moz-border-radius-topleft: 3px;
+  -webkit-border-top-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+#markdownDialog .html table tr:first-child th:last-child {
+  -moz-border-radius-topright: 3px;
+  -webkit-border-top-right-radius: 3px;
+  border-top-right-radius: 3px;
+}
+#markdownDialog .html table tr {
+  text-align: center;
+  padding-left: 20px;
+}
+#markdownDialog .html table tr td:first-child {
+  text-align: left;
+  padding-left: 20px;
+  border-left: 0;
+}
+#markdownDialog .html table tr td {
+  padding: 18px;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+}
+#markdownDialog .html tbody tr:nth-child(odd) {
+  background: #fafafa;
+}
+#markdownDialog .html tbody tr:nth-child(even) {
+  background: #f3f3f3;
+}
+#markdownDialog .html table tr:last-child td {
+  border-bottom: 0;
+}
+#markdownDialog .html table tr:last-child td:first-child {
+  -moz-border-radius-bottomleft: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+#markdownDialog .html table tr:last-child td:last-child {
+  -moz-border-radius-bottomright: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 #codePreviewDialog .modal-content {

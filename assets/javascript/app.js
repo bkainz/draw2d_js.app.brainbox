@@ -51,19 +51,14 @@ var Application = Class.extend(
             _this.fileSave();
         });
 
+        $("#appHelp").on("click", function(){
+            $("#leftTabStrip .gitbook").click();
+        });
 
-        var code = this.getParam("code");
-        if (code!==null) {
-            $.getJSON(conf.githubAuthenticateCallback+code, function(data) {
-                _this.storage.connect(data.token, $.proxy(function(success){
-                    _this.loggedIn = success;
-                    if(success) {
-                        $(".notLoggedIn").removeClass("notLoggedIn");
-                    }
-                },this));
-            });
-        }
 
+        // First check if a valid token is inside the local storage
+        //
+        this.autoLogin();
 
         /*
          * Replace all SVG images with inline SVG
@@ -172,6 +167,47 @@ var Application = Class.extend(
     },
 
 
+    autoLogin:function()
+    {
+        var _this = this;
+        var _doIt=function() {
+            var code = _this.getParam("code");
+            if (code !== null) {
+                $.getJSON(conf.githubAuthenticateCallback + code, function (data) {
+                    _this.storage.connect(data.token, function (success) {
+                        if (success) {
+                            _this.localStorage["token"] = data.token;
+                            _this.loggedIn = success;
+                            $(".notLoggedIn").removeClass("notLoggedIn");
+                        }
+                        else {
+                            _this.localStorage.removeItem("token");
+                        }
+
+                    });
+                });
+            }
+        };
+
+        var token = this.localStorage["token"];
+        if(token){
+            _this.storage.connect(token, function(success){
+                _this.loggedIn = success;
+                if(!success){
+                    _doIt();
+                }
+                else{
+                    $(".notLoggedIn").removeClass("notLoggedIn");
+                }
+            });
+        }
+        // or check if we come back from the OAuth redirect
+        //
+        else{
+            _doIt();
+        }
+    },
+
     loginFirstMessage:function(){
         $.bootstrapGrowl("You must first login into GITHUB to use this functionality", {
             type: 'danger',
@@ -203,27 +239,90 @@ BackendStorage = Class.extend({
 
     connect: function(token, callback)
     {
+        var _this = this;
         this.octo = new Octokat({
             token: token
         });
 
         this.octo.user.fetch(function(param0, user){
             if(user){
-                callback(true);
+               _this.octo.repos(conf.defaultUser, conf.defaultRepo).fetch().then(function(repo){
+                   _this.currentRepository = repo;
+                   _this.currentPath = conf.defaultPath;
+                    callback(true);
+               });
+
             }
             else {
                 callback(false);
             }
         });
+    },
+
+
+    load: function(repository, path, successCallback)
+    {
+        var _this = this;
+        // anonymous usage. Not authenticated
+        //
+        if (this.octo === null) {
+            var octo = new Octokat();
+            var repo = octo.repos(conf.defaultUser, conf.defaultRepo);
+            repo.contents(path).read()
+                .then(function(contents) {
+                    successCallback(contents);
+                });
+        }
+        // Authenticated usage
+        //
+        else {
+            this.octo.user.repos.fetch(function (param, repos) {
+                _this.repositories = repos;
+                _this.currentRepository = $.grep(_this.repositories, function (repo) {
+                    return repo.fullName === repository;
+                })[0];
+                _this.currentPath = _this.dirname(path);
+                _this.currentRepository
+                    .contents(path)
+                    .fetch()
+                    .then(function (info) {
+                        _this.currentFileHandle = {
+                            path: path,
+                            title: _this.basename(path),
+                            sha: info.sha,
+                            content: atob(info.content)
+                        };
+                        successCallback(_this.currentFileHandle.content);
+                    });
+            });
+        }
+    },
+
+
+    dirname: function(path)
+    {
+        if (path.length === 0)
+            return "";
+
+        var segments = path.split("/");
+        if (segments.length <= 1)
+            return "";
+        return segments.slice(0, -1).join("/");
+    },
+
+
+    basename:function(path)
+    {
+        return path.split(/[\\/]/).pop();
     }
+
 });
 ;
 var conf=null;
 if (window.location.hostname === "localhost") {
     conf = {
         githubClientId: "f2b699f46d49387556bc",
-        githubAuthenticateCallback: "http://localhost/~andherz/githubCallback.php?app=circuit&code=",
-
+        githubAuthenticateCallback: "http://localhost/~andherz/githubCallback.php?app=circuit&code="
     };
 }
 else{
@@ -233,8 +332,10 @@ else{
     };
 }
 
-conf.fileSuffix = ".shape";
-conf.repository="http://freegroup.github.io/draw2d_js.shapes/assets/shapes/index.js";
+conf.fileSuffix  = ".dsim";
+conf.defaultUser = "freegroup";
+conf.defaultRepo = "draw2d_js.app.digital_training_studio";
+conf.defaultPath  = "circuits";
 
 ;
 var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
@@ -577,6 +678,9 @@ var View = draw2d.Canvas.extend({
                         case "design":
                             window.open(pathToDesign);
                             break;
+                        case "help":
+                            new MarkdownDialog().show( eval(figure.NAME+".markdown"));
+                            break;
                         case "bug":
                             var pathToIssues = "https://github.com/freegroup/draw2d_js.shapes/issues/new";
                             var createUrl = pathToIssues+"?title=Error in shape '"+figure.NAME+"'&body="+encodeURIComponent("I found a bug in "+figure.NAME+".\n\nError Description here...\n\n\nLinks to the code;\n[GitHub link]("+pathToFile+")\n[Designer Link]("+pathToDesign+")\n");
@@ -597,6 +701,7 @@ var View = draw2d.Canvas.extend({
                 {
                     "code":    {name: "Show Code"},
                     "design":  {name: "Open in Designer"},
+                    "help":    {name: "Help"},
                     "bug":     {name: "Report a Bug"},
                     "sep1":  "---------",
                     "delete":{name: "Delete"}
@@ -649,7 +754,7 @@ var View = draw2d.Canvas.extend({
             var outPort = line.getSource();
             var inPort  = line.getTarget();
             inPort.setValue(outPort.getValue());
-            line.setColor(outPort.getValue()?"#ff5252":"#0000ff");
+            line.setColor(outPort.getValue()?"#C21B7A":"#0078F2");
         });
 
         if(this.simulate===true){
@@ -1190,4 +1295,26 @@ FileSaveAs = Class.extend({
         return segments.slice(0, -1).join("/");
     }
 
+});
+;
+var MarkdownDialog = Class.extend(
+    {
+
+        init:function(){
+            this.defaults = {
+                html:         false,        // Enable HTML tags in source
+                xhtmlOut:     false,        // Use '/' to close single tags (<br />)
+                breaks:       false,        // Convert '\n' in paragraphs into <br>
+                langPrefix:   'language-',  // CSS language prefix for fenced blocks
+                linkify:      true,         // autoconvert URL-like texts to links
+                linkTarget:   '',           // set target to open link in
+                typographer:  true          // Enable smartypants and other sweet transforms
+            };
+        },
+
+        show:function(markdown){
+            var markdownParser = new Remarkable('full', this.defaults);
+            $('#markdownDialog .html').html(markdownParser.render(markdown));
+            $('#markdownDialog').modal('show');
+        }
 });
