@@ -70,7 +70,7 @@ module.exports = function (grunt) {
             application: {
                 expand: true,
                 cwd: 'src/',
-                src: ['**/*.html'],
+                src: ['*.html'],
                 dest: 'dist/'
             },
             bootstrap:{
@@ -84,6 +84,12 @@ module.exports = function (grunt) {
                 cwd: 'bower_components/google-code-prettify/',
                 src: ['**/*'],
                 dest: 'dist/lib/prettify'
+            },
+            help:{
+                expand: true,
+                cwd: 'src/assets/help/_book/',
+                src: ['**/*'],
+                dest: 'dist/assets/help/'
             }
         },
 
@@ -119,7 +125,24 @@ module.exports = function (grunt) {
             },
 
             // when this task is run, lint the Gruntfile and all js files in src
-            build: ['Grunfile.js', 'src/**/*.js']
+            build: ['Grunfile.js', 'src/assets/javascript/**/*.js']
+        },
+
+        'string-replace': {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: 'dist/assets/help',
+                    src: '**/*.html',
+                    dest: 'dist/assets/help/'
+                }],
+                options: {
+                    replacements: [{
+                        pattern: /<a href="https:\/\/www.gitbook.com" [ :.\n\w="></\t\-äöü]*class="gitbook-link"[ :.\n\w="></\t\-äöü]*<\/a>/ig,
+                        replacement: ''
+                    }]
+                }
+            }
         },
 
         watch: {
@@ -164,9 +187,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-gh-pages');
+    grunt.loadNpmTasks('grunt-string-replace');
 
     // Task definition
-    grunt.registerTask('default', ['jshint', 'concat', 'less', 'copy']);
+    grunt.registerTask('default', ['jshint', 'concat', 'less', 'copy', 'string-replace']);
     grunt.registerTask('publish', ['jshint', 'concat', 'less', 'copy', 'gh-pages']);
 };
 

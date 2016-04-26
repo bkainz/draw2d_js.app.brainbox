@@ -272,7 +272,7 @@ var View = draw2d.Canvas.extend({
             var outPort = line.getSource();
             var inPort  = line.getTarget();
             inPort.setValue(outPort.getValue());
-            line.setColor(outPort.getValue()?"#ff5252":"#0000ff");
+            line.setColor(outPort.getValue()?"#C21B7A":"#0078F2");
         });
 
         if(this.simulate===true){

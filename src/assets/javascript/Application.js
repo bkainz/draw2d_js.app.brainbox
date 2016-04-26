@@ -51,6 +51,10 @@ var Application = Class.extend(
             _this.fileSave();
         });
 
+        $("#appHelp").on("click", function(){
+            $("#leftTabStrip .gitbook").click();
+        });
+
 
         // First check if a valid token is inside the local storage
         //

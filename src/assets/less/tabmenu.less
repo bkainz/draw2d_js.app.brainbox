@@ -1,6 +1,7 @@
 @import "colors.less";
 
-.vertical-text {
+.vertical-text
+{
   transform: rotate(-90deg);
   white-space: nowrap;
   top: 200px;
@@ -9,17 +10,19 @@
   color:white;
 }
 
-#leftTabStrip:after {
+#leftTabStrip:after
+{
   content: "Digital Training Studio";
-  transform: rotate(-90deg) translate(-196px, -177px);
-  font-size: 46px;
+  transform: rotate(-90deg) translate(-160px, -127px);
+  font-size: 34px;
   color: white;
   white-space: nowrap;
   opacity: 0.4;
 }
 
 
-#layout {
+#layout
+{
   .nav-tabs {
     background-color: #8F98A7;
 
@@ -69,6 +72,14 @@
         }
         *[fill='#000000'] {
           fill: @tintColorSetting;
+        }
+      }
+      .gitbook {
+        *[stroke='#000000'] {
+          stroke: @tintColorHelp;
+        }
+        *[fill='#000000'] {
+          fill: @tintColorHelp;
         }
       }
       &:hover {
