@@ -16,4 +16,19 @@
     * [XNOR-Gatter](part17/README.md)
 
 * [Gatter mit mehrer Eingängen](part20/README.md)
+    * [AND mit 3 Eingängen](part21/README.md)
+    * [NOR mit 3 Eingängen](part22/README.md)
+    * [Kombischaltungen](part23/README.md)
+
+* [Taktgeber](part30/README.md)
+
+* [FlipFlops](part40/README.md)
+    * [RS-FlipFlop](part41/README.md)
+    * [JK-FlipFlop](part42/README.md)
+    * [Dualzähler](part43/README.md)
+    * [Dualzähler für beliebige Zahlenreihen](part44/README.md)
+    * [D-FlipFlop](part45/README.md)
+
+
+
 

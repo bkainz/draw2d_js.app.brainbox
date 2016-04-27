@@ -204,8 +204,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-run');
 
     // Task definition
-    grunt.registerTask('default', ['jshint', 'concat', 'less', 'copy', 'run:gitbook','string-replace']);
-    grunt.registerTask('publish', ['jshint', 'concat', 'less', 'copy', 'run:gitbook','string-replace', 'gh-pages']);
+    grunt.registerTask('default', ['jshint', 'concat', 'less', 'run:gitbook', 'copy', 'string-replace']);
+    grunt.registerTask('publish', ['jshint', 'concat', 'less', 'run:gitbook', 'copy', 'string-replace', 'gh-pages']);
     grunt.registerTask('gitbook', ['run:gitbook']);
 };
 
