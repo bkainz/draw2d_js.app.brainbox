@@ -3,6 +3,7 @@
 In der Schwachstromelektronik werden heute die beiden Bereiche 
 Analog-Technik und Digital-Technik unterschieden.
 
+
 Ein einfaches Beispiel für diese beiden Begriffe stellt ein 
 gewöhnlicher Spannungsmesser dar. Wenn man das Messgerät wie in 
 *Abb. 1* an eine regelbare Spannungsquelle anschließt, so vergrößert 
