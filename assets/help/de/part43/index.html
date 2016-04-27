@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Analog-Technik und Digital-Technik | Einleitung</title>
+        <title>Dualzähler | Einleitung</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../part02/index.html" />
+    <link rel="next" href="../part44/index.html" />
     
     
-    <link rel="prev" href="../index.html" />
+    <link rel="prev" href="../part42/index.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="1"
-        data-chapter-title="Analog-Technik und Digital-Technik"
-        data-filepath="part01/README.md"
+        data-level="7.3"
+        data-chapter-title="Dualzähler"
+        data-filepath="part43/README.md"
         data-basepath=".."
         data-revision="Wed Apr 27 2016 14:19:55 GMT+0200 (CEST)"
         data-innerlanguage="de">
@@ -82,7 +82,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="part01/index.html">
+        <li class="chapter " data-level="1" data-path="part01/index.html">
             
                 
                     <a href="../part01/index.html">
@@ -380,7 +380,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7.3" data-path="part43/index.html">
+        <li class="chapter active" data-level="7.3" data-path="part43/index.html">
             
                 
                     <a href="../part43/index.html">
@@ -461,50 +461,13 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="analogtechnik-und-digitaltechnik">Analog-Technik und Digital-Technik</h1>
-<p>In der Schwachstromelektronik werden heute die beiden Bereiche 
-Analog-Technik und Digital-Technik unterschieden.</p>
-<p>Ein einfaches Beispiel f&#xFC;r diese beiden Begriffe stellt ein 
-gew&#xF6;hnlicher Spannungsmesser dar. Wenn man das Messger&#xE4;t wie in 
-<em>Abb. 1</em> an eine regelbare Spannungsquelle anschlie&#xDF;t, so vergr&#xF6;&#xDF;ert 
-sich der Zeigerausschlag mit zunehmender Spannung. Dabei wird einem 
-bestimmten Spannungswert genau eine Zeigerstellung zugeordnet. Dieser 
-gleichm&#xE4;&#xDF;ige Anstieg oder Abfall des Zeigers wird <strong>analoges Verhalten</strong>
-genannt.</p>
-<p><img src="image01.png" alt="Local Image"></p>
-<p>Dabei ist jeder Zwischenwert der Spannung innerhalb des Messbereiches 
-des Spannungsger&#xE4;tes m&#xF6;glich. Der Ausschlag des Messger&#xE4;tes entspricht
-dabei der angelegten Spannung, oder anders ausgedr&#xFC;ckt: die angelegte 
-Spannung ist analog zum Zeigerausschlag.</p>
-<p><em>Abb. 2</em> zeigt ein typisches Diagramm f&#xFC;r analoges Verhalten. Hier ist 
-der Zeigerausschlag des Messger&#xE4;tes in Abh&#xE4;ngigkeit der Zeit t 
-dargestellt. Es ist deutlich zu sehen, dass jeder beliebige 
-Zwischenwert des Ausschlags eingestellt werden kann.</p>
-<p><img src="image02.png" alt="Local Image"></p>
-<p>Bei der <strong>Digital-Technik</strong> dagegen wird die Information, die bei der 
-Analog-Technik durch den Kurvenverlauf gegeben ist (Zeigerausschlag), 
-durch das Ablesen auf der Skala bestimmt. Man ordnet eben jedem 
-Zeigerstand einen bestimmten Spannungswert zu. Das ist bei fast allen 
-Messger&#xE4;ten durch die Skala von vornherein schon gegeben. Indem man 
-nun die Skalenstriche abz&#xE4;hlt, setzt man das analoge Signal 
-(Ausschlag des Zeigers) in ein digitales Signal (Anzahl der Striche) 
-um. </p>
-<p><strong>Dabei hat die Digital-Technik gegen&#xFC;ber der Analog-Technik einen gro&#xDF;en 
-Vorteil</strong>. W&#xE4;hrend bei analogen Schaltungen der Spannungsbereich meist 
-genau stimmen muss, braucht man in digitalen Schaltungen nur den 
-richtigen Spannungsbereich einzuhalten. Dies bringt eine <strong>erh&#xF6;hte 
-Stabilit&#xE4;t</strong> der digitalen Schaltungen mit sich.</p>
-<p>Die beiden Spannungsbereiche, die in der Digital-Technik verwendet 
-werden, hei&#xDF;en <code>L-Bereich</code> (von engl.: low = niedrig) und <code>H-Bereich</code> 
-(von engl.: high = hoch). Hier werden f&#xFC;r die Beispiele eine 
-Versorgungsspannung <code>Uv = 5V</code> und die beiden Spannungsbereiche mit 
-<code>0V bis +0,5V</code> f&#xFC;r <code>L</code> (low) und <code>+2,5V bis +5V</code> f&#xFC;r <code>H</code> (high) festgelegt, 
-da diese Spannungsbereiche au&#xDF;erdem gerade f&#xFC;r TTL-Schaltungen 
-(TTL = Transistor-Transistor-Logik) oft ben&#xF6;tigt werden.</p>
-<p>In der mathematischen Beschreibung von digitalen Schaltungen wird der 
-L-Bereich mit 0 und der H-Bereich mit 1 beschrieben. Dies ist unter 
-anderem f&#xFC;r Wahrheitstabellen und <em>KV-Tafeln</em>, die in anderen Kapiteln 
-zur Anwendung kommen, sehr von Vorteil.</p>
+                        <h1 id="dualz&#xE4;hler">Dualz&#xE4;hler</h1>
+<p>Aus dem JK-Flipflop l&#xE4;sst sich nun eine in der Technik oft gebrauchte Z&#xE4;hlerschaltung realisieren. Dabei werden oft die Eing&#xE4;nge S und R neben den J- und K-Eing&#xE4;ngen benutzt. Der Einfachheit halber werden hier nur die J- und K-Eing&#xE4;nge sowie der R-Eingang verwendet. Nat&#xFC;rlich wird auch der Takteingang T angeschlossen.
+Wenn man an ein JK-Flipflop einen Takt T anlegt, so hat der Ausgang Q0 bei jeder negativen Taktflanke eine Wert&#xE4;nderung, also einen dauernden Wechsel zwischen 1 und 0. Abb. 37 zeigt den zeitlichen Verlauf des Ausgangs Q0 in Abh&#xE4;ngigkeit vom angelegten Takt T. Jetzt wird an das zweite JK-Flipflop das Ausgangssignal Q0 angeschlossen. Somit bestimmt der Ausgang des ersten Flipflops den Takt des zweiten Flipflops. Das Anschlussbild ist in Abb. 36 zu sehen.
+Wie man im Spannungsdiagramm der Schaltung erkennt, hat der Ausgang Q1 die halbe Taktfrequenz wie Q0. Dies beruht wiederum darauf, dass eine Umschaltung des Flipflops nur bei einer negativen Taktflanke stattfindet. Die Schaltzust&#xE4;nde der beiden Flipflops entsprechen, wie unter dem Diagramm aufgez&#xE4;hlt, dem dualen Z&#xE4;hlerstand. Der Z&#xE4;hler kann also nur bis zur Zahl 11 des Dualsystems z&#xE4;hlen. Das entspricht der dezimalen Zahl 3. Danach kehrt er automatisch wieder zur Anfangszahl 00 zur&#xFC;ck.</p>
+<p><img src="img01.png" alt="schaltung"></p>
+<p>Wenn nun der R&#xFC;cksetzeingang R, der oftmals auch Reset-Eingang genannt wird, auf Masse gelegt wird, erscheint auf jeden Fall der Wert 0 an beiden Ausg&#xE4;ngen. Dabei ist der Takt nicht von Bedeutung, ebenso die Schaltzust&#xE4;nde der beiden Ausg&#xE4;nge Q0 und Q1. Im folgenden Diagramm wird kurz nach dem zweiten Erscheinen der Zahl 11 (dual) der Reset-Eingang aktiviert. Man sieht, dass die beiden Ausg&#xE4;nge sofort den Wert 0 annehmen, obwohl keine negative Flanke vorliegt. Das wurde ja bereits im letzten Abschnitt n&#xE4;her erl&#xE4;utert. Dieser Sachverhalt wird nun bei Z&#xE4;hlern angewandt, die bis zu einer bestimmten Zahl z&#xE4;hlen sollen, die durch eine einfache Aneinanderreihung von Flipflops nicht erreicht wird. Beispielsweise k&#xF6;nnte man mit der in Abb. 36 dargestellten Schaltung einen Z&#xE4;hler bauen, der nach der Zahl 2, also dual 10, auf 0 zur&#xFC;ckspringt. Genaueres dar&#xFC;ber wird im n&#xE4;chsten Abschnitt behandelt.</p>
+<p><img src="img02.png" alt="diagramm"></p>
 
                     
                     </section>
@@ -515,10 +478,10 @@ zur Anwendung kommen, sehr von Vorteil.</p>
         </div>
 
         
-        <a href="../index.html" class="navigation navigation-prev " aria-label="Previous page: Einleitung"><i class="fa fa-angle-left"></i></a>
+        <a href="../part42/index.html" class="navigation navigation-prev " aria-label="Previous page: JK-FlipFlop"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../part02/index.html" class="navigation navigation-next " aria-label="Next page: Das Dualsystem"><i class="fa fa-angle-right"></i></a>
+        <a href="../part44/index.html" class="navigation navigation-next " aria-label="Next page: Dualzähler für beliebige Zahlenreihen"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

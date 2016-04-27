@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Analog-Technik und Digital-Technik | Einleitung</title>
+        <title>RS-FlipFlop | Einleitung</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../part02/index.html" />
+    <link rel="next" href="../part42/index.html" />
     
     
-    <link rel="prev" href="../index.html" />
+    <link rel="prev" href="../part40/index.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="1"
-        data-chapter-title="Analog-Technik und Digital-Technik"
-        data-filepath="part01/README.md"
+        data-level="7.1"
+        data-chapter-title="RS-FlipFlop"
+        data-filepath="part41/README.md"
         data-basepath=".."
         data-revision="Wed Apr 27 2016 14:19:55 GMT+0200 (CEST)"
         data-innerlanguage="de">
@@ -82,7 +82,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="part01/index.html">
+        <li class="chapter " data-level="1" data-path="part01/index.html">
             
                 
                     <a href="../part01/index.html">
@@ -350,7 +350,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="7.1" data-path="part41/index.html">
+        <li class="chapter active" data-level="7.1" data-path="part41/index.html">
             
                 
                     <a href="../part41/index.html">
@@ -461,50 +461,14 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="analogtechnik-und-digitaltechnik">Analog-Technik und Digital-Technik</h1>
-<p>In der Schwachstromelektronik werden heute die beiden Bereiche 
-Analog-Technik und Digital-Technik unterschieden.</p>
-<p>Ein einfaches Beispiel f&#xFC;r diese beiden Begriffe stellt ein 
-gew&#xF6;hnlicher Spannungsmesser dar. Wenn man das Messger&#xE4;t wie in 
-<em>Abb. 1</em> an eine regelbare Spannungsquelle anschlie&#xDF;t, so vergr&#xF6;&#xDF;ert 
-sich der Zeigerausschlag mit zunehmender Spannung. Dabei wird einem 
-bestimmten Spannungswert genau eine Zeigerstellung zugeordnet. Dieser 
-gleichm&#xE4;&#xDF;ige Anstieg oder Abfall des Zeigers wird <strong>analoges Verhalten</strong>
-genannt.</p>
-<p><img src="image01.png" alt="Local Image"></p>
-<p>Dabei ist jeder Zwischenwert der Spannung innerhalb des Messbereiches 
-des Spannungsger&#xE4;tes m&#xF6;glich. Der Ausschlag des Messger&#xE4;tes entspricht
-dabei der angelegten Spannung, oder anders ausgedr&#xFC;ckt: die angelegte 
-Spannung ist analog zum Zeigerausschlag.</p>
-<p><em>Abb. 2</em> zeigt ein typisches Diagramm f&#xFC;r analoges Verhalten. Hier ist 
-der Zeigerausschlag des Messger&#xE4;tes in Abh&#xE4;ngigkeit der Zeit t 
-dargestellt. Es ist deutlich zu sehen, dass jeder beliebige 
-Zwischenwert des Ausschlags eingestellt werden kann.</p>
-<p><img src="image02.png" alt="Local Image"></p>
-<p>Bei der <strong>Digital-Technik</strong> dagegen wird die Information, die bei der 
-Analog-Technik durch den Kurvenverlauf gegeben ist (Zeigerausschlag), 
-durch das Ablesen auf der Skala bestimmt. Man ordnet eben jedem 
-Zeigerstand einen bestimmten Spannungswert zu. Das ist bei fast allen 
-Messger&#xE4;ten durch die Skala von vornherein schon gegeben. Indem man 
-nun die Skalenstriche abz&#xE4;hlt, setzt man das analoge Signal 
-(Ausschlag des Zeigers) in ein digitales Signal (Anzahl der Striche) 
-um. </p>
-<p><strong>Dabei hat die Digital-Technik gegen&#xFC;ber der Analog-Technik einen gro&#xDF;en 
-Vorteil</strong>. W&#xE4;hrend bei analogen Schaltungen der Spannungsbereich meist 
-genau stimmen muss, braucht man in digitalen Schaltungen nur den 
-richtigen Spannungsbereich einzuhalten. Dies bringt eine <strong>erh&#xF6;hte 
-Stabilit&#xE4;t</strong> der digitalen Schaltungen mit sich.</p>
-<p>Die beiden Spannungsbereiche, die in der Digital-Technik verwendet 
-werden, hei&#xDF;en <code>L-Bereich</code> (von engl.: low = niedrig) und <code>H-Bereich</code> 
-(von engl.: high = hoch). Hier werden f&#xFC;r die Beispiele eine 
-Versorgungsspannung <code>Uv = 5V</code> und die beiden Spannungsbereiche mit 
-<code>0V bis +0,5V</code> f&#xFC;r <code>L</code> (low) und <code>+2,5V bis +5V</code> f&#xFC;r <code>H</code> (high) festgelegt, 
-da diese Spannungsbereiche au&#xDF;erdem gerade f&#xFC;r TTL-Schaltungen 
-(TTL = Transistor-Transistor-Logik) oft ben&#xF6;tigt werden.</p>
-<p>In der mathematischen Beschreibung von digitalen Schaltungen wird der 
-L-Bereich mit 0 und der H-Bereich mit 1 beschrieben. Dies ist unter 
-anderem f&#xFC;r Wahrheitstabellen und <em>KV-Tafeln</em>, die in anderen Kapiteln 
-zur Anwendung kommen, sehr von Vorteil.</p>
+                        <h1 id="rsflipflop-setzspeicher">RS-Flipflop (Setzspeicher)</h1>
+<p>Dieses Bauteil ist das einfachste Speicherglied der Digitaltechnik. Es kann einen bestimmten Wert &#xFC;ber eine gewisse Zeit speichern. Am besten l&#xE4;sst sich das Verhalten an der NAND-Schaltung erkl&#xE4;ren. Allerdings ist diese Schaltung nur eine Prinzipschaltung, die z.B. nicht das &#x201C;Warum&#x201C; der Speicherung erkl&#xE4;rt.</p>
+<p><img src="img01.png" alt="schaltung"></p>
+<p>Setzt man in dieser Schaltung den S-Eingang (&#x201C;Setz-Eingang&#x201C;) mit dem Taster auf 0, so hat der Ausgang A den Wert 1. Wird dagegen der untere Taster bet&#xE4;tigt und somit der R-Eingang (&#x201C;R&#xFC;cksetz-Eingang&#x201C;) auf den Wert 0 gelegt, so erscheint am Ausgang A der Wert 0. Der komplement&#xE4;re Ausgang &#xAC;A hat immer den entgegengesetzten Wert von A. Das Wesentliche dieser Schaltung ist aber, dass durch Bet&#xE4;tigen von z.B. Taster S der Wert 1 am Ausgang &#x201C;gespeichert&#x201C; bleibt &#x2013; auch nach dem Loslassen der Taste. Und zwar so lange, bis durch Bet&#xE4;tigen des Tasters R der Ausgang auf den Wert 0 gesetzt wird. Dabei spielt es keine Rolle, ob der Taster bei S noch gedr&#xFC;ckt ist oder nicht. Abb. 30 verdeutlicht das Verhalten der Schaltung. Abb. 31 zeigt das Schaltsymbol f&#xFC;r RS-Flipflops.</p>
+<p><img src="img02.png" alt="schaltung"></p>
+<p><img src="img03.png" alt="symbol"></p>
+<p>Den Setzspeicher findet man als IC meist nicht als einzelne Schaltung. Vielmehr haben andere Flipflops wie z.B. das JK-Flipflop das RS-Flipflop integriert. Durch geeignete Beschaltung ist es aber nicht schwer, solch ein Flipflop als RS-Flipflop zu betreiben. In manchen Datenb&#xFC;chern und Applikationen sind die beiden Eing&#xE4;nge mit <code>&#xAC;R</code> und <code>&#xAC;S</code> bezeichnet. Das bedeutet nichts anderes, als eine Unterstreichung der Tatsache, dass z.B. das Setzen nicht durch <code>S=1</code>sondern durch <code>S=0</code> erfolgt. Und das ist ja nichts anderes als <code>&#xAC;S=1</code>.
+Um nun in einem &#xDC;bungsaufbau den Wert am Ausgang sofort zu erkennen, empfiehlt es sich, eine Leuchtdiode (LED) dazuzuschalten. Leuchtet sie, so hat der Ausgang den Wert 1. Der komplement&#xE4;re Ausgang <code>&#xAC;A</code> hat somit den Wert 0. Ist die LED dunkel, so hat <code>A</code> den Wert 0 und <code>&#xAC;A</code> den Wert 1.</p>
 
                     
                     </section>
@@ -515,10 +479,10 @@ zur Anwendung kommen, sehr von Vorteil.</p>
         </div>
 
         
-        <a href="../index.html" class="navigation navigation-prev " aria-label="Previous page: Einleitung"><i class="fa fa-angle-left"></i></a>
+        <a href="../part40/index.html" class="navigation navigation-prev " aria-label="Previous page: FlipFlops"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../part02/index.html" class="navigation navigation-next " aria-label="Next page: Das Dualsystem"><i class="fa fa-angle-right"></i></a>
+        <a href="../part42/index.html" class="navigation navigation-next " aria-label="Next page: JK-FlipFlop"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

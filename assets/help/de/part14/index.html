@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Analog-Technik und Digital-Technik | Einleitung</title>
+        <title>NAND-Gatter | Einleitung</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../part02/index.html" />
+    <link rel="next" href="../part15/index.html" />
     
     
-    <link rel="prev" href="../index.html" />
+    <link rel="prev" href="../part13/index.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="1"
-        data-chapter-title="Analog-Technik und Digital-Technik"
-        data-filepath="part01/README.md"
+        data-level="4.4"
+        data-chapter-title="NAND-Gatter"
+        data-filepath="part14/README.md"
         data-basepath=".."
         data-revision="Wed Apr 27 2016 14:19:55 GMT+0200 (CEST)"
         data-innerlanguage="de">
@@ -82,7 +82,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="part01/index.html">
+        <li class="chapter " data-level="1" data-path="part01/index.html">
             
                 
                     <a href="../part01/index.html">
@@ -188,7 +188,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.4" data-path="part14/index.html">
+        <li class="chapter active" data-level="4.4" data-path="part14/index.html">
             
                 
                     <a href="../part14/index.html">
@@ -461,50 +461,52 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="analogtechnik-und-digitaltechnik">Analog-Technik und Digital-Technik</h1>
-<p>In der Schwachstromelektronik werden heute die beiden Bereiche 
-Analog-Technik und Digital-Technik unterschieden.</p>
-<p>Ein einfaches Beispiel f&#xFC;r diese beiden Begriffe stellt ein 
-gew&#xF6;hnlicher Spannungsmesser dar. Wenn man das Messger&#xE4;t wie in 
-<em>Abb. 1</em> an eine regelbare Spannungsquelle anschlie&#xDF;t, so vergr&#xF6;&#xDF;ert 
-sich der Zeigerausschlag mit zunehmender Spannung. Dabei wird einem 
-bestimmten Spannungswert genau eine Zeigerstellung zugeordnet. Dieser 
-gleichm&#xE4;&#xDF;ige Anstieg oder Abfall des Zeigers wird <strong>analoges Verhalten</strong>
-genannt.</p>
-<p><img src="image01.png" alt="Local Image"></p>
-<p>Dabei ist jeder Zwischenwert der Spannung innerhalb des Messbereiches 
-des Spannungsger&#xE4;tes m&#xF6;glich. Der Ausschlag des Messger&#xE4;tes entspricht
-dabei der angelegten Spannung, oder anders ausgedr&#xFC;ckt: die angelegte 
-Spannung ist analog zum Zeigerausschlag.</p>
-<p><em>Abb. 2</em> zeigt ein typisches Diagramm f&#xFC;r analoges Verhalten. Hier ist 
-der Zeigerausschlag des Messger&#xE4;tes in Abh&#xE4;ngigkeit der Zeit t 
-dargestellt. Es ist deutlich zu sehen, dass jeder beliebige 
-Zwischenwert des Ausschlags eingestellt werden kann.</p>
-<p><img src="image02.png" alt="Local Image"></p>
-<p>Bei der <strong>Digital-Technik</strong> dagegen wird die Information, die bei der 
-Analog-Technik durch den Kurvenverlauf gegeben ist (Zeigerausschlag), 
-durch das Ablesen auf der Skala bestimmt. Man ordnet eben jedem 
-Zeigerstand einen bestimmten Spannungswert zu. Das ist bei fast allen 
-Messger&#xE4;ten durch die Skala von vornherein schon gegeben. Indem man 
-nun die Skalenstriche abz&#xE4;hlt, setzt man das analoge Signal 
-(Ausschlag des Zeigers) in ein digitales Signal (Anzahl der Striche) 
-um. </p>
-<p><strong>Dabei hat die Digital-Technik gegen&#xFC;ber der Analog-Technik einen gro&#xDF;en 
-Vorteil</strong>. W&#xE4;hrend bei analogen Schaltungen der Spannungsbereich meist 
-genau stimmen muss, braucht man in digitalen Schaltungen nur den 
-richtigen Spannungsbereich einzuhalten. Dies bringt eine <strong>erh&#xF6;hte 
-Stabilit&#xE4;t</strong> der digitalen Schaltungen mit sich.</p>
-<p>Die beiden Spannungsbereiche, die in der Digital-Technik verwendet 
-werden, hei&#xDF;en <code>L-Bereich</code> (von engl.: low = niedrig) und <code>H-Bereich</code> 
-(von engl.: high = hoch). Hier werden f&#xFC;r die Beispiele eine 
-Versorgungsspannung <code>Uv = 5V</code> und die beiden Spannungsbereiche mit 
-<code>0V bis +0,5V</code> f&#xFC;r <code>L</code> (low) und <code>+2,5V bis +5V</code> f&#xFC;r <code>H</code> (high) festgelegt, 
-da diese Spannungsbereiche au&#xDF;erdem gerade f&#xFC;r TTL-Schaltungen 
-(TTL = Transistor-Transistor-Logik) oft ben&#xF6;tigt werden.</p>
-<p>In der mathematischen Beschreibung von digitalen Schaltungen wird der 
-L-Bereich mit 0 und der H-Bereich mit 1 beschrieben. Dies ist unter 
-anderem f&#xFC;r Wahrheitstabellen und <em>KV-Tafeln</em>, die in anderen Kapiteln 
-zur Anwendung kommen, sehr von Vorteil.</p>
+                        <style>
+pre{
+ text-align:center;
+ padding:20px;
+}
+</style>
+
+
+<h1 id="nandgatter">NAND-Gatter</h1>
+<p>Gebildet aus den englischen Worten <strong>not and</strong>, also <strong>nicht und</strong>. Daraus l&#xE4;sst sich bereits schlie&#xDF;en, dass die Verkn&#xFC;pfung negiert sein muss. Die mathematische Gleichung best&#xE4;tigt dies:</p>
+<pre><code>     A = &#xAC;(E1 &#x2227; E2) (sprich: &#x201C;E1 und E2 negiert&#x201C;)
+</code></pre><p>Der Ausgang <code>A</code> hat immer den Wert 1, au&#xDF;er wenn beide Eing&#xE4;nge den Wert 1 haben. Anhand der Logik-Tafel l&#xE4;sst sich auch erkennen, dass die NAND-Funktion an ihrem Ausgang genau das entgegengesetzte Signal hat wie das AND-Gatter. </p>
+<h3 id="logiktabelle">Logiktabelle</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">E1</th>
+<th style="text-align:center">E2</th>
+<th style="text-align:center">A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center"><strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="symbol">Symbol</h3>
+<p><img src="img01.png" alt="ODER Gatter"></p>
 
                     
                     </section>
@@ -515,10 +517,10 @@ zur Anwendung kommen, sehr von Vorteil.</p>
         </div>
 
         
-        <a href="../index.html" class="navigation navigation-prev " aria-label="Previous page: Einleitung"><i class="fa fa-angle-left"></i></a>
+        <a href="../part13/index.html" class="navigation navigation-prev " aria-label="Previous page: Inverter"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../part02/index.html" class="navigation navigation-next " aria-label="Next page: Das Dualsystem"><i class="fa fa-angle-right"></i></a>
+        <a href="../part15/index.html" class="navigation navigation-next " aria-label="Next page: NOR-Gatter"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

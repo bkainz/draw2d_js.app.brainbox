@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Analog-Technik und Digital-Technik | Einleitung</title>
+        <title>D-FlipFlop | Einleitung</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,8 @@
         
     
     
-    <link rel="next" href="../part02/index.html" />
     
-    
-    <link rel="prev" href="../index.html" />
+    <link rel="prev" href="../part44/index.html" />
     
 
         
@@ -49,9 +47,9 @@
         
         
     <div class="book"
-        data-level="1"
-        data-chapter-title="Analog-Technik und Digital-Technik"
-        data-filepath="part01/README.md"
+        data-level="7.5"
+        data-chapter-title="D-FlipFlop"
+        data-filepath="part45/README.md"
         data-basepath=".."
         data-revision="Wed Apr 27 2016 14:19:55 GMT+0200 (CEST)"
         data-innerlanguage="de">
@@ -82,7 +80,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="part01/index.html">
+        <li class="chapter " data-level="1" data-path="part01/index.html">
             
                 
                     <a href="../part01/index.html">
@@ -410,7 +408,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7.5" data-path="part45/index.html">
+        <li class="chapter active" data-level="7.5" data-path="part45/index.html">
             
                 
                     <a href="../part45/index.html">
@@ -461,50 +459,13 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="analogtechnik-und-digitaltechnik">Analog-Technik und Digital-Technik</h1>
-<p>In der Schwachstromelektronik werden heute die beiden Bereiche 
-Analog-Technik und Digital-Technik unterschieden.</p>
-<p>Ein einfaches Beispiel f&#xFC;r diese beiden Begriffe stellt ein 
-gew&#xF6;hnlicher Spannungsmesser dar. Wenn man das Messger&#xE4;t wie in 
-<em>Abb. 1</em> an eine regelbare Spannungsquelle anschlie&#xDF;t, so vergr&#xF6;&#xDF;ert 
-sich der Zeigerausschlag mit zunehmender Spannung. Dabei wird einem 
-bestimmten Spannungswert genau eine Zeigerstellung zugeordnet. Dieser 
-gleichm&#xE4;&#xDF;ige Anstieg oder Abfall des Zeigers wird <strong>analoges Verhalten</strong>
-genannt.</p>
-<p><img src="image01.png" alt="Local Image"></p>
-<p>Dabei ist jeder Zwischenwert der Spannung innerhalb des Messbereiches 
-des Spannungsger&#xE4;tes m&#xF6;glich. Der Ausschlag des Messger&#xE4;tes entspricht
-dabei der angelegten Spannung, oder anders ausgedr&#xFC;ckt: die angelegte 
-Spannung ist analog zum Zeigerausschlag.</p>
-<p><em>Abb. 2</em> zeigt ein typisches Diagramm f&#xFC;r analoges Verhalten. Hier ist 
-der Zeigerausschlag des Messger&#xE4;tes in Abh&#xE4;ngigkeit der Zeit t 
-dargestellt. Es ist deutlich zu sehen, dass jeder beliebige 
-Zwischenwert des Ausschlags eingestellt werden kann.</p>
-<p><img src="image02.png" alt="Local Image"></p>
-<p>Bei der <strong>Digital-Technik</strong> dagegen wird die Information, die bei der 
-Analog-Technik durch den Kurvenverlauf gegeben ist (Zeigerausschlag), 
-durch das Ablesen auf der Skala bestimmt. Man ordnet eben jedem 
-Zeigerstand einen bestimmten Spannungswert zu. Das ist bei fast allen 
-Messger&#xE4;ten durch die Skala von vornherein schon gegeben. Indem man 
-nun die Skalenstriche abz&#xE4;hlt, setzt man das analoge Signal 
-(Ausschlag des Zeigers) in ein digitales Signal (Anzahl der Striche) 
-um. </p>
-<p><strong>Dabei hat die Digital-Technik gegen&#xFC;ber der Analog-Technik einen gro&#xDF;en 
-Vorteil</strong>. W&#xE4;hrend bei analogen Schaltungen der Spannungsbereich meist 
-genau stimmen muss, braucht man in digitalen Schaltungen nur den 
-richtigen Spannungsbereich einzuhalten. Dies bringt eine <strong>erh&#xF6;hte 
-Stabilit&#xE4;t</strong> der digitalen Schaltungen mit sich.</p>
-<p>Die beiden Spannungsbereiche, die in der Digital-Technik verwendet 
-werden, hei&#xDF;en <code>L-Bereich</code> (von engl.: low = niedrig) und <code>H-Bereich</code> 
-(von engl.: high = hoch). Hier werden f&#xFC;r die Beispiele eine 
-Versorgungsspannung <code>Uv = 5V</code> und die beiden Spannungsbereiche mit 
-<code>0V bis +0,5V</code> f&#xFC;r <code>L</code> (low) und <code>+2,5V bis +5V</code> f&#xFC;r <code>H</code> (high) festgelegt, 
-da diese Spannungsbereiche au&#xDF;erdem gerade f&#xFC;r TTL-Schaltungen 
-(TTL = Transistor-Transistor-Logik) oft ben&#xF6;tigt werden.</p>
-<p>In der mathematischen Beschreibung von digitalen Schaltungen wird der 
-L-Bereich mit 0 und der H-Bereich mit 1 beschrieben. Dies ist unter 
-anderem f&#xFC;r Wahrheitstabellen und <em>KV-Tafeln</em>, die in anderen Kapiteln 
-zur Anwendung kommen, sehr von Vorteil.</p>
+                        <h1 id="dflipflop-datenspeicher">D-Flipflop (Datenspeicher)</h1>
+<p>Das D-Flipflop ist ein einfaches Datenspeicherglied. Es kann einen bestimmten Wert abh&#xE4;ngig vom Takt T und den Eing&#xE4;ngen R und S speichern. Dabei haben die beiden letztgenannten Eing&#xE4;nge wie auch beim JK-Flipflop Priorit&#xE4;t. Das bedeutet, dass das Flipflop unabh&#xE4;ngig vom Takt einen gew&#xFC;nschten Wert annehmen kann, falls der Setz- bzw. R&#xFC;cksetzeingang aktiviert wird. Sind diese beiden Eing&#xE4;nge jedoch auf den Wert 1 gesetzt (also nicht aktiv), so erfolgt bei jeder negativen Takt-Flanke eine &#xDC;bernahme des Dateneingangs D an den Ausgang Q. Der komplement&#xE4;re Ausgang &#xAC;Q hat auch hier wieder den entgegengesetzten Wert von Q. Das Verhalten von D in Abh&#xE4;ngigkeit vom Takt T und den Eing&#xE4;ngen S und R zeigt das abgebildete Spannungsdiagramm. </p>
+<p>Die Industrie bietet D-Flipflops schon fertig aufgebaut als ICs an. Haben Sie diese jedoch nicht zur Hand, so kann man mit Hilfe eines JK-Flipflops einen solchen Datenspeicher aufbauen. Dazu ist es notwendig den K-Eingang &#xFC;ber einen Inverter an den J-Eingang anzuschlie&#xDF;en. An K liegt also &#xAC;J. Wird nun an J der Wert der gew&#xFC;nschten Daten gelegt, so &#xFC;bernimmt das Flipflop bei der n&#xE4;chsten negativen Taktflanke diesen Wert auf den Ausgang Q. Ist z.B. das Flipflop auf dem Wert Q=0 und hat der Dateneingang den Wert D=1, so wechselt nach einer negativen Taktflanke der Ausgang Q seinen Wert von 0 auf 1. Dieser Wert wird so lange gespeichert, bis &#xFC;ber den Takt T und einen neuen Wert an D der Zustand von Q ge&#xE4;ndert wird. Nat&#xFC;rlich w&#xE4;re eine &#xC4;nderung auch durch eine Aktivierung von S oder R m&#xF6;glich.</p>
+<p><img src="img01.png" alt="schaltung"></p>
+<p><img src="img02.png" alt="symbol"></p>
+<p><img src="img03.png" alt="diagramm"></p>
+<p>Ein wichtiges Anwendungsbeispiel eines D-Flipflops ist das Schiebe&#xAD;register. Dieses Bauteil ist in einem eigenen Kapitel noch genauer erkl&#xE4;rt.</p>
 
                     
                     </section>
@@ -515,10 +476,8 @@ zur Anwendung kommen, sehr von Vorteil.</p>
         </div>
 
         
-        <a href="../index.html" class="navigation navigation-prev " aria-label="Previous page: Einleitung"><i class="fa fa-angle-left"></i></a>
+        <a href="../part44/index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Dualzähler für beliebige Zahlenreihen"><i class="fa fa-angle-left"></i></a>
         
-        
-        <a href="../part02/index.html" class="navigation navigation-next " aria-label="Next page: Das Dualsystem"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

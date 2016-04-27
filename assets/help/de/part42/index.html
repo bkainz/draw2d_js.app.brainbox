@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Analog-Technik und Digital-Technik | Einleitung</title>
+        <title>JK-FlipFlop | Einleitung</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../part02/index.html" />
+    <link rel="next" href="../part43/index.html" />
     
     
-    <link rel="prev" href="../index.html" />
+    <link rel="prev" href="../part41/index.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="1"
-        data-chapter-title="Analog-Technik und Digital-Technik"
-        data-filepath="part01/README.md"
+        data-level="7.2"
+        data-chapter-title="JK-FlipFlop"
+        data-filepath="part42/README.md"
         data-basepath=".."
         data-revision="Wed Apr 27 2016 14:19:55 GMT+0200 (CEST)"
         data-innerlanguage="de">
@@ -82,7 +82,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="part01/index.html">
+        <li class="chapter " data-level="1" data-path="part01/index.html">
             
                 
                     <a href="../part01/index.html">
@@ -365,7 +365,7 @@
             
         </li>
     
-        <li class="chapter " data-level="7.2" data-path="part42/index.html">
+        <li class="chapter active" data-level="7.2" data-path="part42/index.html">
             
                 
                     <a href="../part42/index.html">
@@ -461,50 +461,88 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="analogtechnik-und-digitaltechnik">Analog-Technik und Digital-Technik</h1>
-<p>In der Schwachstromelektronik werden heute die beiden Bereiche 
-Analog-Technik und Digital-Technik unterschieden.</p>
-<p>Ein einfaches Beispiel f&#xFC;r diese beiden Begriffe stellt ein 
-gew&#xF6;hnlicher Spannungsmesser dar. Wenn man das Messger&#xE4;t wie in 
-<em>Abb. 1</em> an eine regelbare Spannungsquelle anschlie&#xDF;t, so vergr&#xF6;&#xDF;ert 
-sich der Zeigerausschlag mit zunehmender Spannung. Dabei wird einem 
-bestimmten Spannungswert genau eine Zeigerstellung zugeordnet. Dieser 
-gleichm&#xE4;&#xDF;ige Anstieg oder Abfall des Zeigers wird <strong>analoges Verhalten</strong>
-genannt.</p>
-<p><img src="image01.png" alt="Local Image"></p>
-<p>Dabei ist jeder Zwischenwert der Spannung innerhalb des Messbereiches 
-des Spannungsger&#xE4;tes m&#xF6;glich. Der Ausschlag des Messger&#xE4;tes entspricht
-dabei der angelegten Spannung, oder anders ausgedr&#xFC;ckt: die angelegte 
-Spannung ist analog zum Zeigerausschlag.</p>
-<p><em>Abb. 2</em> zeigt ein typisches Diagramm f&#xFC;r analoges Verhalten. Hier ist 
-der Zeigerausschlag des Messger&#xE4;tes in Abh&#xE4;ngigkeit der Zeit t 
-dargestellt. Es ist deutlich zu sehen, dass jeder beliebige 
-Zwischenwert des Ausschlags eingestellt werden kann.</p>
-<p><img src="image02.png" alt="Local Image"></p>
-<p>Bei der <strong>Digital-Technik</strong> dagegen wird die Information, die bei der 
-Analog-Technik durch den Kurvenverlauf gegeben ist (Zeigerausschlag), 
-durch das Ablesen auf der Skala bestimmt. Man ordnet eben jedem 
-Zeigerstand einen bestimmten Spannungswert zu. Das ist bei fast allen 
-Messger&#xE4;ten durch die Skala von vornherein schon gegeben. Indem man 
-nun die Skalenstriche abz&#xE4;hlt, setzt man das analoge Signal 
-(Ausschlag des Zeigers) in ein digitales Signal (Anzahl der Striche) 
-um. </p>
-<p><strong>Dabei hat die Digital-Technik gegen&#xFC;ber der Analog-Technik einen gro&#xDF;en 
-Vorteil</strong>. W&#xE4;hrend bei analogen Schaltungen der Spannungsbereich meist 
-genau stimmen muss, braucht man in digitalen Schaltungen nur den 
-richtigen Spannungsbereich einzuhalten. Dies bringt eine <strong>erh&#xF6;hte 
-Stabilit&#xE4;t</strong> der digitalen Schaltungen mit sich.</p>
-<p>Die beiden Spannungsbereiche, die in der Digital-Technik verwendet 
-werden, hei&#xDF;en <code>L-Bereich</code> (von engl.: low = niedrig) und <code>H-Bereich</code> 
-(von engl.: high = hoch). Hier werden f&#xFC;r die Beispiele eine 
-Versorgungsspannung <code>Uv = 5V</code> und die beiden Spannungsbereiche mit 
-<code>0V bis +0,5V</code> f&#xFC;r <code>L</code> (low) und <code>+2,5V bis +5V</code> f&#xFC;r <code>H</code> (high) festgelegt, 
-da diese Spannungsbereiche au&#xDF;erdem gerade f&#xFC;r TTL-Schaltungen 
-(TTL = Transistor-Transistor-Logik) oft ben&#xF6;tigt werden.</p>
-<p>In der mathematischen Beschreibung von digitalen Schaltungen wird der 
-L-Bereich mit 0 und der H-Bereich mit 1 beschrieben. Dies ist unter 
-anderem f&#xFC;r Wahrheitstabellen und <em>KV-Tafeln</em>, die in anderen Kapiteln 
-zur Anwendung kommen, sehr von Vorteil.</p>
+                        <h1 id="das-jkflipflop-masterslaveflipflop">Das JK-Flipflop (Master-Slave-Flipflop)</h1>
+<p>Ein weiteres und sehr wichtiges Flipflop ist das JK-Flipflop. Mit ihm k&#xF6;nnen viele Z&#xE4;hler und Teiler aufgebaut werden. Wie man an dem Schaltsymbol erkennt, hat auch dieses Flipflop einen Setz- und einen R&#xFC;cksetzeingang. Werden diese beiden Anschl&#xFC;sse verwendet, so kann man das Bauteil als gew&#xF6;hnliches RS-Flipflop betreiben. Dazu sollten aber die anderen Eing&#xE4;nge nicht angeschlossen sein um eine Fehlschaltung am Ausgang zu vermeiden.</p>
+<p>Das JK-Flipflop kann alternativ dazu &#xFC;ber die beiden Eing&#xE4;nge J und K betrieben werden. F&#xFC;r diesen Fall besitzt es noch einen weiteren Eingang T, &#xFC;ber den dem Flipflop ein Taktimpuls zugef&#xFC;hrt werden kann.</p>
+<p>Prinzipiell unterscheidet man zwei Arten von JK-Flipflops: Das &#x201C;positiv-flankengetriggerte&#x201C; und das &#x201C;negativ-flankengetriggerte&#x201C;. Beim positiv-flankengetriggerten Flipflop, das in Abb. 32 dargestellt ist, erfolgt die Schaltung am Ausgang durch den ansteigenden Teil des angelegten Takt-Impulses. Das bedeutet, dass die Werte am Ausgang, die durch J und K bestimmt werden mit dem Ansteigen des Taktimpulses von L auf H ihren Wert &#xE4;ndern. Dargestellt ist das im Schaltsymbol durch die ansteigende Flanke eines Rechteckimpulses in der oberen rechten Ecke des Schaltsymbols. </p>
+<p><img src="img01.png" alt="schaltung"> </p>
+<p>Beim negativ-flankengetriggerten JK-Flipflop, das in der Technik haupts&#xE4;chlich verwendet wird, erfolgt die Umschaltung beim Abfallen des Impulses von H auf L. Abb. 33 symbolisiert ein solches Bauteil. Das Unterscheidungsmerkmal gegen&#xFC;ber dem vorherigen Flipflop ist die abfallende Flanke eines Rechteckimpulses.</p>
+<p><img src="img02.png" alt="schaltung"></p>
+<p>Wohlbemerkt sind die beiden Eing&#xE4;nge R und S in diesem Fall nicht angeschlossen. Sie haben n&#xE4;mlich Priorit&#xE4;t, d.h. sie sind vom Takt unabh&#xE4;ngig. Doch dazu sp&#xE4;ter mehr.
+Wie schon bei der Unterscheidung der beiden JK-Flipflops erw&#xE4;hnt wurde, ist ein Taktimpuls bei diesem Bauteil sehr wichtig. Angelegt wird er am Eingang T. Von ihm h&#xE4;ngt es z.B. ab, wie schnell sich ein Wert am Ausgang Q oder &#xAC;Q &#xE4;ndern kann. Die Logik-Tafel gibt &#xFC;ber die Werte am Ausgang genauer Auskunft.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">J</th>
+<th style="text-align:center">K</th>
+<th style="text-align:center">Q</th>
+<th style="text-align:center">&#xAC;Q</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center"><strong>0</strong></td>
+<td style="text-align:center"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"><strong>1</strong></td>
+<td style="text-align:center"><strong>0</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"><strong>Q</strong></td>
+<td style="text-align:center"><strong>&#xAC;Q</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center"><strong>&#xAC;Q</strong></td>
+<td style="text-align:center"><strong>Q</strong></td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Hat der J-Eingang den Wert 0 und K den Wert 1, so liegt am Ausgang Q der Wert 0. Entsprechend hat der komplement&#xE4;re Ausgang &#xAC;Q den Wert 1.</li>
+</ol>
+<ol>
+<li>Wechselt nun der J-Eingang auf den Wert 1 und der K-Eingang auf den Wert 0, so hat der Ausgang Q den Wert 1 und &#xAC;Q den Wert 0.</li>
+</ol>
+<ol>
+<li>Wenn beide Eing&#xE4;nge den Wert 0 haben, so &#xE4;ndert sich das Ausgangssignal nicht, das bedeutet, dass der vorherige Wert des Ausgangs beibehalten wird.</li>
+</ol>
+<ol>
+<li>Falls beide Eing&#xE4;nge den Wert 1 aufweisen, so dreht sich das Ausgangssignal gerade um. Sowohl Q als auch &#xAC;Q nehmen jeweils ihren komplement&#xE4;ren Wert an. Oder anders ausgedr&#xFC;ckt: Q nimmt den Wert von &#xAC;Q an und &#xAC;Q den Wert von Q.</li>
+</ol>
+<p>.</p>
+<p>Allerdings kann sich das Ausgangssignal nur &#xE4;ndern, wenn ein Taktimpuls wirksam geworden ist. Um also ein Umschalten des Wertes am Ausgang zu erreichen, muss unbedingt ein Takt angelegt werden. Sobald nun bei einem negativ-flankengetriggerten Flipflop eine negative Flanke an T anliegt, stellen sich die Ausg&#xE4;nge Q und &#xAC;Q entsprechend den Eing&#xE4;ngen J und K um.
+Die Eing&#xE4;nge R und S sind dagegen vom Taktimpuls unabh&#xE4;ngig. Sobald z.B. der Setzeingang auf Masse gelegt wird, erscheint am Ausgang der Wert 1, auch dann, wenn gerade kein Taktimpuls wirksam wurde. Ebenso funktioniert die Schaltung wenn der R&#xFC;cksetzeingang R mit Masse verbunden wird. Dann erscheint am Ausgang A der Wert 0. Sobald der R- oder der S-Eingang benutzt wird, ist die &#xFC;brige Beschaltung (also T, J und K) nicht wirksam.
+In Abb. 34 ist nun das Schaltverhalten eines negativ-flankengetriggerten Flipflops dargestellt. Deutlich zu sehen ist dabei, dass ein Umschalten des Signals am Ausgang nur dann erfolgen kann, wenn der Taktimpuls T gerade abf&#xE4;llt.
+Spannungs-Diagramm (Schaltdiagramm) f&#xFC;r ein negativ-flanken&#xAD;getriggertes JK-Flipflop</p>
+<p><img src="img03.png" alt="schaltung"></p>
+<p>Zur Verdeutlichung hier nun die Erl&#xE4;uterung:</p>
+<ol>
+<li><p>J=0, K=1. Da R und S den Wert 1 haben, also nicht wirksam sind, kann der Takt wirksam werden. In der Logik-Tafel sieht man, dass der Ausgang Q den Wert 0 haben muss. Deshalb nimmt Q auch im Diagramm beim Abfallen der Taktflanke T den Wert 0 an.</p>
+</li>
+<li><p>J=1, K=0. Damit hat Q den Wert 1.</p>
+</li>
+<li>J=K=0. Am Ausgang Q erscheint der Wert 1, da laut Logik-Tafel der Wert gleich bleibt.</li>
+<li>J=K=1. Nun erscheint am Ausgang das gegenteilige Signal, das zuvor an Q lag. In diesem Fall ist es der Wert 0.</li>
+<li>J=0, K=1. Damit hat der Ausgang Q den Wert 0.</li>
+<li>J=K=0. Das Signal am Ausgang bleibt gleich, also auf 0.</li>
+<li>Bei Punkt A wird nun der Setzeingang S auf Masse gelegt. Damit nimmt der Ausgang Q sofort den Wert 1 an. Dies geschieht wie man sieht auch ohne Taktimpuls.</li>
+<li>Der Setzeingang S liegt noch immer auf Masse. Somit sind die Signale von J und K nicht wirksam, wenngleich auch eine negative Taktflanke vorliegt.</li>
+<li>Im Punkt B ist nun der Setzeingang S wieder auf dem Wert 1. Dagegen wird der R&#xFC;cksetzeingang R auf Masse, also auf den Wert 0 gelegt. Damit nimmt der Ausgang Q sofort den Wert 0 an.</li>
+<li>R ist noch immer auf Masse gelegt. Damit hat der Ausgang unabh&#xE4;ngig von J und K den Wert 0.</li>
+<li>J=0, K=1. R hat nun wieder den Wert 1, ist also genau wie S nicht wirksam. Der Taktimpuls kann also wieder wirksam werden und schaltet deshalb bei der abfallenden Taktflanke den Ausgang Q auf den Wert 0.</li>
+</ol>
+<p>Zu bemerken w&#xE4;re noch, dass bei nicht wirksamen Eing&#xE4;ngen R und S zwischen den einzelnen Takt-Impulsen die Eing&#xE4;nge J und K jeden beliebigen Wert annehmen k&#xF6;nnen ohne dass sich der Wert am Ausgang Q ver&#xE4;ndert. Sie k&#xF6;nnen auch ihren Wert zwischen zwei Impulsen mehrmals wechseln. F&#xFC;r das Umschalten am Ausgang ist nur interessant, was zur Zeit der abfallenden Taktflanke f&#xFC;r Signale an J und K liegen. Nur nach diesen Werten richtet sich der Wert des Ausgangs Q.
+Abb. 35 zeigt die Innenschaltung des JK-Flipflops. Das Master-Slave-Flipflop besteht intern aus 2 bistabilen Multivibratoren mit gesteuerter &#xDC;bernahme, die in Reihe (hintereinander) geschaltet sind. Der sogenannte Master (engl. Master = Herr, Meister) besteht aus den Verkn&#xFC;pfungsschaltungen V3 und V4. Die NAND-Gatter V1 und V2 bilden die dazugeh&#xF6;rige Torschaltung. Die J- und K-Eing&#xE4;nge sind UND-verkn&#xFC;pft. Die Verkn&#xFC;pfungsschaltungen V5 und V6 bilden die Torschaltung des Slave (engl. Slave = Knecht, Sklave). Der Multivibrator des Slave besteht aus den Verkn&#xFC;pfungsschaltungen V7 und V8. Der Multivibrator verf&#xFC;gt noch &#xFC;ber 2 Eing&#xE4;nge, die nicht &#xFC;ber die Torschaltung laufen, also auch unabh&#xE4;ngig vom Takt wirksam sind: L-Pegel am Setzeingang S stellt den Ausgang Q auf den Wert 1, L-Pegel am R&#xFC;cksetzeingang R stellt Q wieder auf den Wert 0 zur&#xFC;ck.</p>
+<p><img src="img04.png" alt="schaltung"></p>
 
                     
                     </section>
@@ -515,10 +553,10 @@ zur Anwendung kommen, sehr von Vorteil.</p>
         </div>
 
         
-        <a href="../index.html" class="navigation navigation-prev " aria-label="Previous page: Einleitung"><i class="fa fa-angle-left"></i></a>
+        <a href="../part41/index.html" class="navigation navigation-prev " aria-label="Previous page: RS-FlipFlop"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../part02/index.html" class="navigation navigation-next " aria-label="Next page: Das Dualsystem"><i class="fa fa-angle-right"></i></a>
+        <a href="../part43/index.html" class="navigation navigation-next " aria-label="Next page: Dualzähler"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

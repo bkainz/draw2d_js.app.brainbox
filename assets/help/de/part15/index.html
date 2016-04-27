@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Analog-Technik und Digital-Technik | Einleitung</title>
+        <title>NOR-Gatter | Einleitung</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../part02/index.html" />
+    <link rel="next" href="../part16/index.html" />
     
     
-    <link rel="prev" href="../index.html" />
+    <link rel="prev" href="../part14/index.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="1"
-        data-chapter-title="Analog-Technik und Digital-Technik"
-        data-filepath="part01/README.md"
+        data-level="4.5"
+        data-chapter-title="NOR-Gatter"
+        data-filepath="part15/README.md"
         data-basepath=".."
         data-revision="Wed Apr 27 2016 14:19:55 GMT+0200 (CEST)"
         data-innerlanguage="de">
@@ -82,7 +82,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="part01/index.html">
+        <li class="chapter " data-level="1" data-path="part01/index.html">
             
                 
                     <a href="../part01/index.html">
@@ -203,7 +203,7 @@
             
         </li>
     
-        <li class="chapter " data-level="4.5" data-path="part15/index.html">
+        <li class="chapter active" data-level="4.5" data-path="part15/index.html">
             
                 
                     <a href="../part15/index.html">
@@ -461,50 +461,70 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="analogtechnik-und-digitaltechnik">Analog-Technik und Digital-Technik</h1>
-<p>In der Schwachstromelektronik werden heute die beiden Bereiche 
-Analog-Technik und Digital-Technik unterschieden.</p>
-<p>Ein einfaches Beispiel f&#xFC;r diese beiden Begriffe stellt ein 
-gew&#xF6;hnlicher Spannungsmesser dar. Wenn man das Messger&#xE4;t wie in 
-<em>Abb. 1</em> an eine regelbare Spannungsquelle anschlie&#xDF;t, so vergr&#xF6;&#xDF;ert 
-sich der Zeigerausschlag mit zunehmender Spannung. Dabei wird einem 
-bestimmten Spannungswert genau eine Zeigerstellung zugeordnet. Dieser 
-gleichm&#xE4;&#xDF;ige Anstieg oder Abfall des Zeigers wird <strong>analoges Verhalten</strong>
-genannt.</p>
-<p><img src="image01.png" alt="Local Image"></p>
-<p>Dabei ist jeder Zwischenwert der Spannung innerhalb des Messbereiches 
-des Spannungsger&#xE4;tes m&#xF6;glich. Der Ausschlag des Messger&#xE4;tes entspricht
-dabei der angelegten Spannung, oder anders ausgedr&#xFC;ckt: die angelegte 
-Spannung ist analog zum Zeigerausschlag.</p>
-<p><em>Abb. 2</em> zeigt ein typisches Diagramm f&#xFC;r analoges Verhalten. Hier ist 
-der Zeigerausschlag des Messger&#xE4;tes in Abh&#xE4;ngigkeit der Zeit t 
-dargestellt. Es ist deutlich zu sehen, dass jeder beliebige 
-Zwischenwert des Ausschlags eingestellt werden kann.</p>
-<p><img src="image02.png" alt="Local Image"></p>
-<p>Bei der <strong>Digital-Technik</strong> dagegen wird die Information, die bei der 
-Analog-Technik durch den Kurvenverlauf gegeben ist (Zeigerausschlag), 
-durch das Ablesen auf der Skala bestimmt. Man ordnet eben jedem 
-Zeigerstand einen bestimmten Spannungswert zu. Das ist bei fast allen 
-Messger&#xE4;ten durch die Skala von vornherein schon gegeben. Indem man 
-nun die Skalenstriche abz&#xE4;hlt, setzt man das analoge Signal 
-(Ausschlag des Zeigers) in ein digitales Signal (Anzahl der Striche) 
-um. </p>
-<p><strong>Dabei hat die Digital-Technik gegen&#xFC;ber der Analog-Technik einen gro&#xDF;en 
-Vorteil</strong>. W&#xE4;hrend bei analogen Schaltungen der Spannungsbereich meist 
-genau stimmen muss, braucht man in digitalen Schaltungen nur den 
-richtigen Spannungsbereich einzuhalten. Dies bringt eine <strong>erh&#xF6;hte 
-Stabilit&#xE4;t</strong> der digitalen Schaltungen mit sich.</p>
-<p>Die beiden Spannungsbereiche, die in der Digital-Technik verwendet 
-werden, hei&#xDF;en <code>L-Bereich</code> (von engl.: low = niedrig) und <code>H-Bereich</code> 
-(von engl.: high = hoch). Hier werden f&#xFC;r die Beispiele eine 
-Versorgungsspannung <code>Uv = 5V</code> und die beiden Spannungsbereiche mit 
-<code>0V bis +0,5V</code> f&#xFC;r <code>L</code> (low) und <code>+2,5V bis +5V</code> f&#xFC;r <code>H</code> (high) festgelegt, 
-da diese Spannungsbereiche au&#xDF;erdem gerade f&#xFC;r TTL-Schaltungen 
-(TTL = Transistor-Transistor-Logik) oft ben&#xF6;tigt werden.</p>
-<p>In der mathematischen Beschreibung von digitalen Schaltungen wird der 
-L-Bereich mit 0 und der H-Bereich mit 1 beschrieben. Dies ist unter 
-anderem f&#xFC;r Wahrheitstabellen und <em>KV-Tafeln</em>, die in anderen Kapiteln 
-zur Anwendung kommen, sehr von Vorteil.</p>
+                        <style>
+pre{
+ text-align:center;
+ padding:20px;
+}
+</style>
+
+
+<h1 id="norgatter">NOR-Gatter</h1>
+<p>Gebildet aus den englischen W&#xF6;rtern <strong>not or</strong>, was &#xFC;bersetzt <strong>nicht oder</strong> hei&#xDF;t. Es handelt sich also wiederum um eine Negation, n&#xE4;mlich die der OR-Verkn&#xFC;pfung. Die mathematische Gleichung lautet:</p>
+<pre><code>     A = &#xAC;(E1 &#x2228; E2) (sprich: &#x201C;E1 oder E2 negiert&#x201C;)
+</code></pre><p>Bei dieser Verkn&#xFC;pfungsschaltung hat der Ausgang <code>A</code> den Wert 1, wenn beide Eing&#xE4;nge den Wert 0 haben. In allen anderen F&#xE4;llen hat der Ausgang den Wert 0.</p>
+<h3 id="logiktabelle">Logiktabelle</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">E1</th>
+<th style="text-align:center">E2</th>
+<th style="text-align:center">A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"><strong>1</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center"><strong>0</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"><strong>0</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center"><strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="symbol">Symbol</h3>
+<p><img src="img01.png" alt="NOR Gatter"></p>
+<p>Da diese beiden letzten Gatter sehr h&#xE4;ufig vorkommen, haben sie ein eigenes Schaltsymbol. Au&#xDF;erdem sind sie f&#xFC;r den Praktiker sehr interessant, da sie gegen&#xFC;ber den <em>UND-</em> bzw. <em>ODER-Gattern</em> meist erheblich billiger sind. Deshalb nimmt man h&#xE4;ufig zwei <em>NAND-Gatter</em> um ein <em>UND-Gatter</em> billig aufzubauen, oder zwei NOR-Gatter f&#xFC;r ein OR-Gatter. Die daf&#xFC;r notwendigen Schaltungen werden im Folgenden erkl&#xE4;rt.</p>
+<p><img src="img02.png" alt="NOR Schaltung"></p>
+<p>Bei dieser Schaltung hat der Ausgang <code>A1</code> nur dann den Wert 0, wenn beide Eing&#xE4;nge, also <code>E1</code> und <code>E2</code> den Wert 1 haben. Der offene (nicht angeschlossene) Eingang <code>E4</code> hat generell den Wert 1. Um aber am Ausgang A2 den Wert 1 zu erreichen, muss deswegen <code>E3</code> und somit am Ausgang <code>A1</code> der Wert 0 anliegen. Dies wird, wie oben schon beschrieben, nur dadurch erreicht, dass man den Eing&#xE4;ngen <code>E1</code> und <code>E2</code> den Wert 1 zuordnet.</p>
+<p>Mathematisch ausgedr&#xFC;ckt bedeutet dies:</p>
+<pre><code>A1 = &#xAC;(E1 &#x2227; E2)
+
+A2 = &#xAC;A1 = &#xAC;(&#xAC;(E1 &#x2227; E2))
+</code></pre><p><code>&#xAC;(&#xAC;(E1 &#x2227; E2))</code> ist aber nichts anderes als <code>E1 &#x2227; E2</code>; somit gilt die Funktionsgleichung der normalen UND-Verkn&#xFC;pfung:</p>
+<pre><code>A2 = E1 &#x2227; E2
+</code></pre><p>Dies beweist, dass die obige Schaltung einer normalen UND-Verkn&#xFC;pfung entspricht.</p>
+<p><img src="img03.png" alt="NOR Schaltung aus OR"></p>
+<p>Die Logik dieser Schaltung ist &#xE4;hnlich der Vorherigen. Der Ausgang <code>A2</code> hat nur dann den Wert 0, wenn <code>E3</code> den Wert 1 hat. E4 ist durch den Masseanschluss sowieso immer auf 0. Der Wert 1 an <code>E3</code> und somit an <code>A1</code> wird aber nur erreicht, indem man <code>E1</code> und <code>E2</code> den Wert 0 zuordnet. In allen anderen F&#xE4;llen hat <code>A1</code> den Wert 0 und damit <code>A2</code> den Wert 1. Dies wiederum entspricht genau der OR-Verkn&#xFC;pfung.</p>
+<p>Hier der mathematische Beweis:</p>
+<pre><code>A1 = &#xAC;(E1 &#x2228; E2)
+
+A2 = &#xAC;A1 = &#xAC;(&#xAC;(E1 &#x2228; E2)) = E1 &#x2228; E2
+</code></pre><p>Mit diesen nun beschriebenen <strong>5 Grundschaltungen</strong> (AND-, NAND-, OR-, NOR-Gatter und Inverter) lassen sich <strong>alle</strong> anderen logischen Verkn&#xFC;pfungsschaltungen realisieren. </p>
+<p>Man muss nur die gew&#xFC;nschten Elemente zusammenschalten. Den mathematischen Hintergrund f&#xFC;r die Kombination der Gatter liefert die Boolesche Algebra. Die Grundfunktionen sind bei der Erkl&#xE4;rung der Schaltungen mit angegeben.</p>
 
                     
                     </section>
@@ -515,10 +535,10 @@ zur Anwendung kommen, sehr von Vorteil.</p>
         </div>
 
         
-        <a href="../index.html" class="navigation navigation-prev " aria-label="Previous page: Einleitung"><i class="fa fa-angle-left"></i></a>
+        <a href="../part14/index.html" class="navigation navigation-prev " aria-label="Previous page: NAND-Gatter"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../part02/index.html" class="navigation navigation-next " aria-label="Next page: Das Dualsystem"><i class="fa fa-angle-right"></i></a>
+        <a href="../part16/index.html" class="navigation navigation-next " aria-label="Next page: XOR-Gatter"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
