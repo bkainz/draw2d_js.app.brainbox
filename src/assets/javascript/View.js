@@ -153,6 +153,62 @@ var View = draw2d.Canvas.extend({
             $("#simulationStart").removeClass("disabled");
         });
 
+        this.on("contextmenu", function(emitter, event){
+            var figure = _this.getBestFigure(event.x, event.y);
+
+            if(figure!==null){
+                var x = event.x;
+                var y = event.y;
+
+                var pathToFile   = "https://github.com/freegroup/draw2d_js.shapes/blob/master/"+ eval(figure.NAME+".github");
+                var pathToDesign = "http://freegroup.github.io/draw2d_js.app.shape_designer/#file="+ figure.NAME+".shape";
+                $.contextMenu({
+                    selector: 'body',
+                    events:
+                    {
+                        hide:function(){ $.contextMenu( 'destroy' ); }
+                    },
+                    callback: $.proxy(function(key, options)
+                    {
+                        switch(key){
+                            case "code":
+                                new CodeDialog().show( eval(figure.NAME+".logic"));
+                                break;
+                            case "design":
+                                window.open(pathToDesign);
+                                break;
+                            case "help":
+                                new MarkdownDialog().show( eval(figure.NAME+".markdown"));
+                                break;
+                            case "bug":
+                                var pathToIssues = "https://github.com/freegroup/draw2d_js.shapes/issues/new";
+                                var createUrl = pathToIssues+"?title=Error in shape '"+figure.NAME+"'&body="+encodeURIComponent("I found a bug in "+figure.NAME+".\n\nError Description here...\n\n\nLinks to the code;\n[GitHub link]("+pathToFile+")\n[Designer Link]("+pathToDesign+")\n");
+                                window.open(createUrl);
+                                break;
+                            case "delete":
+                                var cmd = new draw2d.command.CommandDelete(figure);
+                                _this.getCommandStack().execute(cmd);
+                                break;
+                            default:
+                                break;
+                        }
+
+                    },this),
+                    x:x,
+                    y:y,
+                    items:
+                    {
+                        "code":    {name: "Show Code"},
+                        "design":  {name: "Open in Designer"},
+                        "help":    {name: "Help"},
+                        "bug":     {name: "Report a Bug"},
+                        "sep1":  "---------",
+                        "delete":{name: "Delete"}
+                    }
+                });
+            }
+        });
+
     },
 
     /**
@@ -177,56 +233,6 @@ var View = draw2d.Canvas.extend({
         // create a command for the undo/redo support
         var command = new draw2d.command.CommandAdd(this, figure, x, y);
         this.getCommandStack().execute(command);
-
-        figure.on("contextmenu", function(){
-            var pathToFile   = "https://github.com/freegroup/draw2d_js.shapes/blob/master/"+ eval(figure.NAME+".github");
-            var pathToDesign = "http://freegroup.github.io/draw2d_js.app.shape_designer/#file="+ figure.NAME+".shape";
-            $.contextMenu({
-                selector: 'body',
-                events:
-                {
-                    hide:function(){ $.contextMenu( 'destroy' ); }
-                },
-                callback: $.proxy(function(key, options)
-                {
-                    switch(key){
-                        case "code":
-                            new CodeDialog().show( eval(figure.NAME+".logic"));
-                            break;
-                        case "design":
-                            window.open(pathToDesign);
-                            break;
-                        case "help":
-                            new MarkdownDialog().show( eval(figure.NAME+".markdown"));
-                            break;
-                        case "bug":
-                            var pathToIssues = "https://github.com/freegroup/draw2d_js.shapes/issues/new";
-                            var createUrl = pathToIssues+"?title=Error in shape '"+figure.NAME+"'&body="+encodeURIComponent("I found a bug in "+figure.NAME+".\n\nError Description here...\n\n\nLinks to the code;\n[GitHub link]("+pathToFile+")\n[Designer Link]("+pathToDesign+")\n");
-                            window.open(createUrl);
-                            break;
-                        case "delete":
-                            var cmd = new draw2d.command.CommandDelete(figure);
-                            _this.getCommandStack().execute(cmd);
-                            break;
-                        default:
-                            break;
-                    }
-
-                },this),
-                x:x,
-                y:y,
-                items:
-                {
-                    "code":    {name: "Show Code"},
-                    "design":  {name: "Open in Designer"},
-                    "help":    {name: "Help"},
-                    "bug":     {name: "Report a Bug"},
-                    "sep1":  "---------",
-                    "delete":{name: "Delete"}
-                }
-            });
-
-        });
     },
 
 
