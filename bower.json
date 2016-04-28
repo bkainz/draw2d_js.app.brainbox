@@ -19,6 +19,7 @@
     "bootstrap-growl": "^1.1.0",
     "mousetrap": "^1.5.3",
     "google-code-prettify": "^1.0.4",
-    "remarkable": "^1.6.2"
+    "remarkable": "^1.6.2",
+    "shifty": "~1.5.2"
   }
 }
