@@ -1,0 +1,19 @@
+[
+  {
+    "type": "draw2d_circuit_switch_HighLow",
+    "id": "35aee84e-d74b-49b6-9040-957c20af1f1f",
+    "x": 168,
+    "y": 148,
+    "width": 42,
+    "height": 43.5,
+    "alpha": 1,
+    "angle": 0,
+    "userData": {},
+    "cssClass": "draw2d_circuit_switch_HighLow",
+    "bgColor": "none",
+    "color": "#1B1B1B",
+    "stroke": 0,
+    "radius": 0,
+    "dasharray": null
+  }
+]
