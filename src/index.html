@@ -25,57 +25,6 @@
 
         $(window).load(function () {
              app = new Application();
-
-            // The parameters required to intialize the Cognito Credentials object.
-// If you are authenticating your users through one of the supported
-// identity providers you should set the Logins object with the provider
-// tokens. For example:
-// Logins: {
-//   graph.facebook.com : facebookResponse.authResponse.accessToken
-// }
-            var params = {
-                IdentityPoolId: "us-east-1:f2cb5d90-0527-4589-977c-d9e97ecce087",
-            };
-
-            // set the Amazon Cognito region
-            AWS.config.region = 'us-east-1';
-
-            // initialize the Credentials object with our parameters
-            AWS.config.credentials = new AWS.CognitoIdentityCredentials(params);
-
-            // We can set the get method of the Credentials object to retrieve
-            // the unique identifier for the end user (identityId) once the provider
-            // has refreshed itself
-            AWS.config.credentials.get(function(err) {
-                if (err) {
-                    console.log("Error: "+err);
-                    return;
-                }
-                console.log("Cognito Identity Id: " + AWS.config.credentials.identityId);
-
-                // Other service clients will automatically use the Cognito Credentials provider
-                // configured in the JavaScript SDK.
-                var cognitoSyncClient = new AWS.CognitoSync();
-                cognitoSyncClient.listDatasets({
-                    IdentityId: AWS.config.credentials.identityId,
-                    IdentityPoolId: "us-east-1:f2cb5d90-0527-4589-977c-d9e97ecce087"
-                }, function(err, data) {
-                    if ( !err ) {
-                        console.log(JSON.stringify(data));
-
-
-                        AWS.config.credentials.get(function() {
-
-                        //    client = new AWS.CognitoSyncManager();
-
-                           console.log(arguments);
-
-                        });
-
-                    }
-                });
-            });
-
         });
     </script>
 
