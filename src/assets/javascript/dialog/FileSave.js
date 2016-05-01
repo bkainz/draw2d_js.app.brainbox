@@ -4,8 +4,8 @@ FileSave = Class.extend({
      * @constructor
      *
      */
-    init:function(storage){
-        this.storage=storage;
+    init:function(fileHandler){
+        this.currentFileHandle = fileHandler;
     },
 
     /**
@@ -22,13 +22,7 @@ FileSave = Class.extend({
     {
         var _this = this;
 
-        if(this.storage.currentFileHandle===null){
-            this.storage.currentFileHandle= {
-                title:"DocumentName",
-                sha:null
-            };
-        }
-        $("#githubSaveFileDialog .githubFileName").val(_this.storage.currentFileHandle.title);
+        $("#githubSaveFileDialog .githubFileName").val(_this.currentFileHandle.title);
 
         $('#githubSaveFileDialog').on('shown.bs.modal', function () {
             $(this).find('input:first').focus();
@@ -40,17 +34,21 @@ FileSave = Class.extend({
         $("#githubSaveFileDialog .okButton").on("click", function () {
             var writer = new draw2d.io.json.Writer();
             writer.marshal(canvas, function (json, base64) {
-                var config = {
-                    message: $("#githubSaveFileDialog .githubCommitMessage").val(),
-                    content: base64,
-                    sha: _this.storage.currentFileHandle.sha
-                };
-
-                _this.storage.currentRepository.contents(_this.storage.currentFileHandle.path).add(config)
-                    .then(function (info) {
-                        _this.storage.currentFileHandle.sha = info.content.sha;
+                $.ajax({
+                        url: conf.backend + "file_save.php",
+                        method: "POST",
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        data:{
+                            id:$("#githubSaveFileDialog .githubFileName").val(),
+                            content:JSON.stringify(json, undefined, 2)
+                        }
+                    }
+                ).done(function(){
                         $('#githubSaveFileDialog').modal('hide');
-                    });
+                });
+
             });
         });
 

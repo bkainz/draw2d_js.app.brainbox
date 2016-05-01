@@ -29,7 +29,9 @@ var Application = Class.extend(
 
         }
 
-        this.storage = new BackendStorage();
+        this.currentFileHandle= {
+            title: "Untitled"+conf.fileSuffix
+        };
         this.palette = new Palette(this);
         this.view    = new View(this, "draw2dCanvas");
         this.loggedIn = false;
@@ -82,7 +84,7 @@ var Application = Class.extend(
 
     login:function()
     {
-        window.location.href='https://github.com/login/oauth/authorize?client_id='+conf.githubClientId+'&scope=public_repo';
+        window.location.href=conf.backend+"oauth2.php";
     },
 
     getParam: function( name )
@@ -112,9 +114,8 @@ var Application = Class.extend(
     {
         this.view.clear();
         this.localStorage.removeItem("json");
-        this.storage.currentFileHandle = null;
-        this.documentConfiguration = {
-            baseClass:"draw2d.SetFigure"
+        this.currentFileHandle = {
+            title: "Untitled"+conf.fileSuffix
         };
         if(shapeTemplate){
             var reader = new draw2d.io.json.Reader();
@@ -130,13 +131,7 @@ var Application = Class.extend(
             return;
         }
 
-
-        if(this.storage.currentFileHandle===null) {
-            new FileSaveAs(this.storage).show(this.view);
-        }
-        else{
-            new FileSave(this.storage).show(this.view);
-        }
+        new FileSave(this.currentFileHandle).show(this.view);
     },
 
 
@@ -148,7 +143,7 @@ var Application = Class.extend(
         }
 
         $("#leftTabStrip .edit").click();
-        new FileOpen(this.storage).show(
+        new FileOpen(this.currentFileHandle).show(
 
             // success callback
             $.proxy(function(fileData){
@@ -169,43 +164,20 @@ var Application = Class.extend(
 
     autoLogin:function()
     {
+
         var _this = this;
-        var _doIt=function() {
-            var code = _this.getParam("code");
-            if (code !== null) {
-                $.getJSON(conf.githubAuthenticateCallback + code, function (data) {
-                    _this.storage.connect(data.token, function (success) {
-                        if (success) {
-                            _this.localStorage["token"] = data.token;
-                            _this.loggedIn = success;
-                            $(".notLoggedIn").removeClass("notLoggedIn");
-                        }
-                        else {
-                            _this.localStorage.removeItem("token");
-                        }
-
-                    });
-                });
-            }
-        };
-
-        var token = this.localStorage["token"];
-        if(token){
-            _this.storage.connect(token, function(success){
-                _this.loggedIn = success;
-                if(!success){
-                    _doIt();
-                }
-                else{
+        $.ajax({
+            url:conf.backend +"isLoggedIn.php" ,
+            xhrFields: {
+                withCredentials: true
+             },
+            success:function(data){
+                _this.loggedIn = data==="true";
+                if (_this.loggedIn) {
                     $(".notLoggedIn").removeClass("notLoggedIn");
                 }
-            });
-        }
-        // or check if we come back from the OAuth redirect
-        //
-        else{
-            _doIt();
-        }
+            }}
+        );
     },
 
     loginFirstMessage:function(){

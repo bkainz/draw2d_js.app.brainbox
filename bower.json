@@ -21,7 +21,6 @@
     "google-code-prettify": "^1.0.4",
     "remarkable": "^1.6.2",
     "shifty": "~1.5.2",
-    "remarkable": "^1.6.2",
-    "aws-sdk": "aws-sdk-js#^2.3.7"
+    "remarkable": "^1.6.2"
   }
 }
