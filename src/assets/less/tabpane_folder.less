@@ -1,5 +1,31 @@
 @import "colors.less";
 
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+
+.shake {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+
 .notLoggedIn{
   opacity: 0.2;
   transition: all 2s;
@@ -10,7 +36,7 @@
 
   overflow:auto;
   padding:30px !important;
-  background: @tintColorFolder url(../images/bg.png);
+  background: #c0c0c0 url(../images/bg.png);
   background-size: cover;
 
   .teaser{
@@ -23,7 +49,7 @@
       position: absolute;
       right: 20px;
       top: 20px;
-      color: rgba(255,255,255,0.8);
+      color: @tintColorFolder;
       font-weight: 200;
       font-size: 4vw;
       left: 250px;
@@ -97,7 +123,7 @@
     background: #007300;
   }
   .tile.blue {
-    background: #2672EC;
+    background: #4285f4;
   }
   .tile.blue:hover {
     background: #125acd;

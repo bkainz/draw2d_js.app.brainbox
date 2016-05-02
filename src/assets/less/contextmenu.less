@@ -1,18 +1,5 @@
+@import "colors.less";
 
-
-/*!
- * jQuery contextMenu - Plugin for simple contextMenu handling
- *
- * Version: 1.5.24
- *
- * Authors: Rodney Rehm, Addy Osmani (patches for FF)
- * Web: http://medialize.github.com/jQuery-contextMenu/
- *
- * Licensed under
- *   MIT License http://www.opensource.org/licenses/mit-license
- *   GPL v3 http://opensource.org/licenses/GPL-3.0
- *
- */
 
 .context-menu-list {
   margin:0;
@@ -25,21 +12,20 @@
   list-style-type: none;
 
   border: 1px solid #DDD;
-  background: #EEE;
-
+  background: white;
+  border-left: 2px solid @tintColorEdit;
   -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   -ms-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   -o-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 11px;
+  font-size: 15px;
+  white-space: nowrap;
 }
 
 .context-menu-item {
-  padding: 2px 2px 2px 24px;
-  background-color: #EEE;
+  padding: 5px 5px 5px 24px;
   position: relative;
   -webkit-user-select: none;
   -moz-user-select: -moz-none;
@@ -62,7 +48,8 @@
 
 .context-menu-item.hover {
   cursor: pointer;
-  background-color: #39F;
+  background-color: @tintColorEdit;
+  color:white;
 }
 
 .context-menu-item.disabled {
@@ -90,14 +77,12 @@
     http://css-tricks.com/13224-pseudo-spriting/ to get an idea of how to implement
     .context-menu-item.icon:before {}
  */
-.context-menu-item.icon { min-height: 18px; background-repeat: no-repeat; background-position: 4px 2px; }
-.context-menu-item.icon-edit { background-image: url(images/page_white_edit.png); }
-.context-menu-item.icon-cut { background-image: url(images/cut.png); }
-.context-menu-item.icon-copy { background-image: url(images/page_white_copy.png); }
-.context-menu-item.icon-paste { background-image: url(images/page_white_paste.png); }
-.context-menu-item.icon-delete { background-image: url(images/page_white_delete.png); }
-.context-menu-item.icon-add { background-image: url(images/page_white_add.png); }
-.context-menu-item.icon-quit { background-image: url(images/door.png); }
+.context-menu-item.icon { min-height: 18px;}
+.context-menu-item.icon:before {
+  position:relative;
+  left: -15px;
+  font-size:19px;
+}
 
 /* vertically align inside labels */
 .context-menu-input > label > * { vertical-align: top; }

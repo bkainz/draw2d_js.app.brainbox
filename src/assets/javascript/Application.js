@@ -114,6 +114,7 @@ var Application = Class.extend(
 
     fileNew: function(shapeTemplate)
     {
+        $("#edit_tab a").click();
         this.view.clear();
         this.localStorage.removeItem("json");
         this.currentFileHandle = {
@@ -123,6 +124,7 @@ var Application = Class.extend(
             var reader = new draw2d.io.json.Reader();
             reader.unmarshal(this.view, shapeTemplate);
         }
+
     },
 
 
@@ -183,7 +185,11 @@ var Application = Class.extend(
     },
 
     loginFirstMessage:function(){
-        $.bootstrapGrowl("You must first login into GITHUB to use this functionality", {
+        $("#appLogin").addClass("shake");
+        window.setTimeout(function(){
+            $("#appLogin").removeClass("shake");
+        },500);
+        $.bootstrapGrowl("You must first sign in to use this functionality", {
             type: 'danger',
             align: 'center',
             width: 'auto',

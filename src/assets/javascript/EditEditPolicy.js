@@ -4,6 +4,8 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
     init:function()
     {
       this._super();
+      this.mouseMoveProxy = $.proxy(this._onMouseMoveCallback, this);
+      this.configIcon=null;
     },
 
     /**
@@ -21,5 +23,81 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
     onClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
     {
         // do nothing in edit
+    },
+
+
+    onInstall:function(canvas)
+    {
+        var _this = this;
+
+        // provide configuration menu if the mouse is close to a shape
+        //
+        canvas.on("mousemove", this.mouseMoveProxy);
+
+        $("#figureConfigDialog .figureAddLabel").on("click",function(){
+            _this._attachLabel(_this.configFigure);
+        });
+    },
+
+
+    onUninstall:function(canvas)
+    {
+        canvas.off(this.mouseMoveProxy);
+        $("#figureConfigDialog .figureAddLabel").off("click");
+    },
+
+    _onMouseMoveCallback:function(emitter, event){
+        var hit = null;
+        var _this = this;
+
+        emitter.getFigures().each(function(index, figure){
+            if(figure.hitTest(event.x,event.y, 30)){
+                hit = figure;
+                return false;
+            }
+        });
+
+        if(hit!==null){
+            var pos = hit.getBoundingBox().getTopLeft();
+            pos = emitter.fromCanvasToDocumentCoordinate(pos.x, pos.y);
+            pos.y -=30;
+
+            if(_this.configIcon===null) {
+                _this.configIcon = $("<div class='ion-gear-a' id='configMenuIcon'></div>");
+                $("body").append(_this.configIcon);
+                $("#figureConfigDialog").hide();
+                _this.configIcon.on("click",function(){
+                    $("#figureConfigDialog").show().css({top: pos.y, left: pos.x, position:'absolute'});
+                    _this.configFigure = hit;
+                    if(_this.configIcon!==null) {
+                        _this.configIcon.remove();
+                        _this.configIcon = null;
+                    }
+                });
+            }
+            _this.configIcon.css({top: pos.y, left: pos.x, position:'absolute'});
+        }
+        else{
+            if(_this.configIcon!==null) {
+                var x=_this.configIcon;
+                _this.configIcon = null;
+                x.fadeOut(500, function(){ x.remove(); });
+            }
+        }
+    },
+
+
+    _attachLabel:function(figure)
+    {
+        var text = prompt("Label");
+        if(text) {
+            var label = new draw2d.shape.basic.Label({text:text, stroke:0, x:-20, y:-40});
+            var locator = new draw2d.layout.locator.DraggableLocator();
+            label.installEditor(new draw2d.ui.LabelInplaceEditor());
+            this.configFigure.add(label,locator);
+        }
+        $("#figureConfigDialog").hide();
     }
+
+
 });
