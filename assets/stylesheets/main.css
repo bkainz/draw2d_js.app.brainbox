@@ -336,6 +336,28 @@
   background: #b8431f;
 }
 
+#configMenuIcon {
+  font-size: 25px;
+  cursor: pointer;
+}
+#configMenuIcon:hover {
+  color: #1c9bab;
+}
+#figureConfigDialog {
+  display: none;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-left: 3px solid #1c9bab;
+}
+#figureConfigDialog .figureAddLabel {
+  font-size: 14px;
+  font-weight: 200;
+  cursor: pointer;
+}
+#figureConfigDialog .figureAddLabel:hover {
+  color: #1c9bab;
+}
 .pallette_item {
   text-align: center;
 }

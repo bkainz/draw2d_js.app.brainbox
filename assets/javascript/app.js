@@ -29,7 +29,9 @@ var Application = Class.extend(
 
         }
 
-        this.storage = new BackendStorage();
+        this.currentFileHandle= {
+            title: "Untitled"+conf.fileSuffix
+        };
         this.palette = new Palette(this);
         this.view    = new View(this, "draw2dCanvas");
         this.loggedIn = false;
@@ -82,7 +84,7 @@ var Application = Class.extend(
 
     login:function()
     {
-        window.location.href='https://github.com/login/oauth/authorize?client_id='+conf.githubClientId+'&scope=public_repo';
+        window.location.href=conf.backend+"oauth2.php";
     },
 
     getParam: function( name )
@@ -112,9 +114,8 @@ var Application = Class.extend(
     {
         this.view.clear();
         this.localStorage.removeItem("json");
-        this.storage.currentFileHandle = null;
-        this.documentConfiguration = {
-            baseClass:"draw2d.SetFigure"
+        this.currentFileHandle = {
+            title: "Untitled"+conf.fileSuffix
         };
         if(shapeTemplate){
             var reader = new draw2d.io.json.Reader();
@@ -130,13 +131,7 @@ var Application = Class.extend(
             return;
         }
 
-
-        if(this.storage.currentFileHandle===null) {
-            new FileSaveAs(this.storage).show(this.view);
-        }
-        else{
-            new FileSave(this.storage).show(this.view);
-        }
+        new FileSave(this.currentFileHandle).show(this.view);
     },
 
 
@@ -148,7 +143,7 @@ var Application = Class.extend(
         }
 
         $("#leftTabStrip .edit").click();
-        new FileOpen(this.storage).show(
+        new FileOpen(this.currentFileHandle).show(
 
             // success callback
             $.proxy(function(fileData){
@@ -169,43 +164,20 @@ var Application = Class.extend(
 
     autoLogin:function()
     {
+
         var _this = this;
-        var _doIt=function() {
-            var code = _this.getParam("code");
-            if (code !== null) {
-                $.getJSON(conf.githubAuthenticateCallback + code, function (data) {
-                    _this.storage.connect(data.token, function (success) {
-                        if (success) {
-                            _this.localStorage["token"] = data.token;
-                            _this.loggedIn = success;
-                            $(".notLoggedIn").removeClass("notLoggedIn");
-                        }
-                        else {
-                            _this.localStorage.removeItem("token");
-                        }
-
-                    });
-                });
-            }
-        };
-
-        var token = this.localStorage["token"];
-        if(token){
-            _this.storage.connect(token, function(success){
-                _this.loggedIn = success;
-                if(!success){
-                    _doIt();
-                }
-                else{
+        $.ajax({
+            url:conf.backend +"isLoggedIn.php" ,
+            xhrFields: {
+                withCredentials: true
+             },
+            success:function(data){
+                _this.loggedIn = data==="true";
+                if (_this.loggedIn) {
                     $(".notLoggedIn").removeClass("notLoggedIn");
                 }
-            });
-        }
-        // or check if we come back from the OAuth redirect
-        //
-        else{
-            _doIt();
-        }
+            }}
+        );
     },
 
     loginFirstMessage:function(){
@@ -222,120 +194,18 @@ var Application = Class.extend(
 });
 
 ;
-BackendStorage = Class.extend({
+var conf={
+    fileSuffix : ".circuit"
+};
 
-    /**
-     * @constructor
-     * 
-     */
-    init:function(){
-        this.octo=null;
-        this.repositories = null;
-        this.currentRepository = null;
-        this.currentPath = "";
-        this.currentFileHandle = null;
-    },
-    
-
-    connect: function(token, callback)
-    {
-        var _this = this;
-        this.octo = new Octokat({
-            token: token
-        });
-
-        this.octo.user.fetch(function(param0, user){
-            if(user){
-               _this.octo.repos(conf.defaultUser, conf.defaultRepo).fetch().then(function(repo){
-                   _this.currentRepository = repo;
-                   _this.currentPath = conf.defaultPath;
-                    callback(true);
-               });
-
-            }
-            else {
-                callback(false);
-            }
-        });
-    },
-
-
-    load: function(repository, path, successCallback)
-    {
-        var _this = this;
-        // anonymous usage. Not authenticated
-        //
-        if (this.octo === null) {
-            var octo = new Octokat();
-            var repo = octo.repos(conf.defaultUser, conf.defaultRepo);
-            repo.contents(path).read()
-                .then(function(contents) {
-                    successCallback(contents);
-                });
-        }
-        // Authenticated usage
-        //
-        else {
-            this.octo.user.repos.fetch(function (param, repos) {
-                _this.repositories = repos;
-                _this.currentRepository = $.grep(_this.repositories, function (repo) {
-                    return repo.fullName === repository;
-                })[0];
-                _this.currentPath = _this.dirname(path);
-                _this.currentRepository
-                    .contents(path)
-                    .fetch()
-                    .then(function (info) {
-                        _this.currentFileHandle = {
-                            path: path,
-                            title: _this.basename(path),
-                            sha: info.sha,
-                            content: atob(info.content)
-                        };
-                        successCallback(_this.currentFileHandle.content);
-                    });
-            });
-        }
-    },
-
-
-    dirname: function(path)
-    {
-        if (path.length === 0)
-            return "";
-
-        var segments = path.split("/");
-        if (segments.length <= 1)
-            return "";
-        return segments.slice(0, -1).join("/");
-    },
-
-
-    basename:function(path)
-    {
-        return path.split(/[\\/]/).pop();
-    }
-
-});
-;
-var conf=null;
 if (window.location.hostname === "localhost") {
-    conf = {
-        githubClientId: "f2b699f46d49387556bc",
-        githubAuthenticateCallback: "http://localhost/~andherz/githubCallback.php?app=circuit&code="
-    };
+    conf.backend= "http://localhost/~andherz/backend/";
 }
 else{
-    conf = {
-        githubClientId: "dd03c01c22566f3490a2",
-        githubAuthenticateCallback: "http://www.draw2d.org/githubCallback.php?app=circuit&code="
-    };
+    conf.backend= "http://draw2d.org/backend/";
 }
 
-conf.fileSuffix  = ".dsim";
-conf.defaultUser = "freegroup";
-conf.defaultRepo = "draw2d_js.app.digital_training_studio";
-conf.defaultPath  = "circuits";
+
 
 ;
 var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
@@ -453,6 +323,59 @@ var SimulationEditPolicy = draw2d.policy.canvas.ReadOnlySelectionPolicy.extend({
 
     /**
      * @method
+     *
+     * @param {draw2d.Canvas} canvas
+     * @param {Number} x the x-coordinate of the mouse down event
+     * @param {Number} y the y-coordinate of the mouse down event
+     * @param {Boolean} shiftKey true if the shift key has been pressed during this event
+     * @param {Boolean} ctrlKey true if the ctrl key has been pressed during the event
+     */
+    onMouseDown: function(canvas, x, y, shiftKey, ctrlKey) {
+       var figure = canvas.getBestFigure(x, y);
+
+        // may the figure is assigned to a composite. In this case the composite can
+        // override the event receiver
+        while (figure !== null) {
+            var delegated = figure.getSelectionAdapter()();
+            if (delegated === figure) {
+                break;
+            }
+            figure = delegated;
+        }
+
+        // ignore ports since version 6.1.0. This is handled by the ConnectionCreatePolicy
+        //
+        if (figure instanceof draw2d.Port) {
+            return;// silently
+        }
+
+        this.mouseDownElement = figure;
+
+        if (this.mouseDownElement !== null) {
+            this.mouseDownElement.fireEvent("mousedown", {x: x, y: y, shiftKey: shiftKey, ctrlKey: ctrlKey});
+        }
+    },
+
+    /**
+     * @method
+     *
+     * @param {draw2d.Canvas} canvas
+     * @param {Number} x the x-coordinate of the mouse down event
+     * @param {Number} y the y-coordinate of the mouse down event
+     * @param {Boolean} shiftKey true if the shift key has been pressed during this event
+     * @param {Boolean} ctrlKey true if the ctrl key has been pressed during the event
+     */
+    onMouseUp: function(canvas, x,y, shiftKey, ctrlKey)
+    {
+        if(this.mouseDownElement!==null){
+            this.mouseDownElement.fireEvent("mouseup", {x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
+        }
+        this.mouseDownElement = null;
+    },
+
+
+    /**
+     * @method
      * Called by the canvas if the user click on a figure.
      *
      * @param {draw2d.Figure} the figure under the click event. Can be null
@@ -502,6 +425,14 @@ var View = draw2d.Canvas.extend({
         this.simulate = false;
         this.animationFrameFunc = $.proxy(this._calculate,this);
 
+
+        // configuration icon to open the config-panel of a shape
+        // dynamic floating to the current shape which are close to the cursor
+        //
+        this.configIcon=null;
+        // the figure which is related to the current open config dialog
+        //
+        this.configFigure=null;
 
         // register this class as event listener for the canvas
         // CommandStack. This is required to update the state of
@@ -635,6 +566,113 @@ var View = draw2d.Canvas.extend({
             $("#simulationStart").removeClass("disabled");
         });
 
+        this.on("contextmenu", function(emitter, event){
+            var figure = _this.getBestFigure(event.x, event.y);
+
+            if(figure!==null){
+                var x = event.x;
+                var y = event.y;
+
+                var pathToFile   = "https://github.com/freegroup/draw2d_js.shapes/blob/master/"+ eval(figure.NAME+".github");
+                var pathToDesign = "http://freegroup.github.io/draw2d_js.app.shape_designer/#file="+ figure.NAME+".shape";
+                $.contextMenu({
+                    selector: 'body',
+                    events:
+                    {
+                        hide:function(){ $.contextMenu( 'destroy' ); }
+                    },
+                    callback: $.proxy(function(key, options)
+                    {
+                        switch(key){
+                            case "code":
+                                new CodeDialog().show( eval(figure.NAME+".logic"));
+                                break;
+                            case "design":
+                                window.open(pathToDesign);
+                                break;
+                            case "help":
+                                new MarkdownDialog().show( eval(figure.NAME+".markdown"));
+                                break;
+                            case "bug":
+                                var pathToIssues = "https://github.com/freegroup/draw2d_js.shapes/issues/new";
+                                var createUrl = pathToIssues+"?title=Error in shape '"+figure.NAME+"'&body="+encodeURIComponent("I found a bug in "+figure.NAME+".\n\nError Description here...\n\n\nLinks to the code;\n[GitHub link]("+pathToFile+")\n[Designer Link]("+pathToDesign+")\n");
+                                window.open(createUrl);
+                                break;
+                            case "delete":
+                                var cmd = new draw2d.command.CommandDelete(figure);
+                                _this.getCommandStack().execute(cmd);
+                                break;
+                            default:
+                                break;
+                        }
+
+                    },this),
+                    x:x,
+                    y:y,
+                    items:
+                    {
+                        "code":    {name: "Show Code"},
+                        "design":  {name: "Open in Designer"},
+                        "help":    {name: "Help"},
+                        "bug":     {name: "Report a Bug"},
+                        "sep1":  "---------",
+                        "delete":{name: "Delete"}
+                    }
+                });
+            }
+        });
+
+        // hide the figure configuration dialog if the user clicks inside the canvas
+        //
+        this.on("click", function(){
+            $("#figureConfigDialog")
+                .hide();
+        });
+
+        // provide configuration menu if the mouse is close to a shape
+        //
+        this.on("mousemove", function(emitter, event){
+            var hit = null;
+
+            _this.getFigures().each(function(index, figure){
+                if(figure.hitTest(event.x,event.y, 30)){
+                    hit = figure;
+                    return false;
+                }
+            });
+
+            if(hit!==null){
+                var pos = hit.getBoundingBox().getTopLeft();
+                pos = _this.fromCanvasToDocumentCoordinate(pos.x, pos.y);
+                pos.y -=30;
+
+                if(_this.configIcon===null) {
+                    _this.configIcon = $("<div class='ion-gear-a' id='configMenuIcon'></div>");
+                    $("body").append(_this.configIcon);
+                    $("#figureConfigDialog").hide();
+                    _this.configIcon.on("click",function(){
+                        $("#figureConfigDialog").show().css({top: pos.y, left: pos.x, position:'absolute'});
+                        _this.configFigure = hit;
+                        if(_this.configIcon!==null) {
+                            _this.configIcon.remove();
+                            _this.configIcon = null;
+                        }
+                    });
+                }
+                _this.configIcon.css({top: pos.y, left: pos.x, position:'absolute'});
+            }
+            else{
+                if(_this.configIcon!==null) {
+                    var x=_this.configIcon;
+                    _this.configIcon = null;
+                    x.fadeOut(500, function(){ x.remove(); });
+                }
+            }
+        });
+
+        $("#figureConfigDialog .figureAddLabel").on("click",function(){
+            _this.attachLabel(_this.configFigure);
+        });
     },
 
     /**
@@ -659,56 +697,6 @@ var View = draw2d.Canvas.extend({
         // create a command for the undo/redo support
         var command = new draw2d.command.CommandAdd(this, figure, x, y);
         this.getCommandStack().execute(command);
-
-        figure.on("contextmenu", function(){
-            var pathToFile   = "https://github.com/freegroup/draw2d_js.shapes/blob/master/"+ eval(figure.NAME+".github");
-            var pathToDesign = "http://freegroup.github.io/draw2d_js.app.shape_designer/#file="+ figure.NAME+".shape";
-            $.contextMenu({
-                selector: 'body',
-                events:
-                {
-                    hide:function(){ $.contextMenu( 'destroy' ); }
-                },
-                callback: $.proxy(function(key, options)
-                {
-                    switch(key){
-                        case "code":
-                            new CodeDialog().show( eval(figure.NAME+".logic"));
-                            break;
-                        case "design":
-                            window.open(pathToDesign);
-                            break;
-                        case "help":
-                            new MarkdownDialog().show( eval(figure.NAME+".markdown"));
-                            break;
-                        case "bug":
-                            var pathToIssues = "https://github.com/freegroup/draw2d_js.shapes/issues/new";
-                            var createUrl = pathToIssues+"?title=Error in shape '"+figure.NAME+"'&body="+encodeURIComponent("I found a bug in "+figure.NAME+".\n\nError Description here...\n\n\nLinks to the code;\n[GitHub link]("+pathToFile+")\n[Designer Link]("+pathToDesign+")\n");
-                            window.open(createUrl);
-                            break;
-                        case "delete":
-                            var cmd = new draw2d.command.CommandDelete(figure);
-                            _this.getCommandStack().execute(cmd);
-                            break;
-                        default:
-                            break;
-                    }
-
-                },this),
-                x:x,
-                y:y,
-                items:
-                {
-                    "code":    {name: "Show Code"},
-                    "design":  {name: "Open in Designer"},
-                    "help":    {name: "Help"},
-                    "bug":     {name: "Report a Bug"},
-                    "sep1":  "---------",
-                    "delete":{name: "Delete"}
-                }
-            });
-
-        });
     },
 
 
@@ -784,7 +772,23 @@ var View = draw2d.Canvas.extend({
             $("#editRedo").removeClass("disabled");
         }
 
+    },
+
+    attachLabel:function(figure)
+    {
+        var text = prompt("Label");
+        if(text) {
+            var label = new draw2d.shape.basic.Label({text:text, stroke:0, x:-20, y:-40});
+            var locator = new draw2d.layout.locator.DraggableLocator();
+            label.installEditor(new draw2d.ui.LabelInplaceEditor());
+            this.configFigure.add(label,locator);
+        }
+        $("#figureConfigDialog").hide();
     }
+
+
+
+
 });
 
 ;
@@ -840,9 +844,9 @@ FileOpen = Class.extend({
      * @constructor
      *
      */
-    init:function(storage){
-        this.storage=storage;
-
+    init:function(fileHandle)
+    {
+        this.currentFileHandle=fileHandle;
     },
 
     /**
@@ -859,163 +863,81 @@ FileOpen = Class.extend({
     {
         $('#githubFileSelectDialog').modal('show');
 
-        // Select first a ROOT repository if we didn'T have before
-        if(this.storage.currentRepository===null) {
-            this.fetchRepositories(successCallback);
-        }
-        // else reopen the already selected directory
-        else{
-            this.fetchPathContent(this.storage.currentPath, successCallback);
-        }
+        this.fetchPathContent( successCallback);
     },
 
-    /**
-     * @private
-     *
-     * @param successCallback
-     * @param errorCallback
-     * @param abortCallback
-     */
-    fetchRepositories: function(successCallback)
+    fetchPathContent: function( successCallback )
     {
         var _this = this;
 
-        // fetch all repositories of the related user
-        //
-        this.storage.octo.user.repos.fetch(function(param, repos){
-
-            repos.sort(function(a, b)
-            {
-                if ( a.name.toLowerCase() < b.name.toLowerCase() )
-                    return -1;
-                if ( a.name.toLowerCase() > b.name.toLowerCase() )
-                    return 1;
-                return 0;
-            });
-
-            _this.storage.repositories = repos;
-            var compiled = Hogan.compile(
-                '         {{#repos}}'+
-                '         <a href="#" class="list-group-item repository text-nowrap" data-type="repository" data-id="{{id}}">'+
-                '         <span class="fa fa-github"></span>'+
-                '         {{{name}}}'+
-                '         </a>'+
-                '         {{/repos}}'
-            );
-
-            var output = compiled.render({
-                repos: repos
-            });
-            console.log("here");
-            $("#githubFileSelectDialog .githubNavigation").html($(output));
-            $("#githubFileSelectDialog .githubNavigation").scrollTop(0);
-
-            $(".repository").on("click", function(){
-                var $this = $(this);
-                var repositoryId = $this.data("id");
-                _this.storage.currentRepository = $.grep(_this.storage.repositories, function(repo){return repo.id === repositoryId;})[0];
-                _this.fetchPathContent("",successCallback);
-            });
-        });
-    },
-
-    fetchPathContent: function( newPath, successCallback )
-    {
-        var _this = this;
-
-        this.storage.currentRepository.contents(newPath).fetch(function(param, files){
-            // sort the reusult
-            // Directories are always on top
-            //
-            files.sort(function(a, b)
-            {
-                if(a.type===b.type) {
-                    if (a.name.toLowerCase() < b.name.toLowerCase())
-                        return -1;
-                    if (a.name.toLowerCase() > b.name.toLowerCase())
-                        return 1;
-                    return 0;
-                }
-                if(a.type==="dir"){
-                    return -1;
-                }
-                return 1;
-            });
-
-            _this.storage.currentPath = newPath;
-            var compiled = Hogan.compile(
-                '         <a href="#" class="list-group-item githubPath" data-type="{{parentType}}" data-path="{{parentPath}}" >'+
-                '             <span class="glyphicon glyphicon-menu-left"></span>'+
-                '             ..'+
-                '         </a>'+
-                '         {{#files}}'+
-                '           <a href="#" data-draw2d="{{draw2d}}" class="list-group-item githubPath text-nowrap" data-type="{{type}}" data-path="{{currentPath}}{{name}}" data-id="{{id}}" data-sha="{{sha}}">'+
-                '              <span class="{{icon}}"></span>'+
-                '              {{{name}}}'+
-                '           </a>'+
-                '         {{/files}}'
-            );
-
-
-            var parentPath =  _this.dirname(newPath);
-            var output = compiled.render({
-                parentType: parentPath===newPath?"repository":"dir",
-                parentPath: parentPath,
-                currentPath: _this.storage.currentPath.length===0?_this.storage.currentPath:_this.storage.currentPath+"/",
-                files: files,
-                draw2d:function(){
-                    return this.name.endsWith(conf.fileSuffix);
+        $.ajax({
+                url:conf.backend +"file_list.php" ,
+                xhrFields: {
+                    withCredentials: true
                 },
-                icon: function(){
-                    if(this.name.endsWith(conf.fileSuffix)){
-                        return "fa fa-object-group";
-                    }
-                    return this.type==="dir"?"fa fa-folder-o":"fa fa-file-o";
+                success:function(response) {
+                    var files = response.files;
+                    // sort the reusult
+                    // Directories are always on top
+                    //
+                    files.sort(function (a, b) {
+                        if (a.type === b.type) {
+                            if (a.name.toLowerCase() < b.name.toLowerCase())
+                                return -1;
+                            if (a.name.toLowerCase() > b.name.toLowerCase())
+                                return 1;
+                            return 0;
+                        }
+                        if (a.type === "dir") {
+                            return -1;
+                        }
+                        return 1;
+                    });
+
+                    var compiled = Hogan.compile(
+                        '         {{#files}}' +
+                        '           <a href="#" data-draw2d="{{draw2d}}" class="list-group-item githubPath text-nowrap" data-path="{{name}}" data-id="{{id}}">' +
+                        '              <span class="fa fa-file-o"></span>' +
+                        '              {{{name}}}' +
+                        '           </a>' +
+                        '         {{/files}}'
+                    );
+                    var output = compiled.render({
+                        files: files,
+                        draw2d: function () {
+                            return this.id.endsWith(conf.fileSuffix);
+                        }
+                    });
+
+                    $("#githubFileSelectDialog .githubNavigation").html($(output));
+                    $("#githubFileSelectDialog .githubNavigation").scrollTop(0);
+
+
+                    $('.githubPath[data-draw2d="true"]').on("click", function () {
+                        var id   = $(this).data("id");
+                        var name = $(this).data("name");
+                        $.ajax({
+                                url: conf.backend + "file_get.php",
+                                method: "POST",
+                                xhrFields: {
+                                    withCredentials: true
+                                },
+                                data:{
+                                    id:id
+                                }
+                            }
+                        ).done(function(content){
+                                console.log(content);
+                                _this.currentFileHandle.title=name;
+                                successCallback(content);
+                                $('#githubFileSelectDialog').modal('hide');
+                            }
+                        );
+
+                    });
                 }
-            });
-
-            $("#githubFileSelectDialog .githubNavigation").html($(output));
-            $("#githubFileSelectDialog .githubNavigation").scrollTop(0);
-
-            $(".githubPath[data-type='repository']").on("click", function(){
-                _this.fetchRepositories(successCallback);
-            });
-
-            $(".githubPath[data-type='dir']").on("click", function(){
-                _this.fetchPathContent( $(this).data("path"), successCallback);
-            });
-
-            $('.githubPath*[data-draw2d="true"][data-type="file"]').on("click", function(){
-                var path = $(this).data("path");
-                var sha  = $(this).data("sha");
-                _this.storage.currentRepository.contents(path).read(function(param, content){
-                    _this.storage.currentFileHandle={
-                        path : path,
-                        title: path.split(/[\\/]/).pop(), // basename
-                        sha  : sha,
-                        content : content
-                    };
-                    successCallback(content);
-                    $('#githubFileSelectDialog').modal('hide');
-                });
-            });
         });
-    },
-
-
-
-
-    dirname: function(path)
-    {
-        if (path.length === 0)
-            return "";
-
-        var segments = path.split("/");
-        if (segments.length <= 1)
-            return "";
-        return segments.slice(0, -1).join("/");
     }
-
 });
 ;
 FileSave = Class.extend({
@@ -1024,8 +946,8 @@ FileSave = Class.extend({
      * @constructor
      *
      */
-    init:function(storage){
-        this.storage=storage;
+    init:function(fileHandler){
+        this.currentFileHandle = fileHandler;
     },
 
     /**
@@ -1042,13 +964,7 @@ FileSave = Class.extend({
     {
         var _this = this;
 
-        if(this.storage.currentFileHandle===null){
-            this.storage.currentFileHandle= {
-                title:"DocumentName",
-                sha:null
-            };
-        }
-        $("#githubSaveFileDialog .githubFileName").val(_this.storage.currentFileHandle.title);
+        $("#githubSaveFileDialog .githubFileName").val(_this.currentFileHandle.title);
 
         $('#githubSaveFileDialog').on('shown.bs.modal', function () {
             $(this).find('input:first').focus();
@@ -1060,239 +976,24 @@ FileSave = Class.extend({
         $("#githubSaveFileDialog .okButton").on("click", function () {
             var writer = new draw2d.io.json.Writer();
             writer.marshal(canvas, function (json, base64) {
-                var config = {
-                    message: $("#githubSaveFileDialog .githubCommitMessage").val(),
-                    content: base64,
-                    sha: _this.storage.currentFileHandle.sha
-                };
-
-                _this.storage.currentRepository.contents(_this.storage.currentFileHandle.path).add(config)
-                    .then(function (info) {
-                        _this.storage.currentFileHandle.sha = info.content.sha;
-                        $('#githubSaveFileDialog').modal('hide');
-                    });
-            });
-        });
-
-    }
-
-});
-;
-FileSaveAs = Class.extend({
-
-    /**
-     * @constructor
-     *
-     */
-    init:function(storage)
-    {
-        this.storage=storage;
-
-        this.sha = null;
-    },
-
-    /**
-     * @method
-     *
-     * Open the file picker and load the selected file.
-     *
-     * @since 4.0.0
-     */
-    show: function(canvas)
-    {
-        var _this = this;
-
-        if(this.storage.currentFileHandle===null){
-            this.storage.currentFileHandle = {
-                title:"DocumentName"+conf.fileSuffix,
-                sha:null
-            };
-        }
-        // Select first a ROOT repository if we didn'T have before
-        if(_this.storage.currentRepository===null) {
-            $("#githubFileSaveAsDialog .okButton").prop( "disabled", true );
-            _this.fetchRepositories();
-        }
-        // else reopen the already selected directory
-        else{
-            $("#githubFileSaveAsDialog .okButton").prop( "disabled", false );
-            _this.fetchPathContent(_this.storage.currentPath);
-        }
-
-        $('#githubFileSaveAsDialog').modal('show');
-
-        $("#githubFileSaveAsDialog .githubFileName").val(_this.storage.currentFileHandle.title);
-
-        $('#githubFileSaveAsDialog').off('shown.bs.modal').on('shown.bs.modal', function () {
-            $(this).find('input:first').focus();
-        });
-        $("#githubFileSaveAsDialog").modal("show");
-
-        // Button: Commit to GitHub
-        //
-        $("#githubFileSaveAsDialog .okButton").off('click').on("click", function () {
-            var writer = new draw2d.io.json.Writer();
-            writer.marshal(canvas, function (json, base64) {
-                var title = $("#githubFileSaveAsDialog .githubFileName").val();
-                // get the SHA if any exists....or null
-                var sha  =$("*[data-title='"+title+"']").data("sha");
-                var config = {
-                    message: $("#githubSaveFileDialog .githubCommitMessage").val(),
-                    content: base64,
-                    sha: sha
-                };
-
-                var path =(_this.storage.currentPath.length===0)?title:_this.storage.currentPath+"/"+title;
-                _this.storage.currentRepository.contents(path).add(config)
-                    .then(function (info) {
-                        _this.storage.currentFileHandle = {
-                            sha  : info.content.sha,
-                            path : path,
-                            title: title,
-                            content: json
-                        };
-                        $('#githubFileSaveAsDialog').modal('hide');
-                    });
-            });
-        });
-   },
-
-    /**
-     * @private
-     *
-     */
-    fetchRepositories: function()
-    {
-        var _this = this;
-
-        // fetch all repositories of the related user
-        //
-        this.storage.octo.user.repos.fetch(function(param, repos){
-
-            repos.sort(function(a, b)
-            {
-                if ( a.name.toLowerCase() < b.name.toLowerCase() )
-                    return -1;
-                if ( a.name.toLowerCase() > b.name.toLowerCase() )
-                    return 1;
-                return 0;
-            });
-
-            _this.storage.repositories = repos;
-            var compiled = Hogan.compile(
-                '         {{#repos}}'+
-                '         <a  href="#" class="list-group-item repository text-nowrap" data-type="repository" data-id="{{id}}">'+
-                '         <span title="GitHub Repository" class="fa fa-github"></span>'+
-                '         {{{name}}}'+
-                '         </a>'+
-                '         {{/repos}}'
-            );
-
-            var output = compiled.render({
-                repos: repos
-            });
-            $("#githubFileSaveAsDialog .githubNavigation").html($(output));
-            $("#githubFileSaveAsDialog .githubNavigation").scrollTop(0);
-
-            $(".repository").on("click", function(){
-                var $this = $(this);
-                var repositoryId = $this.data("id");
-                _this.storage.currentRepository = $.grep(_this.storage.repositories, function(repo){return repo.id === repositoryId;})[0];
-                _this.fetchPathContent("");
-            });
-        });
-    },
-
-    fetchPathContent: function( newPath )
-    {
-        var _this = this;
-
-        this.storage.currentRepository.contents(newPath).fetch(function(param, files){
-            // sort the result
-            // Directories are always on top
-            //
-            files.sort(function(a, b)
-            {
-                if(a.type===b.type) {
-                    if (a.name.toLowerCase() < b.name.toLowerCase())
-                        return -1;
-                    if (a.name.toLowerCase() > b.name.toLowerCase())
-                        return 1;
-                    return 0;
-                }
-                if(a.type==="dir"){
-                    return -1;
-                }
-                return 1;
-            });
-
-            _this.storage.currentPath = newPath;
-            var compiled = Hogan.compile(
-                '         <a href="#" class="list-group-item githubPath" data-type="{{parentType}}" data-path="{{parentPath}}" >'+
-                '             <span class="glyphicon glyphicon-menu-left"></span>'+
-                '             ..'+
-                '         </a>'+
-                '         {{#files}}'+
-                '           <a href="#" data-draw2d="{{draw2d}}" class="list-group-item githubPath text-nowrap" data-type="{{type}}" data-path="{{currentPath}}{{name}}" data-title="{{name}}" data-id="{{id}}" data-sha="{{sha}}">'+
-                '              <span class="{{icon}}"></span>'+
-                '              {{{name}}}'+
-                '           </a>'+
-                '         {{/files}}'
-            );
-
-
-            var parentPath =  _this.dirname(newPath);
-            var output = compiled.render({
-                parentType: parentPath===newPath?"repository":"dir",
-                parentPath: parentPath,
-                currentPath: _this.storage.currentPath.length===0?_this.storage.currentPath:_this.storage.currentPath+"/",
-                files: files,
-                draw2d:function(){
-                    return this.name.endsWith(conf.fileSuffix);
-                },
-                icon: function(){
-                    if(this.name.endsWith(conf.fileSuffix)){
-                        return "fa fa-object-group";
+                $.ajax({
+                        url: conf.backend + "file_save.php",
+                        method: "POST",
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        data:{
+                            id:$("#githubSaveFileDialog .githubFileName").val(),
+                            content:JSON.stringify(json, undefined, 2)
+                        }
                     }
-                    return this.type==="dir"?"fa fa-folder-o":"fa fa-file-o";
-                }
-            });
-            $("#githubFileSaveAsDialog .githubNavigation").html($(output));
-            $("#githubFileSaveAsDialog .githubNavigation").scrollTop(0);
+                ).done(function(){
+                        $('#githubSaveFileDialog').modal('hide');
+                });
 
-            //we are in a folder. Create of a file is possible now
-            //
-            $("#githubFileSaveAsDialog .okButton").prop( "disabled", false );
-
-            $(".githubPath[data-type='repository']").on("click", function(){
-                _this.fetchRepositories();
-            });
-
-            $(".githubPath[data-type='dir']").on("click", function(){
-                _this.fetchPathContent( $(this).data("path"));
-            });
-
-            $('.githubPath*[data-draw2d="true"][data-type="file"]').on("click", function(){
-                var path = $(this).data("path");
-                var sha  = $(this).data("sha");
-                var title= path.split(/[\\/]/).pop(); // basename
-                $("#githubFileSaveAsDialog .githubFileName").val(title);
             });
         });
-    },
 
-
-
-
-    dirname: function(path)
-    {
-        if (path.length === 0)
-            return "";
-
-        var segments = path.split("/");
-        if (segments.length <= 1)
-            return "";
-        return segments.slice(0, -1).join("/");
     }
 
 });
