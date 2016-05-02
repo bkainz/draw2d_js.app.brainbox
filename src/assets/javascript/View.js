@@ -21,6 +21,14 @@ var View = draw2d.Canvas.extend({
         this.animationFrameFunc = $.proxy(this._calculate,this);
 
 
+        // configuration icon to open the config-panel of a shape
+        // dynamic floating to the current shape which are close to the cursor
+        //
+        this.configIcon=null;
+        // the figure which is related to the current open config dialog
+        //
+        this.configFigure=null;
+
         // register this class as event listener for the canvas
         // CommandStack. This is required to update the state of
         // the Undo/Redo Buttons.
@@ -209,6 +217,57 @@ var View = draw2d.Canvas.extend({
             }
         });
 
+        // hide the figure configuration dialog if the user clicks inside the canvas
+        //
+        this.on("click", function(){
+            $("#figureConfigDialog")
+                .hide();
+        });
+
+        // provide configuration menu if the mouse is close to a shape
+        //
+        this.on("mousemove", function(emitter, event){
+            var hit = null;
+
+            _this.getFigures().each(function(index, figure){
+                if(figure.hitTest(event.x,event.y, 30)){
+                    hit = figure;
+                    return false;
+                }
+            });
+
+            if(hit!==null){
+                var pos = hit.getBoundingBox().getTopLeft();
+                pos = _this.fromCanvasToDocumentCoordinate(pos.x, pos.y);
+                pos.y -=30;
+
+                if(_this.configIcon===null) {
+                    _this.configIcon = $("<div class='ion-gear-a' id='configMenuIcon'></div>");
+                    $("body").append(_this.configIcon);
+                    $("#figureConfigDialog").hide();
+                    _this.configIcon.on("click",function(){
+                        $("#figureConfigDialog").show().css({top: pos.y, left: pos.x, position:'absolute'});
+                        _this.configFigure = hit;
+                        if(_this.configIcon!==null) {
+                            _this.configIcon.remove();
+                            _this.configIcon = null;
+                        }
+                    });
+                }
+                _this.configIcon.css({top: pos.y, left: pos.x, position:'absolute'});
+            }
+            else{
+                if(_this.configIcon!==null) {
+                    var x=_this.configIcon;
+                    _this.configIcon = null;
+                    x.fadeOut(500, function(){ x.remove(); });
+                }
+            }
+        });
+
+        $("#figureConfigDialog .figureAddLabel").on("click",function(){
+            _this.attachLabel(_this.configFigure);
+        });
     },
 
     /**
@@ -308,5 +367,21 @@ var View = draw2d.Canvas.extend({
             $("#editRedo").removeClass("disabled");
         }
 
+    },
+
+    attachLabel:function(figure)
+    {
+        var text = prompt("Label");
+        if(text) {
+            var label = new draw2d.shape.basic.Label({text:text, stroke:0, x:-20, y:-40});
+            var locator = new draw2d.layout.locator.DraggableLocator();
+            label.installEditor(new draw2d.ui.LabelInplaceEditor());
+            this.configFigure.add(label,locator);
+        }
+        $("#figureConfigDialog").hide();
     }
+
+
+
+
 });

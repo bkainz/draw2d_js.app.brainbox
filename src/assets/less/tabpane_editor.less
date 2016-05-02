@@ -1,6 +1,30 @@
 @import "colors.less";
 
 
+#configMenuIcon{
+  font-size: 25px;
+  cursor:pointer;
+  &:hover{
+    color:@tintColorEdit;
+  }
+}
+
+#figureConfigDialog{
+  display:none;
+  background-color:white;
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 10px;
+  border-left: 3px solid @tintColorEdit;
+  .figureAddLabel{
+    font-size:14px;
+    font-weight: 200;
+    cursor:pointer;
+    &:hover{
+      color:@tintColorEdit;
+    }
+  }
+}
+
 .pallette_item
 {
   text-align:center;
