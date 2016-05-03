@@ -51,6 +51,8 @@ var View = draw2d.Canvas.extend({
             return c;
         };
 
+//        this.uninstallEditPolicy("draw2d.policy.canvas.DropInterceptorPolicy");
+        this.installEditPolicy( new DropInterceptorPolicy());
 
         // install a Connection create policy which matches to a "circuit like"
         // connections
@@ -86,9 +88,9 @@ var View = draw2d.Canvas.extend({
         this.installEditPolicy( new draw2d.policy.canvas.SnapToCenterEditPolicy());
         this.installEditPolicy( new draw2d.policy.canvas.SnapToInBetweenEditPolicy());
 
-
         this.installEditPolicy(new EditEditPolicy());
 
+        console.log(this.editPolicy);
         // Enable Copy&Past for figures
         //
         Mousetrap.bind(['ctrl+c', 'command+c'], $.proxy(function (event) {
