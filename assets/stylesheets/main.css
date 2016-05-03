@@ -233,44 +233,25 @@
 #file {
   overflow: auto;
   padding: 30px !important;
-  background: #c0c0c0 url(../images/bg.png);
+  background: transparent url(../images/bg.png);
   background-size: cover;
 }
 #file .teaser {
-  margin-bottom: 40px;
-  padding-bottom: 0;
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  min-width: 940px;
+  margin-bottom: 30px;
 }
 #file .teaser .title {
-  position: absolute;
-  right: 20px;
-  top: 20px;
   color: #0078f2;
   font-weight: 200;
   font-size: 4vw;
-  left: 250px;
   white-space: nowrap;
-  text-align: right;
+  border-bottom: 1px solid #0078f2;
+  margin-bottom: 10px;
 }
-#file .teaser .headline {
-  background: black url(../images/logo.png);
-  font-size: 30px;
+#file .teaser .slogan {
+  font-size: 2vw;
   font-weight: 200;
-  color: white;
+  color: #34495e;
   width: 500px;
-  position: relative;
-  padding: 7px;
-  margin-top: 32px;
-  bottom: 0px;
-  padding-bottom: 55px;
-  padding-left: 240px;
-  background-size: auto 231px;
-  background-repeat: no-repeat;
-  padding-right: 25px;
-  height: 240px;
 }
 #file .tile {
   width: 100%;
@@ -282,19 +263,19 @@
   -webkit-transition: all 2s;
 }
 #file .tile .description {
-  margin-top: 30px;
+  margin-top: 20px;
   background-color: rgba(255, 255, 255, 0.3);
   padding: 10px;
 }
 #file .tile .title {
-  font-size: 30px;
+  font-size: 20px;
   padding-top: 30px;
   font-weight: 200;
   color: rgba(255, 255, 255, 0.9);
 }
 #file .tile .icon {
   width: 130px;
-  font-size: 90px;
+  font-size: 60px;
   text-align: center;
   padding-top: 20px;
 }
