@@ -176,12 +176,12 @@ var Application = Class.extend(
                 withCredentials: true
              },
             success:function(data){
-                _this.loggedIn = data==="true";
-                if (_this.loggedIn) {
-                    $(".notLoggedIn").removeClass("notLoggedIn");
-                }
-            }}
-        );
+                _this.setLoginStatus(data==="true");
+            },
+            error:function(){
+                _this.setLoginStatus(false);
+            }
+        });
     },
 
     loginFirstMessage:function(){
@@ -195,8 +195,20 @@ var Application = Class.extend(
             width: 'auto',
             allow_dismiss: false
         });
+    },
+
+    setLoginStatus:function(isLoggedIn){
+        this.loggedIn = isLoggedIn;
+        if (this.loggedIn) {
+            $(".notLoggedIn").removeClass("notLoggedIn");
+            $("#editorgroup_login").hide();
+            $("#editorgroup_fileoperations").show();
+
+        }
+        else{
+            $(".notLoggedIn").addClass("notLoggedIn");
+            $("#editorgroup_login").show();
+            $("#editorgroup_fileoperations").hide();
+        }
     }
-
-
-
 });

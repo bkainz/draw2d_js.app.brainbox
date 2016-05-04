@@ -22,9 +22,12 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
      */
     onClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
     {
-        // do nothing in edit
+        // we only foreward the click-event to the MarkerFigure hich the user can show hide per
+        // defalt in the edit mode as well.
+        if(figure instanceof MarkerFigure){
+            this._super(figure, mouseX, mouseY, shiftKey, ctrlKey);
+        }
     },
-
 
     onInstall:function(canvas)
     {

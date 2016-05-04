@@ -51,7 +51,6 @@ var View = draw2d.Canvas.extend({
             return c;
         };
 
-//        this.uninstallEditPolicy("draw2d.policy.canvas.DropInterceptorPolicy");
         this.installEditPolicy( new DropInterceptorPolicy());
 
         // install a Connection create policy which matches to a "circuit like"
@@ -90,7 +89,6 @@ var View = draw2d.Canvas.extend({
 
         this.installEditPolicy(new EditEditPolicy());
 
-        console.log(this.editPolicy);
         // Enable Copy&Past for figures
         //
         Mousetrap.bind(['ctrl+c', 'command+c'], $.proxy(function (event) {
@@ -210,7 +208,7 @@ var View = draw2d.Canvas.extend({
                     {
                         "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
                         "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
-                        "sep1":  "---------",
+                        "sep1":    "---------",
                         "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
                         "design":  {name: "Open Designer"    , icon :"x ion-ios-compose-outline"      },
                         "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            }
@@ -222,8 +220,7 @@ var View = draw2d.Canvas.extend({
         // hide the figure configuration dialog if the user clicks inside the canvas
         //
         this.on("click", function(){
-            $("#figureConfigDialog")
-                .hide();
+            $("#figureConfigDialog").hide();
         });
 
     },
@@ -282,10 +279,7 @@ var View = draw2d.Canvas.extend({
     {
         // call the "calculate" method if given to calculate the output-port values
         //
-        var figures = this.getFigures().clone().grep(function(f){
-            return f['calculate'];
-        });
-        figures.each(function(i,figure){
+        this.getFigures().each(function(i,figure){
             figure.calculate();
         });
 

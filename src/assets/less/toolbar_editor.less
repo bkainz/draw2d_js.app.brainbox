@@ -1,11 +1,51 @@
 @import "colors.less";
 
+
+#editorLogin{
+  white-space: nowrap;
+  width: auto !important;
+  background-color: white;
+  color: black;
+  font-size: 20px;
+  padding: 10px !important;
+  margin-left:20px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 0.2s;
+  cursor:pointer;
+  border-radius:1px;
+  &:hover{
+    box-shadow: 0 2px 5px 0 @googleBlue;
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .googleIcon{
+    width:20px;
+    height:20px;
+    display: inline-block;
+  }
+  .googleText{
+    display: inline-block;
+    font-size: 18px;
+    vertical-align: top;
+    color: rgba(0,0,0,0.6);
+  }
+}
+
+
 .workspace{
   .toolbar {
     background-color:#EAEFF3;
 
     .group{
       padding-right:20px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .github{
+      float: right;
+      padding-right: 20px;
+      height: @toolbarHeight;
     }
 
     .icon{
