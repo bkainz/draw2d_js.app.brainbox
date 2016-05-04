@@ -111,11 +111,47 @@
   text-decoration: underline;
 }
 
+#editorLogin {
+  white-space: nowrap;
+  width: auto !important;
+  background-color: white;
+  color: black;
+  font-size: 20px;
+  padding: 10px !important;
+  margin-left: 20px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 0.2s;
+  cursor: pointer;
+  border-radius: 1px;
+}
+#editorLogin:hover {
+  box-shadow: 0 2px 5px 0 #4285f4;
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#editorLogin .googleIcon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+#editorLogin .googleText {
+  display: inline-block;
+  font-size: 18px;
+  vertical-align: top;
+  color: rgba(0, 0, 0, 0.6);
+}
 .workspace .toolbar {
   background-color: #EAEFF3;
 }
 .workspace .toolbar .group {
   padding-right: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.workspace .toolbar .github {
+  float: right;
+  padding-right: 20px;
+  height: 60px;
 }
 .workspace .toolbar .icon {
   cursor: pointer;
@@ -317,6 +353,14 @@
   background: #b8431f;
 }
 
+text.highlightOnHover:hover {
+  fill: #1c9bab;
+  cursor: pointer;
+}
+ellipse.highlightOnHover:hover {
+  stroke: #1c9bab;
+  cursor: pointer;
+}
 #configMenuIcon {
   font-size: 25px;
   cursor: pointer;
@@ -484,11 +528,6 @@ body #layout .tab-content .tab-pane .workspace .toolbar .icon {
   height: 50px;
   margin: 5px;
   padding: 0px;
-}
-body #layout .tab-content .tab-pane .workspace .toolbar .github {
-  float: right;
-  padding-right: 20px;
-  height: 60px;
 }
 body #layout .tab-content .tab-pane .workspace .content {
   position: absolute;

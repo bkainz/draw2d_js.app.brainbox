@@ -176,12 +176,12 @@ var Application = Class.extend(
                 withCredentials: true
              },
             success:function(data){
-                _this.loggedIn = data==="true";
-                if (_this.loggedIn) {
-                    $(".notLoggedIn").removeClass("notLoggedIn");
-                }
-            }}
-        );
+                _this.setLoginStatus(data==="true");
+            },
+            error:function(){
+                _this.setLoginStatus(false);
+            }
+        });
     },
 
     loginFirstMessage:function(){
@@ -195,10 +195,22 @@ var Application = Class.extend(
             width: 'auto',
             allow_dismiss: false
         });
+    },
+
+    setLoginStatus:function(isLoggedIn){
+        this.loggedIn = isLoggedIn;
+        if (this.loggedIn) {
+            $(".notLoggedIn").removeClass("notLoggedIn");
+            $("#editorgroup_login").hide();
+            $("#editorgroup_fileoperations").show();
+
+        }
+        else{
+            $(".notLoggedIn").addClass("notLoggedIn");
+            $("#editorgroup_login").show();
+            $("#editorgroup_fileoperations").hide();
+        }
     }
-
-
-
 });
 
 ;
@@ -214,6 +226,87 @@ else{
 }
 
 
+
+;
+var DropInterceptorPolicy = draw2d.policy.canvas.DropInterceptorPolicy.extend({
+
+    NAME : "draw2d.policy.canvas.DropInterceptorPolicy",
+
+    /**
+     * @constructor
+     *
+     */
+    init: function(attr, setter, getter)
+    {
+        this._super(attr, setter, getter);
+    },
+
+
+    /**
+     * @method
+     * Called if the user want connect a port with any kind draw2d.Figure.<br>
+     * Return a non <b>null</b> value if the interceptor accept the connect event.<br>
+     * <br>
+     * It is possible to delegate the drop event to another figure if the policy
+     * returns another figure. This is usefull if a figure want to accept a port
+     * drop event and delegates this drop event to another port.<br>
+     *
+     *
+     * @param {draw2d.Figure} connectInquirer the figure who wants connect
+     * @param {draw2d.Figure} connectIntent the potential connect target
+     *
+     * @return {draw2d.Figure} the calculated connect intent or <b>null</b> if the interceptor uses the veto right
+     */
+    delegateTarget: function(connectInquirer, connectIntent)
+    {
+        // a composite accept any kind of figures exceptional ports
+        //
+        if(!(connectInquirer instanceof draw2d.Port) && connectIntent instanceof draw2d.shape.composite.StrongComposite){
+            return connectIntent;
+        }
+
+        // Ports accepts only Ports as DropTarget
+        //
+        if(!(connectIntent instanceof draw2d.Port) || !(connectInquirer instanceof draw2d.Port)){
+            return null;
+        }
+
+        // consider the max possible connections for this port
+        //
+        if(connectIntent.getConnections().getSize() >= connectIntent.getMaxFanOut()){
+            return null;
+        }
+
+        // It is not allowed to connect two output ports
+        if (connectInquirer instanceof draw2d.OutputPort && connectIntent instanceof draw2d.OutputPort) {
+            return null;
+        }
+
+        // It is not allowed to connect two input ports
+        if (connectInquirer instanceof draw2d.InputPort && connectIntent instanceof draw2d.InputPort) {
+            return null;
+        }
+
+        // It is not possible to create a loop back connection at the moment.
+        // Reason: no connection router implemented for this case
+        if((connectInquirer instanceof draw2d.Port) && (connectIntent instanceof draw2d.Port)){
+        //    if(connectInquirer === connectIntent){
+         //       return null;
+           // }
+        }
+
+        // redirect the dragEnter handling to the hybrid port
+        //
+        if((connectInquirer instanceof draw2d.Port) && (connectIntent instanceof draw2d.shape.node.Hub)) {
+            return connectIntent.getHybridPort(0);
+        }
+
+        // return the connectTarget determined by the framework or delegate it to another
+        // figure.
+        return connectIntent;
+    }
+
+});
 
 ;
 var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
@@ -240,9 +333,12 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
      */
     onClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
     {
-        // do nothing in edit
+        // we only foreward the click-event to the MarkerFigure hich the user can show hide per
+        // defalt in the edit mode as well.
+        if(figure instanceof MarkerFigure){
+            this._super(figure, mouseX, mouseY, shiftKey, ctrlKey);
+        }
     },
-
 
     onInstall:function(canvas)
     {
@@ -558,6 +654,7 @@ var View = draw2d.Canvas.extend({
             return c;
         };
 
+        this.installEditPolicy( new DropInterceptorPolicy());
 
         // install a Connection create policy which matches to a "circuit like"
         // connections
@@ -592,7 +689,6 @@ var View = draw2d.Canvas.extend({
         this.installEditPolicy( new draw2d.policy.canvas.SnapToGeometryEditPolicy());
         this.installEditPolicy( new draw2d.policy.canvas.SnapToCenterEditPolicy());
         this.installEditPolicy( new draw2d.policy.canvas.SnapToInBetweenEditPolicy());
-
 
         this.installEditPolicy(new EditEditPolicy());
 
@@ -715,7 +811,7 @@ var View = draw2d.Canvas.extend({
                     {
                         "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
                         "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
-                        "sep1":  "---------",
+                        "sep1":    "---------",
                         "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
                         "design":  {name: "Open Designer"    , icon :"x ion-ios-compose-outline"      },
                         "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            }
@@ -727,8 +823,7 @@ var View = draw2d.Canvas.extend({
         // hide the figure configuration dialog if the user clicks inside the canvas
         //
         this.on("click", function(){
-            $("#figureConfigDialog")
-                .hide();
+            $("#figureConfigDialog").hide();
         });
 
     },
@@ -787,10 +882,7 @@ var View = draw2d.Canvas.extend({
     {
         // call the "calculate" method if given to calculate the output-port values
         //
-        var figures = this.getFigures().clone().grep(function(f){
-            return f['calculate'];
-        });
-        figures.each(function(i,figure){
+        this.getFigures().each(function(i,figure){
             figure.calculate();
         });
 
@@ -1060,4 +1152,413 @@ var MarkdownDialog = Class.extend(
             $('#markdownDialog .html').html(markdownParser.render(markdown));
             $('#markdownDialog').modal('show');
         }
+});
+;
+
+var DecoratedInputPort = draw2d.InputPort.extend({
+
+    init : function(attr, setter, getter)
+    {
+        this._super(attr, setter, getter);
+        
+        this.decoration = new MarkerFigure();
+
+        this.add(this.decoration, new draw2d.layout.locator.LeftLocator({margin:8}));
+
+        this.on("disconnect",function(emitter, event){
+            this.decoration.setVisible(this.getConnections().getSize()===0);
+
+            // default value of a not connected port is always HIGH
+            //
+            if(this.getConnections().getSize()===0){
+                this.setValue(true);
+            }
+        }.bind(this));
+
+        this.on("connect",function(emitter, event){
+            this.decoration.setVisible(false);
+        }.bind(this));
+
+        this.on("dragend",function(emitter, event){
+            this.decoration.setVisible(this.getConnections().getSize()===0);
+        }.bind(this));
+        
+        this.on("drag",function(emitter, event){
+            this.decoration.setVisible(false);
+        }.bind(this));
+
+        // a port can have a value. Usefull for workflow engines or circuit diagrams
+        this.setValue(true);
+    },
+
+    useDefaultValue:function()
+    {
+        this.decoration.setStick(true);
+    }
+});
+
+;
+/**
+ * The markerFigure is the left hand side annotation for a DecoratedPort.
+ *
+ * It contains two children
+ *
+ * StateAFigure: if the mouse hover and the figure isn't permanent visible
+ * StateBFigure: either the mouse is over or the user pressed the checkbox to stick the figure on the port
+ *
+ * This kind of decoration is usefull for defualt values on workflwos enginges or circuit diagrams
+ *
+ */
+var MarkerFigure = draw2d.shape.layout.VerticalLayout.extend({
+
+    NAME : "MarkerFigure",
+
+    init : function(attr, setter, getter)
+    {
+        var _this = this;
+
+        this.isMouseOver = false;        // indicator if the mouse is over the element
+        this.stick       = false;        // indicator if the stateBFigure should always be visible
+        this.defaultValue= true;         // current selected default value for the decoration
+
+        this._super($.extend({
+              stroke:0
+        },attr),
+        setter, 
+        getter);
+
+
+        // figure if the decoration is not permanent visible (sticky note)
+        this.add(this.stateA = new MarkerStateAFigure({text:"X"}));
+        // figure if the decoration permanent visible
+        this.add(this.stateB = new MarkerStateBFigure({text:"X"}));
+
+
+        this.on("mouseenter",function(emitter, event){
+            _this.onMouseOver(true);
+        });
+
+        this.on("mouseleave",function(emitter, event){
+            _this.onMouseOver(false);
+        });
+
+        this.on("click",function(emitter, event){
+            if (_this.isVisible() === false) {
+                return;//silently
+            }
+
+            if(_this.stateB.getStickTickFigure().getBoundingBox().hitTest(event.x, event.y) === true){
+                _this.setStick(!_this.getStick());
+            }
+            else if(_this.stateB.getLabelFigure().getBoundingBox().hitTest(event.x, event.y) === true){
+                $.contextMenu({
+                    selector: 'body',
+                    trigger:"left",
+                    events:
+                    {
+                        hide:function(){ $.contextMenu( 'destroy' ); }
+                    },
+                    callback: $.proxy(function(key, options)
+                    {
+                        // propagate the default value to the port
+                        //
+                        switch(key){
+                            case "high":
+                                _this.setDefaultValue(true);
+                                break;
+                            case "low":
+                                _this.setDefaultValue(false);
+                                break;
+                            default:
+                                break;
+                        }
+
+                    },this),
+                    x:event.x,
+                    y:event.y,
+                    items:{
+                        "high": {name: "High"},
+                        "low":  {name: "Low" }
+                    }
+                });
+
+            }
+        });
+
+        this.setDefaultValue(true);
+        this.onMouseOver(false);
+    },
+
+    onMouseOver: function(flag)
+    {
+        this.isMouseOver = flag;
+
+        if(this.visible===false){
+            return; // silently
+        }
+
+        if(this.stick===true) {
+            this.stateA.setVisible(false);
+            this.stateB.setVisible(true);
+        }
+        else{
+            this.stateA.setVisible(!this.isMouseOver);
+            this.stateB.setVisible( this.isMouseOver);
+        }
+
+        return this;
+    },
+
+
+    setVisible: function(flag)
+    {
+        this._super(flag);
+
+        // update the hover/stick state of the figure
+        this.onMouseOver(this.isMouseOver);
+
+        return this;
+    },
+
+
+    setStick:function(flag)
+    {
+        this.stick = flag;
+        this.onMouseOver(this.isMouseOver);
+
+
+        // the port has only a default value if the decoration is visible
+        this.parent.setValue(flag?this.defaultValue:null);
+
+        this.stateB.setTick(this.getStick());
+
+        return this;
+    },
+
+
+    getStick:function()
+    {
+        return this.stick;
+    },
+
+
+    setText: function(text)
+    {
+        this.stateB.setText(text);
+
+        return this;
+    },
+
+    setDefaultValue: function(value)
+    {
+        this.defaultValue = value;
+        this.setText((this.defaultValue===true)?"High":"Low ");
+
+        // only propagate the value to the parent if the decoration permanent visible
+        //
+        if(this.stick===true){
+            this.parent.setValue(this.defaultValue);
+        }
+    }
+});
+
+;
+/**
+ * This is only the mouseover reactive shape. A little bit smaller than the visible shape
+ *
+ * Or you can display this shape with opacity of 0.2 to indicate that this is a reactive area.
+ */
+var MarkerStateAFigure = draw2d.shape.basic.Label.extend({
+
+    NAME : "MarkerStateAFigure",
+
+    /**
+     * @param attr
+     */
+    init : function(attr, setter, getter)
+    {
+        this._super($.extend({
+            padding:{left:5, top:2, bottom:2, right:10},
+            bgColor:null,
+            stroke:1,
+            color:null,
+            fontColor:null,
+            fontSize:8
+        },attr), 
+        setter, 
+        getter);
+
+        // we must override the hitTest method to ensure that the parent can receive the mouseenter/mouseleave events.
+        // Unfortunately draw2D didn't provide event bubbling like HTML. The first shape in queue consumes the event.
+        //
+        // now this shape is "dead" for any mouse events and the parent must/can handle this.
+        this.hitTest = function(){return false;};
+    }
+
+});
+;
+var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
+
+    NAME : "MarkerStateBFigure",
+
+    /**
+     * @param attr
+     */
+    init : function(attr, setter, getter)
+    {
+        this._super($.extend({
+            bgColor:"#FFFFFF",
+            stroke:1,
+            color:"#00bcd4",
+            radius:2,
+            padding:{left:3, top:2, bottom:0, right:8},
+            gap:5
+        },attr), 
+        setter, 
+        getter);
+
+        this.stickTick = new draw2d.shape.basic.Circle({
+            diameter:8,
+            bgColor:"#f0f0f0",
+            stroke:1,
+            resizeable:false
+        });
+        this.add(this.stickTick);
+        this.stickTick.hitTest = function(){return false;};
+        this.stickTick.addCssClass("highlightOnHover");
+
+        this.label = new draw2d.shape.basic.Label({
+            text:attr.text,
+            resizeable:false,
+            stroke:0,
+            padding:0,
+            fontSize:8,
+            fontColor:"#303030"
+        });
+        this.add(this.label);
+        // don't catch the mouse events. This is done by the parent container
+        this.label.hitTest = function(){return false;};
+        this.label.addCssClass("highlightOnHover");
+
+        // we must override the hitTest method to ensure that the parent can receive the mouseenter/mouseleave events.
+        // Unfortunately draw2D didn't provide event bubbling like HTML. The first shape in queue consumes the event.
+        //
+        // now this shape is "dead" for any mouse events and the parent must/can handle this.
+        this.hitTest = function(){return false;};
+    },
+
+    setText: function(text)
+    {
+        this.label.setText(text);
+    },
+
+    setTick :function(flag)
+    {
+        this.stickTick.attr({bgColor:flag?"#00bcd4":"#f0f0f0"});
+   },
+
+    getStickTickFigure:function()
+    {
+        return this.stickTick;
+    },
+
+    getLabelFigure:function()
+    {
+        return this.label;
+    },
+
+    /**
+     * @method
+     *
+     *
+     * @template
+     **/
+    repaint: function(attributes)
+    {
+        if(this.repaintBlocked===true || this.shape===null){
+            return;
+        }
+
+        attributes= attributes || {};
+
+        attributes.path = this.calculatePath();
+
+        this._super(attributes);
+    },
+
+
+    /**
+     * @method
+     *
+     * Override the default rendering of the HorizontalLayout, which is a simple
+     * rectangle. We want an arrow.
+     */
+    createShapeElement : function()
+    {
+        return this.canvas.paper.path(this.calculatePath());
+    },
+
+    /**
+     * stupid copy&paste the code from the Polygon shape...unfortunately the LayoutFigure isn't a polygon.
+     *
+     * @returns {string}
+     */
+    calculatePath: function()
+    {
+        var arrowLength=8;
+
+        this.vertices   = new draw2d.util.ArrayList();
+
+        var w  = this.width;
+        var h  = this.height;
+        var pos= this.getAbsolutePosition();
+        var i  = 0;
+        var length=0;
+        this.vertices.add(new draw2d.geo.Point(pos.x,  pos.y)  );
+        this.vertices.add(new draw2d.geo.Point(pos.x+w-arrowLength,pos.y)  );
+
+        this.vertices.add(new draw2d.geo.Point(pos.x+w,pos.y+h/2));
+
+        this.vertices.add(new draw2d.geo.Point(pos.x+w-arrowLength,pos.y+h));
+        this.vertices.add(new draw2d.geo.Point(pos.x  ,pos.y+h));
+
+        var radius = this.getRadius();
+        var path = [];
+        // hard corners
+        //
+        if(radius === 0){
+            length = this.vertices.getSize();
+            var p = this.vertices.get(0);
+            path.push("M",p.x," ",p.y);
+            for(i=1;i<length;i++){
+                p = this.vertices.get(i);
+                path.push("L", p.x, " ", p.y);
+            }
+            path.push("Z");
+        }
+        // soften/round corners
+        //
+        else{
+            length = this.vertices.getSize();
+            var start = this.vertices.first();
+            var end   = this.vertices.last();
+            if(start.equals(end)){
+                length = length-1;
+                end = this.vertices.get(length-1);
+            }
+            var begin   = draw2d.geo.Util.insetPoint(start,end, radius);
+            path.push("M", begin.x, ",", begin.y);
+            for( i=0 ;i<length;i++){
+                start = this.vertices.get(i);
+                end   = this.vertices.get((i+1)%length);
+                modStart = draw2d.geo.Util.insetPoint(start,end, radius);
+                modEnd   = draw2d.geo.Util.insetPoint(end,start,radius);
+                path.push("Q",start.x,",",start.y," ", modStart.x, ", ", modStart.y);
+                path.push("L", modEnd.x, ",", modEnd.y);
+            }
+        }
+        return path.join("");
+    }
+
+
 });
