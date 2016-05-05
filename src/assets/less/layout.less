@@ -77,21 +77,28 @@ body {
               left: 2px;
             }
 
-            #paletteElements{
-              position:absolute;
-              width:@paletteWidth;
-              margin:0;
-              padding:0;
-              top:150px;
-              bottom:0px;
-              overflow:auto;
-              .mix{
-                height:@paletteWidth/2;
-                border:1px solid #f0f0f0;
-                /* to avoid doubling the border of the grid */
-                margin: -1px 0 0 -1px;
+            #paletteElementsScroll {
+              position: absolute;
+              width: @paletteWidth - 2px;
+              margin: 0;
+              padding: 0;
+              top: 150px;
+              bottom: 0px;
+              overflow: auto;
+              #paletteElements {
+                position: absolute;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                .mix {
+                  height: @paletteWidth/2;
+                  border: 1px solid #f0f0f0;
+                  /* to avoid doubling the border of the grid */
+                  margin: -1px 0 0 -1px;
+                }
               }
-             }
+            }
           }
           .toolbar {
             position:absolute;

@@ -56,7 +56,7 @@ FileOpen = Class.extend({
 
                     var compiled = Hogan.compile(
                         '         {{#files}}' +
-                        '           <a href="#" data-draw2d="{{draw2d}}" class="list-group-item githubPath text-nowrap" data-path="{{name}}" data-id="{{id}}">' +
+                        '           <a href="#" data-draw2d="{{draw2d}}" class="list-group-item githubPath text-nowrap" data-name="{{name}}" data-id="{{id}}">' +
                         '              <span class="fa fa-file-o"></span>' +
                         '              {{{name}}}' +
                         '           </a>' +
@@ -87,10 +87,10 @@ FileOpen = Class.extend({
                                 }
                             }
                         ).done(function(content){
-                                console.log(content);
                                 _this.currentFileHandle.title=name;
                                 successCallback(content);
                                 $('#githubFileSelectDialog').modal('hide');
+                                console.log(_this.currentFileHandle);
                             }
                         );
 

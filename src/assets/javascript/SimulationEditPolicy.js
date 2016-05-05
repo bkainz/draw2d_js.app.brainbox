@@ -3,7 +3,8 @@ var SimulationEditPolicy = draw2d.policy.canvas.ReadOnlySelectionPolicy.extend({
 
     init:function()
     {
-      this._super();
+        this._super();
+        this.mouseDownElement=null;
     },
 
 

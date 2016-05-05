@@ -41,7 +41,7 @@ var View = draw2d.Canvas.extend({
             var c = new draw2d.Connection({
                 color:"#000000",
                 router: router,
-                stroke:2,
+                stroke:1.5,
                 radius:2
             });
             if(sourcePort) {
@@ -169,6 +169,8 @@ var View = draw2d.Canvas.extend({
                 var y = event.y;
 
                 var pathToFile   = "https://github.com/freegroup/draw2d_js.shapes/blob/master/"+ eval(figure.NAME+".github");
+                var pathToMD   = "http://freegroup.github.io/draw2d_js.shapes/assets/shapes/"+ figure.NAME+".md";
+                var pathToCustom   = "http://freegroup.github.io/draw2d_js.shapes/assets/shapes/"+ figure.NAME+".custom";
                 var pathToDesign = "http://freegroup.github.io/draw2d_js.app.shape_designer/#file="+ figure.NAME+".shape";
                 $.contextMenu({
                     selector: 'body',
@@ -180,13 +182,17 @@ var View = draw2d.Canvas.extend({
                     {
                         switch(key){
                             case "code":
-                                new CodeDialog().show( eval(figure.NAME+".logic"));
+                                $.get(pathToCustom, function(content){
+                                    new CodeDialog().show(content);
+                                });
                                 break;
                             case "design":
                                 window.open(pathToDesign);
                                 break;
                             case "help":
-                                new MarkdownDialog().show( eval(figure.NAME+".markdown"));
+                                $.get(pathToMD, function(content){
+                                    new MarkdownDialog().show(content);
+                                });
                                 break;
                             case "bug":
                                 var pathToIssues = "https://github.com/freegroup/draw2d_js.shapes/issues/new";

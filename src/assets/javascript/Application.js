@@ -36,20 +36,19 @@ var Application = Class.extend(
         this.view    = new View(this, "draw2dCanvas");
         this.loggedIn = false;
 
-        $("#appLogin").on("click", function(){
+        $("#appLogin, #editorLogin").on("click", function(){
             _this.login();
         });
 
-        $("#fileOpen").on("click", function(){
+        $("#fileOpen, #editorFileOpen").on("click", function(){
             _this.fileOpen();
         });
-
 
         $("#fileNew").on("click", function(){
             _this.fileNew();
         });
 
-        $("#fileSave").on("click", function(){
+        $("#fileSave, #editorFileSave").on("click", function(){
             _this.fileSave();
         });
 
@@ -86,7 +85,17 @@ var Application = Class.extend(
 
     login:function()
     {
-        window.location.href=conf.backend+"oauth2.php";
+        var _this = this;
+        // store the current document and visible tab pane.
+        // This will be restored after the login has been done
+        //
+        var id= $("#leftTabStrip .active").attr("id");
+        this.localStorage["pane"]=id;
+        var writer = new draw2d.io.json.Writer();
+        writer.marshal(this.view, function (json, base64) {
+            _this.localStorage["json"]=JSON.stringify(json, undefined,2);
+            window.location.href=conf.backend+"oauth2.php";
+        });
     },
 
     getParam: function( name )
@@ -116,7 +125,6 @@ var Application = Class.extend(
     {
         $("#edit_tab a").click();
         this.view.clear();
-        this.localStorage.removeItem("json");
         this.currentFileHandle = {
             title: "Untitled"+conf.fileSuffix
         };
@@ -124,7 +132,6 @@ var Application = Class.extend(
             var reader = new draw2d.io.json.Reader();
             reader.unmarshal(this.view, shapeTemplate);
         }
-
     },
 
 
@@ -152,8 +159,6 @@ var Application = Class.extend(
             // success callback
             $.proxy(function(fileData){
                 try{
-                    this.fileNew();
-
                     this.view.clear();
                     var reader = new draw2d.io.json.Reader();
                     reader.unmarshal(this.view, fileData);
@@ -184,7 +189,8 @@ var Application = Class.extend(
         });
     },
 
-    loginFirstMessage:function(){
+    loginFirstMessage:function()
+    {
         $("#appLogin").addClass("shake");
         window.setTimeout(function(){
             $("#appLogin").removeClass("shake");
@@ -197,7 +203,9 @@ var Application = Class.extend(
         });
     },
 
-    setLoginStatus:function(isLoggedIn){
+    setLoginStatus:function(isLoggedIn)
+    {
+        var _this = this;
         this.loggedIn = isLoggedIn;
         if (this.loggedIn) {
             $(".notLoggedIn").removeClass("notLoggedIn");
@@ -209,6 +217,22 @@ var Application = Class.extend(
             $(".notLoggedIn").addClass("notLoggedIn");
             $("#editorgroup_login").show();
             $("#editorgroup_fileoperations").hide();
+        }
+
+        var id = this.localStorage["pane"];
+        if(id){
+            this.localStorage.removeItem("pane");
+            window.setTimeout(function(){
+                $("#"+id+" a").click();
+                var json = this.localStorage["json"];
+                _this.localStorage.removeItem("json");
+                if(json){
+                    console.log(json);
+                    window.setTimeout(function(){
+                        _this.fileNew(json);
+                    },200);
+                }
+            },100);
         }
     }
 });
