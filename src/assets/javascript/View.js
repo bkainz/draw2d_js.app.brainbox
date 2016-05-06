@@ -150,15 +150,11 @@ var View = draw2d.Canvas.extend({
 
         $("#simulationStart").on("click", function(){
             _this.simulationStart();
-            $("#simulationStart").addClass("disabled");
-            $("#simulationStop").removeClass("disabled");
         });
 
 
         $("#simulationStop").on("click", function(){
             _this.simulationStop();
-            $("#simulationStop").addClass("disabled");
-            $("#simulationStart").removeClass("disabled");
         });
 
         this.on("contextmenu", function(emitter, event){
@@ -233,6 +229,17 @@ var View = draw2d.Canvas.extend({
 
     /**
      * @method
+     * Clear the canvas and stop the simulation. Be ready for the next clean circuit
+     * load. Start from the beginning
+     */
+    clear: function()
+    {
+        this.simulationStop();
+        this._super();
+    },
+
+    /**
+     * @method
      * Called if the user drop the droppedDomNode onto the canvas.<br>
      * <br>
      * Draw2D use the jQuery draggable/droppable lib. Please inspect
@@ -267,6 +274,8 @@ var View = draw2d.Canvas.extend({
             p.setVisible(false);
         });
         requestAnimationFrame(this.animationFrameFunc);
+        $("#simulationStart").addClass("disabled");
+        $("#simulationStop").removeClass("disabled");
     },
 
     simulationStop:function()
@@ -279,6 +288,8 @@ var View = draw2d.Canvas.extend({
         this.installEditPolicy(this.connectionPolicy);
         this.installEditPolicy(this.coronaFeedback);
 
+        $("#simulationStop").addClass("disabled");
+        $("#simulationStart").removeClass("disabled");
     },
 
     _calculate:function()
