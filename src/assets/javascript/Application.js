@@ -36,25 +36,12 @@ var Application = Class.extend(
         this.view    = new View(this, "draw2dCanvas");
         this.loggedIn = false;
 
-        $("#appLogin, #editorLogin").on("click", function(){
-            _this.login();
-        });
-
-        $("#fileOpen, #editorFileOpen").on("click", function(){
-            _this.fileOpen();
-        });
-
-        $("#fileNew").on("click", function(){
-            _this.fileNew();
-        });
-
-        $("#fileSave, #editorFileSave").on("click", function(){
-            _this.fileSave();
-        });
-
-        $("#appHelp").on("click", function(){
-            $("#leftTabStrip .gitbook").click();
-        });
+        $("#appLogin, #editorLogin").on("click", function(){_this.login();});
+        $("#fileOpen, #editorFileOpen").on("click", function(){ _this.fileOpen(); });
+        $("#fileNew").on("click", function(){_this.fileNew();});
+        $("#fileSave, #editorFileSave").on("click", function(){ _this.fileSave();});
+        $("#appHelp").on("click", function(){$("#leftTabStrip .gitbook").click();});
+        $("#appAbout").on("click", function(){ $("#leftTabStrip .about").click();});
 
 
         // First check if a valid token is inside the local storage
@@ -95,6 +82,16 @@ var Application = Class.extend(
         writer.marshal(this.view, function (json, base64) {
             _this.localStorage["json"]=JSON.stringify(json, undefined,2);
             window.location.href=conf.backend+"oauth2.php";
+        });
+    },
+
+
+
+    dump:function()
+    {
+        var writer = new draw2d.io.json.Writer();
+        writer.marshal(this.view, function (json) {
+            console.log(JSON.stringify(json, undefined,2));
         });
     },
 

@@ -56,6 +56,12 @@ module.exports = function (grunt) {
         },
 
         copy: {
+            circuit: {
+                expand: true,
+                cwd: 'src/assets/circuit',
+                src: ['*.circuit'],
+                dest: 'dist/assets/circuit'
+            },
             img: {
                 expand: true,
                 cwd: 'src/assets/images',
@@ -101,9 +107,11 @@ module.exports = function (grunt) {
                 },
                 files: {
                     "./dist/assets/stylesheets/main.css": [
+                        "./src/assets/less/widget.less",
                         "./src/assets/less/contextmenu.less",
                         "./src/assets/less/toolbar_editor.less",
                         "./src/assets/less/tabmenu.less",
+                        "./src/assets/less/tabpane_about.less",
                         "./src/assets/less/tabpane_folder.less",
                         "./src/assets/less/tabpane_editor.less",
                         "./src/assets/less/tabpane_setting.less",
