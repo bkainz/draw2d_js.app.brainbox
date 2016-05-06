@@ -36,26 +36,12 @@ var Application = Class.extend(
         this.view    = new View(this, "draw2dCanvas");
         this.loggedIn = false;
 
-        $("#appLogin").on("click", function(){
-            _this.login();
-        });
-
-        $("#fileOpen").on("click", function(){
-            _this.fileOpen();
-        });
-
-
-        $("#fileNew").on("click", function(){
-            _this.fileNew();
-        });
-
-        $("#fileSave").on("click", function(){
-            _this.fileSave();
-        });
-
-        $("#appHelp").on("click", function(){
-            $("#leftTabStrip .gitbook").click();
-        });
+        $("#appLogin, #editorLogin").on("click", function(){_this.login();});
+        $("#fileOpen, #editorFileOpen").on("click", function(){ _this.fileOpen(); });
+        $("#fileNew").on("click", function(){_this.fileNew();});
+        $("#fileSave, #editorFileSave").on("click", function(){ _this.fileSave();});
+        $("#appHelp").on("click", function(){$("#leftTabStrip .gitbook").click();});
+        $("#appAbout").on("click", function(){ $("#leftTabStrip .about").click();});
 
 
         // First check if a valid token is inside the local storage
@@ -86,7 +72,27 @@ var Application = Class.extend(
 
     login:function()
     {
-        window.location.href=conf.backend+"oauth2.php";
+        var _this = this;
+        // store the current document and visible tab pane.
+        // This will be restored after the login has been done
+        //
+        var id= $("#leftTabStrip .active").attr("id");
+        this.localStorage["pane"]=id;
+        var writer = new draw2d.io.json.Writer();
+        writer.marshal(this.view, function (json, base64) {
+            _this.localStorage["json"]=JSON.stringify(json, undefined,2);
+            window.location.href=conf.backend+"oauth2.php";
+        });
+    },
+
+
+
+    dump:function()
+    {
+        var writer = new draw2d.io.json.Writer();
+        writer.marshal(this.view, function (json) {
+            console.log(JSON.stringify(json, undefined,2));
+        });
     },
 
     getParam: function( name )
@@ -116,7 +122,6 @@ var Application = Class.extend(
     {
         $("#edit_tab a").click();
         this.view.clear();
-        this.localStorage.removeItem("json");
         this.currentFileHandle = {
             title: "Untitled"+conf.fileSuffix
         };
@@ -124,7 +129,6 @@ var Application = Class.extend(
             var reader = new draw2d.io.json.Reader();
             reader.unmarshal(this.view, shapeTemplate);
         }
-
     },
 
 
@@ -152,8 +156,6 @@ var Application = Class.extend(
             // success callback
             $.proxy(function(fileData){
                 try{
-                    this.fileNew();
-
                     this.view.clear();
                     var reader = new draw2d.io.json.Reader();
                     reader.unmarshal(this.view, fileData);
@@ -184,7 +186,8 @@ var Application = Class.extend(
         });
     },
 
-    loginFirstMessage:function(){
+    loginFirstMessage:function()
+    {
         $("#appLogin").addClass("shake");
         window.setTimeout(function(){
             $("#appLogin").removeClass("shake");
@@ -197,7 +200,9 @@ var Application = Class.extend(
         });
     },
 
-    setLoginStatus:function(isLoggedIn){
+    setLoginStatus:function(isLoggedIn)
+    {
+        var _this = this;
         this.loggedIn = isLoggedIn;
         if (this.loggedIn) {
             $(".notLoggedIn").removeClass("notLoggedIn");
@@ -209,6 +214,22 @@ var Application = Class.extend(
             $(".notLoggedIn").addClass("notLoggedIn");
             $("#editorgroup_login").show();
             $("#editorgroup_fileoperations").hide();
+        }
+
+        var id = this.localStorage["pane"];
+        if(id){
+            this.localStorage.removeItem("pane");
+            window.setTimeout(function(){
+                $("#"+id+" a").click();
+                var json = this.localStorage["json"];
+                _this.localStorage.removeItem("json");
+                if(json){
+                    console.log(json);
+                    window.setTimeout(function(){
+                        _this.fileNew(json);
+                    },200);
+                }
+            },100);
         }
     }
 });
@@ -360,7 +381,35 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         $("#figureConfigDialog .figureAddLabel").off("click");
     },
 
-    _onMouseMoveCallback:function(emitter, event){
+
+    onMouseUp: function(canvas, x,y, shiftKey, ctrlKey)
+    {
+        if(shiftKey ===true){
+            var rx = Math.min(x, this.x);
+            var ry = Math.min(y, this.y);
+            var rh = Math.abs(y-this.y);
+            var rw = Math.abs(x-this.x);
+            var raftFigure = new Raft();
+            raftFigure.attr({
+                x:rx,
+                y:ry,
+                width:rw,
+                height:rh,
+                color:"#1c9bab"
+            });
+            canvas.add(raftFigure);
+            this.boundingBoxFigure1.setCanvas(null);
+            this.boundingBoxFigure1 = null;
+            this.boundingBoxFigure2.setCanvas(null);
+            this.boundingBoxFigure2 = null;
+        }
+        else{
+            this._super(canvas, x, y, shiftKey, ctrlKey);
+        }
+    },
+
+    _onMouseMoveCallback:function(emitter, event)
+    {
         var hit = null;
         var _this = this;
 
@@ -500,7 +549,8 @@ var SimulationEditPolicy = draw2d.policy.canvas.ReadOnlySelectionPolicy.extend({
 
     init:function()
     {
-      this._super();
+        this._super();
+        this.mouseDownElement=null;
     },
 
 
@@ -644,7 +694,7 @@ var View = draw2d.Canvas.extend({
             var c = new draw2d.Connection({
                 color:"#000000",
                 router: router,
-                stroke:2,
+                stroke:1.5,
                 radius:2
             });
             if(sourcePort) {
@@ -772,6 +822,8 @@ var View = draw2d.Canvas.extend({
                 var y = event.y;
 
                 var pathToFile   = "https://github.com/freegroup/draw2d_js.shapes/blob/master/"+ eval(figure.NAME+".github");
+                var pathToMD   = "http://freegroup.github.io/draw2d_js.shapes/assets/shapes/"+ figure.NAME+".md";
+                var pathToCustom   = "http://freegroup.github.io/draw2d_js.shapes/assets/shapes/"+ figure.NAME+".custom";
                 var pathToDesign = "http://freegroup.github.io/draw2d_js.app.shape_designer/#file="+ figure.NAME+".shape";
                 $.contextMenu({
                     selector: 'body',
@@ -783,13 +835,17 @@ var View = draw2d.Canvas.extend({
                     {
                         switch(key){
                             case "code":
-                                new CodeDialog().show( eval(figure.NAME+".logic"));
+                                $.get(pathToCustom, function(content){
+                                    new CodeDialog().show(content);
+                                });
                                 break;
                             case "design":
                                 window.open(pathToDesign);
                                 break;
                             case "help":
-                                new MarkdownDialog().show( eval(figure.NAME+".markdown"));
+                                $.get(pathToMD, function(content){
+                                    new MarkdownDialog().show(content);
+                                });
                                 break;
                             case "bug":
                                 var pathToIssues = "https://github.com/freegroup/draw2d_js.shapes/issues/new";
@@ -926,6 +982,139 @@ var View = draw2d.Canvas.extend({
 });
 
 ;
+/*jshint sub:true*/
+/*jshint evil:true */
+
+
+/**
+ * 
+ * The **GraphicalEditor** is responsible for layout and dialog handling.
+ * 
+ * @author Andreas Herz
+ */
+
+
+var Widget = draw2d.Canvas.extend({
+
+    init:function()
+    {
+        var _this = this;
+        var id = "draw2dCanvasWrapper";
+        this._super(id, 6000,6000);
+        this.simulate = false;
+        this.animationFrameFunc = $.proxy(this._calculate,this);
+
+
+        // nice grid decoration for the canvas paint area
+        //
+        this.grid =  new draw2d.policy.canvas.ShowGridEditPolicy(20);
+        this.installEditPolicy( this.grid);
+
+        var circuit= this.getParam("circuit");
+        $.getJSON(circuit,function(json){
+            var reader = new draw2d.io.json.Reader();
+            reader.unmarshal(widget, json);
+
+            _this.shiftDocument();
+            _this.simulationStart();
+        });
+    },
+
+    simulationStart:function()
+    {
+        this.simulate=true;
+
+        this.installEditPolicy(new SimulationEditPolicy());
+        this.commonPorts.each(function(i,p){
+            p.setVisible(false);
+        });
+        requestAnimationFrame(this.animationFrameFunc);
+    },
+
+    _calculate:function()
+    {
+        // call the "calculate" method if given to calculate the output-port values
+        //
+        this.getFigures().each(function(i,figure){
+            figure.calculate();
+        });
+
+        // transport the value from outputPort to inputPort
+        //
+        this.getLines().each(function(i,line){
+            var outPort = line.getSource();
+            var inPort  = line.getTarget();
+            inPort.setValue(outPort.getValue());
+            line.setColor(outPort.getValue()?"#C21B7A":"#0078F2");
+        });
+
+        if(this.simulate===true){
+            requestAnimationFrame(this.animationFrameFunc);
+        }
+    },
+
+
+    getParam: function( name )
+    {
+        name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+        var regexS = "[\\?&]"+name+"=([^&#]*)";
+        var regex = new RegExp( regexS );
+        var results = regex.exec( window.location.href );
+
+        // the param isn'T part of the normal URL pattern...
+        //
+        if( results === null ) {
+            // maybe it is part in the hash.
+            //
+            regexS = "[\\#]"+name+"=([^&#]*)";
+            regex = new RegExp( regexS );
+            results = regex.exec( window.location.hash );
+            if( results === null ) {
+                return null;
+            }
+        }
+
+        return results[1];
+    },
+
+    getBoundingBox: function(){
+        var xCoords = [];
+        var yCoords = [];
+        this.getFigures().each(function(i,f){
+            var b = f.getBoundingBox();
+            xCoords.push(b.x, b.x+b.w);
+            yCoords.push(b.y, b.y+b.h);
+        });
+        var minX   = Math.min.apply(Math, xCoords);
+        var minY   = Math.min.apply(Math, yCoords);
+        var width  = Math.max(10,Math.max.apply(Math, xCoords)-minX);
+        var height = Math.max(10,Math.max.apply(Math, yCoords)-minY);
+
+        return new draw2d.geo.Rectangle(minX,minY,width,height);
+    },
+
+    shiftDocument:function()
+    {
+        // get the bounding box of the document and translate the complete document
+        // into the center of the canvas. Scroll to the top left corner after them
+        //
+        var bb = this.getBoundingBox();
+
+        var dx = -bb.x;
+        var dy = -bb.y;
+
+        this.getFigures().each(function(i,f){
+            f.translate(dx,dy);
+        });
+        this.getLines().each(function(i,f){
+            f.translate(dx,dy);
+        });
+    }
+
+
+});
+
+;
 About = Class.extend(
 {
     NAME : "shape_designer.dialog.About", 
@@ -1030,7 +1219,7 @@ FileOpen = Class.extend({
 
                     var compiled = Hogan.compile(
                         '         {{#files}}' +
-                        '           <a href="#" data-draw2d="{{draw2d}}" class="list-group-item githubPath text-nowrap" data-path="{{name}}" data-id="{{id}}">' +
+                        '           <a href="#" data-draw2d="{{draw2d}}" class="list-group-item githubPath text-nowrap" data-name="{{name}}" data-id="{{id}}">' +
                         '              <span class="fa fa-file-o"></span>' +
                         '              {{{name}}}' +
                         '           </a>' +
@@ -1061,10 +1250,10 @@ FileOpen = Class.extend({
                                 }
                             }
                         ).done(function(content){
-                                console.log(content);
                                 _this.currentFileHandle.title=name;
                                 successCallback(content);
                                 $('#githubFileSelectDialog').modal('hide');
+                                console.log(_this.currentFileHandle);
                             }
                         );
 
@@ -1560,5 +1749,56 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
         return path.join("");
     }
 
+
+});
+
+;
+/**
+ * The markerFigure is the left hand side annotation for a DecoratedPort.
+ *
+ * It contains two children
+ *
+ * StateAFigure: if the mouse hover and the figure isn't permanent visible
+ * StateBFigure: either the mouse is over or the user pressed the checkbox to stick the figure on the port
+ *
+ * This kind of decoration is usefull for defualt values on workflwos enginges or circuit diagrams
+ *
+ */
+var Raft = draw2d.shape.composite.Raft.extend({
+
+    NAME : "Raft",
+
+    init : function(attr, setter, getter)
+    {
+        this._super(attr, setter, getter);
+    },
+
+    calculate: function()
+    {
+
+    },
+
+    onStart:function()
+    {
+
+    },
+
+    onStop:function()
+    {
+
+    },
+
+    toBack:function(figure)
+    {
+        if(this.canvas.getFigures().getSize()===1){
+            return ; // silently
+        }
+
+        // unfortunately the shape goes behind the "canvas decoration" which could be the grid or dots.
+        // this is sad and unwanted. In this case we select the first figure in th canvas and set the Raft behind of them
+        // instead of "behind of ALL shapes"
+        var first = this.canvas.getFigures().first();
+        this._super(first);
+    }
 
 });

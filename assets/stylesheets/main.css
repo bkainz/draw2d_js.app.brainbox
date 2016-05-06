@@ -1,3 +1,13 @@
+.widget {
+  display: block;
+}
+.widget iframe {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+.widget .subtitle {
+  color: rgba(0, 0, 0, 0.4);
+}
+
 .context-menu-list {
   margin: 0;
   padding: 0;
@@ -233,8 +243,48 @@
 #layout .nav-tabs li.active .gitbook *[fill='#000000'] {
   fill: #008cff;
 }
+#layout .nav-tabs li.active .about *[stroke='#000000'] {
+  stroke: #ac193d;
+}
+#layout .nav-tabs li.active .about *[fill='#000000'] {
+  fill: #ac193d;
+}
 #layout .nav-tabs li.active:hover {
   background-color: white;
+}
+
+#about {
+  overflow: auto;
+  padding: 30px !important;
+}
+#about h1 {
+  font-size: 36px;
+  display: inline-block;
+  color: white;
+  background-color: #ac193d;
+  padding: 11px;
+  font-weight: 200;
+  margin-bottom: 50px;
+}
+#about ul {
+  font-size: 25px;
+  font-weight: 200;
+}
+#about ul li {
+  margin-bottom: 30px;
+  max-width: 70%;
+  border-left: 6px solid #ac193d;
+  padding-left: 10px;
+  list-style-type: none;
+}
+#about footer {
+  text-align: center;
+  margin-top: 100px;
+  color: #ac193d;
+}
+#about footer a {
+  color: #ac193d;
+  text-decoration: underline;
 }
 
 @keyframes shake {
@@ -352,6 +402,15 @@
 #file .tile.orange:hover {
   background: #b8431f;
 }
+#file footer {
+  text-align: center;
+  margin-top: 100px;
+  color: #0078f2;
+}
+#file footer a {
+  color: #0078f2;
+  text-decoration: underline;
+}
 
 text.highlightOnHover:hover {
   fill: #1c9bab;
@@ -360,6 +419,9 @@ text.highlightOnHover:hover {
 ellipse.highlightOnHover:hover {
   stroke: #1c9bab;
   cursor: pointer;
+}
+rect.Raft {
+  fill: rgba(28, 155, 171, 0.1);
 }
 #configMenuIcon {
   font-size: 25px;
@@ -501,16 +563,23 @@ body #layout .tab-content .tab-pane .workspace .palette #filter {
   width: 245px;
   left: 2px;
 }
-body #layout .tab-content .tab-pane .workspace .palette #paletteElements {
+body #layout .tab-content .tab-pane .workspace .palette #paletteElementsScroll {
   position: absolute;
-  width: 250px;
+  width: 248px;
   margin: 0;
   padding: 0;
   top: 150px;
   bottom: 0px;
   overflow: auto;
 }
-body #layout .tab-content .tab-pane .workspace .palette #paletteElements .mix {
+body #layout .tab-content .tab-pane .workspace .palette #paletteElementsScroll #paletteElements {
+  position: absolute;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+body #layout .tab-content .tab-pane .workspace .palette #paletteElementsScroll #paletteElements .mix {
   height: 125px;
   border: 1px solid #f0f0f0;
   /* to avoid doubling the border of the grid */
@@ -677,8 +746,7 @@ body #layout .tab-content .active {
 }
 
 #githubSaveFileDialog .githubFilePreview {
-  max-width: 200px;
-  max-height: 200px;
+  font-size: 100px;
 }
 
 #githubFileSaveAsDialog .githubFilePreview {
