@@ -49,7 +49,35 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         $("#figureConfigDialog .figureAddLabel").off("click");
     },
 
-    _onMouseMoveCallback:function(emitter, event){
+
+    onMouseUp: function(canvas, x,y, shiftKey, ctrlKey)
+    {
+        if(shiftKey ===true){
+            var rx = Math.min(x, this.x);
+            var ry = Math.min(y, this.y);
+            var rh = Math.abs(y-this.y);
+            var rw = Math.abs(x-this.x);
+            var raftFigure = new Raft();
+            raftFigure.attr({
+                x:rx,
+                y:ry,
+                width:rw,
+                height:rh,
+                color:"#1c9bab"
+            });
+            canvas.add(raftFigure);
+            this.boundingBoxFigure1.setCanvas(null);
+            this.boundingBoxFigure1 = null;
+            this.boundingBoxFigure2.setCanvas(null);
+            this.boundingBoxFigure2 = null;
+        }
+        else{
+            this._super(canvas, x, y, shiftKey, ctrlKey);
+        }
+    },
+
+    _onMouseMoveCallback:function(emitter, event)
+    {
         var hit = null;
         var _this = this;
 
