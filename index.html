@@ -24,6 +24,7 @@
 
         $(window).load(function () {
              app = new Application();
+            $('.lazyload').lazyload({ trigger: "appear"});
         });
     </script>
 
@@ -36,7 +37,7 @@
 <div id="layout">
         <ul class="nav nav-tabs" id="leftTabStrip">
 
-            <li id="folder_tab">
+            <li id="folder_tab" class="active">
                 <a href="#file" class="leftTab folder"   data-toggle="tab">
                     <img class="svg" src="./assets/images/folder.svg">
                 </a>
@@ -47,13 +48,6 @@
                     <img class="svg" src="./assets/images/edit.svg">
                 </a>
             </li>
-<!--
-            <li id="setting_tab">
-                <a href="#setting" class="leftTab setting"  data-toggle="tab">
-                    <img class="svg" src="./assets/images/settings.svg">
-                </a>
-            </li>
--->
 
             <li id="help_tab">
                 <a href="#gitbook" class="leftTab gitbook"  data-toggle="tab">
@@ -73,13 +67,17 @@
         <div class="tab-content">
 
 
-            <div class="tab-pane fade" id="file">
+            <div class="tab-pane active" id="file">
                 <div class="row hidden-xs teaser">
                     <div class="col-xs-12 col-sm-6 col-md-6">
-                        <div class="widget">
-                            <iframe src="widget.html?circuit=assets/circuit/test.circuit" width="320" height="200">
-                            </iframe>
-                            <div class="subtitle">Click on the switch to test the circuit</div>
+                        <div class="lazyload">
+                            <script type="text/lazyload">
+                                <div class="widget">
+                                  <iframe src="widget.html?circuit=assets/circuit/test.circuit" width="330" height="200" frameBorder="0">
+                                  </iframe>
+                                  <div class="subtitle">Click on the switch to test the circuit</div>
+                                </div>
+                            </script>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-6">
@@ -94,9 +92,13 @@
                         <div class="slogan">Teach logic gates and digital circuits effectively</div>
                     </div>
                     <div class="col-xs-12">
-                        <div class="widget">
-                            <iframe src="widget.html?circuit=assets/circuit/test.circuit" width="100%" height="200">
-                            </iframe>
+                        <div class="lazyload">
+                            <script type="text/lazyload">
+                                <div class="widget">
+                                  <iframe src="widget.html?circuit=assets/circuit/test.circuit" width="330" height="200" frameBorder="0">
+                                  </iframe>
+                                </div>
+                            </script>
                         </div>
                     </div>
 
@@ -191,7 +193,7 @@
 
 
 
-            <div class="tab-pane active fade" id="editor">
+            <div class="tab-pane" id="editor">
                 <div class="workspace">
                     <div class="palette ">
                         <span class="title">Edit</span>
@@ -243,17 +245,21 @@
             </div>
 -->
 
-            <div class="tab-pane fade" id="gitbook">
+            <div class="tab-pane" id="gitbook">
                 <iframe src="./assets/help/de/index.html" style="width:100%; height:100%" marginwidth="0"  marginheight="0" frameBorder="0">
                 </iframe>
             </div>
 
-            <div class="tab-pane fade" id="about">
+            <div class="tab-pane" id="about">
                 <h1 class="logo">Teach logic gates + digital circuits effectively</h1>
-                <div class="widget" style="text-align:center">
-                    <iframe src="widget.html?circuit=assets/circuit/test.circuit" width="400" height="200">
-                    </iframe>
-                    <div class="subtitle">Click on the switch to test the circuit</div>
+                <div class="lazyload">
+                    <script type="text/lazyload">
+                        <div class="widget" style="text-align:center">
+                            <iframe src="widget.html?circuit=assets/circuit/test.circuit" width="330" height="200" frameBorder="0">
+                            </iframe>
+                            <div class="subtitle">Click on the switch to test the circuit</div>
+                        </div>
+                    </script>
                 </div>
 
                 <ul>

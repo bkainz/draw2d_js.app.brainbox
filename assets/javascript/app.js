@@ -66,7 +66,7 @@ var Application = Class.extend(
 
         });
 
-        $("#folder_tab a").click();
+   //     $("#folder_tab a").click();
     },
 
 
@@ -1010,11 +1010,10 @@ var Widget = draw2d.Canvas.extend({
     init:function()
     {
         var _this = this;
-        var id = "draw2dCanvasWrapper";
+        var id = "draw2dCanvas";
         this._super(id, 6000,6000);
         this.simulate = false;
         this.animationFrameFunc = $.proxy(this._calculate,this);
-
 
         // nice grid decoration for the canvas paint area
         //

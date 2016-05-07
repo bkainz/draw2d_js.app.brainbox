@@ -1,35 +1,25 @@
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
-<head>
-    <title></title>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link type="text/css" rel="stylesheet" href="./lib/ionicons/css/ionicons.min.css" />
-    <link type="text/css" rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet" href="./assets/stylesheets/dependencies.css" />
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <SCRIPT src="./assets/javascript/dependencies.js"></SCRIPT>
-    <SCRIPT src="./lib/bootstrap/js/bootstrap.min.js"></SCRIPT>
-    <SCRIPT src="./assets/javascript/app.js"></SCRIPT>
+        <SCRIPT src="./assets/javascript/widget.js"></SCRIPT>
+        <SCRIPT src="http://freegroup.github.io/draw2d_js.shapes/assets/shapes/index.js"></SCRIPT>
 
-    <SCRIPT src="http://freegroup.github.io/draw2d_js.shapes/assets/shapes/index.js"></SCRIPT>
+        <script>
+        var widget=null;
+        $(window).load(function () {
+            widget = new Widget();
+        });
+        </script>
 
-</head>
-<body style="overflow:hidden">
-    <div class="content" id="draw2dCanvasWrapper" style="overflow:hidden">
-        <div class="canvas" id="draw2dCanvas" oncontextmenu="return false;">
+    </head>
+
+    <body style="overflow:hidden;margin:0px; padding:0px;">
+        <div class="content" id="draw2dCanvasWrapper" style="overflow:hidden">
+            <div class="canvas" id="draw2dCanvas" oncontextmenu="return false;">
+            </div>
         </div>
-    </div>
-</body>
-<script>
-    var widget = new Widget();
+    </body>
 
-    function load(json){
-        widget.clear();
-        var reader = new draw2d.io.json.Reader();
-        reader.unmarshal(widget, json);
-    }
-
-</script>
 </html>
