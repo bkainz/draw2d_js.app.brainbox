@@ -66,7 +66,7 @@ var Application = Class.extend(
 
         });
 
-        $("#folder_tab a").click();
+   //     $("#folder_tab a").click();
     },
 
 

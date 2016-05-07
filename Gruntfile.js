@@ -17,17 +17,16 @@ module.exports = function (grunt) {
             libs: {
                 nonull: true,
                 src: [
-                    './bower_components/aws-sdk/dist/aws-sdk.min.js',
                     './bower_components/shifty/dist/shifty.min.js',
                     './bower_components/draw2d/dist/patched_raphael.js',
                     './bower_components/jquery/dist/jquery.min.js',
                     './bower_components/jquery-ui/jquery-ui.min.js',
+                    './bower_components/jquery-lazyload-any/build/jquery.lazyload-any.min.js',
                     './bower_components/jsrender/jsrender.min.js',
                     './bower_components/shufflejs/dist/jquery.shuffle.modernizr.min.js',
                     './bower_components/draw2d/dist/jquery.autoresize.js',
                     './bower_components/draw2d/dist/jquery-touch_punch.js',
                     './bower_components/draw2d/dist/jquery.contextmenu.js',
-                    './bower_components/octokat/dist/octokat.js',
                     './bower_components/hogan.js/web/1.0.0/hogan.min.js',
                     './bower_components/draw2d/dist/rgbcolor.js',
                     './bower_components/draw2d/dist/patched_canvg.js',
@@ -46,6 +45,22 @@ module.exports = function (grunt) {
                     './src/assets/javascript/**/*.js'
                 ],
                 dest: './dist/assets/javascript/app.js'
+            },
+            widget: {
+                src: [
+                    './bower_components/shifty/dist/shifty.min.js',
+                    './bower_components/draw2d/dist/patched_raphael.js',
+                    './bower_components/jquery/dist/jquery.min.js',
+                    './bower_components/draw2d/dist/jquery.contextmenu.js',
+                    './bower_components/draw2d/dist/rgbcolor.js',
+                    './bower_components/draw2d/dist/patched_canvg.js',
+                    './bower_components/draw2d/dist/patched_Class.js',
+                    './bower_components/draw2d/dist/json2.js',
+                    './bower_components/draw2d/dist/pathfinding-browser.min.js',
+                    './bower_components/draw2d/dist/draw2d.js',
+                    './src/assets/javascript/**/*.js'
+                ],
+                dest: './dist/assets/javascript/widget.js'
             },
             css:{
                 src:[
