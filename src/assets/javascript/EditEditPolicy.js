@@ -31,6 +31,7 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
 
     onInstall:function(canvas)
     {
+        this._super(canvas);
         var _this = this;
 
         // provide configuration menu if the mouse is close to a shape
@@ -45,6 +46,8 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
 
     onUninstall:function(canvas)
     {
+        this._super(canvas);
+
         canvas.off(this.mouseMoveProxy);
         $("#figureConfigDialog .figureAddLabel").off("click");
     },
@@ -78,6 +81,16 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
 
     _onMouseMoveCallback:function(emitter, event)
     {
+        // there is no benefit to show decorations during Drag&Drop of an shape
+        //
+        if(this.mouseMovedDuringMouseDown===true){
+            if(this.configIcon!==null) {
+                this.configIcon.remove();
+                this.configIcon = null;
+            }
+            return;
+        }
+
         var hit = null;
         var _this = this;
 

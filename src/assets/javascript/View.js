@@ -35,7 +35,7 @@ var View = draw2d.Canvas.extend({
         //
         this.getCommandStack().addEventListener(this);
 
-        var router = new draw2d.layout.connection.InteractiveManhattanConnectionRouter();
+        var router = new ConnectionRouter();
         router.abortRoutingOnFirstVertexNode=false;
         var createConnection=function(sourcePort, targetPort){
             var c = new draw2d.Connection({
