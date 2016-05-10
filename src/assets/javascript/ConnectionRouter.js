@@ -8,10 +8,9 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
      */
     init: function () {
         this._super();
-        console.log("called");
 
         this.setBridgeRadius(4);
-        this.setVertexRadius(2);
+        this.setVertexRadius(3);
     },
 
     /**
@@ -48,7 +47,7 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
      */
     _paint: function(conn)
     {
-        console.log(conn.id);
+        var _this = this;
         // get the intersections to the other connections
         //
         var intersectionsASC = conn.getCanvas().getIntersection(conn).sort("x");
@@ -71,52 +70,51 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
         var path = [ "M", p.x, " ", p.y];
 
         var oldP = p;
-        var bridgeWidth = null;
+        var bridgeWidth =  this.bridgeRadius;
         var bridgeCode  = null;
+
+        var calc = function(ii, interP) {
+            if (draw2d.shape.basic.Line.hit(5, oldP.x, oldP.y, p.x, p.y, interP.x, interP.y) === true) {
+                // It is a vertex node..
+                //
+                if(conn.sharingPorts(interP.other)){
+                    var other = interP.other;
+                    var otherZ = other.getZOrder();
+                    var connZ = conn.getZOrder();
+                    if(connZ<otherZ){
+                        var vertexNode=conn.canvas.paper.ellipse(interP.x,interP.y, _this.vertexRadius, _this.vertexRadius).attr({fill:conn.lineColor.hash()});
+                        conn.vertexNodes.push(vertexNode);
+                    }
+                }
+                // ..or a bridge. We draw only horizontal bridges. Just a design decision
+                //
+                else if ((p.y|0) === (interP.y|0)) {
+                    path.push(" L", (interP.x - bridgeWidth), " ", interP.y);
+                    path.push(bridgeCode);
+                }
+            }
+        };
 
         for (var i = 1; i < ps.getSize(); i++) {
             p = ps.get(i);
 
             // line goes from right->left.
             if (oldP.x > p.x) {
-                console.log("RL");
                 intersectionForCalc=intersectionsDESC;
-                bridgeCode = this.bridge_RL;
+                bridgeCode  = this.bridge_RL;
                 bridgeWidth = -this.bridgeRadius;
             }
             // line goes from left->right
             else{
-                console.log("LR");
                 intersectionForCalc=intersectionsASC;
-                bridgeCode = this.bridge_LR;
+                bridgeCode  = this.bridge_LR;
                 bridgeWidth = this.bridgeRadius;
             }
 
             // bridge   => the connections didn't have a common port
             // vertex => the connections did have a common source or target port
             //
-            intersectionForCalc.each(function(ii, interP) {
-                console.log(oldP.x, oldP.y, p.x, p.y, interP.x, interP.y);
-                if (draw2d.shape.basic.Line.hit(5, oldP.x, oldP.y, p.x, p.y, interP.x, interP.y) === true) {
-                    // It is a vertex node..
-                    //
-                    if(conn.sharingPorts(interP.other)){
-                        var other = interP.other;
-                        var otherZ = other.getZOrder();
-                        var connZ = conn.getZOrder();
-                        if(connZ<otherZ){
-                            var vertexNode=conn.canvas.paper.ellipse(interP.x,interP.y, this.vertexRadius, this.vertexRadius).attr({fill:conn.lineColor.hash()});
-                            conn.vertexNodes.push(vertexNode);
-                        }
-                    }
-                    // ..or a bridge. We draw only horizontal bridges. Just a design decision
-                    //
-                    else if ((p.y|0) === (interP.y|0)) {
-                        path.push(" L", (interP.x - bridgeWidth), " ", interP.y);
-                        path.push(bridgeCode);
-                    }
-                }
-            });
+            intersectionForCalc.each(calc);
 
             path.push(" L", p.x, " ", p.y);
             oldP = p;

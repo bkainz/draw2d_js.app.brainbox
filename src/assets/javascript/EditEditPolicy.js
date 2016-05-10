@@ -136,7 +136,7 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         var text = prompt("Label");
         if(text) {
             var label = new draw2d.shape.basic.Label({text:text, stroke:0, x:-20, y:-40});
-            var locator = new draw2d.layout.locator.DraggableLocator();
+            var locator = new draw2d.layout.locator.SmartDraggableLocator();
             label.installEditor(new draw2d.ui.LabelInplaceEditor());
             this.configFigure.add(label,locator);
         }

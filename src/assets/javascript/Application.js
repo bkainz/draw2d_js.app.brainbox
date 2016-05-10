@@ -120,11 +120,11 @@ var Application = Class.extend(
 
     fileNew: function(shapeTemplate)
     {
-        this.view.clear();
         $("#edit_tab a").click();
         this.currentFileHandle = {
             title: "Untitled"+conf.fileSuffix
         };
+        this.view.clear();
         if(shapeTemplate){
             var reader = new draw2d.io.json.Reader();
             reader.unmarshal(this.view, shapeTemplate);
@@ -160,9 +160,10 @@ var Application = Class.extend(
                     var reader = new draw2d.io.json.Reader();
                     reader.unmarshal(this.view, fileData);
                     this.view.getCommandStack().markSaveLocation();
+                    this.view.centerDocument();
                 }
                 catch(e){
-                    this.view.reset();
+                    this.view.clear();
                 }
             },this));
     },

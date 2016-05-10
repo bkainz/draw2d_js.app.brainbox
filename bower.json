@@ -7,7 +7,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "draw2d": "~6.1.0",
+    "draw2d": "~6.1.27",
     "jquery.browser": "~0.0.7",
     "bootstrap": "^3.3.6",
     "shufflejs": "^3.1.1",
@@ -23,4 +23,3 @@
     "jquery-lazyload-any": "^0.3.0"
   }
 }
-grunt watch
