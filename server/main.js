@@ -3,6 +3,8 @@ var http     = require('http');
 var env      = require('jsdom').env;
 var fs       = require('fs');
 var vm       = require("vm");
+var gpio     = require("gpio");
+
 
 // first argument can be html string, filename, or url
 env("<html></html>", function (errors, window) {
@@ -38,7 +40,11 @@ env("<html></html>", function (errors, window) {
     var immediateId;
 
     var i=0;
+    var status = false;
+    var led = gpio.export(4, { direction: "out"});
     function loop(){
+        led.set(status);
+        status=!status;
         console.log("running..."+i++);
         // call the "calculate" method if given to calculate the output-port values
         //
