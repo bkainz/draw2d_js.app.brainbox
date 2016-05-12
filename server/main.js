@@ -35,16 +35,21 @@ env("<html></html>", function (errors, window) {
     var reader = new draw2d.io.json.Reader();
     reader.unmarshal(canvas,json);
 
+gpio22 = gpio.export(18, {
+   ready: function() {
+      intervalTimer = setInterval(function() {
+         gpio22.set();
+         setTimeout(function() { gpio22.reset(); }, 500);
+      }, 1000);
+   }
+});
 
 
     var immediateId;
 
     var i=0;
     var status = false;
-    var led = gpio.export(4, { direction: "out"});
     function loop(){
-        led.set(status);
-        status=!status;
         console.log("running..."+i++);
         // call the "calculate" method if given to calculate the output-port values
         //
