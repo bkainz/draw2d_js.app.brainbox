@@ -413,9 +413,9 @@ var View = draw2d.Canvas.extend({
         }
         else{
             bb={
-                    x:this.getWidth()/2,
-                    y:this.getHeight()/2
-                };
+                x:this.getWidth()/2,
+                y:this.getHeight()/2
+            };
             c.scrollTop(bb.y- c.height()/2);
             c.scrollLeft(bb.x- c.width()/2);
 
