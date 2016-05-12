@@ -1,9 +1,13 @@
 // Load the http module to create an http server.
-var http     = require('http');
-var env      = require('jsdom').env;
-var fs       = require('fs');
-var vm       = require("vm");
-var gpio     = require("gpio");
+var express =require('express');
+var app  = express();
+
+var http = require('http').Server(app);
+var io   = require('socket.io')(http);
+var env  = require('jsdom').env;
+var fs   = require('fs');
+var vm   = require("vm");
+var gpio = require("gpio");
 
 
 // first argument can be html string, filename, or url
@@ -35,22 +39,10 @@ env("<html></html>", function (errors, window) {
     var reader = new draw2d.io.json.Reader();
     reader.unmarshal(canvas,json);
 
-gpio22 = gpio.export(18, {
-   ready: function() {
-      intervalTimer = setInterval(function() {
-         gpio22.set();
-         setTimeout(function() { gpio22.reset(); }, 500);
-      }, 1000);
-   }
-});
-
 
     var immediateId;
 
-    var i=0;
-    var status = false;
     function loop(){
-        console.log("running..."+i++);
         // call the "calculate" method if given to calculate the output-port values
         //
         canvas.getFigures().each(function(i,figure){
@@ -67,5 +59,24 @@ gpio22 = gpio.export(18, {
         immediateId = setImmediate(loop);
     }
     loop();
+
+
+    app.use(express.static('dist'));
+
+
+
+    io.on('connection', function(socket){
+        console.log('a user connected');
+        socket.on('disconnect', function(){
+            console.log('user disconnected');
+        });
+        socket.on('chat message', function(msg){
+            console.log('message: ' + msg);
+        });
+    });
+
+    http.listen(7400, function(){
+        console.log('listening on *:3000');
+    });
 
 });

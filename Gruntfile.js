@@ -71,6 +71,12 @@ module.exports = function (grunt) {
         },
 
         copy: {
+            socketIO: {
+                expand: true,
+                cwd: 'src/socket.io',
+                src: ['*.js'],
+                dest: 'dist/socket.io'
+            },
             circuit: {
                 expand: true,
                 cwd: 'src/assets/circuit',

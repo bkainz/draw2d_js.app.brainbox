@@ -671,7 +671,7 @@ draw2d_circuit_alu_FullAdder4Bit = draw2d_circuit_alu_FullAdder4Bit.extend({
      **/
     calculate:function()
     {
-        console.log("calculate");
+
         var input = [];
         var output = [];
 
