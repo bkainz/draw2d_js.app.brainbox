@@ -302,7 +302,8 @@ var View = draw2d.Canvas.extend({
         this.commonPorts.each(function(i,p){
             p.setVisible(false);
         });
-        requestAnimationFrame(this.animationFrameFunc);
+
+        setImmediate(this.animationFrameFunc);
         $("#simulationStart").addClass("disabled");
         $("#simulationStop").removeClass("disabled");
     },
@@ -339,7 +340,7 @@ var View = draw2d.Canvas.extend({
         });
 
         if(this.simulate===true){
-            requestAnimationFrame(this.animationFrameFunc);
+            setImmediate(this.animationFrameFunc);
         }
     },
 

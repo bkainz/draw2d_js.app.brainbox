@@ -3,6 +3,8 @@ var DecoratedInputPort = draw2d.InputPort.extend({
 
     init : function(attr, setter, getter)
     {
+        this.hasChanged = false;
+
         this._super(attr, setter, getter);
         
         this.decoration = new MarkerFigure();
@@ -38,5 +40,26 @@ var DecoratedInputPort = draw2d.InputPort.extend({
     useDefaultValue:function()
     {
         this.decoration.setStick(true);
+    },
+
+    setValue:function(value)
+    {
+        this.hasChanged = this.value !==value;
+        this._super(value);
+    },
+
+    hasChangedValue: function()
+    {
+        return this.hasChanged;
+    },
+
+    hasRisingEdge: function()
+    {
+        return this.hasChangedValue()&& this.getValue();
+    },
+
+    hasFallingEdge: function()
+    {
+        return this.hasChangedValue() && !this.getValue();
     }
 });

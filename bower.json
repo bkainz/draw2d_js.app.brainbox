@@ -20,6 +20,7 @@
     "google-code-prettify": "^1.0.4",
     "remarkable": "^1.6.2",
     "shifty": "~1.5.2",
-    "jquery-lazyload-any": "^0.3.0"
+    "jquery-lazyload-any": "^0.3.0",
+    "setimmediate": "^1.0.1"
   }
 }

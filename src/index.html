@@ -15,23 +15,19 @@
     <SCRIPT src="./lib/bootstrap/js/bootstrap.min.js"></SCRIPT>
     <script src="./lib/prettify/src/prettify.js"></script>
     <SCRIPT src="./assets/javascript/app.js"></SCRIPT>
+    <script src="./socket.io/socket.io.js"></script>
 
     <SCRIPT src="http://freegroup.github.io/draw2d_js.shapes/assets/shapes/index.js"></SCRIPT>
 
     <script type="text/javascript">
         var app = null;
-
+        var socket = null;
 
         $(window).load(function () {
+             socket = io();
              app = new Application();
             $('.lazyload').lazyload({ trigger: "appear"});
         });
-    </script>
-
-    <script src="./socket.io/socket.io.js"></script>
-    <script>
-        var socket = io();
-        socket.emit('chat message', "welcome...");
     </script>
 
 </head>

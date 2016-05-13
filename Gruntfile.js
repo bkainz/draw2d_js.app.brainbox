@@ -17,6 +17,7 @@ module.exports = function (grunt) {
             libs: {
                 nonull: true,
                 src: [
+                    './bower_components/setimmediate/setImmediate.js',
                     './bower_components/shifty/dist/shifty.min.js',
                     './bower_components/draw2d/dist/patched_raphael.js',
                     './bower_components/jquery/dist/jquery.min.js',
