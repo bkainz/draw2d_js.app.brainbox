@@ -1,0 +1,6 @@
+.grunt/
+.idea/
+bower_components/
+circuits/
+dist/
+src/
