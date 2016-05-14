@@ -9,4 +9,4 @@ else{
     conf.backend= "http://draw2d.org/backend/";
 }
 
-
+conf.backend= "http://draw2d.org/backend/";
