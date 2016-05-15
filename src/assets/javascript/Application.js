@@ -81,7 +81,7 @@ var Application = Class.extend(
         var writer = new draw2d.io.json.Writer();
         writer.marshal(this.view, function (json, base64) {
             _this.localStorage["json"]=JSON.stringify(json, undefined,2);
-            window.location.href=conf.backend+"oauth2.php";
+            window.location.href=conf.backend.oauth;
         });
     },
 
@@ -174,7 +174,7 @@ var Application = Class.extend(
 
         var _this = this;
         $.ajax({
-            url:conf.backend +"isLoggedIn.php" ,
+            url:conf.backend.isLoggedIn,
             xhrFields: {
                 withCredentials: true
              },

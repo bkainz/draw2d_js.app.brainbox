@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "digitalstudio" : "./server/main.js"
+    "digitalstudio": "./server/webserver.js"
   },
   "repository": {
     "type": "git",
@@ -39,9 +39,11 @@
     "jshint-stylish": "latest"
   },
   "dependencies": {
+    "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "gitbook-cli": "^2.1.3",
     "gitbook-plugin-jsfiddle": "^1.0.0",
+    "glob": "^7.0.3",
     "gpio": "^0.2.7",
     "grunt-gitbook": "^1.5.0",
     "jquery": "^2.2.3",

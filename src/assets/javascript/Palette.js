@@ -22,13 +22,16 @@ var Palette = Class.extend(
 
         var $grid = $("#paletteElements");
 
-        $.getJSON("http://freegroup.github.io/draw2d_js.shapes/assets/shapes/index.json", function(data) {
+        $.getJSON(conf.backend.shapesUrl+ "index.json", function(data) {
 
             data.forEach(function (element){
                 element.basename = element.name.split("_").pop();
             });
             var tmpl = $.templates("#shapeTemplate");
-            var html = tmpl.render({shapes: data});
+            var html = tmpl.render({
+                shapesUrl :conf.backend.shapesUrl,
+                shapes: data
+            });
 
             $("#paletteElements").html(html);
 
@@ -69,8 +72,6 @@ var Palette = Class.extend(
             }).on('mouseout', function(){
                 $(this).parent().removeClass('glowBorder');
             });
-
-
         });
 
     }

@@ -35,7 +35,7 @@ FileSave = Class.extend({
             var writer = new draw2d.io.json.Writer();
             writer.marshal(canvas, function (json, base64) {
                 $.ajax({
-                        url: conf.backend + "file_save.php",
+                        url: conf.backend.file.save,
                         method: "POST",
                         xhrFields: {
                             withCredentials: true

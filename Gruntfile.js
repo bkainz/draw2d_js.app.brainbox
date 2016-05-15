@@ -62,13 +62,7 @@ module.exports = function (grunt) {
                     './src/assets/javascript/**/*.js'
                 ],
                 dest: './dist/assets/javascript/widget.js'
-            },
-            css:{
-                src:[
-                 ],
-                dest: './dist/assets/stylesheets/dependencies.css'
             }
-
         },
 
         copy: {
@@ -77,6 +71,12 @@ module.exports = function (grunt) {
                 cwd: 'src/socket.io',
                 src: ['*.js'],
                 dest: 'dist/socket.io'
+            },
+            conf: {
+                expand: true,
+                cwd: 'src/assets/settings',
+                src: ['*.js'],
+                dest: 'dist/assets/settings'
             },
             circuit: {
                 expand: true,

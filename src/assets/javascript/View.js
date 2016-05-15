@@ -192,8 +192,8 @@ var View = draw2d.Canvas.extend({
                 var y = event.y;
 
                 var pathToFile   = "https://github.com/freegroup/draw2d_js.shapes/blob/master/"+ eval(figure.NAME+".github");
-                var pathToMD   = "http://freegroup.github.io/draw2d_js.shapes/assets/shapes/"+ figure.NAME+".md";
-                var pathToCustom   = "http://freegroup.github.io/draw2d_js.shapes/assets/shapes/"+ figure.NAME+".custom";
+                var pathToMD     = conf.shapesUrl+figure.NAME+".md";
+                var pathToCustom = conf.shapesUrl+figure.NAME+".custom";
                 var pathToDesign = "http://freegroup.github.io/draw2d_js.app.shape_designer/#file="+ figure.NAME+".shape";
                 $.contextMenu({
                     selector: 'body',

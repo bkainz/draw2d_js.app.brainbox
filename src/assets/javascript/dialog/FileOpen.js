@@ -31,7 +31,7 @@ FileOpen = Class.extend({
         var _this = this;
 
         $.ajax({
-                url:conf.backend +"file_list.php" ,
+                url:conf.backend.file.list ,
                 xhrFields: {
                     withCredentials: true
                 },
@@ -77,7 +77,7 @@ FileOpen = Class.extend({
                         var id   = $(this).data("id");
                         var name = $(this).data("name");
                         $.ajax({
-                                url: conf.backend + "file_get.php",
+                                url: conf.backend.file.get,
                                 method: "POST",
                                 xhrFields: {
                                     withCredentials: true
