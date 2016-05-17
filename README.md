@@ -6,7 +6,6 @@ Extended Demo project for the [draw2d.js](http://www.draw2d.org) library which s
 
 
 
-
 # How to install and use it
 You have different options to use the digital ciscuit simulator.
 
@@ -34,7 +33,7 @@ and start the server with `digitaltrainingstudio`. The server reports the URL ho
 your RaspberryPi with the browser.
 
 ###The simulation circuit
-![image](//github.com/freegroup/draw2d_js.app.digital_training_studio/blob/master/src/assets/images/readme_gpio_dts.png?raw=true)
+![image](src/assets/images/readme_gpio_dts.png?raw=true)
 
 ### connect a real LED to your GPIO pin 3
 You find a lot of documentation how to connect a simple LED to your raspi. A good source is always the web page of the original [raspberry pi organisation](https://www.raspberrypi.org/documentation/usage/gpio/)
