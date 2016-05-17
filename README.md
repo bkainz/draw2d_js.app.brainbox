@@ -1,6 +1,12 @@
 # Digital Training Studio - circuit simulator for the web
 
-Extended Demo project for the [draw2d.js](http://www.draw2d.org) library which shows how to connect the browser with a node.js server on raspberry Pi or just your local computer.
+Logic gates are the basic building blocks of any digital system. It is an electronic circuit having one or 
+more than one input and only one output. The relationship between the input and the output is based on a 
+certain logic. Based on this, logic gates are named as AND gate, OR gate, NOT gate etc.
+
+Now you can  edit and run your digital circuit simulation designs online on PCs, Macs, thin clients, tablets, smart phones, smart TVs and e-book readers without any installation. You can use **DigitalTrainingStudio** in the office, classroom or at home and connect even your RaspberryPi to drive real physical devices.
+
+(*Extended Demo project for the [draw2d.js](http://www.draw2d.org) library which shows how to connect the browser with a node.js server on raspberry Pi or just your local computer.*)
 
 ![image](src/assets/images/animation.gif)
 
