@@ -9,7 +9,7 @@ var io   = require('socket.io')(http);
 var gpio = require("gpio");
 var glob = require("glob");
 var path = require('path');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 // determine the ip address of the running node server
 //
@@ -63,7 +63,6 @@ app.post('/backend/file/save', function (req, res) {
         res.send('true');
     });
 });
-
 
 
 var pins = {
