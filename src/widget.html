@@ -9,7 +9,7 @@
         <script>
         var widget=null;
         $(window).load(function () {
-            $.getScript(conf.backend.shapesUrl+"index.js",function() {
+            $.getScript(conf.shapes.url+"index.js",function() {
                 widget = new Widget();
             });
         });

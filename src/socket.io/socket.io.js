@@ -3,6 +3,11 @@
 //
 function io(){
     return {
-        emit:function(){}
+        emit:function(){
+
+        },
+        on:function(){
+
+        }
     };
 }

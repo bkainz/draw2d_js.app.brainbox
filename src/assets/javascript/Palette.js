@@ -22,14 +22,14 @@ var Palette = Class.extend(
 
         var $grid = $("#paletteElements");
 
-        $.getJSON(conf.backend.shapesUrl+ "index.json", function(data) {
+        $.getJSON(conf.shapes.url+ "index.json", function(data) {
 
             data.forEach(function (element){
                 element.basename = element.name.split("_").pop();
             });
             var tmpl = $.templates("#shapeTemplate");
             var html = tmpl.render({
-                shapesUrl :conf.backend.shapesUrl,
+                shapesUrl :conf.shapes.url,
                 shapes: data
             });
 

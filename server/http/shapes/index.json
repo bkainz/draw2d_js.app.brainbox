@@ -99,12 +99,12 @@
     ]
   },
   {
-    "name": "draw2d_circuit_hardware_raspi",
+    "name": "draw2d_circuit_hardware_RaspiGPIO",
     "tags": [
       "draw2d",
       "circuit",
       "hardware",
-      "raspi"
+      "RaspiGPIO"
     ]
   },
   {

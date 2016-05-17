@@ -10,6 +10,9 @@
 //
 var conf={
     fileSuffix : ".circuit",
+    designer: {
+        url:"http://freegroup.github.io/draw2d_js.app.shape_designer/"
+    },
     backend: {
         oauth     : "http://draw2d.org/backend/oauth2.php",
         isLoggedIn: "http://draw2d.org/backend/isLoggedIn.php",
@@ -19,5 +22,7 @@ var conf={
             save : "http://draw2d.org/backend/file_save.php"
         }
     },
-    shapesUrl : "http://freegroup.github.io/draw2d_js.shapes/assets/shapes/"
+    shapes :{
+        url: "http://freegroup.github.io/draw2d_js.shapes/assets/shapes/"
+    }
 };

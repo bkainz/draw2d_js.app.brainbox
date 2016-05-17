@@ -22,10 +22,12 @@
         var socket = null;
 
         $(window).load(function () {
-            $.getScript(conf.backend.shapesUrl+"index.js",function(){
+            $.getScript(conf.shapes.url+"index.js",function(){
                 socket = io();
                 app = new Application();
                 $('.lazyload').lazyload({ trigger: "appear"});
+
+                raspi.gpio.init(socket);
             });
         });
     </script>

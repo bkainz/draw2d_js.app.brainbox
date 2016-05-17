@@ -6,7 +6,7 @@
  *
  *
  */
-draw2d_circuit_hardware_raspi = draw2d_circuit_hardware_raspi.extend({
+draw2d_circuit_hardware_RaspiGPIO = draw2d_circuit_hardware_RaspiGPIO.extend({
 
     init: function(attr, setter, getter){
          this._super(attr, setter, getter);
@@ -25,6 +25,9 @@ draw2d_circuit_hardware_raspi = draw2d_circuit_hardware_raspi.extend({
             if(port.hasChangedValue() && port.getConnections().getSize()>0){
                 raspi.gpio.set(port.getName(), port.getValue());
             }
+        });
+        this.getOutputPorts().each(function(index,port){
+            port.setValue(raspi.gpio.get(port.getName()));
         });
     },
 

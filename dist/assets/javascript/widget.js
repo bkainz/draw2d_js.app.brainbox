@@ -67018,14 +67018,14 @@ var Palette = Class.extend(
 
         var $grid = $("#paletteElements");
 
-        $.getJSON(conf.backend.shapesUrl+ "index.json", function(data) {
+        $.getJSON(conf.shapes.url+ "index.json", function(data) {
 
             data.forEach(function (element){
                 element.basename = element.name.split("_").pop();
             });
             var tmpl = $.templates("#shapeTemplate");
             var html = tmpl.render({
-                shapesUrl :conf.backend.shapesUrl,
+                shapesUrl :conf.shapes.url,
                 shapes: data
             });
 
@@ -67375,9 +67375,25 @@ var View = draw2d.Canvas.extend({
                 var y = event.y;
 
                 var pathToFile   = "https://github.com/freegroup/draw2d_js.shapes/blob/master/"+ eval(figure.NAME+".github");
-                var pathToMD     = conf.shapesUrl+figure.NAME+".md";
-                var pathToCustom = conf.shapesUrl+figure.NAME+".custom";
-                var pathToDesign = "http://freegroup.github.io/draw2d_js.app.shape_designer/#file="+ figure.NAME+".shape";
+                var pathToMD     = conf.shapes.url+figure.NAME+".md";
+                var pathToCustom = conf.shapes.url+figure.NAME+".custom";
+                var pathToDesign = conf.designer.url+"#file="+ figure.NAME+".shape";
+                var items = {
+                    "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
+                    "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
+                    "sep1":    "---------",
+                    "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
+                    "design":  {name: "Open Designer"    , icon :"x ion-ios-compose-outline"      },
+                    "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            }
+                };
+                if(conf.designer.url===null){
+                     items = {
+                        "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
+                        "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
+                        "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        }
+                     };
+                }
+
                 $.contextMenu({
                     selector: 'body',
                     events:
@@ -67416,15 +67432,8 @@ var View = draw2d.Canvas.extend({
                     },this),
                     x:x,
                     y:y,
-                    items:
-                    {
-                        "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
-                        "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
-                        "sep1":    "---------",
-                        "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
-                        "design":  {name: "Open Designer"    , icon :"x ion-ios-compose-outline"      },
-                        "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            }
-                    }
+                    items:items
+
                 });
             }
         });
@@ -67609,7 +67618,6 @@ var View = draw2d.Canvas.extend({
     calculateConnectionIntersection: function()
     {
         this._super();
-        console.log("calculated");
     }
 });
 
@@ -68494,11 +68502,23 @@ var Raft = draw2d.shape.composite.Raft.extend({
 ;
 var raspi={
 
-    gpio:function(pin, value)
-    {
-        socket.emit('gpi:set', {
-            pin:pin,
-            value:value
-        });
+    gpio:{
+        values:{
+
+        },
+        init:function(socket){
+            socket.on("gpo:change", function(msg){
+                raspi.gpio.values[msg.pin]=msg.value;
+            });
+        },
+        set: function(pin, value){
+            socket.emit('gpi:set', {
+                pin:pin,
+                value:value
+            });
+        },
+        get:function(pin){
+            return !!raspi.gpio.values[pin];
+        }
     }
 };

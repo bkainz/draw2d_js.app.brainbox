@@ -1,6 +1,6 @@
 {
   "name": "digitalstudio",
-  "version": "1.0.3",
+  "version": "1.0.10",
   "description": "DigitalTrainingStudio. A browser based circuit simulator which is able to run on a raspi with a node.js backend and has access to the GPIO pins.",
   "main": "index.html",
   "scripts": {
