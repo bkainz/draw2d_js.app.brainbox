@@ -2,7 +2,7 @@
 
 Extended Demo project for the [draw2d.js](http://www.draw2d.org) library which shows how to connect the browser with a node.js server on raspberry Pi or just your local computer.
 
-![image](http://github.com/freegroup/draw2d_js.app.digital_training_studio/blob/master/src/assets/images/animation.gif?raw=true)
+![image](//github.com/freegroup/draw2d_js.app.digital_training_studio/blob/master/src/assets/images/animation.gif?raw=true)
 
 
 
@@ -32,6 +32,15 @@ npm install -g digitaltrainingstudio
 
 and start the server with `digitaltrainingstudio`. The server reports the URL how to connect to 
 your RaspberryPi with the browser.
+
+###The simulation circuit
+![image](//github.com/freegroup/draw2d_js.app.digital_training_studio/blob/master/src/assets/images/readme_gpio_dts.png?raw=true)
+
+### connect a real LED to your GPIO pin 3
+You find a lot of documentation how to connect a simple LED to your raspi. A good source is always the web page of the original [raspberry pi organisation](https://www.raspberrypi.org/documentation/usage/gpio/)
+
+Now you can start the simulation in your browser and the LED connecte to the GPIO(3) lights up
+if you press the button in your simulator.
 
 
 
