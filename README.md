@@ -23,7 +23,7 @@ just go to [http://freegroup.github.io/draw2d_js.app.digital_training_studio/](h
 You can install the application even in your local intranet for training purpose. Just install and run the backend server (to store and load the circuit files) on every computer which can run a simple node.js server. 
 
 ```
-npm install -g digitaltrainingstudio
+npm install -g digitalstudio
 ```
 
 
@@ -32,10 +32,10 @@ You have **full access to the `GPIO`** pins on you RaspberryPi with the browser 
 like on your desktop
 
 ```
-npm install -g digitaltrainingstudio
+npm install -g digitalstudio
 ```
 
-and start the server with `digitaltrainingstudio`. The server reports the URL how to connect to 
+and start the server with `digitalstudio`. The server reports the URL how to connect to 
 your RaspberryPi with the browser.
 
 ###The simulation circuit
