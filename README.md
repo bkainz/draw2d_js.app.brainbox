@@ -38,6 +38,8 @@ npm install -g digitalstudio
 and start the server with `digitalstudio`. The server reports the URL how to connect to 
 your RaspberryPi with the browser.
 
+See the running example on YouTube: [https://www.youtube.com/watch?v=fUkAIjTaNXI](https://www.youtube.com/watch?v=fUkAIjTaNXI)
+
 ###The simulation circuit
 ![image](src/assets/images/readme_gpio_dts.png?raw=true)
 
