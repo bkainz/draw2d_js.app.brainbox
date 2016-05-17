@@ -2,7 +2,7 @@
 
 Extended Demo project for the [draw2d.js](http://www.draw2d.org) library which shows how to connect the browser with a node.js server on raspberry Pi or just your local computer.
 
-![image](//github.com/freegroup/draw2d_js.app.digital_training_studio/blob/master/src/assets/images/animation.gif?raw=true)
+![image](src/assets/images/animation.gif)
 
 
 
