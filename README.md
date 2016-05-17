@@ -1,27 +1,42 @@
-# Digital Training Studio
+# Digital Training Studio - circuit simulator for the web
 
-Preview: [http://freegroup.github.io/draw2d_js.app.digital_training_studio/](http://freegroup.github.io/draw2d_js.app.digital_training_studio/)
+Extended Demo project for the [draw2d.js](http://www.draw2d.org) library which shows how to connect the browser with a node.js server on raspberry Pi or just your local computer.
 
-Extended Demo project to build a circuit diagramming application with the http://www.draw2d.org framework.
-
-The **Digital Training Studio** is one of three applications which works together.
- 
-You can create very easy new shapes for the circuit diagramming application without changing one line of code. Just go to the Draw2D Designer, paint it, save it, done! At this point you can use it in the circuit app. The repository provides the new shape.
-  
- 
-##[Draw2D Shape Designer](http://freegroup.github.io/draw2d_js.app.shape_designer)
- The Shape Designer is one tool to design (draw) stencils for the Draw2d.js library. You can export the generated JS code or store them in your private github repositry.
- 
- The code can be found [here](https://github.com/freegroup/draw2d_js.app.shape_designer)
-  
-##[Draw2D Shape Repository](http://freegroup.github.io/draw2d_js.shapes)
-The repository is the *whippersnapper* in the Draw2D tool chain. It is a still growing repository of Draw2D shapes and code.
-
-The code can be found [here](https://github.com/freegroup/draw2d_js.shapes)
+![image](http://github.com/freegroup/draw2d_js.app.digital_training_studio/blob/master/src/assets/images/animation.gif?raw=true)
 
 
 
-## Feel free to clone and build your own App
+
+# How to install and use it
+You have different options to use the digital ciscuit simulator.
+
+## Internet
+just go to [http://freegroup.github.io/draw2d_js.app.digital_training_studio/](http://freegroup.github.io/draw2d_js.app.digital_training_studio/) and you can build your own digital circuits. You can save and load your created schemas if you login with your Google+ account.
+
+
+## Intranet
+You can install the application even in your local intranet for training purpose. Just install and run the backend server (to store and load the circuit files) on every computer which can run a simple node.js server. 
+
+```
+npm install -g digitaltrainingstudio
+```
+
+
+## Raspberry Pi
+You have **full access to the `GPIO`** pins on you RaspberryPi with the browser based digital circuit simulator. If node.js already running on your raspi you need just to install the simulator 
+like on your desktop
+
+```
+npm install -g digitaltrainingstudio
+```
+
+and start the server with `digitaltrainingstudio`. The server reports the URL how to connect to 
+your RaspberryPi with the browser.
+
+
+
+
+# Feel free to clone and and run it
  
 You need bower and grunt to build this Draw2D demo app.
 
@@ -37,10 +52,20 @@ With the flag -g you installed it globally and now you can access it from anywhe
 
 ###Bower
 Installing bower couldn't be simpler. Just go:
+
 ```
 npm install -g bower
 ```
+
 and you have it.
+
+###Gitbook
+The application uses gitbook to create a getting started guide (at the moment only in *german*). 
+
+```
+npm install -g gitbook-cli
+```
+
 
 ###Download draw2d.js
 
