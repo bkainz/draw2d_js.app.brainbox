@@ -119,7 +119,16 @@ module.exports = function (grunt) {
                 cwd: 'src/assets/help/_book/',
                 src: ['**/*'],
                 dest: 'dist/assets/help/'
+            },
+            // copies the build result from the "dist" directory to the server subdirectory
+            // for "npm publish"
+            server:{
+                expand: true,
+                cwd: 'dist/',
+                src: ['**/*'],
+                dest: 'server/http/html'
             }
+
         },
 
         less: {
@@ -235,9 +244,16 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-run');
 
     // Task definition
-    grunt.registerTask('server',  ['jshint', 'concat', 'less', 'run:gitbook', 'copy', 'string-replace']);
-    grunt.registerTask('default', ['jshint', 'concat', 'less', 'run:gitbook', 'copy', 'string-replace']);
-    grunt.registerTask('publish', ['jshint', 'concat', 'less', 'run:gitbook', 'copy', 'string-replace','gh-pages']);
+    grunt.registerTask('default', [
+        'jshint',
+        'concat',
+        'less',
+        'run:gitbook',
+        'copy:socketIO', 'copy:conf','copy:circuit', 'copy:img','copy:ionicons','copy:application','copy:bootstrap','copy:prettify','copy:help',
+        'string-replace',
+        'copy:server'
+    ]);
+    grunt.registerTask('publish', ['default','gh-pages']);
     grunt.registerTask('gitbook', ['run:gitbook']);
 };
 

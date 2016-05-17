@@ -36,7 +36,7 @@ var port = 7400;
 //
 app.use('/assets/settings', express.static(__dirname+'/settings'));
 app.use('/assets/shapes'  , express.static(__dirname+'/shapes'));
-app.use(express.static(__dirname+'/../../dist'));
+app.use(express.static(__dirname+'/html'));
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
