@@ -21,6 +21,7 @@
     "remarkable": "^1.6.2",
     "shifty": "~1.5.2",
     "jquery-lazyload-any": "^0.3.0",
-    "setimmediate": "^1.0.1"
+    "setimmediate": "^1.0.1",
+    "draw2d-shapes": "^1.0.10"
   }
 }

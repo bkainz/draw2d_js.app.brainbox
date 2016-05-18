@@ -127,6 +127,12 @@ module.exports = function (grunt) {
                 cwd: 'dist/',
                 src: ['**/*'],
                 dest: 'server/http/html'
+            },
+            shapes:{
+                expand: true,
+                cwd: 'bower_components/draw2d-shapes/dist/assets/shapes',
+                src: ['*'],
+                dest: 'server/http/shapes'
             }
 
         },
@@ -251,7 +257,7 @@ module.exports = function (grunt) {
         'run:gitbook',
         'copy:socketIO', 'copy:conf','copy:circuit', 'copy:img','copy:ionicons','copy:application','copy:bootstrap','copy:prettify','copy:help',
         'string-replace',
-        'copy:server'
+        'copy:server', "copy:shapes"
     ]);
     grunt.registerTask('publish', ['default','gh-pages']);
     grunt.registerTask('gitbook', ['run:gitbook']);
