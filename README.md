@@ -1,4 +1,4 @@
-# Digital Training Studio - circuit simulator for the web
+# Digital Training Studio - working with real device
 
 Logic gates are the basic building blocks of any digital system. It is an electronic circuit having one or 
 more than one input and only one output. The relationship between the input and the output is based on a 
