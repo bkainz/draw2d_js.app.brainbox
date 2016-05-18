@@ -16834,10 +16834,13 @@ draw2d.geo.Point = Class.extend({
      * @param {draw2d.geo.Point} other the point to use
      * @return {Number}
      */
-    getDistance: function(other)
+    distance: function(other)
     {
         return Math.sqrt((this.x - other.x) * (this.x - other.x) + (this.y - other.y) * (this.y - other.y));
     },
+    /* @deprecated */
+    getDistance: function(other){return this.distance(other);},
+
 
     /**
      * @method 
@@ -17359,6 +17362,9 @@ draw2d.geo.Rectangle = draw2d.geo.Point.extend({
 	getVertices: function()
 	{
 	    var result = new draw2d.util.ArrayList();
+		// don't change the order. We expect always that the top left corner has index[0]
+        // and goes clock wise
+        //
         result.add(this.getTopLeft());
         result.add(this.getTopRight());
         result.add(this.getBottomRight());
@@ -19846,10 +19852,10 @@ draw2d.command.CommandDelete = draw2d.command.Command.extend({
           }
        }
        
-        
-       if(this.figure instanceof draw2d.Connection){
-           this.figure.disconnect();
-       }   
+   // already done in the canvas.remove(..) method
+   //    if(this.figure instanceof draw2d.Connection){
+   //        this.figure.disconnect();
+   //    }
     
        // remove this figure from the parent 
        //
@@ -20774,7 +20780,7 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
      * @method
      * Callback method if the router has been assigned to a connection.
      * 
-     * @param {draw2d.Connection} connection The assigned connection
+     * @param {draw2d.shape.basic.PolyLine} connection The assigned connection
      * @template
      * @since 2.7.2
      */
@@ -20787,7 +20793,7 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
      * @method
      * Callback method if the router has been removed from the connection.
      * 
-     * @param {draw2d.Connection} connection The related connection
+     * @param {draw2d.shape.basic.PolyLine} connection The related connection
      * @template
      * @since 2.7.2
      */
@@ -21866,7 +21872,7 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
     route: function(conn, routingHints)
     {
         if (!routingHints.oldVertices) {
-            debugger
+            debugger;
         }
         if(routingHints.oldVertices.getSize()===0 || conn._routingMetaData.routedByUserInteraction===false){
             this._super(conn, routingHints);
@@ -24414,7 +24420,7 @@ draw2d.layout.locator.PortLocator = draw2d.layout.locator.Locator.extend({
 /**
  * @class draw2d.layout.locator.DraggableLocator
  * 
- * A DraggableLocator is used to place figures relative to the parent. It is
+ * A DraggableLocator is used to place figures relative to the parent top left corner. It is
  * possible to move a child node via drag&drop.
  *
  * 
@@ -24459,6 +24465,152 @@ draw2d.layout.locator.DraggableLocator= draw2d.layout.locator.Locator.extend({
     {
         // use default
         child.setSelectionAdapter(null);
+    }
+});
+
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************/
+/**
+ * @class draw2d.layout.locator.DraggableLocator
+ * 
+ * A DraggableLocator is used to place figures relative to the parent nearest corner. It is
+ * possible to move a child node via drag&drop.
+ *
+ * 
+ * See the example:
+ *
+ *     @example preview small frame
+ *     
+ *
+ *
+ *     
+ * @author Andreas Herz
+ * @extend draw2d.layout.locator.Locator
+ */
+draw2d.layout.locator.SmartDraggableLocator= draw2d.layout.locator.Locator.extend({
+    NAME : "draw2d.layout.locator.SmartDraggableLocator",
+    
+    /**
+     * @constructor
+     * Constructs a locator with associated parent.
+     * 
+     */
+    init: function( )
+    {
+        this._super();
+
+        // description see "bind" method
+        this.boundedCorners={
+            init:false,
+            parent:0,
+            child:0,
+            dist: Number.MAX_SAFE_INTEGER,
+            xOffset: 0,
+            yOffset: 0
+        }
+
+    },
+
+    bind: function(parent, child)
+    {
+        var _this = this;
+        // determine the best corner of the parent/child node and stick to the calculated corner
+        // In the example below it is R1.2 in combination with R2.0
+        //
+        //     0             1
+        //      +-----------+
+        //      |           |
+        //      |    R1     |
+        //      +-----------+
+        //     3             2
+        //
+        //              0             1
+        //               +-----------+
+        //               |           |
+        //               |    R2     |
+        //               +-----------+
+        //              3             2
+        //
+        var calcBoundingCorner=function() {
+            _this.boundedCorners={
+                init:false,
+                parent:0,
+                child:0,
+                dist: Number.MAX_SAFE_INTEGER,
+                xOffset: 0,
+                yOffset: 0
+            };
+            var parentVertices = child.getParent().getBoundingBox().getVertices();
+            var childVertices  = child.getBoundingBox().getVertices();
+            var i_parent, i_child;
+            var p1, p2, distance;
+            for (i_parent = 0; i_parent < parentVertices.getSize(); i_parent++) {
+                for (i_child = 0; i_child < childVertices.getSize(); i_child++) {
+                    p1 = parentVertices.get(i_parent);
+                    p2 = childVertices.get(i_child);
+                    distance = Math.abs(p1.distance(p2));
+                    if (distance < _this.boundedCorners.dist) {
+                        _this.boundedCorners = {
+                            parent: i_parent,
+                            child: i_child,
+                            dist: distance,
+                            xOffset:p1.x-p2.x,
+                            yOffset:p1.y-p2.y
+                        }
+                    }
+                }
+            }
+            _this.boundedCorners.init=true;
+        };
+
+        // override the parent implementation to avoid
+        // that the child is "!selectable" and "!draggable"
+
+        // Don't redirect the selection handling to the parent
+        // Using the DraggableLocator provides the ability to the children
+        // that they are selectable and draggable. Remove the SelectionAdapter from the parent
+        // assignment.
+        child.setSelectionAdapter( function(){
+            return child;
+        });
+
+        child.getParent().on("added",calcBoundingCorner);
+        child.on("dragend",calcBoundingCorner);
+    },
+
+    unbind: function(parent, child)
+    {
+        // use default
+        child.setSelectionAdapter(null);
+    },
+
+
+    /**
+     * @method
+     * Controls the location of an I{@link draw2d.Figure}
+     *
+     * @param {Number} index child index of the figure
+     * @param {draw2d.Figure} figure the figure to control
+     *
+     * @template
+     **/
+    relocate: function(index, figure)
+    {
+        this._super(index, figure);
+        if(this.boundedCorners.init===true) {
+            var parentVertices = figure.getParent().getBoundingBox().getVertices();
+            var childVertices = figure.getBoundingBox().getVertices();
+            var p1 = parentVertices.get(this.boundedCorners.parent);
+            var p2 = childVertices.get(this.boundedCorners.child);
+
+            var xOffset = p1.x - p2.x;
+            var yOffset = p1.y - p2.y;
+            // restore the initial distance from the corner by adding the new offset
+            // to the position of the child
+            figure.translate(xOffset - this.boundedCorners.xOffset, yOffset - this.boundedCorners.yOffset);
+        }
     }
 });
 
@@ -34143,9 +34295,11 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
      */
     onDragEnd: function(canvas, figure, x, y, shiftKey, ctrlKey)
     {
-        this.tweenable.stop(true);
-        this.tweenable.dispose();
-        this.tweenable= null;
+        if(this.tweenable) {
+            this.tweenable.stop(true);
+            this.tweenable.dispose();
+            this.tweenable = null;
+        }
         canvas.getAllPorts().each(function(i, element){
             // IMPORTANT shortcut to avoid rendering errors!!
             // performance shortcut to avoid a lot of events and recalculate/routing of all related connections
@@ -34181,7 +34335,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.26",
+    version : "6.1.28",
     i18n : {
         command : {
             move : "Move Shape",
@@ -36897,12 +37051,12 @@ draw2d.Figure = Class.extend({
           this.getShapeElement();
       }
 
-      // resset the attribute cache. We must start by paint all attributes
+      // reset the attribute cache. We must start by paint all attributes
       //
       this.lastAppliedAttributes = {};
 
 
-     if(canvas === null){
+      if(canvas === null){
     	  this.stopTimer();
       }
       else{
@@ -38377,7 +38531,7 @@ draw2d.Figure = Class.extend({
      **/
     setDimension: function(w, h)
     {
-        var old = {w:this.width, h:this.height};
+        var old = {width:this.width, height:this.height};
 
         var _this = this;
         w = Math.max(this.getMinWidth(),w);
@@ -38433,7 +38587,7 @@ draw2d.Figure = Class.extend({
             this.repaint();
 
             this.fireEvent("resize");
-            this.fireEvent("change:dimension",{value:{height:this.height, width:this.width}});
+            this.fireEvent("change:dimension",{value:{height:this.height, width:this.width, old:old}});
 
             // Update the resize handles if the user change the position of the element via an API call.
             //
@@ -66330,7 +66484,7 @@ var Application = Class.extend(
         var writer = new draw2d.io.json.Writer();
         writer.marshal(this.view, function (json, base64) {
             _this.localStorage["json"]=JSON.stringify(json, undefined,2);
-            window.location.href=conf.backend+"oauth2.php";
+            window.location.href=conf.backend.oauth;
         });
     },
 
@@ -66369,11 +66523,11 @@ var Application = Class.extend(
 
     fileNew: function(shapeTemplate)
     {
-        this.view.clear();
         $("#edit_tab a").click();
         this.currentFileHandle = {
             title: "Untitled"+conf.fileSuffix
         };
+        this.view.clear();
         if(shapeTemplate){
             var reader = new draw2d.io.json.Reader();
             reader.unmarshal(this.view, shapeTemplate);
@@ -66409,9 +66563,10 @@ var Application = Class.extend(
                     var reader = new draw2d.io.json.Reader();
                     reader.unmarshal(this.view, fileData);
                     this.view.getCommandStack().markSaveLocation();
+                    this.view.centerDocument();
                 }
                 catch(e){
-                    this.view.reset();
+                    this.view.clear();
                 }
             },this));
     },
@@ -66422,7 +66577,7 @@ var Application = Class.extend(
 
         var _this = this;
         $.ajax({
-            url:conf.backend +"isLoggedIn.php" ,
+            url:conf.backend.isLoggedIn,
             xhrFields: {
                 withCredentials: true
              },
@@ -66484,19 +66639,131 @@ var Application = Class.extend(
 });
 
 ;
-var conf={
-    fileSuffix : ".circuit"
-};
+ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter.extend({
+    NAME: "ConnectionRouter",
 
-if (window.location.hostname === "localhost") {
-    conf.backend= "http://localhost/~andherz/backend/";
-}
-else{
-    conf.backend= "http://draw2d.org/backend/";
-}
+    /**
+     * @constructor
+     * Creates a new Router object.
+     *
+     */
+    init: function () {
+        this._super();
 
+        this.setBridgeRadius(4);
+        this.setVertexRadius(3);
+    },
 
+    /**
+     * @method
+     * Set the radius of the vertex circle.
+     *
+     * @param {Number} radius
+     */
+    setVertexRadius: function(radius)
+    {
+        this.vertexRadius=radius;
 
+        return this;
+    },
+
+    /**
+     * @method
+     * Set the radius or span of the bridge. A bridge will be drawn if two connections are crossing and didn't have any
+     * common port.
+     *
+     * @param {Number} radius
+     */
+    setBridgeRadius: function(radius)
+    {
+        this.bridgeRadius=radius;
+        this.bridge_LR = [" r", 0.5, -0.5, radius-(radius/2), -(radius-radius/4), radius, -radius,radius+(radius/2), -(radius-radius/4), radius*2, "0 "].join(" ");
+        this.bridge_RL = [" r", -0.5, -0.5, -(radius-(radius/2)), -(radius-radius/4), -radius, -radius,-(radius+(radius/2)), -(radius-radius/4), -radius*2, "0 "].join(" ");
+
+        return this;
+    },
+
+    /**
+     * @inheritdoc
+     */
+    _paint: function(conn)
+    {
+        var _this = this;
+        // get the intersections to the other connections
+        //
+        var intersectionsASC = conn.getCanvas().getIntersection(conn).sort("x");
+        var intersectionsDESC= intersectionsASC.clone().reverse();
+
+        var intersectionForCalc = intersectionsASC;
+
+        // add a ArrayList of all added vertex nodes to the connection
+        //
+        if(typeof conn.vertexNodes!=="undefined" && conn.vertexNodes!==null){
+            conn.vertexNodes.remove();
+        }
+        conn.vertexNodes = conn.canvas.paper.set();
+
+        // ATTENTION: we cast all x/y coordinates to integer and add 0.5 to avoid subpixel rendering of
+        //            the connection. The 1px or 2px lines look much clearer than before.
+        //
+        var ps = conn.getVertices();
+        var p = ps.get(0);
+        var path = [ "M", p.x, " ", p.y];
+
+        var oldP = p;
+        var bridgeWidth =  this.bridgeRadius;
+        var bridgeCode  = null;
+
+        var calc = function(ii, interP) {
+            if (draw2d.shape.basic.Line.hit(5, oldP.x, oldP.y, p.x, p.y, interP.x, interP.y) === true) {
+                // It is a vertex node..
+                //
+                if(conn.sharingPorts(interP.other)){
+                    var other = interP.other;
+                    var otherZ = other.getZOrder();
+                    var connZ = conn.getZOrder();
+                    if(connZ<otherZ){
+                        var vertexNode=conn.canvas.paper.ellipse(interP.x,interP.y, _this.vertexRadius, _this.vertexRadius).attr({fill:conn.lineColor.hash()});
+                        conn.vertexNodes.push(vertexNode);
+                    }
+                }
+                // ..or a bridge. We draw only horizontal bridges. Just a design decision
+                //
+                else if ((p.y|0) === (interP.y|0)) {
+                    path.push(" L", (interP.x - bridgeWidth), " ", interP.y);
+                    path.push(bridgeCode);
+                }
+            }
+        };
+
+        for (var i = 1; i < ps.getSize(); i++) {
+            p = ps.get(i);
+
+            // line goes from right->left.
+            if (oldP.x > p.x) {
+                intersectionForCalc=intersectionsDESC;
+                bridgeCode  = this.bridge_RL;
+                bridgeWidth = -this.bridgeRadius;
+            }
+            // line goes from left->right
+            else{
+                intersectionForCalc=intersectionsASC;
+                bridgeCode  = this.bridge_LR;
+                bridgeWidth = this.bridgeRadius;
+            }
+
+            // bridge   => the connections didn't have a common port
+            // vertex => the connections did have a common source or target port
+            //
+            intersectionForCalc.each(calc);
+
+            path.push(" L", p.x, " ", p.y);
+            oldP = p;
+        }
+        conn.svgPathString = path.join("");
+    }
+
+});
 ;
 var DropInterceptorPolicy = draw2d.policy.canvas.DropInterceptorPolicy.extend({
 
@@ -66612,6 +66879,7 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
 
     onInstall:function(canvas)
     {
+        this._super(canvas);
         var _this = this;
 
         // provide configuration menu if the mouse is close to a shape
@@ -66626,6 +66894,8 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
 
     onUninstall:function(canvas)
     {
+        this._super(canvas);
+
         canvas.off(this.mouseMoveProxy);
         $("#figureConfigDialog .figureAddLabel").off("click");
     },
@@ -66659,6 +66929,16 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
 
     _onMouseMoveCallback:function(emitter, event)
     {
+        // there is no benefit to show decorations during Drag&Drop of an shape
+        //
+        if(this.mouseMovedDuringMouseDown===true){
+            if(this.configIcon!==null) {
+                this.configIcon.remove();
+                this.configIcon = null;
+            }
+            return;
+        }
+
         var hit = null;
         var _this = this;
 
@@ -66704,7 +66984,7 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         var text = prompt("Label");
         if(text) {
             var label = new draw2d.shape.basic.Label({text:text, stroke:0, x:-20, y:-40});
-            var locator = new draw2d.layout.locator.DraggableLocator();
+            var locator = new draw2d.layout.locator.SmartDraggableLocator();
             label.installEditor(new draw2d.ui.LabelInplaceEditor());
             this.configFigure.add(label,locator);
         }
@@ -66738,13 +67018,16 @@ var Palette = Class.extend(
 
         var $grid = $("#paletteElements");
 
-        $.getJSON("http://freegroup.github.io/draw2d_js.shapes/assets/shapes/index.json", function(data) {
+        $.getJSON(conf.shapes.url+ "index.json", function(data) {
 
             data.forEach(function (element){
                 element.basename = element.name.split("_").pop();
             });
             var tmpl = $.templates("#shapeTemplate");
-            var html = tmpl.render({shapes: data});
+            var html = tmpl.render({
+                shapesUrl :conf.shapes.url,
+                shapes: data
+            });
 
             $("#paletteElements").html(html);
 
@@ -66785,8 +67068,6 @@ var Palette = Class.extend(
             }).on('mouseout', function(){
                 $(this).parent().removeClass('glowBorder');
             });
-
-
         });
 
     }
@@ -66937,10 +67218,10 @@ var View = draw2d.Canvas.extend({
         //
         this.getCommandStack().addEventListener(this);
 
-        var router = new draw2d.layout.connection.InteractiveManhattanConnectionRouter();
+        var router = new ConnectionRouter();
         router.abortRoutingOnFirstVertexNode=false;
         var createConnection=function(sourcePort, targetPort){
-            var c = new draw2d.Connection({
+            var c = new Connection({
                 color:"#000000",
                 router: router,
                 stroke:1.5,
@@ -67041,6 +67322,33 @@ var View = draw2d.Canvas.extend({
 
 
 
+        var setZoom = function(newZoom){
+            var bb = _this.getBoundingBox().getCenter();
+            var c = $("#draw2dCanvasWrapper");
+            _this.setZoom(newZoom);
+            c.scrollTop((bb.y/newZoom- c.height()/2));
+            c.scrollLeft((bb.x/newZoom- c.width()/2));
+        };
+        //  ZoomIn Button and the callbacks
+        //
+        $("#canvas_zoom_in").on("click",function(){
+            setZoom(_this.getZoom()*1.2);
+        });
+
+        // OneToOne Button
+        //
+        $("#canvas_zoom_normal").on("click",function(){
+            setZoom(1.0);
+        });
+
+        //ZoomOut Button and the callback
+        //
+        $("#canvas_zoom_out").on("click",function(){
+            setZoom(_this.getZoom()*0.8);
+        });
+
+
+
         $("#editUndo").on("click", function(){
             _this.getCommandStack().undo();
         });
@@ -67067,9 +67375,25 @@ var View = draw2d.Canvas.extend({
                 var y = event.y;
 
                 var pathToFile   = "https://github.com/freegroup/draw2d_js.shapes/blob/master/"+ eval(figure.NAME+".github");
-                var pathToMD   = "http://freegroup.github.io/draw2d_js.shapes/assets/shapes/"+ figure.NAME+".md";
-                var pathToCustom   = "http://freegroup.github.io/draw2d_js.shapes/assets/shapes/"+ figure.NAME+".custom";
-                var pathToDesign = "http://freegroup.github.io/draw2d_js.app.shape_designer/#file="+ figure.NAME+".shape";
+                var pathToMD     = conf.shapes.url+figure.NAME+".md";
+                var pathToCustom = conf.shapes.url+figure.NAME+".custom";
+                var pathToDesign = conf.designer.url+"#file="+ figure.NAME+".shape";
+                var items = {
+                    "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
+                    "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
+                    "sep1":    "---------",
+                    "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
+                    "design":  {name: "Open Designer"    , icon :"x ion-ios-compose-outline"      },
+                    "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            }
+                };
+                if(conf.designer.url===null){
+                     items = {
+                        "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
+                        "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
+                        "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        }
+                     };
+                }
+
                 $.contextMenu({
                     selector: 'body',
                     events:
@@ -67108,15 +67432,8 @@ var View = draw2d.Canvas.extend({
                     },this),
                     x:x,
                     y:y,
-                    items:
-                    {
-                        "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
-                        "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
-                        "sep1":    "---------",
-                        "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
-                        "design":  {name: "Open Designer"    , icon :"x ion-ios-compose-outline"      },
-                        "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            }
-                    }
+                    items:items
+
                 });
             }
         });
@@ -67137,7 +67454,10 @@ var View = draw2d.Canvas.extend({
     clear: function()
     {
         this.simulationStop();
+
         this._super();
+
+        this.centerDocument();
     },
 
     /**
@@ -67156,7 +67476,6 @@ var View = draw2d.Canvas.extend({
      **/
     onDrop : function(droppedDomNode, x, y, shiftKey, ctrlKey)
     {
-        var _this = this;
         var type = $(droppedDomNode).data("shape");
         var figure = eval("new "+type+"();"); // jshint ignore:line
         // create a command for the undo/redo support
@@ -67175,7 +67494,8 @@ var View = draw2d.Canvas.extend({
         this.commonPorts.each(function(i,p){
             p.setVisible(false);
         });
-        requestAnimationFrame(this.animationFrameFunc);
+
+        setImmediate(this.animationFrameFunc);
         $("#simulationStart").addClass("disabled");
         $("#simulationStop").removeClass("disabled");
     },
@@ -67212,7 +67532,7 @@ var View = draw2d.Canvas.extend({
         });
 
         if(this.simulate===true){
-            requestAnimationFrame(this.animationFrameFunc);
+            setImmediate(this.animationFrameFunc);
         }
     },
 
@@ -67238,6 +67558,66 @@ var View = draw2d.Canvas.extend({
             $("#editRedo").removeClass("disabled");
         }
 
+    },
+
+
+    getBoundingBox: function()
+    {
+        var xCoords = [];
+        var yCoords = [];
+        this.getFigures().each(function(i,f){
+           var b = f.getBoundingBox();
+            xCoords.push(b.x, b.x+b.w);
+            yCoords.push(b.y, b.y+b.h);
+        });
+        var minX   = Math.min.apply(Math, xCoords);
+        var minY   = Math.min.apply(Math, yCoords);
+        var width  = Math.max(10,Math.max.apply(Math, xCoords)-minX);
+        var height = Math.max(10,Math.max.apply(Math, yCoords)-minY);
+
+        return new draw2d.geo.Rectangle(minX,minY,width,height);
+    },
+
+
+    centerDocument:function()
+    {
+        var bb=null;
+        var c = $("#draw2dCanvasWrapper");
+        this.setZoom(1.0);
+        if(this.getFigures().getSize()>0){
+            // get the bounding box of the document and translate the complete document
+            // into the center of the canvas. Scroll to the top left corner after them
+            //
+            bb = this.getBoundingBox();
+
+            var dx = (this.getWidth()/2)-(bb.x+bb.w/2);
+            var dy = (this.getHeight()/2)-(bb.y+bb.h/2);
+
+            this.getFigures().each(function(i,f){
+                f.translate(dx,dy);
+            });
+            this.getLines().each(function(i,f){
+                f.translate(dx,dy);
+            });
+            bb = this.getBoundingBox().getCenter();
+
+            c.scrollTop(bb.y- c.height()/2);
+            c.scrollLeft(bb.x- c.width()/2);
+        }
+        else{
+            bb={
+                x:this.getWidth()/2,
+                y:this.getHeight()/2
+            };
+            c.scrollTop(bb.y- c.height()/2);
+            c.scrollLeft(bb.x- c.width()/2);
+
+        }
+    },
+
+    calculateConnectionIntersection: function()
+    {
+        this._super();
     }
 });
 
@@ -67453,7 +67833,7 @@ FileOpen = Class.extend({
         var _this = this;
 
         $.ajax({
-                url:conf.backend +"file_list.php" ,
+                url:conf.backend.file.list ,
                 xhrFields: {
                     withCredentials: true
                 },
@@ -67499,7 +67879,7 @@ FileOpen = Class.extend({
                         var id   = $(this).data("id");
                         var name = $(this).data("name");
                         $.ajax({
-                                url: conf.backend + "file_get.php",
+                                url: conf.backend.file.get,
                                 method: "POST",
                                 xhrFields: {
                                     withCredentials: true
@@ -67559,7 +67939,7 @@ FileSave = Class.extend({
             var writer = new draw2d.io.json.Writer();
             writer.marshal(canvas, function (json, base64) {
                 $.ajax({
-                        url: conf.backend + "file_save.php",
+                        url: conf.backend.file.save,
                         method: "POST",
                         xhrFields: {
                             withCredentials: true
@@ -67603,10 +67983,46 @@ var MarkdownDialog = Class.extend(
 });
 ;
 
+var Connection = draw2d.Connection.extend({
+
+    init : function(attr, setter, getter)
+    {
+        this._super(attr, setter, getter);
+    },
+
+    setCanvas: function(canvas)
+    {
+        this._super(canvas);
+
+        // remove any decoration if exists
+        if(canvas===null){
+
+        }
+    },
+
+    disconnect: function()
+    {
+       this._super();
+
+       // remove some decorations of the router.
+       // This is a design flaw. the router creates the decoration and the connection must remove them :-/
+       // Unfortunately the Router didn't have a callback when a connection is removed from the canvas.
+       //
+        if(typeof this.vertexNodes!=="undefined" && this.vertexNodes!==null){
+            this.vertexNodes.remove();
+            delete this.vertexNodes;
+        }
+    }
+});
+
+;
+
 var DecoratedInputPort = draw2d.InputPort.extend({
 
     init : function(attr, setter, getter)
     {
+        this.hasChanged = false;
+
         this._super(attr, setter, getter);
         
         this.decoration = new MarkerFigure();
@@ -67642,6 +68058,27 @@ var DecoratedInputPort = draw2d.InputPort.extend({
     useDefaultValue:function()
     {
         this.decoration.setStick(true);
+    },
+
+    setValue:function(value)
+    {
+        this.hasChanged = this.value !==value;
+        this._super(value);
+    },
+
+    hasChangedValue: function()
+    {
+        return this.hasChanged;
+    },
+
+    hasRisingEdge: function()
+    {
+        return this.hasChangedValue()&& this.getValue();
+    },
+
+    hasFallingEdge: function()
+    {
+        return this.hasChangedValue() && !this.getValue();
     }
 });
 
@@ -68061,3 +68498,27 @@ var Raft = draw2d.shape.composite.Raft.extend({
     }
 
 });
+
+;
+var raspi={
+
+    gpio:{
+        values:{
+
+        },
+        init:function(socket){
+            socket.on("gpo:change", function(msg){
+                raspi.gpio.values[msg.pin]=msg.value;
+            });
+        },
+        set: function(pin, value){
+            socket.emit('gpi:set', {
+                pin:pin,
+                value:value
+            });
+        },
+        get:function(pin){
+            return !!raspi.gpio.values[pin];
+        }
+    }
+};

@@ -432,6 +432,24 @@ rect.Raft {
   opacity: 1;
   color: #1c9bab;
 }
+#canvas_zoom {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: transparent;
+}
+#canvas_zoom button {
+  background-color: transparent;
+  font-weight: 300;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 1px solid transparent;
+  outline: none;
+}
+#canvas_zoom button:hover {
+  border: 1px solid #1c9bab !important;
+}
 #figureConfigDialog {
   display: none;
   background-color: white;
@@ -607,8 +625,8 @@ body #layout .tab-content .tab-pane .workspace .content {
   overflow: scroll;
 }
 body #layout .tab-content .tab-pane .workspace .content .canvas {
-  width: 3000px;
-  height: 3000px;
+  width: 6000px;
+  height: 6000px;
 }
 body #layout .tab-content .active {
   display: block;

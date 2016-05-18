@@ -1,3 +1,223 @@
+(function (global, undefined) {
+    "use strict";
+
+    var tasks = (function () {
+        function Task(handler, args) {
+            this.handler = handler;
+            this.args = args;
+        }
+        Task.prototype.run = function () {
+            // See steps in section 5 of the spec.
+            if (typeof this.handler === "function") {
+                // Choice of `thisArg` is not in the setImmediate spec; `undefined` is in the setTimeout spec though:
+                // http://www.whatwg.org/specs/web-apps/current-work/multipage/timers.html
+                this.handler.apply(undefined, this.args);
+            } else {
+                var scriptSource = "" + this.handler;
+                /*jshint evil: true */
+                eval(scriptSource);
+            }
+        };
+
+        var nextHandle = 1; // Spec says greater than zero
+        var tasksByHandle = {};
+        var currentlyRunningATask = false;
+
+        return {
+            addFromSetImmediateArguments: function (args) {
+                var handler = args[0];
+                var argsToHandle = Array.prototype.slice.call(args, 1);
+                var task = new Task(handler, argsToHandle);
+
+                var thisHandle = nextHandle++;
+                tasksByHandle[thisHandle] = task;
+                return thisHandle;
+            },
+            runIfPresent: function (handle) {
+                // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
+                // So if we're currently running a task, we'll need to delay this invocation.
+                if (!currentlyRunningATask) {
+                    var task = tasksByHandle[handle];
+                    if (task) {
+                        currentlyRunningATask = true;
+                        try {
+                            task.run();
+                        } finally {
+                            delete tasksByHandle[handle];
+                            currentlyRunningATask = false;
+                        }
+                    }
+                } else {
+                    // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
+                    // "too much recursion" error.
+                    global.setTimeout(function () {
+                        tasks.runIfPresent(handle);
+                    }, 0);
+                }
+            },
+            remove: function (handle) {
+                delete tasksByHandle[handle];
+            }
+        };
+    }());
+
+    function canUseNextTick() {
+        // Don't get fooled by e.g. browserify environments.
+        return typeof process === "object" &&
+               Object.prototype.toString.call(process) === "[object process]";
+    }
+
+    function canUseMessageChannel() {
+        return !!global.MessageChannel;
+    }
+
+    function canUsePostMessage() {
+        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
+        // where `global.postMessage` means something completely different and can't be used for this purpose.
+
+        if (!global.postMessage || global.importScripts) {
+            return false;
+        }
+
+        var postMessageIsAsynchronous = true;
+        var oldOnMessage = global.onmessage;
+        global.onmessage = function () {
+            postMessageIsAsynchronous = false;
+        };
+        global.postMessage("", "*");
+        global.onmessage = oldOnMessage;
+
+        return postMessageIsAsynchronous;
+    }
+
+    function canUseReadyStateChange() {
+        return "document" in global && "onreadystatechange" in global.document.createElement("script");
+    }
+
+    function installNextTickImplementation(attachTo) {
+        attachTo.setImmediate = function () {
+            var handle = tasks.addFromSetImmediateArguments(arguments);
+
+            process.nextTick(function () {
+                tasks.runIfPresent(handle);
+            });
+
+            return handle;
+        };
+    }
+
+    function installMessageChannelImplementation(attachTo) {
+        var channel = new global.MessageChannel();
+        channel.port1.onmessage = function (event) {
+            var handle = event.data;
+            tasks.runIfPresent(handle);
+        };
+        attachTo.setImmediate = function () {
+            var handle = tasks.addFromSetImmediateArguments(arguments);
+
+            channel.port2.postMessage(handle);
+
+            return handle;
+        };
+    }
+
+    function installPostMessageImplementation(attachTo) {
+        // Installs an event handler on `global` for the `message` event: see
+        // * https://developer.mozilla.org/en/DOM/window.postMessage
+        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
+
+        var MESSAGE_PREFIX = "com.bn.NobleJS.setImmediate" + Math.random();
+
+        function isStringAndStartsWith(string, putativeStart) {
+            return typeof string === "string" && string.substring(0, putativeStart.length) === putativeStart;
+        }
+
+        function onGlobalMessage(event) {
+            // This will catch all incoming messages (even from other windows!), so we need to try reasonably hard to
+            // avoid letting anyone else trick us into firing off. We test the origin is still this window, and that a
+            // (randomly generated) unpredictable identifying prefix is present.
+            if (event.source === global && isStringAndStartsWith(event.data, MESSAGE_PREFIX)) {
+                var handle = event.data.substring(MESSAGE_PREFIX.length);
+                tasks.runIfPresent(handle);
+            }
+        }
+        if (global.addEventListener) {
+            global.addEventListener("message", onGlobalMessage, false);
+        } else {
+            global.attachEvent("onmessage", onGlobalMessage);
+        }
+
+        attachTo.setImmediate = function () {
+            var handle = tasks.addFromSetImmediateArguments(arguments);
+
+            // Make `global` post a message to itself with the handle and identifying prefix, thus asynchronously
+            // invoking our onGlobalMessage listener above.
+            global.postMessage(MESSAGE_PREFIX + handle, "*");
+
+            return handle;
+        };
+    }
+
+    function installReadyStateChangeImplementation(attachTo) {
+        attachTo.setImmediate = function () {
+            var handle = tasks.addFromSetImmediateArguments(arguments);
+
+            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
+            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+            var scriptEl = global.document.createElement("script");
+            scriptEl.onreadystatechange = function () {
+                tasks.runIfPresent(handle);
+
+                scriptEl.onreadystatechange = null;
+                scriptEl.parentNode.removeChild(scriptEl);
+                scriptEl = null;
+            };
+            global.document.documentElement.appendChild(scriptEl);
+
+            return handle;
+        };
+    }
+
+    function installSetTimeoutImplementation(attachTo) {
+        attachTo.setImmediate = function () {
+            var handle = tasks.addFromSetImmediateArguments(arguments);
+
+            global.setTimeout(function () {
+                tasks.runIfPresent(handle);
+            }, 0);
+
+            return handle;
+        };
+    }
+
+    if (!global.setImmediate) {
+        // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
+        var attachTo = typeof Object.getPrototypeOf === "function" && "setTimeout" in Object.getPrototypeOf(global) ?
+                          Object.getPrototypeOf(global)
+                        : global;
+
+        if (canUseNextTick()) {
+            // For Node.js before 0.9
+            installNextTickImplementation(attachTo);
+        } else if (canUsePostMessage()) {
+            // For non-IE10 modern browsers
+            installPostMessageImplementation(attachTo);
+        } else if (canUseMessageChannel()) {
+            // For web workers, where supported
+            installMessageChannelImplementation(attachTo);
+        } else if (canUseReadyStateChange()) {
+            // For IE 6–8
+            installReadyStateChangeImplementation(attachTo);
+        } else {
+            // For older browsers
+            installSetTimeoutImplementation(attachTo);
+        }
+
+        attachTo.clearImmediate = tasks.remove;
+    }
+}(typeof global === "object" && global ? global : this));
+
+;
 /* shifty - v1.5.2 - 2016-02-10 - http://jeremyckahn.github.io/shifty */
 (function(){var a=this||Function("return this")(),b=function(){"use strict";function b(){}function c(a,b){var c;for(c in a)Object.hasOwnProperty.call(a,c)&&b(c)}function d(a,b){return c(b,function(c){a[c]=b[c]}),a}function e(a,b){c(b,function(c){"undefined"==typeof a[c]&&(a[c]=b[c])})}function f(a,b,c,d,e,f,h){var i,j,k,m=f>a?0:(a-f)/e;for(i in b)b.hasOwnProperty(i)&&(j=h[i],k="function"==typeof j?j:l[j],b[i]=g(c[i],d[i],k,m));return b}function g(a,b,c,d){return a+(b-a)*c(d)}function h(a,b){var d=k.prototype.filter,e=a._filterArgs;c(d,function(c){"undefined"!=typeof d[c][b]&&d[c][b].apply(a,e)})}function i(a,b,c,d,e,g,i,j,k,l,m){s=b+c+d,t=Math.min(m||r(),s),u=t>=s,v=d-(s-t),a.isPlaying()&&(u?(k(i,a._attachment,v),a.stop(!0)):(a._scheduleId=l(a._timeoutHandler,p),h(a,"beforeTween"),b+c>t?f(1,e,g,i,1,1,j):f(t,e,g,i,d,b+c,j),h(a,"afterTween"),k(e,a._attachment,v)))}function j(a,b){var d={},e=typeof b;return"string"===e||"function"===e?c(a,function(a){d[a]=b}):c(a,function(a){d[a]||(d[a]=b[a]||n)}),d}function k(a,b){this._currentState=a||{},this._configured=!1,this._scheduleFunction=m,"undefined"!=typeof b&&this.setConfig(b)}var l,m,n="linear",o=500,p=1e3/60,q=Date.now?Date.now:function(){return+new Date},r="undefined"!=typeof SHIFTY_DEBUG_NOW?SHIFTY_DEBUG_NOW:q;m="undefined"!=typeof window?window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequestAnimationFrame||window.mozCancelRequestAnimationFrame&&window.mozRequestAnimationFrame||setTimeout:setTimeout;var s,t,u,v;return k.prototype.tween=function(a){return this._isTweening?this:(void 0===a&&this._configured||this.setConfig(a),this._timestamp=r(),this._start(this.get(),this._attachment),this.resume())},k.prototype.setConfig=function(a){a=a||{},this._configured=!0,this._attachment=a.attachment,this._pausedAtTime=null,this._scheduleId=null,this._delay=a.delay||0,this._start=a.start||b,this._step=a.step||b,this._finish=a.finish||b,this._duration=a.duration||o,this._currentState=d({},a.from)||this.get(),this._originalState=this.get(),this._targetState=d({},a.to)||this.get();var c=this;this._timeoutHandler=function(){i(c,c._timestamp,c._delay,c._duration,c._currentState,c._originalState,c._targetState,c._easing,c._step,c._scheduleFunction)};var f=this._currentState,g=this._targetState;return e(g,f),this._easing=j(f,a.easing||n),this._filterArgs=[f,this._originalState,g,this._easing],h(this,"tweenCreated"),this},k.prototype.get=function(){return d({},this._currentState)},k.prototype.set=function(a){this._currentState=a},k.prototype.pause=function(){return this._pausedAtTime=r(),this._isPaused=!0,this},k.prototype.resume=function(){return this._isPaused&&(this._timestamp+=r()-this._pausedAtTime),this._isPaused=!1,this._isTweening=!0,this._timeoutHandler(),this},k.prototype.seek=function(a){a=Math.max(a,0);var b=r();return this._timestamp+a===0?this:(this._timestamp=b-a,this.isPlaying()||(this._isTweening=!0,this._isPaused=!1,i(this,this._timestamp,this._delay,this._duration,this._currentState,this._originalState,this._targetState,this._easing,this._step,this._scheduleFunction,b),this.pause()),this)},k.prototype.stop=function(c){return this._isTweening=!1,this._isPaused=!1,this._timeoutHandler=b,(a.cancelAnimationFrame||a.webkitCancelAnimationFrame||a.oCancelAnimationFrame||a.msCancelAnimationFrame||a.mozCancelRequestAnimationFrame||a.clearTimeout)(this._scheduleId),c&&(h(this,"beforeTween"),f(1,this._currentState,this._originalState,this._targetState,1,0,this._easing),h(this,"afterTween"),h(this,"afterTweenEnd"),this._finish.call(this,this._currentState,this._attachment)),this},k.prototype.isPlaying=function(){return this._isTweening&&!this._isPaused},k.prototype.setScheduleFunction=function(a){this._scheduleFunction=a},k.prototype.dispose=function(){var a;for(a in this)this.hasOwnProperty(a)&&delete this[a]},k.prototype.filter={},k.prototype.formula={linear:function(a){return a}},l=k.prototype.formula,d(k,{now:r,each:c,tweenProps:f,tweenProp:g,applyFilter:h,shallowCopy:d,defaults:e,composeEasingObject:j}),"function"==typeof SHIFTY_DEBUG_NOW&&(a.timeoutHandler=i),"object"==typeof exports?module.exports=k:"function"==typeof define&&define.amd?define(function(){return k}):"undefined"==typeof a.Tweenable&&(a.Tweenable=k),k}();!function(){b.shallowCopy(b.prototype.formula,{easeInQuad:function(a){return Math.pow(a,2)},easeOutQuad:function(a){return-(Math.pow(a-1,2)-1)},easeInOutQuad:function(a){return(a/=.5)<1?.5*Math.pow(a,2):-.5*((a-=2)*a-2)},easeInCubic:function(a){return Math.pow(a,3)},easeOutCubic:function(a){return Math.pow(a-1,3)+1},easeInOutCubic:function(a){return(a/=.5)<1?.5*Math.pow(a,3):.5*(Math.pow(a-2,3)+2)},easeInQuart:function(a){return Math.pow(a,4)},easeOutQuart:function(a){return-(Math.pow(a-1,4)-1)},easeInOutQuart:function(a){return(a/=.5)<1?.5*Math.pow(a,4):-.5*((a-=2)*Math.pow(a,3)-2)},easeInQuint:function(a){return Math.pow(a,5)},easeOutQuint:function(a){return Math.pow(a-1,5)+1},easeInOutQuint:function(a){return(a/=.5)<1?.5*Math.pow(a,5):.5*(Math.pow(a-2,5)+2)},easeInSine:function(a){return-Math.cos(a*(Math.PI/2))+1},easeOutSine:function(a){return Math.sin(a*(Math.PI/2))},easeInOutSine:function(a){return-.5*(Math.cos(Math.PI*a)-1)},easeInExpo:function(a){return 0===a?0:Math.pow(2,10*(a-1))},easeOutExpo:function(a){return 1===a?1:-Math.pow(2,-10*a)+1},easeInOutExpo:function(a){return 0===a?0:1===a?1:(a/=.5)<1?.5*Math.pow(2,10*(a-1)):.5*(-Math.pow(2,-10*--a)+2)},easeInCirc:function(a){return-(Math.sqrt(1-a*a)-1)},easeOutCirc:function(a){return Math.sqrt(1-Math.pow(a-1,2))},easeInOutCirc:function(a){return(a/=.5)<1?-.5*(Math.sqrt(1-a*a)-1):.5*(Math.sqrt(1-(a-=2)*a)+1)},easeOutBounce:function(a){return 1/2.75>a?7.5625*a*a:2/2.75>a?7.5625*(a-=1.5/2.75)*a+.75:2.5/2.75>a?7.5625*(a-=2.25/2.75)*a+.9375:7.5625*(a-=2.625/2.75)*a+.984375},easeInBack:function(a){var b=1.70158;return a*a*((b+1)*a-b)},easeOutBack:function(a){var b=1.70158;return(a-=1)*a*((b+1)*a+b)+1},easeInOutBack:function(a){var b=1.70158;return(a/=.5)<1?.5*(a*a*(((b*=1.525)+1)*a-b)):.5*((a-=2)*a*(((b*=1.525)+1)*a+b)+2)},elastic:function(a){return-1*Math.pow(4,-8*a)*Math.sin((6*a-1)*(2*Math.PI)/2)+1},swingFromTo:function(a){var b=1.70158;return(a/=.5)<1?.5*(a*a*(((b*=1.525)+1)*a-b)):.5*((a-=2)*a*(((b*=1.525)+1)*a+b)+2)},swingFrom:function(a){var b=1.70158;return a*a*((b+1)*a-b)},swingTo:function(a){var b=1.70158;return(a-=1)*a*((b+1)*a+b)+1},bounce:function(a){return 1/2.75>a?7.5625*a*a:2/2.75>a?7.5625*(a-=1.5/2.75)*a+.75:2.5/2.75>a?7.5625*(a-=2.25/2.75)*a+.9375:7.5625*(a-=2.625/2.75)*a+.984375},bouncePast:function(a){return 1/2.75>a?7.5625*a*a:2/2.75>a?2-(7.5625*(a-=1.5/2.75)*a+.75):2.5/2.75>a?2-(7.5625*(a-=2.25/2.75)*a+.9375):2-(7.5625*(a-=2.625/2.75)*a+.984375)},easeFromTo:function(a){return(a/=.5)<1?.5*Math.pow(a,4):-.5*((a-=2)*Math.pow(a,3)-2)},easeFrom:function(a){return Math.pow(a,4)},easeTo:function(a){return Math.pow(a,.25)}})}(),function(){function a(a,b,c,d,e,f){function g(a){return((n*a+o)*a+p)*a}function h(a){return((q*a+r)*a+s)*a}function i(a){return(3*n*a+2*o)*a+p}function j(a){return 1/(200*a)}function k(a,b){return h(m(a,b))}function l(a){return a>=0?a:0-a}function m(a,b){var c,d,e,f,h,j;for(e=a,j=0;8>j;j++){if(f=g(e)-a,l(f)<b)return e;if(h=i(e),l(h)<1e-6)break;e-=f/h}if(c=0,d=1,e=a,c>e)return c;if(e>d)return d;for(;d>c;){if(f=g(e),l(f-a)<b)return e;a>f?c=e:d=e,e=.5*(d-c)+c}return e}var n=0,o=0,p=0,q=0,r=0,s=0;return p=3*b,o=3*(d-b)-p,n=1-p-o,s=3*c,r=3*(e-c)-s,q=1-s-r,k(a,j(f))}function c(b,c,d,e){return function(f){return a(f,b,c,d,e,1)}}b.setBezierFunction=function(a,d,e,f,g){var h=c(d,e,f,g);return h.displayName=a,h.x1=d,h.y1=e,h.x2=f,h.y2=g,b.prototype.formula[a]=h},b.unsetBezierFunction=function(a){delete b.prototype.formula[a]}}(),function(){function a(a,c,d,e,f,g){return b.tweenProps(e,c,a,d,1,g,f)}var c=new b;c._filterArgs=[],b.interpolate=function(d,e,f,g,h){var i=b.shallowCopy({},d),j=h||0,k=b.composeEasingObject(d,g||"linear");c.set({});var l=c._filterArgs;l.length=0,l[0]=i,l[1]=d,l[2]=e,l[3]=k,b.applyFilter(c,"tweenCreated"),b.applyFilter(c,"beforeTween");var m=a(d,i,e,f,k,j);return b.applyFilter(c,"afterTween"),m}}(),function(a){function b(a,b){var c,d=[],e=a.length;for(c=0;e>c;c++)d.push("_"+b+"_"+c);return d}function c(a){var b=a.match(v);return b?(1===b.length||a[0].match(u))&&b.unshift(""):b=["",""],b.join(A)}function d(b){a.each(b,function(a){var c=b[a];"string"==typeof c&&c.match(z)&&(b[a]=e(c))})}function e(a){return i(z,a,f)}function f(a){var b=g(a);return"rgb("+b[0]+","+b[1]+","+b[2]+")"}function g(a){return a=a.replace(/#/,""),3===a.length&&(a=a.split(""),a=a[0]+a[0]+a[1]+a[1]+a[2]+a[2]),B[0]=h(a.substr(0,2)),B[1]=h(a.substr(2,2)),B[2]=h(a.substr(4,2)),B}function h(a){return parseInt(a,16)}function i(a,b,c){var d=b.match(a),e=b.replace(a,A);if(d)for(var f,g=d.length,h=0;g>h;h++)f=d.shift(),e=e.replace(A,c(f));return e}function j(a){return i(x,a,k)}function k(a){for(var b=a.match(w),c=b.length,d=a.match(y)[0],e=0;c>e;e++)d+=parseInt(b[e],10)+",";return d=d.slice(0,-1)+")"}function l(d){var e={};return a.each(d,function(a){var f=d[a];if("string"==typeof f){var g=r(f);e[a]={formatString:c(f),chunkNames:b(g,a)}}}),e}function m(b,c){a.each(c,function(a){for(var d=b[a],e=r(d),f=e.length,g=0;f>g;g++)b[c[a].chunkNames[g]]=+e[g];delete b[a]})}function n(b,c){a.each(c,function(a){var d=b[a],e=o(b,c[a].chunkNames),f=p(e,c[a].chunkNames);d=q(c[a].formatString,f),b[a]=j(d)})}function o(a,b){for(var c,d={},e=b.length,f=0;e>f;f++)c=b[f],d[c]=a[c],delete a[c];return d}function p(a,b){C.length=0;for(var c=b.length,d=0;c>d;d++)C.push(a[b[d]]);return C}function q(a,b){for(var c=a,d=b.length,e=0;d>e;e++)c=c.replace(A,+b[e].toFixed(4));return c}function r(a){return a.match(w)}function s(b,c){a.each(c,function(a){var d,e=c[a],f=e.chunkNames,g=f.length,h=b[a];if("string"==typeof h){var i=h.split(" "),j=i[i.length-1];for(d=0;g>d;d++)b[f[d]]=i[d]||j}else for(d=0;g>d;d++)b[f[d]]=h;delete b[a]})}function t(b,c){a.each(c,function(a){var d=c[a],e=d.chunkNames,f=e.length,g=b[e[0]],h=typeof g;if("string"===h){for(var i="",j=0;f>j;j++)i+=" "+b[e[j]],delete b[e[j]];b[a]=i.substr(1)}else b[a]=g})}var u=/(\d|\-|\.)/,v=/([^\-0-9\.]+)/g,w=/[0-9.\-]+/g,x=new RegExp("rgb\\("+w.source+/,\s*/.source+w.source+/,\s*/.source+w.source+"\\)","g"),y=/^.*\(/,z=/#([0-9]|[a-f]){3,6}/gi,A="VAL",B=[],C=[];a.prototype.filter.token={tweenCreated:function(a,b,c,e){d(a),d(b),d(c),this._tokenData=l(a)},beforeTween:function(a,b,c,d){s(d,this._tokenData),m(a,this._tokenData),m(b,this._tokenData),m(c,this._tokenData)},afterTween:function(a,b,c,d){n(a,this._tokenData),n(b,this._tokenData),n(c,this._tokenData),t(d,this._tokenData)}}}(b)}).call(null);
 ;
@@ -17431,10 +17651,13 @@ draw2d.geo.Point = Class.extend({
      * @param {draw2d.geo.Point} other the point to use
      * @return {Number}
      */
-    getDistance: function(other)
+    distance: function(other)
     {
         return Math.sqrt((this.x - other.x) * (this.x - other.x) + (this.y - other.y) * (this.y - other.y));
     },
+    /* @deprecated */
+    getDistance: function(other){return this.distance(other);},
+
 
     /**
      * @method 
@@ -17956,6 +18179,9 @@ draw2d.geo.Rectangle = draw2d.geo.Point.extend({
 	getVertices: function()
 	{
 	    var result = new draw2d.util.ArrayList();
+		// don't change the order. We expect always that the top left corner has index[0]
+        // and goes clock wise
+        //
         result.add(this.getTopLeft());
         result.add(this.getTopRight());
         result.add(this.getBottomRight());
@@ -20443,10 +20669,10 @@ draw2d.command.CommandDelete = draw2d.command.Command.extend({
           }
        }
        
-        
-       if(this.figure instanceof draw2d.Connection){
-           this.figure.disconnect();
-       }   
+   // already done in the canvas.remove(..) method
+   //    if(this.figure instanceof draw2d.Connection){
+   //        this.figure.disconnect();
+   //    }
     
        // remove this figure from the parent 
        //
@@ -21371,7 +21597,7 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
      * @method
      * Callback method if the router has been assigned to a connection.
      * 
-     * @param {draw2d.Connection} connection The assigned connection
+     * @param {draw2d.shape.basic.PolyLine} connection The assigned connection
      * @template
      * @since 2.7.2
      */
@@ -21384,7 +21610,7 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
      * @method
      * Callback method if the router has been removed from the connection.
      * 
-     * @param {draw2d.Connection} connection The related connection
+     * @param {draw2d.shape.basic.PolyLine} connection The related connection
      * @template
      * @since 2.7.2
      */
@@ -22463,7 +22689,7 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
     route: function(conn, routingHints)
     {
         if (!routingHints.oldVertices) {
-            debugger
+            debugger;
         }
         if(routingHints.oldVertices.getSize()===0 || conn._routingMetaData.routedByUserInteraction===false){
             this._super(conn, routingHints);
@@ -25011,7 +25237,7 @@ draw2d.layout.locator.PortLocator = draw2d.layout.locator.Locator.extend({
 /**
  * @class draw2d.layout.locator.DraggableLocator
  * 
- * A DraggableLocator is used to place figures relative to the parent. It is
+ * A DraggableLocator is used to place figures relative to the parent top left corner. It is
  * possible to move a child node via drag&drop.
  *
  * 
@@ -25056,6 +25282,152 @@ draw2d.layout.locator.DraggableLocator= draw2d.layout.locator.Locator.extend({
     {
         // use default
         child.setSelectionAdapter(null);
+    }
+});
+
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************/
+/**
+ * @class draw2d.layout.locator.DraggableLocator
+ * 
+ * A DraggableLocator is used to place figures relative to the parent nearest corner. It is
+ * possible to move a child node via drag&drop.
+ *
+ * 
+ * See the example:
+ *
+ *     @example preview small frame
+ *     
+ *
+ *
+ *     
+ * @author Andreas Herz
+ * @extend draw2d.layout.locator.Locator
+ */
+draw2d.layout.locator.SmartDraggableLocator= draw2d.layout.locator.Locator.extend({
+    NAME : "draw2d.layout.locator.SmartDraggableLocator",
+    
+    /**
+     * @constructor
+     * Constructs a locator with associated parent.
+     * 
+     */
+    init: function( )
+    {
+        this._super();
+
+        // description see "bind" method
+        this.boundedCorners={
+            init:false,
+            parent:0,
+            child:0,
+            dist: Number.MAX_SAFE_INTEGER,
+            xOffset: 0,
+            yOffset: 0
+        }
+
+    },
+
+    bind: function(parent, child)
+    {
+        var _this = this;
+        // determine the best corner of the parent/child node and stick to the calculated corner
+        // In the example below it is R1.2 in combination with R2.0
+        //
+        //     0             1
+        //      +-----------+
+        //      |           |
+        //      |    R1     |
+        //      +-----------+
+        //     3             2
+        //
+        //              0             1
+        //               +-----------+
+        //               |           |
+        //               |    R2     |
+        //               +-----------+
+        //              3             2
+        //
+        var calcBoundingCorner=function() {
+            _this.boundedCorners={
+                init:false,
+                parent:0,
+                child:0,
+                dist: Number.MAX_SAFE_INTEGER,
+                xOffset: 0,
+                yOffset: 0
+            };
+            var parentVertices = child.getParent().getBoundingBox().getVertices();
+            var childVertices  = child.getBoundingBox().getVertices();
+            var i_parent, i_child;
+            var p1, p2, distance;
+            for (i_parent = 0; i_parent < parentVertices.getSize(); i_parent++) {
+                for (i_child = 0; i_child < childVertices.getSize(); i_child++) {
+                    p1 = parentVertices.get(i_parent);
+                    p2 = childVertices.get(i_child);
+                    distance = Math.abs(p1.distance(p2));
+                    if (distance < _this.boundedCorners.dist) {
+                        _this.boundedCorners = {
+                            parent: i_parent,
+                            child: i_child,
+                            dist: distance,
+                            xOffset:p1.x-p2.x,
+                            yOffset:p1.y-p2.y
+                        }
+                    }
+                }
+            }
+            _this.boundedCorners.init=true;
+        };
+
+        // override the parent implementation to avoid
+        // that the child is "!selectable" and "!draggable"
+
+        // Don't redirect the selection handling to the parent
+        // Using the DraggableLocator provides the ability to the children
+        // that they are selectable and draggable. Remove the SelectionAdapter from the parent
+        // assignment.
+        child.setSelectionAdapter( function(){
+            return child;
+        });
+
+        child.getParent().on("added",calcBoundingCorner);
+        child.on("dragend",calcBoundingCorner);
+    },
+
+    unbind: function(parent, child)
+    {
+        // use default
+        child.setSelectionAdapter(null);
+    },
+
+
+    /**
+     * @method
+     * Controls the location of an I{@link draw2d.Figure}
+     *
+     * @param {Number} index child index of the figure
+     * @param {draw2d.Figure} figure the figure to control
+     *
+     * @template
+     **/
+    relocate: function(index, figure)
+    {
+        this._super(index, figure);
+        if(this.boundedCorners.init===true) {
+            var parentVertices = figure.getParent().getBoundingBox().getVertices();
+            var childVertices = figure.getBoundingBox().getVertices();
+            var p1 = parentVertices.get(this.boundedCorners.parent);
+            var p2 = childVertices.get(this.boundedCorners.child);
+
+            var xOffset = p1.x - p2.x;
+            var yOffset = p1.y - p2.y;
+            // restore the initial distance from the corner by adding the new offset
+            // to the position of the child
+            figure.translate(xOffset - this.boundedCorners.xOffset, yOffset - this.boundedCorners.yOffset);
+        }
     }
 });
 
@@ -34740,9 +35112,11 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
      */
     onDragEnd: function(canvas, figure, x, y, shiftKey, ctrlKey)
     {
-        this.tweenable.stop(true);
-        this.tweenable.dispose();
-        this.tweenable= null;
+        if(this.tweenable) {
+            this.tweenable.stop(true);
+            this.tweenable.dispose();
+            this.tweenable = null;
+        }
         canvas.getAllPorts().each(function(i, element){
             // IMPORTANT shortcut to avoid rendering errors!!
             // performance shortcut to avoid a lot of events and recalculate/routing of all related connections
@@ -34778,7 +35152,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.26",
+    version : "6.1.28",
     i18n : {
         command : {
             move : "Move Shape",
@@ -37494,12 +37868,12 @@ draw2d.Figure = Class.extend({
           this.getShapeElement();
       }
 
-      // resset the attribute cache. We must start by paint all attributes
+      // reset the attribute cache. We must start by paint all attributes
       //
       this.lastAppliedAttributes = {};
 
 
-     if(canvas === null){
+      if(canvas === null){
     	  this.stopTimer();
       }
       else{
@@ -38974,7 +39348,7 @@ draw2d.Figure = Class.extend({
      **/
     setDimension: function(w, h)
     {
-        var old = {w:this.width, h:this.height};
+        var old = {width:this.width, height:this.height};
 
         var _this = this;
         w = Math.max(this.getMinWidth(),w);
@@ -39030,7 +39404,7 @@ draw2d.Figure = Class.extend({
             this.repaint();
 
             this.fireEvent("resize");
-            this.fireEvent("change:dimension",{value:{height:this.height, width:this.width}});
+            this.fireEvent("change:dimension",{value:{height:this.height, width:this.width, old:old}});
 
             // Update the resize handles if the user change the position of the element via an API call.
             //

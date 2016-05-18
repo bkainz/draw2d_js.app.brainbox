@@ -8,26 +8,29 @@
     <link type="text/css" rel="stylesheet" href="./lib/ionicons/css/ionicons.min.css" />
     <link type="text/css" rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="./lib/prettify/src/prettify.css" />
-    <link type="text/css" rel="stylesheet" href="./assets/stylesheets/dependencies.css" />
     <link type="text/css" rel="stylesheet" href="./assets/stylesheets/main.css" />
 
     <SCRIPT src="./assets/javascript/dependencies.js"></SCRIPT>
     <SCRIPT src="./lib/bootstrap/js/bootstrap.min.js"></SCRIPT>
     <script src="./lib/prettify/src/prettify.js"></script>
+    <SCRIPT src="./assets/settings/backend.js"></SCRIPT>
     <SCRIPT src="./assets/javascript/app.js"></SCRIPT>
-
-    <SCRIPT src="http://freegroup.github.io/draw2d_js.shapes/assets/shapes/index.js"></SCRIPT>
+    <script src="./socket.io/socket.io.js"></script>
 
     <script type="text/javascript">
         var app = null;
-
+        var socket = null;
 
         $(window).load(function () {
-             app = new Application();
-            $('.lazyload').lazyload({ trigger: "appear"});
+            $.getScript(conf.shapes.url+"index.js",function(){
+                socket = io();
+                app = new Application();
+                $('.lazyload').lazyload({ trigger: "appear"});
+
+                raspi.gpio.init(socket);
+            });
         });
     </script>
-
 
 </head>
 
@@ -236,6 +239,12 @@
                     <div class="content" id="draw2dCanvasWrapper">
                         <div class="canvas" id="draw2dCanvas" oncontextmenu="return false;">
                         </div>
+                        <div id="canvas_zoom" class="btn-group">
+                            <button type="button" id="canvas_zoom_in"     class="btn highlight">&#8210;</button>
+                            <button type="button" id="canvas_zoom_normal" class="btn highlight">100%</button>
+                            <button type="button" id="canvas_zoom_out"    class="btn highlight">&#xFF0B</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -282,13 +291,12 @@
 {{for shapes}}
     <div  data-name='{{:name}}' class="mix col-md-6 pallette_item">
     <div class="glow">
-        <img data-shape="{{:name}}" class="draw2d_droppable" src="http://freegroup.github.io/draw2d_js.shapes/assets/shapes/{{:name}}.png">
+        <img data-shape="{{:name}}" class="draw2d_droppable" src="{{:~root.shapesUrl}}{{:name}}.png">
         <div>{{:basename}}</div>
         </div>
     </div>
 {{/for}}
 </script>
-
 
 
 
