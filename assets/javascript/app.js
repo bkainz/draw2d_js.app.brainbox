@@ -1084,6 +1084,10 @@ var View = draw2d.Canvas.extend({
 
     simulationStart:function()
     {
+        if(this.simulate===true){
+            return; // silently
+        }
+
         this.simulate=true;
 
         this.installEditPolicy(new SimulationEditPolicy());
