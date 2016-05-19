@@ -73,7 +73,7 @@ var View = draw2d.Canvas.extend({
 
         // show the ports of the elements only if the mouse cursor is close to the shape.
         //
-        this.coronaFeedback = new draw2d.policy.canvas.CoronaDecorationPolicy();
+        this.coronaFeedback = new draw2d.policy.canvas.CoronaDecorationPolicy({diameterToBeVisible:50});
         this.installEditPolicy(this.coronaFeedback);
 
         // nice grid decoration for the canvas paint area

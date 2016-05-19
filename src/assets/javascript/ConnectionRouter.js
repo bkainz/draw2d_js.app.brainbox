@@ -45,7 +45,7 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
     /**
      * @inheritdoc
      */
-    _paint: function(conn)
+    x_paint: function(conn)
     {
         var _this = this;
         // get the intersections to the other connections

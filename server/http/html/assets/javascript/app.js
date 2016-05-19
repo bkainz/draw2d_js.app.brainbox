@@ -283,7 +283,7 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
     /**
      * @inheritdoc
      */
-    _paint: function(conn)
+    x_paint: function(conn)
     {
         var _this = this;
         // get the intersections to the other connections
@@ -1131,6 +1131,9 @@ var View = draw2d.Canvas.extend({
             var inPort  = line.getTarget();
             inPort.setValue(outPort.getValue());
             line.setColor(outPort.getValue()?"#C21B7A":"#0078F2");
+        });
+        this.getFigures().each(function(i,figure){
+            figure.calculate();
         });
 
         if(this.simulate===true){
