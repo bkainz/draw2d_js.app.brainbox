@@ -129,6 +129,7 @@ var Application = Class.extend(
             var reader = new draw2d.io.json.Reader();
             reader.unmarshal(this.view, shapeTemplate);
         }
+        this.view.centerDocument();
     },
 
 
@@ -225,7 +226,6 @@ var Application = Class.extend(
                 var json = this.localStorage["json"];
                 _this.localStorage.removeItem("json");
                 if(json){
-                    console.log(json);
                     window.setTimeout(function(){
                         _this.fileNew(json);
                     },200);
@@ -925,6 +925,7 @@ var View = draw2d.Canvas.extend({
             _this.setZoom(newZoom);
             c.scrollTop((bb.y/newZoom- c.height()/2));
             c.scrollLeft((bb.x/newZoom- c.width()/2));
+
         };
         //  ZoomIn Button and the callbacks
         //
@@ -1180,7 +1181,6 @@ var View = draw2d.Canvas.extend({
     {
         var bb=null;
         var c = $("#draw2dCanvasWrapper");
-        this.setZoom(1.0);
         if(this.getFigures().getSize()>0){
             // get the bounding box of the document and translate the complete document
             // into the center of the canvas. Scroll to the top left corner after them
