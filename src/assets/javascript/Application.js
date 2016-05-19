@@ -129,6 +129,7 @@ var Application = Class.extend(
             var reader = new draw2d.io.json.Reader();
             reader.unmarshal(this.view, shapeTemplate);
         }
+        this.view.centerDocument();
     },
 
 
@@ -225,7 +226,6 @@ var Application = Class.extend(
                 var json = this.localStorage["json"];
                 _this.localStorage.removeItem("json");
                 if(json){
-                    console.log(json);
                     window.setTimeout(function(){
                         _this.fileNew(json);
                     },200);
