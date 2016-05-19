@@ -67535,6 +67535,9 @@ var View = draw2d.Canvas.extend({
             inPort.setValue(outPort.getValue());
             line.setColor(outPort.getValue()?"#C21B7A":"#0078F2");
         });
+        this.getFigures().each(function(i,figure){
+            figure.calculate();
+        });
 
         if(this.simulate===true){
             setImmediate(this.animationFrameFunc);
