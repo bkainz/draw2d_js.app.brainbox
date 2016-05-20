@@ -20724,10 +20724,10 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
      *
      * @param {draw2d.Connection} connection The Connection to route
      * @param {draw2d.util.ArrayList} oldVertices old/existing vertices of the Connection
-     * @param {Object} routingHints some helper attributes for the router
-     * @param {Boolean} routingHints.startMoved is true if just the start location has moved
-     * @param {Boolean} routingHints.endMoved is true if the destination location has changed
-     * @param {draw2d.util.ArrayList} routingHints.oldVertices the vertices before the reroute has been triggered
+     * @param {Object} [routingHints] some helper attributes for the router
+     * @param {Boolean} [routingHints.startMoved] is true if just the start location has moved
+     * @param {Boolean} [routingHints.endMoved] is true if the destination location has changed
+     * @param {draw2d.util.ArrayList} [routingHints.oldVertices] the vertices before the reroute has been triggered
      *
      * @template
      */
@@ -20744,19 +20744,20 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
         //            of subpixel rendering.
         var ps = conn.getVertices();
         var p = ps.get(0);
-        var distance = conn.getRadius();
+        var radius = conn.getRadius();
         var path = ["M",(p.x|0)+0.5," ",(p.y|0)+0.5];
         var i=1;
-        if(distance>0){
+        var length,inset, p2;
+        if(radius>0){
             var lastP = p;
-            var length = (ps.getSize()-1);
+            length = (ps.getSize()-1);
             for(  ;i<length;i++){
                   p = ps.get(i);
-                  inset = draw2d.geo.Util.insetPoint(p,lastP, distance);
+                  inset = draw2d.geo.Util.insetPoint(p,lastP, radius);
                   path.push("L", (inset.x|0)+0.5, ",", (inset.y|0)+0.5);
     
                   p2 = ps.get(i+1);
-                  inset = draw2d.geo.Util.insetPoint(p,p2,distance);
+                  inset = draw2d.geo.Util.insetPoint(p,p2,radius);
                   
                   path.push("Q",p.x,",",p.y," ", (inset.x|0)+0.5, ", ", (inset.y|0)+0.5);
                   lastP = p;
@@ -20765,7 +20766,7 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
             path.push("L", (p.x|0)+0.5, ",", (p.y|0)+0.5);
        }
         else{
-            var length = ps.getSize();
+            length = ps.getSize();
             for( ;i<length;i++){
                 p = ps.get(i);
                 path.push("L", (p.x|0)+0.5, ",", (p.y|0)+0.5);
@@ -20943,7 +20944,8 @@ draw2d.layout.connection.DirectRouter = draw2d.layout.connection.ConnectionRoute
     {
         connection.installEditPolicy(new draw2d.policy.line.LineSelectionFeedbackPolicy());
     },
- 
+
+
     /**
      * @method
      * Invalidates the given Connection
@@ -20951,7 +20953,8 @@ draw2d.layout.connection.DirectRouter = draw2d.layout.connection.ConnectionRoute
     invalidate: function()
     {
     },
-    
+
+
     /**
      * @inheritdoc
      */
@@ -20970,9 +20973,7 @@ draw2d.layout.connection.DirectRouter = draw2d.layout.connection.ConnectionRoute
        path.push("L", end.x, " ", end.y);
 
        connection.svgPathString = path.join("");
-
     }
-
 });
 
 /*****************************************
@@ -21467,7 +21468,6 @@ draw2d.layout.connection.ManhattanConnectionRouter = draw2d.layout.connection.Co
     onInstall: function(connection)
     {
         connection.installEditPolicy(new draw2d.policy.line.LineSelectionFeedbackPolicy());
-       
     },
 
 	/**
@@ -21512,52 +21512,42 @@ draw2d.layout.connection.ManhattanConnectionRouter = draw2d.layout.connection.Co
 	   var yDiff = fromPt.y - toPt.y;
 	   var point;
 	   var dir;
+       var pos;
 	
-	   if (((xDiff * xDiff) < (this.TOLxTOL)) && ((yDiff * yDiff) < (this.TOLxTOL))) 
-	   {
+	   if (((xDiff * xDiff) < (this.TOLxTOL)) && ((yDiff * yDiff) < (this.TOLxTOL))){
           conn.addPoint(new draw2d.geo.Point(toPt.x, toPt.y));
 	      return;
 	   }
 	
-	   if (fromDir === LEFT) 
-	   {
-	      if ((xDiff > 0) && ((yDiff * yDiff) < this.TOL) && (toDir === RIGHT))
-	      {
+	   if (fromDir === LEFT) {
+	      if ((xDiff > 0) && ((yDiff * yDiff) < this.TOL) && (toDir === RIGHT)) {
 	         point = toPt;
 	         dir = toDir;
 	      } 
-	      else 
-	      {
-	         if (xDiff < 0) 
-	         {
+	      else {
+	         if (xDiff < 0) {
 	            point = new draw2d.geo.Point(fromPt.x - this.MINDIST, fromPt.y);
 	         }
-	         else if (((yDiff > 0) && (toDir === DOWN)) || ((yDiff < 0) && (toDir === UP))) 
-	         {
+	         else if (((yDiff > 0) && (toDir === DOWN)) || ((yDiff < 0) && (toDir === UP))) {
 	            point = new draw2d.geo.Point(toPt.x, fromPt.y);
 	         }
-	         else if (fromDir == toDir)
-	         {
-	            var pos = Math.min(fromPt.x, toPt.x) - this.MINDIST;
+	         else if (fromDir == toDir) {
+	            pos = Math.min(fromPt.x, toPt.x) - this.MINDIST;
 	            point = new draw2d.geo.Point(pos, fromPt.y);
 	         }
-	         else
-	         {
+	         else{
 	            point = new draw2d.geo.Point(fromPt.x - (xDiff / 2), fromPt.y);
 	         }
 	
-	         if (yDiff > 0) 
-	         {
+	         if (yDiff > 0) {
 	            dir = UP;
 	         }
-	         else
-	         {
+	         else{
 	            dir = DOWN;
 	         }
 	      }
 	   }
-	   else if (fromDir === RIGHT) 
-	   {
+	   else if (fromDir === RIGHT)  {
 	      if ((xDiff < 0) && ((yDiff * yDiff) < this.TOL)&& (toDir === LEFT)) 
 	      {
 	         point = toPt;
@@ -21575,7 +21565,7 @@ draw2d.layout.connection.ManhattanConnectionRouter = draw2d.layout.connection.Co
 	         } 
 	         else if (fromDir === toDir) 
 	         {
-	            var pos = Math.max(fromPt.x, toPt.x) + this.MINDIST;
+                pos = Math.max(fromPt.x, toPt.x) + this.MINDIST;
 	            point = new draw2d.geo.Point(pos, fromPt.y);
 	         } 
 	         else 
@@ -21612,7 +21602,7 @@ draw2d.layout.connection.ManhattanConnectionRouter = draw2d.layout.connection.Co
 	         } 
 	         else if (fromDir === toDir) 
 	         {
-	            var pos = Math.max(fromPt.y, toPt.y) + this.MINDIST;
+	            pos = Math.max(fromPt.y, toPt.y) + this.MINDIST;
 	            point = new draw2d.geo.Point(fromPt.x, pos);
 	         } 
 	         else 
@@ -21649,7 +21639,7 @@ draw2d.layout.connection.ManhattanConnectionRouter = draw2d.layout.connection.Co
 	         } 
 	         else if (fromDir === toDir) 
 	         {
-	            var pos = Math.min(fromPt.y, toPt.y) - this.MINDIST;
+                pos = Math.min(fromPt.y, toPt.y) - this.MINDIST;
 	            point = new draw2d.geo.Point(fromPt.x, pos);
 	         } 
 	         else 
@@ -21872,7 +21862,7 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
     route: function(conn, routingHints)
     {
         if (!routingHints.oldVertices) {
-            debugger;
+            debugger
         }
         if(routingHints.oldVertices.getSize()===0 || conn._routingMetaData.routedByUserInteraction===false){
             this._super(conn, routingHints);
@@ -22534,12 +22524,12 @@ draw2d.layout.connection.CircuitConnectionRouter = draw2d.layout.connection.Manh
         			        if(this.abortRoutingOnFirstVertexNode===true){
             				    if(conn.getSource()==other.getSource()|| conn.getSource()==other.getTarget()){
             				        path = [ "M", (interP.x|0)+0.5, " ", (interP.y|0)+0.5 ];
-            				        if(lastVerteNode!==null){
-                                        lastVerteNode.remove();
+            				        if(lastVertexNode!==null){
+                                        lastVertexNode.remove();
             				            conn.vertexNodes.exclude(lastVerteNode);
             				        }
             				    }
-                                lastVerteNode = vertexNode;
+                                lastVertexNode = vertexNode;
         			        }
                         }
     			    }
@@ -26544,7 +26534,7 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
         if (this.mouseDraggingElement !== null) {
             // Can be a ResizeHandle or a normal Figure
             //
-            var sel =canvas.getSelection().getAll();
+            var sel =canvas.getSelection();
             if(!sel.contains(this.mouseDraggingElement)){
                 this.mouseDraggingElement.onDrag(dx, dy, dx2, dy2);
             }
@@ -34335,7 +34325,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.28",
+    version : "6.1.30",
     i18n : {
         command : {
             move : "Move Shape",
@@ -34394,6 +34384,342 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
         }
     }
 };
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************//**
+ * @class draw2d.HeadlessCanvas
+ *
+ * Required for Node.js draw2d model read/write operations.
+ *
+ * @inheritable
+ * @author Andreas Herz
+ */
+draw2d.HeadlessCanvas = Class.extend(
+{
+    NAME : "draw2d.HeadlessCanvas",
+
+    /**
+     * @constructor
+     * Create a new canvas with the given HTML DOM references.
+     * 
+     * @param {String} canvasId the id of the DOM element to use a parent container
+     */
+    init: function()
+    {
+        // internal document with all figures, ports, ....
+        //
+        this.figures     = new draw2d.util.ArrayList();
+        this.lines       = new draw2d.util.ArrayList(); // crap - why are connections not just figures. Design by accident
+        this.commonPorts = new draw2d.util.ArrayList();
+        this.dropTargets = new draw2d.util.ArrayList();
+
+        this.eventSubscriptions = {};
+
+        // The CommandStack for undo/redo operations
+        // 
+        this.commandStack = new draw2d.command.CommandStack();
+    },
+
+    /**
+     * @method
+     * Reset the canvas and delete all model elements.<br>
+     * You can now reload another model to the canvas with a {@link draw2d.io.Reader}
+     * 
+     * @since 1.1.0
+     */
+    clear: function()
+    {
+        // internal document with all figures, ports, ....
+        //
+        this.figures     = new draw2d.util.ArrayList();
+        this.lines       = new draw2d.util.ArrayList();
+        this.commonPorts = new draw2d.util.ArrayList();
+        this.dropTargets = new draw2d.util.ArrayList();
+       
+        this.commandStack.markSaveLocation();
+
+        return this;
+    },
+
+    calculateConnectionIntersection:function()
+    {
+
+    },
+
+    /**
+     * @method
+     * Callback for any kind of image export tools to trigger the canvas to hide all unwanted
+     * decorations. The method is called e.g. from the draw2d.io.png.Writer
+     * 
+     * @since 4.0.0
+     * @template
+     */
+    hideDecoration: function()
+    {
+    },
+
+    /**
+     * @method
+     * callback method for any image export writer to reactivate the decoration
+     * of the canvas. e.g. grids, rulers,...
+     * 
+     * 
+     * @since 4.0.0
+     * @template
+     */
+    showDecoration: function()
+    {
+    },
+
+
+    /**
+     * @method
+     * Add a figure at the given x/y coordinate. This method fires an event.
+     *
+     * Example:
+     * 
+     *      canvas.on("figure:add", function(emitter, event){
+     *         alert("figure added:");
+     *      });
+     *      
+     *      // or more general if you want catch all figure related events
+     *      //
+     *      canvas.on("figure", function(emitter, event){
+     *         // use event.figure.getCanvas()===null to determine if the 
+     *         // figure part of the canvas
+     *         
+     *         alert("figure added or removed:");
+     *      });
+     *      
+     * @param {draw2d.Figure} figure The figure to add.
+     * @param {Number/draw2d.geo.Point} [x] The new x coordinate of the figure or the x/y coordinate if it is an draw2d.geo.Point
+     * @param {Number} [y] The y position.
+     **/
+    add: function( figure , x,  y)
+    {
+        if(figure.getCanvas()===this){
+            return;
+        }
+        
+        if(figure instanceof draw2d.shape.basic.Line){
+         this.lines.add(figure);
+        }
+        else{
+         this.figures.add(figure);
+        }
+        figure.canvas=this;
+
+
+        return this;
+    },
+
+    /**
+     * @method
+     * Returns all lines/connections in this workflow/canvas.<br>
+     *
+     * @protected
+     * @return {draw2d.util.ArrayList}
+     **/
+    getLines: function()
+    {
+      return this.lines;
+    },
+
+    /**
+     * @method
+     * Returns the internal figures.<br>
+     *
+     * @protected
+     * @return {draw2d.util.ArrayList}
+     **/
+    getFigures: function()
+    {
+      return this.figures;
+    },
+
+    /**
+     * @method
+     * Returns the line or connection with the given id.
+     *
+     * @param {String} id The id of the line.
+     * 
+     * @return {draw2d.shape.basic.Line}
+     **/
+    getLine: function( id)
+    {
+      var count = this.lines.getSize();
+      for(var i=0; i<count;i++)
+      {
+         var line = this.lines.get(i);
+         if(line.getId()===id){
+            return line;
+         }
+      }
+      return null;
+    },
+
+    /**
+     * @method
+     * Returns the figure with the given id. 
+     *
+     * @param {String} id The id of the figure.
+     * @return {draw2d.Figure}
+     **/
+    getFigure: function( id)
+    {
+      var figure = null;
+      this.figures.each(function(i,e){
+          if(e.id===id){
+              figure=e;
+              return false;
+           }
+      });
+      return figure;
+    },
+
+    /**
+     * @method
+     * Register a port to the canvas. This is required for other ports to find a valid drop target.
+     * 
+     * @param {draw2d.Port} port The new port which has been added to the Canvas.
+     **/
+    registerPort: function(port )
+    {
+      // All elements have the same drop targets.
+      //
+      if(!this.commonPorts.contains(port)){
+          this.commonPorts.add(port);
+      }
+      
+      return this;
+    },
+
+    /**
+     * @method
+     * Return all ports in the canvas
+     * 
+     */
+    getAllPorts: function()
+    {
+        return this.commonPorts;
+    },
+    
+    /**
+     * @method
+     * Returns the command stack for the Canvas. Required for undo/redo support.
+     *
+     * @return {draw2d.command.CommandStack}
+     **/
+    getCommandStack: function()
+    {
+      return this.commandStack;
+    },
+
+
+    // NEW EVENT HANDLING SINCE VERSION 5.0.0
+    /**
+     * @method
+     * Execute all handlers and behaviors attached to the canvas for the given event type.
+     * 
+     * 
+     * @param {String} event the event to trigger
+     * @param {Object} [args] optional parameters for the triggered event callback
+     * 
+     * @since 5.0.0
+     */
+    fireEvent: function(event, args)
+    {
+        if (typeof this.eventSubscriptions[event] === 'undefined') {
+            return;
+        }
+        
+        var subscribers = this.eventSubscriptions[event];
+        for (var i=0; i<subscribers.length; i++) {
+            try{
+                subscribers[i](this, args);
+            }
+            catch(exc){
+                console.log(exc);
+                console.log(subscribers[i]);
+                debugger;
+            }
+        }
+    },
+    
+    /**
+     * @method
+     * Attach an event handler function for one or more events to the canvas.
+     * To remove events bound with .on(), see {@link #off}.
+     * 
+     * possible events are:<br>
+     * <ul>
+     *   <li>reset</li>
+     *   <li>select</li>
+     * </ul>
+     * 
+     * Example:
+     * 
+     *      canvas.on("clear", function(emitter, event){
+     *         alert("canvas.clear() called.");
+     *      });
+     *      
+     *      canvas.on("select", function(emitter,event){
+     *          if(event.figure!==null){
+     *              alert("figure selected");
+     *          }
+     *          else{
+     *              alert("selection cleared");
+     *          }
+     *      });
+     *      
+     * @param {String}   event One or more space-separated event types
+     * @param {Function} callback A function to execute when the event is triggered. 
+     * @param {draw2d.Canvas} callback.emitter the emitter of the event
+     * @param {Object} [callback.obj] optional event related data
+     * 
+     * @since 5.0.0
+     */
+    on: function(event, callback)
+    {
+        var events = event.split(" ");
+        for(var i=0; i<events.length; i++){
+            if (typeof this.eventSubscriptions[events[i]] === 'undefined') {
+                this.eventSubscriptions[events[i]] = [];
+            }
+            this.eventSubscriptions[events[i]].push(callback);
+        }
+        return this;
+    },
+    
+    /**
+     * @method
+     * The .off() method removes event handlers that were attached with {@link #on}.<br>
+     * Calling .off() with no arguments removes all handlers attached to the canvas.<br>
+     * <br>
+     * If a simple event name such as "reset" is provided, all events of that type are removed from the canvas. 
+     * 
+     * 
+     * @param {String|Function} eventOrFunction the event name of the registerd function
+     * @since 5.0.0
+     */
+    off: function( eventOrFunction)
+    {
+        if(typeof eventOrFunction ==="undefined"){
+            this.eventSubscriptions = {};
+        }
+        else if( typeof eventOrFunction === 'string'){
+            this.eventSubscriptions[eventOrFunction] = [];
+        }
+        else{
+            for(var event in this.eventSubscriptions ){
+                this.eventSubscriptions[event] =$.grep(this.eventSubscriptions[event], function( callback ) { return callback !== eventOrFunction; });
+            }
+        }
+
+        return this;
+    }
+});
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
@@ -35538,6 +35864,13 @@ draw2d.Canvas = Class.extend(
      **/
     snapToHelper:function(figure,  pos)
     {
+        // disable snapToPos if we have sleect more than one element
+        // which are currently in Drag&Drop operation
+        //
+        if(this.getSelection().getSize()>1){
+            return pos;
+        }
+
         var _this = this;
         var orig = pos.clone();
         this.editPolicy.each(function(i,policy){
@@ -39715,7 +40048,7 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
     	// relayout the ports
     	this.setDimension(this.width,this.height);
     	
-        this.layoutPorts();
+//        this.layoutPorts();
 
     	return newPort;
     },
@@ -39828,7 +40161,6 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
      */
      layoutPorts: function()
     {
-
          if(this.portRelayoutRequired===false){
              return;//silently
          }
@@ -46206,16 +46538,17 @@ draw2d.shape.composite.Raft = draw2d.shape.composite.WeakComposite.extend({
      * Set the position of the object.
      *
      * @param {Number/draw2d.geo.Point} x The new x coordinate of the figure
-     * @param {Number} [y] The new y coordinate of the figure 
+     * @param {Number} [y] The new y coordinate of the figure
+     * @param {boolean} [dontApplyToChildren] don't move the children if this flag is set.
      **/
-    setPosition: function(x, y)
+    setPosition: function(x, y, dontApplyToChildren)
     {
         var oldX = this.x;
         var oldY = this.y;
         
         // we need the figures before the composite has moved. Otherwise some figures are fall out of the raft
         // 
-        var aboardedFigures =this.getAboardFigures(this.isInDragDrop===false);
+        var aboardedFigures = (dontApplyToChildren)?draw2d.util.ArrayList.EMPTY_LIST:this.getAboardFigures(this.isInDragDrop===false);
         
         this._super(x,y);
         
@@ -49047,7 +49380,8 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
 
         this.locator = null;
         this.lighterBgColor =null;
-        
+        this.name = null;
+
         this._super($.extend({
                 bgColor: "#4f6870",
                 stroke:1,
@@ -49073,8 +49407,6 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         this.connections = new draw2d.util.ArrayList();
         
     
-        // avoid "undefined" values. This breaks the code on iOS.
-        this.name = name?name:null;
 
         this.moveListener = function( emitter, event){
             _this.repaint();
@@ -67256,7 +67588,7 @@ var View = draw2d.Canvas.extend({
 
         // show the ports of the elements only if the mouse cursor is close to the shape.
         //
-        this.coronaFeedback = new draw2d.policy.canvas.CoronaDecorationPolicy();
+        this.coronaFeedback = new draw2d.policy.canvas.CoronaDecorationPolicy({diameterToBeVisible:50});
         this.installEditPolicy(this.coronaFeedback);
 
         // nice grid decoration for the canvas paint area
@@ -67293,33 +67625,26 @@ var View = draw2d.Canvas.extend({
         },this));
 
 
-        // add keyboard support for shape/figure movement
-        //
         Mousetrap.bind(['left'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(-diff,0);}
+            _this.getSelection().each(function(i,f){f.translate(-diff,0);});
             return false;
         });
         Mousetrap.bind(['up'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(0,-diff);}
+            _this.getSelection().each(function(i,f){f.translate(0,-diff);});
             return false;
         });
         Mousetrap.bind(['right'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(diff,0);}
+            _this.getSelection().each(function(i,f){f.translate(diff,0);});
             return false;
         });
         Mousetrap.bind(['down'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(0,diff);}
+            _this.getSelection().each(function(i,f){f.translate(0,diff);});
             return false;
         });
-
 
 
         var setZoom = function(newZoom){
@@ -67462,6 +67787,19 @@ var View = draw2d.Canvas.extend({
     },
 
     /**
+     * Disable snapTo GRID if we have select more than one element
+     * @param figure
+     * @param pos
+     */
+    snapToHelper : function(figure, pos)
+    {
+        if(this.getSelection().getSize()>1){
+            return pos;
+        }
+        return this._super(figure, pos);
+    },
+
+    /**
      * @method
      * Called if the user drop the droppedDomNode onto the canvas.<br>
      * <br>
@@ -67500,7 +67838,8 @@ var View = draw2d.Canvas.extend({
             p.setVisible(false);
         });
 
-        setImmediate(this.animationFrameFunc);
+        this._calculate();
+
         $("#simulationStart").addClass("disabled");
         $("#simulationStop").removeClass("disabled");
     },
@@ -67535,12 +67874,10 @@ var View = draw2d.Canvas.extend({
             inPort.setValue(outPort.getValue());
             line.setColor(outPort.getValue()?"#C21B7A":"#0078F2");
         });
-        this.getFigures().each(function(i,figure){
-            figure.calculate();
-        });
 
         if(this.simulate===true){
-            setImmediate(this.animationFrameFunc);
+       //     setImmediate(this.animationFrameFunc);
+            setTimeout(this.animationFrameFunc,5);
         }
     },
 
@@ -67601,7 +67938,7 @@ var View = draw2d.Canvas.extend({
             var dy = (this.getHeight()/2)-(bb.y+bb.h/2);
 
             this.getFigures().each(function(i,f){
-                f.translate(dx,dy);
+                f.translate(dx,dy, true);
             });
             this.getLines().each(function(i,f){
                 f.translate(dx,dy);
@@ -67899,7 +68236,6 @@ FileOpen = Class.extend({
                                 _this.currentFileHandle.title=name;
                                 successCallback(content);
                                 $('#githubFileSelectDialog').modal('hide');
-                                console.log(_this.currentFileHandle);
                             }
                         );
 
@@ -68456,6 +68792,9 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
 });
 
 ;
+/*jshint evil:true */
+
+
 /**
  * The markerFigure is the left hand side annotation for a DecoratedPort.
  *
@@ -68502,6 +68841,67 @@ var Raft = draw2d.shape.composite.Raft.extend({
         // instead of "behind of ALL shapes"
         var first = this.canvas.getFigures().first();
         this._super(first);
+    },
+
+
+
+    translate: function(dx, dy, untouchChildren)
+    {
+
+    },
+
+    /**
+     * @method
+     * Return an objects with all important attributes for XML or JSON serialization
+     *
+     * @returns {Object}
+     */
+    getPersistentAttributes : function()
+    {
+        var memento = this._super();
+
+        // add all decorations to the memento
+        //
+        memento.labels = [];
+        this.children.each(function(i,e){
+            var labelJSON = e.figure.getPersistentAttributes();
+            labelJSON.locator=e.locator.NAME;
+            memento.labels.push(labelJSON);
+        });
+
+        return memento;
+    },
+
+    /**
+     * @method
+     * Read all attributes from the serialized properties and transfer them into the shape.
+     *
+     * @param {Object} memento
+     * @returns
+     */
+    setPersistentAttributes : function(memento)
+    {
+        this._super(memento);
+
+        // remove all decorations created in the constructor of this element
+        //
+        this.resetChildren();
+
+        // and add all children of the JSON document.
+        //
+        $.each(memento.labels, $.proxy(function(i,json){
+            // create the figure stored in the JSON
+            var figure =  eval("new "+json.type+"()");
+
+            // apply all attributes
+            figure.attr(json);
+
+            // instantiate the locator
+            var locator =  eval("new "+json.locator+"()");
+
+            // add the new figure as child to this figure
+            this.add(figure, locator);
+        },this));
     }
 
 });

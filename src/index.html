@@ -23,6 +23,27 @@
 
         $(window).load(function () {
             $.getScript(conf.shapes.url+"index.js",function(){
+                /*
+                draw2d_circuit_pulse_10hz.inject({
+                    calculate:function(){
+                        this.getOutputPort(0).setValue(this.value);
+                    },
+                    onStart:function()
+                    {
+                        var _this = this;
+                        this.running=true;
+                        this.timer = setInterval(function() {
+                            _this.value = !_this.value;
+                        }, 1000 / _this.hz);
+                    },
+                    onStop:function()
+                    {
+                        this.running=false;
+                        clearInterval( this.timer);
+                    }
+
+                });
+                */
                 socket = io();
                 app = new Application();
                 $('.lazyload').lazyload({ trigger: "appear"});

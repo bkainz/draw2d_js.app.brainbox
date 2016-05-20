@@ -90,7 +90,6 @@ FileOpen = Class.extend({
                                 _this.currentFileHandle.title=name;
                                 successCallback(content);
                                 $('#githubFileSelectDialog').modal('hide');
-                                console.log(_this.currentFileHandle);
                             }
                         );
 

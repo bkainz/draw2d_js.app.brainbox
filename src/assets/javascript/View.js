@@ -110,33 +110,26 @@ var View = draw2d.Canvas.extend({
         },this));
 
 
-        // add keyboard support for shape/figure movement
-        //
         Mousetrap.bind(['left'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(-diff,0);}
+            _this.getSelection().each(function(i,f){f.translate(-diff,0);});
             return false;
         });
         Mousetrap.bind(['up'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(0,-diff);}
+            _this.getSelection().each(function(i,f){f.translate(0,-diff);});
             return false;
         });
         Mousetrap.bind(['right'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(diff,0);}
+            _this.getSelection().each(function(i,f){f.translate(diff,0);});
             return false;
         });
         Mousetrap.bind(['down'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(0,diff);}
+            _this.getSelection().each(function(i,f){f.translate(0,diff);});
             return false;
         });
-
 
 
         var setZoom = function(newZoom){
@@ -279,6 +272,19 @@ var View = draw2d.Canvas.extend({
     },
 
     /**
+     * Disable snapTo GRID if we have select more than one element
+     * @param figure
+     * @param pos
+     */
+    snapToHelper : function(figure, pos)
+    {
+        if(this.getSelection().getSize()>1){
+            return pos;
+        }
+        return this._super(figure, pos);
+    },
+
+    /**
      * @method
      * Called if the user drop the droppedDomNode onto the canvas.<br>
      * <br>
@@ -317,7 +323,8 @@ var View = draw2d.Canvas.extend({
             p.setVisible(false);
         });
 
-        setImmediate(this.animationFrameFunc);
+        this._calculate();
+
         $("#simulationStart").addClass("disabled");
         $("#simulationStop").removeClass("disabled");
     },
@@ -352,12 +359,10 @@ var View = draw2d.Canvas.extend({
             inPort.setValue(outPort.getValue());
             line.setColor(outPort.getValue()?"#C21B7A":"#0078F2");
         });
-        this.getFigures().each(function(i,figure){
-            figure.calculate();
-        });
 
         if(this.simulate===true){
-            setImmediate(this.animationFrameFunc);
+       //     setImmediate(this.animationFrameFunc);
+            setTimeout(this.animationFrameFunc,5);
         }
     },
 
@@ -414,17 +419,21 @@ var View = draw2d.Canvas.extend({
             //
             bb = this.getBoundingBox();
 
+            /*
             var dx = (this.getWidth()/2)-(bb.x+bb.w/2);
             var dy = (this.getHeight()/2)-(bb.y+bb.h/2);
 
+
             this.getFigures().each(function(i,f){
-                f.translate(dx,dy);
+                f.translate(dx,dy, true);
             });
+
             this.getLines().each(function(i,f){
                 f.translate(dx,dy);
             });
             bb = this.getBoundingBox().getCenter();
-
+*/
+            
             c.scrollTop(bb.y- c.height()/2);
             c.scrollLeft(bb.x- c.width()/2);
         }

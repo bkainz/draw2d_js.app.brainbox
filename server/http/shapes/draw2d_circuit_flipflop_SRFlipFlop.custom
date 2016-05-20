@@ -1,0 +1,46 @@
+/**
+ * by 'Draw2D Shape Designer'
+ *
+ * Custom JS code to tweak the standard behaviour of the generated
+ * shape. add your custome code and event handler here.
+ *
+ *
+ */
+draw2d_circuit_flipflop_SRFlipFlop = draw2d_circuit_flipflop_SRFlipFlop.extend({
+
+    init: function(attr, setter, getter){
+         this._super(attr, setter, getter);
+
+        this.attr({resizeable:false});
+        this.installEditPolicy(new draw2d.policy.figure.AntSelectionFeedbackPolicy());
+    },
+    
+    calculate:function()
+    {
+        var s = !!this.getInputPort("input_s").getValue();
+        var r = !!this.getInputPort("input_r").getValue();
+
+        var q = this.getOutputPort("output_q");
+        var q_ = this.getOutputPort("output_q_not");
+        console.log(s,r);
+        // do nothing
+        if(s===false && r===false){
+           
+        }
+        // reset
+        else if(s===false && r===true){
+            q.setValue(false);
+            q_.setValue(true);
+        }
+        // set
+        else if(s===true && r===false){
+            q.setValue(true);
+            q_.setValue(false);
+        }
+        // invalid
+        else if(s===true && r===true){
+            q.setValue( false);
+            q_.setValue( false);
+        }
+    }
+});

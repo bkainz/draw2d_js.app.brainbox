@@ -15,7 +15,6 @@ draw2d_circuit_pulse_10hz = draw2d_circuit_pulse_10hz.extend({
         this.installEditPolicy(new draw2d.policy.figure.AntSelectionFeedbackPolicy());
         this.hz = 10;
         this.running=false;
-// only for test purpose        
 //        this.onStart();
     },
     
@@ -28,20 +27,14 @@ draw2d_circuit_pulse_10hz = draw2d_circuit_pulse_10hz.extend({
     {
         var _this = this;
         this.running=true;
-        var tick = function() {
-            setTimeout(function() {
-                if(_this.running){
-                    requestAnimationFrame(tick);
-                }
-                _this.value = !_this.value;
-            }, 1000 / _this.hz);
-        }
-        tick();
+        this.timer = setInterval(function() {
+            _this.value = !_this.value;
+        }, 1000 / _this.hz);
     },
-    
     onStop:function()
     {
-        this.running = false;
+        this.running=false;
+        clearInterval( this.timer);
     }
 
 });

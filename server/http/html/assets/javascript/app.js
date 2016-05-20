@@ -853,7 +853,7 @@ var View = draw2d.Canvas.extend({
 
         // show the ports of the elements only if the mouse cursor is close to the shape.
         //
-        this.coronaFeedback = new draw2d.policy.canvas.CoronaDecorationPolicy();
+        this.coronaFeedback = new draw2d.policy.canvas.CoronaDecorationPolicy({diameterToBeVisible:50});
         this.installEditPolicy(this.coronaFeedback);
 
         // nice grid decoration for the canvas paint area
@@ -890,33 +890,26 @@ var View = draw2d.Canvas.extend({
         },this));
 
 
-        // add keyboard support for shape/figure movement
-        //
         Mousetrap.bind(['left'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(-diff,0);}
+            _this.getSelection().each(function(i,f){f.translate(-diff,0);});
             return false;
         });
         Mousetrap.bind(['up'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(0,-diff);}
+            _this.getSelection().each(function(i,f){f.translate(0,-diff);});
             return false;
         });
         Mousetrap.bind(['right'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(diff,0);}
+            _this.getSelection().each(function(i,f){f.translate(diff,0);});
             return false;
         });
         Mousetrap.bind(['down'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(0,diff);}
+            _this.getSelection().each(function(i,f){f.translate(0,diff);});
             return false;
         });
-
 
 
         var setZoom = function(newZoom){
@@ -1059,6 +1052,19 @@ var View = draw2d.Canvas.extend({
     },
 
     /**
+     * Disable snapTo GRID if we have select more than one element
+     * @param figure
+     * @param pos
+     */
+    snapToHelper : function(figure, pos)
+    {
+        if(this.getSelection().getSize()>1){
+            return pos;
+        }
+        return this._super(figure, pos);
+    },
+
+    /**
      * @method
      * Called if the user drop the droppedDomNode onto the canvas.<br>
      * <br>
@@ -1097,7 +1103,8 @@ var View = draw2d.Canvas.extend({
             p.setVisible(false);
         });
 
-        setImmediate(this.animationFrameFunc);
+        this._calculate();
+
         $("#simulationStart").addClass("disabled");
         $("#simulationStop").removeClass("disabled");
     },
@@ -1132,12 +1139,10 @@ var View = draw2d.Canvas.extend({
             inPort.setValue(outPort.getValue());
             line.setColor(outPort.getValue()?"#C21B7A":"#0078F2");
         });
-        this.getFigures().each(function(i,figure){
-            figure.calculate();
-        });
 
         if(this.simulate===true){
-            setImmediate(this.animationFrameFunc);
+       //     setImmediate(this.animationFrameFunc);
+            setTimeout(this.animationFrameFunc,5);
         }
     },
 
@@ -1198,7 +1203,7 @@ var View = draw2d.Canvas.extend({
             var dy = (this.getHeight()/2)-(bb.y+bb.h/2);
 
             this.getFigures().each(function(i,f){
-                f.translate(dx,dy);
+                f.translate(dx,dy, true);
             });
             this.getLines().each(function(i,f){
                 f.translate(dx,dy);
@@ -1496,7 +1501,6 @@ FileOpen = Class.extend({
                                 _this.currentFileHandle.title=name;
                                 successCallback(content);
                                 $('#githubFileSelectDialog').modal('hide');
-                                console.log(_this.currentFileHandle);
                             }
                         );
 
@@ -2053,6 +2057,9 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
 });
 
 ;
+/*jshint evil:true */
+
+
 /**
  * The markerFigure is the left hand side annotation for a DecoratedPort.
  *
@@ -2099,6 +2106,67 @@ var Raft = draw2d.shape.composite.Raft.extend({
         // instead of "behind of ALL shapes"
         var first = this.canvas.getFigures().first();
         this._super(first);
+    },
+
+
+
+    translate: function(dx, dy, untouchChildren)
+    {
+
+    },
+
+    /**
+     * @method
+     * Return an objects with all important attributes for XML or JSON serialization
+     *
+     * @returns {Object}
+     */
+    getPersistentAttributes : function()
+    {
+        var memento = this._super();
+
+        // add all decorations to the memento
+        //
+        memento.labels = [];
+        this.children.each(function(i,e){
+            var labelJSON = e.figure.getPersistentAttributes();
+            labelJSON.locator=e.locator.NAME;
+            memento.labels.push(labelJSON);
+        });
+
+        return memento;
+    },
+
+    /**
+     * @method
+     * Read all attributes from the serialized properties and transfer them into the shape.
+     *
+     * @param {Object} memento
+     * @returns
+     */
+    setPersistentAttributes : function(memento)
+    {
+        this._super(memento);
+
+        // remove all decorations created in the constructor of this element
+        //
+        this.resetChildren();
+
+        // and add all children of the JSON document.
+        //
+        $.each(memento.labels, $.proxy(function(i,json){
+            // create the figure stored in the JSON
+            var figure =  eval("new "+json.type+"()");
+
+            // apply all attributes
+            figure.attr(json);
+
+            // instantiate the locator
+            var locator =  eval("new "+json.locator+"()");
+
+            // add the new figure as child to this figure
+            this.add(figure, locator);
+        },this));
     }
 
 });
