@@ -66686,7 +66686,7 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
     /**
      * @inheritdoc
      */
-    _paint: function(conn)
+    x_paint: function(conn)
     {
         var _this = this;
         // get the intersections to the other connections
@@ -67256,7 +67256,7 @@ var View = draw2d.Canvas.extend({
 
         // show the ports of the elements only if the mouse cursor is close to the shape.
         //
-        this.coronaFeedback = new draw2d.policy.canvas.CoronaDecorationPolicy();
+        this.coronaFeedback = new draw2d.policy.canvas.CoronaDecorationPolicy({diameterToBeVisible:50});
         this.installEditPolicy(this.coronaFeedback);
 
         // nice grid decoration for the canvas paint area
