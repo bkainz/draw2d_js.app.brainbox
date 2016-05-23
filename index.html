@@ -8,7 +8,8 @@
     <link type="text/css" rel="stylesheet" href="./lib/ionicons/css/ionicons.min.css" />
     <link type="text/css" rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="./lib/prettify/src/prettify.css" />
-    <link type="text/css" rel="stylesheet" href="./assets/stylesheets/main.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/main.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/depend.css" />
 
     <SCRIPT src="./assets/javascript/dependencies.js"></SCRIPT>
     <SCRIPT src="./lib/bootstrap/js/bootstrap.min.js"></SCRIPT>
@@ -23,6 +24,27 @@
 
         $(window).load(function () {
             $.getScript(conf.shapes.url+"index.js",function(){
+                /*
+                draw2d_circuit_pulse_10hz.inject({
+                    calculate:function(){
+                        this.getOutputPort(0).setValue(this.value);
+                    },
+                    onStart:function()
+                    {
+                        var _this = this;
+                        this.running=true;
+                        this.timer = setInterval(function() {
+                            _this.value = !_this.value;
+                        }, 1000 / _this.hz);
+                    },
+                    onStop:function()
+                    {
+                        this.running=false;
+                        clearInterval( this.timer);
+                    }
+
+                });
+                */
                 socket = io();
                 app = new Application();
                 $('.lazyload').lazyload({ trigger: "appear"});
@@ -205,6 +227,7 @@
                             <div id="paletteElements" class="row ">
 
                             </div>
+                            <div id="paletteElementsOverlay"></div>
                         </div>
                     </div>
                     <div class="toolbar">
@@ -230,9 +253,32 @@
                         </span>
 
                         <span class="group">
-                            <span id="simulationStart" class="ion-ios-play icon"></span>
-                            <span id="simulationStop"  class="ion-ios-pause icon disabled"></span>
+                            <a href="#" class="morph_btn play" id="simulationStartStop">
+                                <span>
+                                  <span class="s1"></span>
+                                  <span class="s2"></span>
+                                  <span class="s3"></span>
+                                </span>
+                            </a>
+                       </span>
+
+                        <span class="group simulationBase" style="display: none;">
+
+                        <label>Simulation Speed</label>
+                        <input id="simulationBaseTimer"
+                               type="text"
+                               value="100"
+                               data-slider-min="50"
+                               data-slider-max="500"
+                               data-slider-step="1"
+                               data-slider-value="100"
+                               data-slider-handle="round"
+                               data-slider-tooltip="hide"
+                               data-slider-id="simulationBaseTimerSlider"
+                               data-slider-orientation="horizontal">
                         </span>
+
+
                         <a href="https://github.com/freegroup/draw2d_js.app.digital_training_studio" target="_blank"><img  class="github" src="assets/images/octocat.svg" title="Clone project on github"></a>
 
                     </div>

@@ -809,6 +809,8 @@ var View = draw2d.Canvas.extend({
         //
         this.configFigure=null;
 
+        this.timerBase = 10; // ms calculate every 10ms all elements
+
         // register this class as event listener for the canvas
         // CommandStack. This is required to update the state of
         // the Undo/Redo Buttons.
@@ -890,33 +892,26 @@ var View = draw2d.Canvas.extend({
         },this));
 
 
-        // add keyboard support for shape/figure movement
-        //
         Mousetrap.bind(['left'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(-diff,0);}
+            _this.getSelection().each(function(i,f){f.translate(-diff,0);});
             return false;
         });
         Mousetrap.bind(['up'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(0,-diff);}
+            _this.getSelection().each(function(i,f){f.translate(0,-diff);});
             return false;
         });
         Mousetrap.bind(['right'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(diff,0);}
+            _this.getSelection().each(function(i,f){f.translate(diff,0);});
             return false;
         });
         Mousetrap.bind(['down'],function (event) {
             var diff = _this.getZoom()<0.5?0.5:1;
-            var primarySelection = _this.getSelection().getPrimary();
-            if(primarySelection!==null){ primarySelection.translate(0,diff);}
+            _this.getSelection().each(function(i,f){f.translate(0,diff);});
             return false;
         });
-
 
 
         var setZoom = function(newZoom){
@@ -955,15 +950,10 @@ var View = draw2d.Canvas.extend({
             _this.getCommandStack().redo();
         });
 
-
-        $("#simulationStart").on("click", function(){
-            _this.simulationStart();
+        $("#simulationStartStop").on("click", function(){
+            _this.simulationToggle();
         });
 
-
-        $("#simulationStop").on("click", function(){
-            _this.simulationStop();
-        });
 
         this.on("contextmenu", function(emitter, event){
             var figure = _this.getBestFigure(event.x, event.y);
@@ -1042,6 +1032,29 @@ var View = draw2d.Canvas.extend({
             $("#figureConfigDialog").hide();
         });
 
+        this.slider= $('#simulationBaseTimer')
+            .slider({
+                id:"simulationBaseTimerSlider"
+            })
+            .on("slide",function(event){
+                // min = 50     => 100ms
+                // norm= 100    => 10ms ticks
+                // max = 500    =>  2ms ticks
+                //
+                // To map between the different intervals
+                // [A, B] --> [a, b]
+                // use this formula
+                // (val - A)*(b-a)/(B-A) + a
+
+                if(event.value<100){
+                    _this.timerBase = parseInt(100-((event.value-50)*(100-10)/(100-50)+10));
+                }
+                else{
+                    _this.timerBase = parseInt(11-((event.value-100)*(10-2)/(500-100)+2));
+                }
+            });
+
+
     },
 
     /**
@@ -1056,6 +1069,19 @@ var View = draw2d.Canvas.extend({
         this._super();
 
         this.centerDocument();
+    },
+
+    /**
+     * Disable snapTo GRID if we have select more than one element
+     * @param figure
+     * @param pos
+     */
+    snapToHelper : function(figure, pos)
+    {
+        if(this.getSelection().getSize()>1){
+            return pos;
+        }
+        return this._super(figure, pos);
     },
 
     /**
@@ -1081,6 +1107,10 @@ var View = draw2d.Canvas.extend({
         this.getCommandStack().execute(command);
     },
 
+    simulationToggle:function()
+    {
+        return (this.simulate===true)?this.simulationStop():this.simulationStart();
+    },
 
     simulationStart:function()
     {
@@ -1097,9 +1127,13 @@ var View = draw2d.Canvas.extend({
             p.setVisible(false);
         });
 
-        setImmediate(this.animationFrameFunc);
-        $("#simulationStart").addClass("disabled");
-        $("#simulationStop").removeClass("disabled");
+        this._calculate();
+
+        $("#simulationStartStop").addClass("pause");
+        $("#simulationStartStop").removeClass("play");
+        $(".simulationBase" ).fadeIn( "fast" );
+        $("#paletteElementsOverlay" ).fadeIn( "fast" );
+        this.slider.slider("setValue",100);
     },
 
     simulationStop:function()
@@ -1112,8 +1146,10 @@ var View = draw2d.Canvas.extend({
         this.installEditPolicy(this.connectionPolicy);
         this.installEditPolicy(this.coronaFeedback);
 
-        $("#simulationStop").addClass("disabled");
-        $("#simulationStart").removeClass("disabled");
+        $("#simulationStartStop").addClass("play");
+        $("#simulationStartStop").removeClass("pause");
+        $(".simulationBase" ).fadeOut( "fast" );
+        $("#paletteElementsOverlay" ).fadeOut( "fast" );
     },
 
     _calculate:function()
@@ -1132,12 +1168,10 @@ var View = draw2d.Canvas.extend({
             inPort.setValue(outPort.getValue());
             line.setColor(outPort.getValue()?"#C21B7A":"#0078F2");
         });
-        this.getFigures().each(function(i,figure){
-            figure.calculate();
-        });
 
         if(this.simulate===true){
-            setImmediate(this.animationFrameFunc);
+       //     setImmediate(this.animationFrameFunc);
+            setTimeout(this.animationFrameFunc,this.timerBase);
         }
     },
 
@@ -1194,16 +1228,20 @@ var View = draw2d.Canvas.extend({
             //
             bb = this.getBoundingBox();
 
+            /*
             var dx = (this.getWidth()/2)-(bb.x+bb.w/2);
             var dy = (this.getHeight()/2)-(bb.y+bb.h/2);
 
+
             this.getFigures().each(function(i,f){
-                f.translate(dx,dy);
+                f.translate(dx,dy, true);
             });
+
             this.getLines().each(function(i,f){
                 f.translate(dx,dy);
             });
             bb = this.getBoundingBox().getCenter();
+*/
 
             c.scrollTop(bb.y- c.height()/2);
             c.scrollLeft(bb.x- c.width()/2);
@@ -1496,7 +1534,6 @@ FileOpen = Class.extend({
                                 _this.currentFileHandle.title=name;
                                 successCallback(content);
                                 $('#githubFileSelectDialog').modal('hide');
-                                console.log(_this.currentFileHandle);
                             }
                         );
 
@@ -2053,6 +2090,9 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
 });
 
 ;
+/*jshint evil:true */
+
+
 /**
  * The markerFigure is the left hand side annotation for a DecoratedPort.
  *
@@ -2099,6 +2139,68 @@ var Raft = draw2d.shape.composite.Raft.extend({
         // instead of "behind of ALL shapes"
         var first = this.canvas.getFigures().first();
         this._super(first);
+    },
+
+
+
+    translate: function(dx, dy, untouchChildren)
+    {
+        this.setPosition(this.getX()+dx,this.getY()+dy, untouchChildren);
+        return this;
+    },
+
+    /**
+     * @method
+     * Return an objects with all important attributes for XML or JSON serialization
+     *
+     * @returns {Object}
+     */
+    getPersistentAttributes : function()
+    {
+        var memento = this._super();
+
+        // add all decorations to the memento
+        //
+        memento.labels = [];
+        this.children.each(function(i,e){
+            var labelJSON = e.figure.getPersistentAttributes();
+            labelJSON.locator=e.locator.NAME;
+            memento.labels.push(labelJSON);
+        });
+
+        return memento;
+    },
+
+    /**
+     * @method
+     * Read all attributes from the serialized properties and transfer them into the shape.
+     *
+     * @param {Object} memento
+     * @returns
+     */
+    setPersistentAttributes : function(memento)
+    {
+        this._super(memento);
+
+        // remove all decorations created in the constructor of this element
+        //
+        this.resetChildren();
+
+        // and add all children of the JSON document.
+        //
+        $.each(memento.labels, $.proxy(function(i,json){
+            // create the figure stored in the JSON
+            var figure =  eval("new "+json.type+"()");
+
+            // apply all attributes
+            figure.attr(json);
+
+            // instantiate the locator
+            var locator =  eval("new "+json.locator+"()");
+
+            // add the new figure as child to this figure
+            this.add(figure, locator);
+        },this));
     }
 
 });
