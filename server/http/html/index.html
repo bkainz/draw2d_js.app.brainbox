@@ -8,7 +8,8 @@
     <link type="text/css" rel="stylesheet" href="./lib/ionicons/css/ionicons.min.css" />
     <link type="text/css" rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="./lib/prettify/src/prettify.css" />
-    <link type="text/css" rel="stylesheet" href="./assets/stylesheets/main.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/main.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/depend.css" />
 
     <SCRIPT src="./assets/javascript/dependencies.js"></SCRIPT>
     <SCRIPT src="./lib/bootstrap/js/bootstrap.min.js"></SCRIPT>
@@ -254,6 +255,24 @@
                             <span id="simulationStart" class="ion-ios-play icon"></span>
                             <span id="simulationStop"  class="ion-ios-pause icon disabled"></span>
                         </span>
+
+                        <span class="group">
+
+                        <label>Simulation Speed</label>
+                        <input id="simulationBaseTimer"
+                               type="text"
+                               value="100"
+                               data-slider-min="50"
+                               data-slider-max="500"
+                               data-slider-step="1"
+                               data-slider-value="100"
+                               data-slider-handle="round"
+                               data-slider-tooltip="hide"
+                               data-slider-id="simulationBaseTimerSlider"
+                               data-slider-orientation="horizontal">
+                        </span>
+
+
                         <a href="https://github.com/freegroup/draw2d_js.app.digital_training_studio" target="_blank"><img  class="github" src="assets/images/octocat.svg" title="Clone project on github"></a>
 
                     </div>

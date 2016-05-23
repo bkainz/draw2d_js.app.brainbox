@@ -67544,6 +67544,8 @@ var View = draw2d.Canvas.extend({
         //
         this.configFigure=null;
 
+        this.timerBase = 10; // ms calculate every 10ms all elements
+
         // register this class as event listener for the canvas
         // CommandStack. This is required to update the state of
         // the Undo/Redo Buttons.
@@ -67770,6 +67772,29 @@ var View = draw2d.Canvas.extend({
             $("#figureConfigDialog").hide();
         });
 
+        $('#simulationBaseTimer')
+            .slider({
+                id:"simulationBaseTimerSlider"
+            })
+            .on("slide",function(event){
+                // min = 50     => 100ms
+                // norm= 100    => 10ms ticks
+                // max = 500    =>  2ms ticks
+                //
+                // To map between the different intervals
+                // [A, B] --> [a, b]
+                // use this formula
+                // (val - A)*(b-a)/(B-A) + a
+
+                if(event.value<100){
+                    _this.timerBase = parseInt(100-((event.value-50)*(100-10)/(100-50)+10));
+                }
+                else{
+                    _this.timerBase = parseInt(11-((event.value-100)*(10-2)/(500-100)+2));
+                }
+            });
+
+
     },
 
     /**
@@ -67877,7 +67902,7 @@ var View = draw2d.Canvas.extend({
 
         if(this.simulate===true){
        //     setImmediate(this.animationFrameFunc);
-            setTimeout(this.animationFrameFunc,5);
+            setTimeout(this.animationFrameFunc,this.timerBase);
         }
     },
 
@@ -67934,16 +67959,20 @@ var View = draw2d.Canvas.extend({
             //
             bb = this.getBoundingBox();
 
+            /*
             var dx = (this.getWidth()/2)-(bb.x+bb.w/2);
             var dy = (this.getHeight()/2)-(bb.y+bb.h/2);
+
 
             this.getFigures().each(function(i,f){
                 f.translate(dx,dy, true);
             });
+
             this.getLines().each(function(i,f){
                 f.translate(dx,dy);
             });
             bb = this.getBoundingBox().getCenter();
+*/
 
             c.scrollTop(bb.y- c.height()/2);
             c.scrollLeft(bb.x- c.width()/2);
@@ -68847,7 +68876,8 @@ var Raft = draw2d.shape.composite.Raft.extend({
 
     translate: function(dx, dy, untouchChildren)
     {
-
+        this.setPosition(this.getX()+dx,this.getY()+dy, untouchChildren);
+        return this;
     },
 
     /**

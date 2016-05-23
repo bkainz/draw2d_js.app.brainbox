@@ -9194,6 +9194,435 @@ function(a){return void 0!==d(a).data("jquery-lazyload-any-show")};d.fn._bindSho
  */
 window.Modernizr=function(a,b,c){function d(a){s.cssText=a}function e(a,b){return typeof a===b}function f(a,b){return!!~(""+a).indexOf(b)}function g(a,b){for(var d in a){var e=a[d];if(!f(e,"-")&&s[e]!==c)return"pfx"==b?e:!0}return!1}function h(a,b,d){for(var f in a){var g=b[a[f]];if(g!==c)return d===!1?a[f]:e(g,"function")?g.bind(d||b):g}return!1}function i(a,b,c){var d=a.charAt(0).toUpperCase()+a.slice(1),f=(a+" "+v.join(d+" ")+d).split(" ");return e(b,"string")||e(b,"undefined")?g(f,b):(f=(a+" "+w.join(d+" ")+d).split(" "),h(f,b,c))}var j,k,l,m="2.6.2",n={},o=!0,p=b.documentElement,q="modernizr",r=b.createElement(q),s=r.style,t=({}.toString," -webkit- -moz- -o- -ms- ".split(" ")),u="Webkit Moz O ms",v=u.split(" "),w=u.toLowerCase().split(" "),x={},y=[],z=y.slice,A=function(a,c,d,e){var f,g,h,i,j=b.createElement("div"),k=b.body,l=k||b.createElement("body");if(parseInt(d,10))for(;d--;)h=b.createElement("div"),h.id=e?e[d]:q+(d+1),j.appendChild(h);return f=["&#173;",'<style id="s',q,'">',a,"</style>"].join(""),j.id=q,(k?j:l).innerHTML+=f,l.appendChild(j),k||(l.style.background="",l.style.overflow="hidden",i=p.style.overflow,p.style.overflow="hidden",p.appendChild(l)),g=c(j,a),k?j.parentNode.removeChild(j):(l.parentNode.removeChild(l),p.style.overflow=i),!!g},B={}.hasOwnProperty;l=e(B,"undefined")||e(B.call,"undefined")?function(a,b){return b in a&&e(a.constructor.prototype[b],"undefined")}:function(a,b){return B.call(a,b)},Function.prototype.bind||(Function.prototype.bind=function(a){var b=this;if("function"!=typeof b)throw new TypeError;var c=z.call(arguments,1),d=function(){if(this instanceof d){var e=function(){};e.prototype=b.prototype;var f=new e,g=b.apply(f,c.concat(z.call(arguments)));return Object(g)===g?g:f}return b.apply(a,c.concat(z.call(arguments)))};return d}),x.csstransforms=function(){return!!i("transform")},x.csstransforms3d=function(){var a=!!i("perspective");return a&&"webkitPerspective"in p.style&&A("@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}",function(b){a=9===b.offsetLeft&&3===b.offsetHeight}),a},x.csstransitions=function(){return i("transition")};for(var C in x)l(x,C)&&(k=C.toLowerCase(),n[k]=x[C](),y.push((n[k]?"":"no-")+k));return n.addTest=function(a,b){if("object"==typeof a)for(var d in a)l(a,d)&&n.addTest(d,a[d]);else{if(a=a.toLowerCase(),n[a]!==c)return n;b="function"==typeof b?b():b,"undefined"!=typeof o&&o&&(p.className+=" "+(b?"":"no-")+a),n[a]=b}return n},d(""),r=j=null,n._version=m,n._prefixes=t,n._domPrefixes=w,n._cssomPrefixes=v,n.testProp=function(a){return g([a])},n.testAllProps=i,n.testStyles=A,n.prefixed=function(a,b,c){return b?i(a,b,c):i(a,"pfx")},p.className=p.className.replace(/(^|\s)no-js(\s|$)/,"$1$2")+(o?" js "+y.join(" "):""),n}(this,this.document),function(a){"function"==typeof define&&define.amd?define(["jquery","modernizr"],a):"object"==typeof exports?module.exports=a(require("jquery"),window.Modernizr):window.Shuffle=a(window.jQuery,window.Modernizr)}(function(a,b,c){"use strict";function d(a){return a?a.replace(/([A-Z])/g,function(a,b){return"-"+b.toLowerCase()}).replace(/^ms-/,"-ms-"):""}function e(b,c,d){var e,f,g,h=null,i=0;d=d||{};var j=function(){i=d.leading===!1?0:a.now(),h=null,g=b.apply(e,f),e=f=null};return function(){var k=a.now();i||d.leading!==!1||(i=k);var l=c-(k-i);return e=this,f=arguments,0>=l||l>c?(clearTimeout(h),h=null,i=k,g=b.apply(e,f),e=f=null):h||d.trailing===!1||(h=setTimeout(j,l)),g}}function f(a,b,c){for(var d=0,e=a.length;e>d;d++)if(b.call(c,a[d],d,a)==={})return}function g(b,c,d){return setTimeout(a.proxy(b,c),d)}function h(a){return Math.max.apply(Math,a)}function i(a){return Math.min.apply(Math,a)}function j(b){return a.isNumeric(b)?b:0}function k(a){var b,c,d=a.length;if(!d)return a;for(;--d;)c=Math.floor(Math.random()*(d+1)),b=a[c],a[c]=a[d],a[d]=b;return a}if("object"!=typeof b)throw new Error("Shuffle.js requires Modernizr.\nhttp://vestride.github.io/Shuffle/#dependencies");var l=b.prefixed("transition"),m=b.prefixed("transitionDelay"),n=b.prefixed("transitionDuration"),o={WebkitTransition:"webkitTransitionEnd",transition:"transitionend"}[l],p=b.prefixed("transform"),q=d(p),r=b.csstransforms&&b.csstransitions,s=b.csstransforms3d,t=!!window.getComputedStyle,u="shuffle",v="all",w="groups",x=1,y=.001,z=window.getComputedStyle||function(){},A=function(a,b){this.x=j(a),this.y=j(b)};A.equals=function(a,b){return a.x===b.x&&a.y===b.y};var B=function(){if(!t)return!1;var a=document.body||document.documentElement,b=document.createElement("div");b.style.cssText="width:10px;padding:2px;-webkit-box-sizing:border-box;box-sizing:border-box;",a.appendChild(b);var c=z(b,null).width,d="10px"===c;return a.removeChild(b),d}(),C=0,D=a(window),E=function(b,c){c=c||{},a.extend(this,E.options,c,E.settings),this.$el=a(b),this.element=b,this.unique="shuffle_"+C++,this._fire(E.EventType.LOADING),this._init(),g(function(){this.initialized=!0,this._fire(E.EventType.DONE)},this,16)};return E.EventType={LOADING:"loading",DONE:"done",LAYOUT:"layout",REMOVED:"removed"},E.ClassName={BASE:u,SHUFFLE_ITEM:"shuffle-item",FILTERED:"filtered",CONCEALED:"concealed"},E.options={group:v,speed:250,easing:"ease-out",itemSelector:"",sizer:null,gutterWidth:0,columnWidth:0,delimeter:null,buffer:0,columnThreshold:t?.01:.1,initialSort:null,throttle:e,throttleTime:300,sequentialFadeDelay:150,supported:r},E.settings={useSizer:!1,itemCss:{position:"absolute",top:0,left:0,visibility:"visible"},revealAppendedDelay:300,lastSort:{},lastFilter:v,enabled:!0,destroyed:!1,initialized:!1,_animations:[],_transitions:[],_isMovementCanceled:!1,styleQueue:[]},E.Point=A,E._getItemTransformString=function(a,b){return s?"translate3d("+a.x+"px, "+a.y+"px, 0) scale3d("+b+", "+b+", 1)":"translate("+a.x+"px, "+a.y+"px) scale("+b+")"},E._getNumberStyle=function(b,c,d){if(t){d=d||z(b,null);var e=E._getFloat(d[c]);return B||"width"!==c?B||"height"!==c||(e+=E._getFloat(d.paddingTop)+E._getFloat(d.paddingBottom)+E._getFloat(d.borderTopWidth)+E._getFloat(d.borderBottomWidth)):e+=E._getFloat(d.paddingLeft)+E._getFloat(d.paddingRight)+E._getFloat(d.borderLeftWidth)+E._getFloat(d.borderRightWidth),e}return E._getFloat(a(b).css(c))},E._getFloat=function(a){return j(parseFloat(a))},E._getOuterWidth=function(a,b){var c=z(a,null),d=E._getNumberStyle(a,"width",c);if(b){var e=E._getNumberStyle(a,"marginLeft",c),f=E._getNumberStyle(a,"marginRight",c);d+=e+f}return d},E._getOuterHeight=function(a,b){var c=z(a,null),d=E._getNumberStyle(a,"height",c);if(b){var e=E._getNumberStyle(a,"marginTop",c),f=E._getNumberStyle(a,"marginBottom",c);d+=e+f}return d},E._skipTransition=function(a,b,c){var d=a.style[n];a.style[n]="0ms",b.call(c);var e=a.offsetWidth;e=null,a.style[n]=d},E.prototype._init=function(){this.$items=this._getItems(),this.sizer=this._getElementOption(this.sizer),this.sizer&&(this.useSizer=!0),this.$el.addClass(E.ClassName.BASE),this._initItems(),D.on("resize."+u+"."+this.unique,this._getResizeFunction());var a=this.$el.css(["position","overflow"]),b=E._getOuterWidth(this.element);this._validateStyles(a),this._setColumns(b),this.shuffle(this.group,this.initialSort),this.supported&&g(function(){this._setTransitions(),this.element.style[l]="height "+this.speed+"ms "+this.easing},this)},E.prototype._getResizeFunction=function(){var b=a.proxy(this._onResize,this);return this.throttle?this.throttle(b,this.throttleTime):b},E.prototype._getElementOption=function(a){return"string"==typeof a?this.$el.find(a)[0]||null:a&&a.nodeType&&1===a.nodeType?a:a&&a.jquery?a[0]:null},E.prototype._validateStyles=function(a){"static"===a.position&&(this.element.style.position="relative"),"hidden"!==a.overflow&&(this.element.style.overflow="hidden")},E.prototype._filter=function(a,b){a=a||this.lastFilter,b=b||this.$items;var c=this._getFilteredSets(a,b);return this._toggleFilterClasses(c.filtered,c.concealed),this.lastFilter=a,"string"==typeof a&&(this.group=a),c.filtered},E.prototype._getFilteredSets=function(b,c){var d=a(),e=a();return b===v?d=c:f(c,function(c){var f=a(c);this._doesPassFilter(b,f)?d=d.add(f):e=e.add(f)},this),{filtered:d,concealed:e}},E.prototype._doesPassFilter=function(b,c){if(a.isFunction(b))return b.call(c[0],c,this);var d=c.data(w),e=this.delimeter&&!a.isArray(d)?d.split(this.delimeter):d;return a.inArray(b,e)>-1},E.prototype._toggleFilterClasses=function(a,b){a.removeClass(E.ClassName.CONCEALED).addClass(E.ClassName.FILTERED),b.removeClass(E.ClassName.FILTERED).addClass(E.ClassName.CONCEALED)},E.prototype._initItems=function(a){a=a||this.$items,a.addClass([E.ClassName.SHUFFLE_ITEM,E.ClassName.FILTERED].join(" ")),a.css(this.itemCss).data("point",new A).data("scale",x)},E.prototype._updateItemCount=function(){this.visibleItems=this._getFilteredItems().length},E.prototype._setTransition=function(a){a.style[l]=q+" "+this.speed+"ms "+this.easing+", opacity "+this.speed+"ms "+this.easing},E.prototype._setTransitions=function(a){a=a||this.$items,f(a,function(a){this._setTransition(a)},this)},E.prototype._setSequentialDelay=function(a){this.supported&&f(a,function(a,b){a.style[m]="0ms,"+(b+1)*this.sequentialFadeDelay+"ms"},this)},E.prototype._getItems=function(){return this.$el.children(this.itemSelector)},E.prototype._getFilteredItems=function(){return this.$items.filter("."+E.ClassName.FILTERED)},E.prototype._getConcealedItems=function(){return this.$items.filter("."+E.ClassName.CONCEALED)},E.prototype._getColumnSize=function(b,c){var d;return d=a.isFunction(this.columnWidth)?this.columnWidth(b):this.useSizer?E._getOuterWidth(this.sizer):this.columnWidth?this.columnWidth:this.$items.length>0?E._getOuterWidth(this.$items[0],!0):b,0===d&&(d=b),d+c},E.prototype._getGutterSize=function(b){var c;return c=a.isFunction(this.gutterWidth)?this.gutterWidth(b):this.useSizer?E._getNumberStyle(this.sizer,"marginLeft"):this.gutterWidth},E.prototype._setColumns=function(a){var b=a||E._getOuterWidth(this.element),c=this._getGutterSize(b),d=this._getColumnSize(b,c),e=(b+c)/d;Math.abs(Math.round(e)-e)<this.columnThreshold&&(e=Math.round(e)),this.cols=Math.max(Math.floor(e),1),this.containerWidth=b,this.colWidth=d},E.prototype._setContainerSize=function(){this.$el.css("height",this._getContainerSize())},E.prototype._getContainerSize=function(){return h(this.positions)},E.prototype._fire=function(a,b){this.$el.trigger(a+"."+u,b&&b.length?b:[this])},E.prototype._resetCols=function(){var a=this.cols;for(this.positions=[];a--;)this.positions.push(0)},E.prototype._layout=function(a,b){f(a,function(a){this._layoutItem(a,!!b)},this),this._processStyleQueue(),this._setContainerSize()},E.prototype._layoutItem=function(b,c){var d=a(b),e=d.data(),f=e.point,g=e.scale,h={width:E._getOuterWidth(b,!0),height:E._getOuterHeight(b,!0)},i=this._getItemPosition(h);A.equals(f,i)&&g===x||(e.point=i,e.scale=x,this.styleQueue.push({$item:d,point:i,scale:x,opacity:c?0:1,skipTransition:c||0===this.speed,callfront:function(){c||d.css("visibility","visible")},callback:function(){c&&d.css("visibility","hidden")}}))},E.prototype._getItemPosition=function(a){for(var b=this._getColumnSpan(a.width,this.colWidth,this.cols),c=this._getColumnSet(b,this.cols),d=this._getShortColumn(c,this.buffer),e=new A(Math.round(this.colWidth*d),Math.round(c[d])),f=c[d]+a.height,g=this.cols+1-c.length,h=0;g>h;h++)this.positions[d+h]=f;return e},E.prototype._getColumnSpan=function(a,b,c){var d=a/b;return Math.abs(Math.round(d)-d)<this.columnThreshold&&(d=Math.round(d)),Math.min(Math.ceil(d),c)},E.prototype._getColumnSet=function(a,b){if(1===a)return this.positions;for(var c=b+1-a,d=[],e=0;c>e;e++)d[e]=h(this.positions.slice(e,e+a));return d},E.prototype._getShortColumn=function(a,b){for(var c=i(a),d=0,e=a.length;e>d;d++)if(a[d]>=c-b&&a[d]<=c+b)return d;return 0},E.prototype._shrink=function(b){var c=b||this._getConcealedItems();f(c,function(b){var c=a(b),d=c.data();d.scale!==y&&(d.scale=y,this.styleQueue.push({$item:c,point:d.point,scale:y,opacity:0,callback:function(){c.css("visibility","hidden")}}))},this)},E.prototype._onResize=function(){if(this.enabled&&!this.destroyed){var a=E._getOuterWidth(this.element);a!==this.containerWidth&&this.update()}},E.prototype._getStylesForTransition=function(a){var b={opacity:a.opacity};return this.supported?b[p]=E._getItemTransformString(a.point,a.scale):(b.left=a.point.x,b.top=a.point.y),b},E.prototype._transition=function(b){var c=this._getStylesForTransition(b);this._startItemAnimation(b.$item,c,b.callfront||a.noop,b.callback||a.noop)},E.prototype._startItemAnimation=function(b,c,d,e){function f(b){b.target===b.currentTarget&&(a(b.target).off(o,f),g._removeTransitionReference(h),e())}var g=this,h={$element:b,handler:f};if(d(),!this.initialized)return b.css(c),void e();if(this.supported)b.css(c),b.on(o,f),this._transitions.push(h);else{var i=b.stop(!0).animate(c,this.speed,"swing",e);this._animations.push(i.promise())}},E.prototype._processStyleQueue=function(b){this.isTransitioning&&this._cancelMovement();var c=a();f(this.styleQueue,function(a){a.skipTransition?this._styleImmediately(a):(c=c.add(a.$item),this._transition(a))},this),c.length>0&&this.initialized&&this.speed>0?(this.isTransitioning=!0,this.supported?this._whenCollectionDone(c,o,this._movementFinished):this._whenAnimationsDone(this._movementFinished)):b||g(this._layoutEnd,this),this.styleQueue.length=0},E.prototype._cancelMovement=function(){this.supported?f(this._transitions,function(a){a.$element.off(o,a.handler)}):(this._isMovementCanceled=!0,this.$items.stop(!0),this._isMovementCanceled=!1),this._transitions.length=0,this.isTransitioning=!1},E.prototype._removeTransitionReference=function(b){var c=a.inArray(b,this._transitions);c>-1&&this._transitions.splice(c,1)},E.prototype._styleImmediately=function(a){E._skipTransition(a.$item[0],function(){a.$item.css(this._getStylesForTransition(a))},this)},E.prototype._movementFinished=function(){this.isTransitioning=!1,this._layoutEnd()},E.prototype._layoutEnd=function(){this._fire(E.EventType.LAYOUT)},E.prototype._addItems=function(a,b,c){this._initItems(a),this._setTransitions(a),this.$items=this._getItems(),this._shrink(a),f(this.styleQueue,function(a){a.skipTransition=!0}),this._processStyleQueue(!0),b?this._addItemsToEnd(a,c):this.shuffle(this.lastFilter)},E.prototype._addItemsToEnd=function(a,b){var c=this._filter(null,a),d=c.get();this._updateItemCount(),this._layout(d,!0),b&&this.supported&&this._setSequentialDelay(d),this._revealAppended(d)},E.prototype._revealAppended=function(b){g(function(){f(b,function(b){var c=a(b);this._transition({$item:c,opacity:1,point:c.data("point"),scale:x})},this),this._whenCollectionDone(a(b),o,function(){a(b).css(m,"0ms"),this._movementFinished()})},this,this.revealAppendedDelay)},E.prototype._whenCollectionDone=function(b,c,d){function e(b){b.target===b.currentTarget&&(a(b.target).off(c,e),f++,f===g&&(h._removeTransitionReference(i),d.call(h)))}var f=0,g=b.length,h=this,i={$element:b,handler:e};b.on(c,e),this._transitions.push(i)},E.prototype._whenAnimationsDone=function(b){a.when.apply(null,this._animations).always(a.proxy(function(){this._animations.length=0,this._isMovementCanceled||b.call(this)},this))},E.prototype.shuffle=function(a,b){this.enabled&&(a||(a=v),this._filter(a),this._updateItemCount(),this._shrink(),this.sort(b))},E.prototype.sort=function(a){if(this.enabled){this._resetCols();var b=a||this.lastSort,c=this._getFilteredItems().sorted(b);this._layout(c),this.lastSort=b}},E.prototype.update=function(a){this.enabled&&(a||this._setColumns(),this.sort())},E.prototype.layout=function(){this.update(!0)},E.prototype.appended=function(a,b,c){this._addItems(a,b===!0,c!==!1)},E.prototype.disable=function(){this.enabled=!1},E.prototype.enable=function(a){this.enabled=!0,a!==!1&&this.update()},E.prototype.remove=function(b){function c(){b.remove(),this.$items=this._getItems(),this._updateItemCount(),this._fire(E.EventType.REMOVED,[b,this]),b=null}b.length&&b.jquery&&(this._toggleFilterClasses(a(),b),this._shrink(b),this.sort(),this.$el.one(E.EventType.LAYOUT+"."+u,a.proxy(c,this)))},E.prototype.destroy=function(){D.off("."+this.unique),this.$el.removeClass(u).removeAttr("style").removeData(u),this.$items.removeAttr("style").removeData("point").removeData("scale").removeClass([E.ClassName.CONCEALED,E.ClassName.FILTERED,E.ClassName.SHUFFLE_ITEM].join(" ")),this.$items=null,this.$el=null,this.sizer=null,this.element=null,this._transitions=null,this.destroyed=!0},a.fn.shuffle=function(b){var c=Array.prototype.slice.call(arguments,1);return this.each(function(){var d=a(this),e=d.data(u);e?"string"==typeof b&&e[b]&&e[b].apply(e,c):(e=new E(this,b),d.data(u,e))})},a.fn.sorted=function(b){var d=a.extend({},a.fn.sorted.defaults,b),e=this.get(),f=!1;return e.length?d.randomize?k(e):(a.isFunction(d.by)&&e.sort(function(b,e){if(f)return 0;var g=d.by(a(b)),h=d.by(a(e));return g===c&&h===c?(f=!0,0):h>g||"sortFirst"===g||"sortLast"===h?-1:g>h||"sortLast"===g||"sortFirst"===h?1:0}),f?this.get():(d.reverse&&e.reverse(),e)):[]},a.fn.sorted.defaults={reverse:!1,by:null,randomize:!1},E});
 ;
+/* =========================================================
+ * bootstrap-slider.js v2.0.0
+ * http://www.eyecon.ro/bootstrap-slider
+ * =========================================================
+ * Copyright 2012 Stefan Petre
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ========================================================= */
+
+!function( $ ) {
+
+	var Slider = function(element, options) {
+		this.dragLocked = false;
+		this.limit = 100000;
+		this.element = $(element).hide();
+		this.picker = $('<div class="slider">'+
+							'<div class="slider-track">'+
+								'<div class="slider-selection"></div>'+
+								'<div class="slider-handle"></div>'+
+								'<div class="slider-handle"></div>'+
+							'</div>'+
+							'<div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'+
+						'</div>')
+							.insertBefore(this.element)
+							.append(this.element);
+		this.id = this.element.data('slider-id')||options.id;
+		if (this.id) {
+			this.picker[0].id = this.id;
+		}
+
+		if (typeof Modernizr !== 'undefined' && Modernizr.touch) {
+			this.touchCapable = true;
+		}
+
+		var tooltip = this.element.data('slider-tooltip')||options.tooltip;
+
+		this.tooltip = this.picker.find('.tooltip');
+		this.tooltipInner = this.tooltip.find('div.tooltip-inner');
+
+		this.orientation = this.element.data('slider-orientation')||options.orientation;
+		switch(this.orientation) {
+			case 'vertical':
+				this.picker.addClass('slider-vertical');
+				this.stylePos = 'top';
+				this.mousePos = 'pageY';
+				this.sizePos = 'offsetHeight';
+				this.tooltip.addClass('right')[0].style.left = '100%';
+				break;
+			default:
+				this.picker
+					.addClass('slider-horizontal')
+					.css('width', this.element.outerWidth());
+				this.orientation = 'horizontal';
+				this.stylePos = 'left';
+				this.mousePos = 'pageX';
+				this.sizePos = 'offsetWidth';
+				this.tooltip.addClass('top')[0].style.top = -this.tooltip.outerHeight() - 14 + 'px';
+				break;
+		}
+
+		this.min = this.element.data('slider-min')||options.min;
+		this.max = this.element.data('slider-max')||options.max;
+		this.step = this.element.data('slider-step')||options.step;
+		this.value = this.element.data('slider-value')||options.value;
+		if (this.value[1]) {
+			this.range = true;
+		}
+
+		this.selection = this.element.data('slider-selection')||options.selection;
+		this.selectionEl = this.picker.find('.slider-selection');
+		if (this.selection === 'none') {
+			this.selectionEl.addClass('hide');
+		}
+		this.selectionElStyle = this.selectionEl[0].style;
+
+
+		this.handle1 = this.picker.find('.slider-handle:first');
+		this.handle1Stype = this.handle1[0].style;
+		this.handle2 = this.picker.find('.slider-handle:last');
+		this.handle2Stype = this.handle2[0].style;
+
+		var handle = this.element.data('slider-handle')||options.handle;
+		switch(handle) {
+			case 'round':
+				this.handle1.addClass('round');
+				this.handle2.addClass('round');
+				break
+			case 'triangle':
+				this.handle1.addClass('triangle');
+				this.handle2.addClass('triangle');
+				break
+		}
+
+		if (this.range) {
+			this.value[0] = Math.max(this.min, Math.min(this.max, this.value[0]));
+			this.value[1] = Math.max(this.min, Math.min(this.max, this.value[1]));
+		} else {
+			this.value = [ Math.max(this.min, Math.min(this.max, this.value))];
+			this.handle2.addClass('hide');
+			if (this.selection == 'after') {
+				this.value[1] = this.max;
+			} else {
+				this.value[1] = this.min;
+			}
+		}
+		this.diff = this.max - this.min;
+		this.percentage = [
+			(this.value[0]-this.min)*100/this.diff,
+			(this.value[1]-this.min)*100/this.diff,
+			this.step*100/this.diff
+		];
+
+		this.offset = this.picker.offset();
+		this.size = this.picker[0][this.sizePos];
+
+		this.formater = options.formater;
+		this.reversed = this.element.data('slider-reversed')||options.reversed;
+
+		this.layout();
+
+		if (this.touchCapable) {
+			// Touch: Bind touch events:
+			this.picker.on({
+				touchstart: $.proxy(this.mousedown, this)
+			});
+		} else {
+			this.picker.on({
+				mousedown: $.proxy(this.mousedown, this)
+			});
+		}
+
+		if (tooltip === 'show') {
+			this.picker.on({
+				mouseenter: $.proxy(this.showTooltip, this),
+				mouseleave: $.proxy(this.hideTooltip, this)
+			});
+		} else {
+			this.tooltip.addClass('hide');
+		}
+	};
+
+	Slider.prototype = {
+		constructor: Slider,
+
+		over: false,
+		inDrag: false,
+
+		showTooltip: function(){
+			this.tooltip.addClass('in');
+			//var left = Math.round(this.percent*this.width);
+			//this.tooltip.css('left', left - this.tooltip.outerWidth()/2);
+			this.over = true;
+		},
+
+		hideTooltip: function(){
+			if (this.inDrag === false) {
+				this.tooltip.removeClass('in');
+			}
+			this.over = false;
+		},
+
+		layout: function(){
+      var positionPercentages;
+
+      if(this.reversed) {
+        positionPercentages = [ this.percentage[1] - this.percentage[0], this.percentage[1] ];
+      } else {
+        positionPercentages = [ this.percentage[0], this.percentage[1] ];
+      }
+
+      this.handle1Stype[this.stylePos] = positionPercentages[0]+'%';
+      this.handle2Stype[this.stylePos] = positionPercentages[1]+'%';
+      if (this.orientation == 'vertical') {
+        this.selectionElStyle.top = Math.min(positionPercentages[0], positionPercentages[1]) +'%';
+        this.selectionElStyle.height = Math.abs(positionPercentages[0] - positionPercentages[1]) +'%';
+      } else {
+        this.selectionElStyle.left = Math.min(positionPercentages[0], positionPercentages[1]) +'%';
+        this.selectionElStyle.width = Math.abs(positionPercentages[0] - positionPercentages[1]) +'%';
+      }
+
+      if (this.range) {
+        this.tooltipInner.text(
+          this.formater(this.value[0]) +
+          ' : ' +
+          this.formater(this.value[1])
+        );
+        this.tooltip[0].style[this.stylePos] = this.size * (positionPercentages[0] + (positionPercentages[1] - positionPercentages[0])/2)/100 - (this.orientation === 'vertical' ? this.tooltip.outerHeight()/2 : this.tooltip.outerWidth()/2) +'px';
+      } else {
+        this.tooltipInner.text(
+          this.formater(this.value[0])
+        );
+        this.tooltip[0].style[this.stylePos] = this.size * positionPercentages[0]/100 - (this.orientation === 'vertical' ? this.tooltip.outerHeight()/2 : this.tooltip.outerWidth()/2) +'px';
+      }
+    },
+
+		mousedown: function(ev) {
+
+			if (!this.dragLocked){
+			// Touch: Get the original event:
+			if (this.touchCapable && ev.type === 'touchstart') {
+				ev = ev.originalEvent;
+			}
+
+			this.offset = this.picker.offset();
+			this.size = this.picker[0][this.sizePos];
+
+			var percentage = this.getPercentage(ev);
+
+			if (this.range) {
+				var diff1 = Math.abs(this.percentage[0] - percentage);
+				var diff2 = Math.abs(this.percentage[1] - percentage);
+				this.dragged = (diff1 < diff2) ? 0 : 1;
+			} else {
+				this.dragged = 0;
+			}
+
+			this.percentage[this.dragged] = this.reversed ? this.percentage[1] - percentage : percentage;
+			this.layout();
+
+			if (this.touchCapable) {
+				// Touch: Bind touch events:
+				$(document).on({
+					touchmove: $.proxy(this.mousemove, this),
+					touchend: $.proxy(this.mouseup, this)
+				});
+			} else {
+				$(document).on({
+					mousemove: $.proxy(this.mousemove, this),
+					mouseup: $.proxy(this.mouseup, this)
+				});
+			}
+
+			this.inDrag = true;
+			var val = this.calculateValue();
+
+			this.setValue(val);
+			this.element.trigger({
+				type: 'slideStart',
+				value: val
+			}).trigger({
+				type: 'slide',
+				value: val
+			});
+			return false;
+			}
+		},
+
+		mousemove: function(ev) {
+			// Touch: Get the original event:
+			if (!this.dragLocked){
+				if (this.touchCapable && ev.type === 'touchmove') {
+					ev = ev.originalEvent;
+				}
+
+				var percentage = this.getPercentage(ev);
+				if (this.range) {
+					if (this.dragged === 0 && this.percentage[1] < percentage) {
+						this.percentage[0] = this.percentage[1];
+						this.dragged = 1;
+					} else if (this.dragged === 1 && this.percentage[0] > percentage) {
+						this.percentage[1] = this.percentage[0];
+						this.dragged = 0;
+					}
+				}
+				x = this.reversed ? this.percentage[1] - percentage : percentage;
+				if (x > this.limit) {
+					return ;
+				}
+				this.percentage[this.dragged] = x;
+				this.layout();
+				var val = this.calculateValue();
+				this.setValue(val);
+
+				this.element
+				.trigger({
+					type: 'slide',
+					value: val
+				})
+				.data('value', val)
+				.prop('value', val);
+				return false;
+			}
+		},
+
+		mouseup: function(ev) {
+			if (this.touchCapable) {
+				// Touch: Bind touch events:
+				$(document).off({
+					touchmove: this.mousemove,
+					touchend: this.mouseup
+				});
+			} else {
+				$(document).off({
+					mousemove: this.mousemove,
+					mouseup: this.mouseup
+				});
+			}
+
+			this.inDrag = false;
+			if (this.over == false) {
+				this.hideTooltip();
+			}
+			this.element;
+			var val = this.calculateValue();
+			this.layout();
+			this.element
+				.trigger({
+					type: 'slideStop',
+					value: val
+				})
+				.data('value', val)
+				.prop('value', val);
+			return false;
+		},
+
+		calculateValue: function() {
+			var val;
+			if (this.range) {
+				val = [
+					(this.min + Math.round((this.diff * this.percentage[0]/100)/this.step)*this.step),
+					(this.min + Math.round((this.diff * this.percentage[1]/100)/this.step)*this.step)
+				];
+				this.value = val;
+			} else {
+				val = (this.min + Math.round((this.diff * this.percentage[0]/100)/this.step)*this.step);
+				this.value = [val, this.value[1]];
+			}
+			return val;
+		},
+
+		getPercentage: function(ev) {
+			if (this.touchCapable) {
+				ev = ev.touches[0];
+			}
+			var percentage = (ev[this.mousePos] - this.offset[this.stylePos])*100/this.size;
+			percentage = Math.round(percentage/this.percentage[2])*this.percentage[2];
+			return Math.max(0, Math.min(100, percentage));
+		},
+
+		getValue: function() {
+			if (this.range) {
+				return this.value;
+			}
+			return this.value[0];
+		},
+		setLimit: function(val) {
+			this.limit = val;
+		},
+		setDragLocked: function(val) {
+			this.dragLocked = val;
+		},
+		getDragLocked: function(val) {
+			return this.dragLocked;
+		},
+		setValue: function(val) {
+			this.value = val;
+
+			if (this.range) {
+				this.value[0] = Math.max(this.min, Math.min(this.max, this.value[0]));
+				this.value[1] = Math.max(this.min, Math.min(this.max, this.value[1]));
+			} else {
+				this.value = [ Math.max(this.min, Math.min(this.max, this.value))];
+				this.handle2.addClass('hide');
+				if (this.selection == 'after') {
+					this.value[1] = this.max;
+				} else {
+					this.value[1] = this.min;
+				}
+			}
+			this.diff = this.max - this.min;
+			this.percentage = [
+				(this.value[0]-this.min)*100/this.diff,
+				(this.value[1]-this.min)*100/this.diff,
+				this.step*100/this.diff
+			];
+			this.layout();
+		},
+		destroy: function(){
+			this.element.show().insertBefore(this.picker);
+			this.picker.remove();
+		},
+	};
+
+	$.fn.slider = function ( option, val ) {
+		return this.each(function () {
+			var $this = $(this),
+				data = $this.data('slider'),
+				options = typeof option === 'object' && option;
+			if (!data)  {
+				$this.data('slider', (data = new Slider(this, $.extend({}, $.fn.slider.defaults,options))));
+			}
+			if (typeof option == 'string') {
+				data[option](val);
+			}
+		})
+	};
+
+	$.fn.slider.defaults = {
+		min: 0,
+		max: 10,
+		step: 1,
+		orientation: 'horizontal',
+		value: 5,
+		selection: 'before',
+		tooltip: 'show',
+		handle: 'round',
+		reversed : false,
+		limit: 100000,
+		dragLocked: false,
+		formater: function(value) {
+			return value;
+		}
+	};
+
+	$.fn.slider.Constructor = Slider;
+
+}( window.jQuery );
+
+;
 /*
  * jQuery.fn.autoResize 1.14
  * --

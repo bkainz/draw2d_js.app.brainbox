@@ -29,6 +29,8 @@ var View = draw2d.Canvas.extend({
         //
         this.configFigure=null;
 
+        this.timerBase = 10; // ms calculate every 10ms all elements
+
         // register this class as event listener for the canvas
         // CommandStack. This is required to update the state of
         // the Undo/Redo Buttons.
@@ -168,15 +170,10 @@ var View = draw2d.Canvas.extend({
             _this.getCommandStack().redo();
         });
 
-
-        $("#simulationStart").on("click", function(){
-            _this.simulationStart();
+        $("#simulationStartStop").on("click", function(){
+            _this.simulationToggle();
         });
 
-
-        $("#simulationStop").on("click", function(){
-            _this.simulationStop();
-        });
 
         this.on("contextmenu", function(emitter, event){
             var figure = _this.getBestFigure(event.x, event.y);
@@ -255,6 +252,29 @@ var View = draw2d.Canvas.extend({
             $("#figureConfigDialog").hide();
         });
 
+        this.slider= $('#simulationBaseTimer')
+            .slider({
+                id:"simulationBaseTimerSlider"
+            })
+            .on("slide",function(event){
+                // min = 50     => 100ms
+                // norm= 100    => 10ms ticks
+                // max = 500    =>  2ms ticks
+                //
+                // To map between the different intervals
+                // [A, B] --> [a, b]
+                // use this formula
+                // (val - A)*(b-a)/(B-A) + a
+
+                if(event.value<100){
+                    _this.timerBase = parseInt(100-((event.value-50)*(100-10)/(100-50)+10));
+                }
+                else{
+                    _this.timerBase = parseInt(11-((event.value-100)*(10-2)/(500-100)+2));
+                }
+            });
+
+
     },
 
     /**
@@ -307,6 +327,10 @@ var View = draw2d.Canvas.extend({
         this.getCommandStack().execute(command);
     },
 
+    simulationToggle:function()
+    {
+        (this.simulate===true)?this.simulationStop():this.simulationStart();
+    },
 
     simulationStart:function()
     {
@@ -325,8 +349,11 @@ var View = draw2d.Canvas.extend({
 
         this._calculate();
 
-        $("#simulationStart").addClass("disabled");
-        $("#simulationStop").removeClass("disabled");
+        $("#simulationStartStop").addClass("pause");
+        $("#simulationStartStop").removeClass("play");
+        $(".simulationBase" ).fadeIn( "fast" );
+        $("#paletteElementsOverlay" ).fadeIn( "fast" );
+        this.slider.slider("setValue",100);
     },
 
     simulationStop:function()
@@ -339,8 +366,10 @@ var View = draw2d.Canvas.extend({
         this.installEditPolicy(this.connectionPolicy);
         this.installEditPolicy(this.coronaFeedback);
 
-        $("#simulationStop").addClass("disabled");
-        $("#simulationStart").removeClass("disabled");
+        $("#simulationStartStop").addClass("play");
+        $("#simulationStartStop").removeClass("pause");
+        $(".simulationBase" ).fadeOut( "fast" );
+        $("#paletteElementsOverlay" ).fadeOut( "fast" );
     },
 
     _calculate:function()
@@ -362,7 +391,7 @@ var View = draw2d.Canvas.extend({
 
         if(this.simulate===true){
        //     setImmediate(this.animationFrameFunc);
-            setTimeout(this.animationFrameFunc,5);
+            setTimeout(this.animationFrameFunc,this.timerBase);
         }
     },
 
@@ -433,7 +462,7 @@ var View = draw2d.Canvas.extend({
             });
             bb = this.getBoundingBox().getCenter();
 */
-            
+
             c.scrollTop(bb.y- c.height()/2);
             c.scrollLeft(bb.x- c.width()/2);
         }

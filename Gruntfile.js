@@ -7,6 +7,8 @@ module.exports = function (grunt) {
         // this way we can use things like name and version (pkg.name)
         pkg: grunt.file.readJSON('package.json'),
 
+        clean: ['dist'],
+
 
         // Task configuration
         concat: {
@@ -25,6 +27,7 @@ module.exports = function (grunt) {
                     './bower_components/jquery-lazyload-any/build/jquery.lazyload-any.min.js',
                     './bower_components/jsrender/jsrender.min.js',
                     './bower_components/shufflejs/dist/jquery.shuffle.modernizr.min.js',
+                    './bower_components/bootstrap-slider/bootstrap-slider.js',
                     './bower_components/draw2d/dist/jquery.autoresize.js',
                     './bower_components/draw2d/dist/jquery-touch_punch.js',
                     './bower_components/draw2d/dist/jquery.contextmenu.js',
@@ -40,6 +43,12 @@ module.exports = function (grunt) {
                     './bower_components/draw2d/dist/draw2d.js'
                 ],
                 dest: './dist/assets/javascript/dependencies.js'
+            },
+            css: {
+                src: [
+                    './bower_components/bootstrap-slider/slider.css'
+                ],
+                dest: './dist/assets/css/depend.css'
             },
             application: {
                 src: [
@@ -143,7 +152,7 @@ module.exports = function (grunt) {
                     compress: false
                 },
                 files: {
-                    "./dist/assets/stylesheets/main.css": [
+                    "./dist/assets/css/main.css": [
                         "./src/assets/less/widget.less",
                         "./src/assets/less/contextmenu.less",
                         "./src/assets/less/toolbar_editor.less",
@@ -248,9 +257,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-gh-pages');
     grunt.loadNpmTasks('grunt-string-replace');
     grunt.loadNpmTasks('grunt-run');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     // Task definition
     grunt.registerTask('default', [
+        'clean',
         'jshint',
         'concat',
         'less',
