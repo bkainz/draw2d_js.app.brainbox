@@ -950,15 +950,10 @@ var View = draw2d.Canvas.extend({
             _this.getCommandStack().redo();
         });
 
-
-        $("#simulationStart").on("click", function(){
-            _this.simulationStart();
+        $("#simulationStartStop").on("click", function(){
+            _this.simulationToggle();
         });
 
-
-        $("#simulationStop").on("click", function(){
-            _this.simulationStop();
-        });
 
         this.on("contextmenu", function(emitter, event){
             var figure = _this.getBestFigure(event.x, event.y);
@@ -1037,7 +1032,7 @@ var View = draw2d.Canvas.extend({
             $("#figureConfigDialog").hide();
         });
 
-        $('#simulationBaseTimer')
+        this.slider= $('#simulationBaseTimer')
             .slider({
                 id:"simulationBaseTimerSlider"
             })
@@ -1112,6 +1107,10 @@ var View = draw2d.Canvas.extend({
         this.getCommandStack().execute(command);
     },
 
+    simulationToggle:function()
+    {
+        if(this.simulate===true)this.simulationStop(); else this.simulationStart();
+    },
 
     simulationStart:function()
     {
@@ -1130,8 +1129,11 @@ var View = draw2d.Canvas.extend({
 
         this._calculate();
 
-        $("#simulationStart").addClass("disabled");
-        $("#simulationStop").removeClass("disabled");
+        $("#simulationStartStop").addClass("pause");
+        $("#simulationStartStop").removeClass("play");
+        $(".simulationBase" ).fadeIn( "fast" );
+        $("#paletteElementsOverlay" ).fadeIn( "fast" );
+        this.slider.slider("setValue",100);
     },
 
     simulationStop:function()
@@ -1144,8 +1146,10 @@ var View = draw2d.Canvas.extend({
         this.installEditPolicy(this.connectionPolicy);
         this.installEditPolicy(this.coronaFeedback);
 
-        $("#simulationStop").addClass("disabled");
-        $("#simulationStart").removeClass("disabled");
+        $("#simulationStartStop").addClass("play");
+        $("#simulationStartStop").removeClass("pause");
+        $(".simulationBase" ).fadeOut( "fast" );
+        $("#paletteElementsOverlay" ).fadeOut( "fast" );
     },
 
     _calculate:function()

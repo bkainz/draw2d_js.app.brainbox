@@ -227,6 +227,7 @@
                             <div id="paletteElements" class="row ">
 
                             </div>
+                            <div id="paletteElementsOverlay"></div>
                         </div>
                     </div>
                     <div class="toolbar">
@@ -252,11 +253,16 @@
                         </span>
 
                         <span class="group">
-                            <span id="simulationStart" class="ion-ios-play icon"></span>
-                            <span id="simulationStop"  class="ion-ios-pause icon disabled"></span>
-                        </span>
+                            <a href="#" class="morph_btn play" id="simulationStartStop">
+                                <span>
+                                  <span class="s1"></span>
+                                  <span class="s2"></span>
+                                  <span class="s3"></span>
+                                </span>
+                            </a>
+                       </span>
 
-                        <span class="group">
+                        <span class="group simulationBase" style="display: none;">
 
                         <label>Simulation Speed</label>
                         <input id="simulationBaseTimer"
