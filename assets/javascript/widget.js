@@ -67844,7 +67844,7 @@ var View = draw2d.Canvas.extend({
 
     simulationToggle:function()
     {
-        return (this.simulate===true)?this.simulationStop():this.simulationStart();
+        if(this.simulate===true)this.simulationStop(); else this.simulationStart();
     },
 
     simulationStart:function()
