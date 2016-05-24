@@ -274,7 +274,23 @@ var View = draw2d.Canvas.extend({
                 }
             });
 
+        // force focus for the searchbox in the object palette
+        //
+        setInterval(function(){
+            // force only the focus if the editor tab pane is visible
+            if(!$("#editor").hasClass("active")){
+                return;
+            }
 
+            // fore only the focus if the "filter" input element the one and only visible
+            // input field
+            //
+            if($("input:visible").length>1){
+                return;
+            }
+
+            document.getElementById("filter").focus();
+        },10);
     },
 
     /**
@@ -353,6 +369,7 @@ var View = draw2d.Canvas.extend({
         $("#simulationStartStop").removeClass("play");
         $(".simulationBase" ).fadeIn( "fast" );
         $("#paletteElementsOverlay" ).fadeIn( "fast" );
+        $("#paletteElementsOverlay").height($("#paletteElements").height());
         this.slider.slider("setValue",100);
     },
 
