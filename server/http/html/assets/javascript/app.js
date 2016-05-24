@@ -500,7 +500,7 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
 
     onMouseUp: function(canvas, x,y, shiftKey, ctrlKey)
     {
-        if(shiftKey ===true){
+        if(shiftKey ===true && this.mouseDownElement===null){
             var rx = Math.min(x, this.x);
             var ry = Math.min(y, this.y);
             var rh = Math.abs(y-this.y);
@@ -958,6 +958,12 @@ var View = draw2d.Canvas.extend({
         this.on("contextmenu", function(emitter, event){
             var figure = _this.getBestFigure(event.x, event.y);
 
+            // a connectionprovides its own context menu
+            //
+            if(figure instanceof draw2d.Connection){
+                return;
+            }
+
             if(figure!==null){
                 var x = event.x;
                 var y = event.y;
@@ -1054,7 +1060,23 @@ var View = draw2d.Canvas.extend({
                 }
             });
 
+        // force focus for the searchbox in the object palette
+        //
+        setInterval(function(){
+            // force only the focus if the editor tab pane is visible
+            if(!$("#editor").hasClass("active")){
+                return;
+            }
 
+            // fore only the focus if the "filter" input element the one and only visible
+            // input field
+            //
+            if($("input:visible").length>1){
+                return;
+            }
+
+            document.getElementById("filter").focus();
+        },10);
     },
 
     /**
@@ -1109,7 +1131,13 @@ var View = draw2d.Canvas.extend({
 
     simulationToggle:function()
     {
-        if(this.simulate===true)this.simulationStop(); else this.simulationStart();
+        if(this.simulate===true){
+            this.simulationStop();
+            $("#favicon_sim").attr("href","./assets/images/favicon_edit.ico");
+        } else {
+            this.simulationStart();
+            $("#favicon_sim").attr("href","./assets/images/favicon_sim.ico");
+        }
     },
 
     simulationStart:function()
@@ -1133,6 +1161,7 @@ var View = draw2d.Canvas.extend({
         $("#simulationStartStop").removeClass("play");
         $(".simulationBase" ).fadeIn( "fast" );
         $("#paletteElementsOverlay" ).fadeIn( "fast" );
+        $("#paletteElementsOverlay").height($("#paletteElements").height());
         this.slider.slider("setValue",100);
     },
 
@@ -2141,10 +2170,16 @@ var Raft = draw2d.shape.composite.Raft.extend({
         this._super(first);
     },
 
+    setPosition: function(x, y)
+    {
+      this._super(x,y);
+      console.log(arguments);
+    },
 
 
     translate: function(dx, dy, untouchChildren)
     {
+        console.log(untouchChildren);
         this.setPosition(this.getX()+dx,this.getY()+dy, untouchChildren);
         return this;
     },

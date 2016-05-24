@@ -9,8 +9,16 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: 2em;
   overflow: hidden;
+
+  -webkit-transform: translateZ(0);
   transform: translateZ(0);
-  transition: all 0.5s ease;
+
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -ms-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease;
+
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
@@ -19,6 +27,7 @@
 }
 
 .morph_btn:active {
+  -webkit-transform: scale(1.1, 1.1);
   transform: scale(1.1, 1.1);
 }
 
@@ -33,38 +42,54 @@
   position: relative;
   width: 2em;
   height: 2em;
-  transition: transform 0.5s ease;
+
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -ms-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease;
+
   overflow: hidden;
   margin: 1em;
 }
 
 .morph_btn > span > span {
   display: block;
-  background-color: #e91e63;
+  background-color: @tintColorHIGH;
   position: absolute;
   top: 0;
   left: 0;
   width: 2em;
   height: 2em;
-  transition: all 0.5s ease;
+
+  -webkit-transition: all 500ms ease;
+  -moz-transition: all 500ms ease;
+  -ms-transition: all 500ms ease;
+  -o-transition: all 500ms ease;
+  transition: all 500ms ease;
+
   border: 1px solid transparent;
 }
 
 
 .morph_btn.play > span {
+  -webkit-transform: translate(1em, 0) scale(1.6, 1);
   transform: translate(1em, 0) scale(1.6, 1);
 }
 
 .morph_btn.play > span > span {
+  -webkit-transform: rotate(-45deg) translate(-1em, -1em) scale(1, 1);
   transform: rotate(-45deg) translate(-1em, -1em) scale(1, 1);
   background-color: @tintColorEdit;
 }
 
 .morph_btn.pause > span > span {
+  -webkit-transform: scale(0.4, 1) translate(-1.6em, 0);
   transform: scale(0.4, 1) translate(-1.6em, 0);
 }
 
 .morph_btn.pause > span > span.s3 {
+  -webkit-transform: scale(0.4, 1) translate(1.6em, 0);
   transform: scale(0.4, 1) translate(1.6em, 0);
 }
 
@@ -73,6 +98,7 @@
   position: absolute;
   background: #CCC;
   border-radius: 100%;
+  -webkit-transform: scale(0);
   transform: scale(0);
   pointer-events: none;
   width: 100%;
@@ -89,44 +115,22 @@
   height: 100%;
   top: 0;
   left: 0;
+  -webkit-transform: scale(0);
   transform: scale(0);
 }
-
-.drop.animate {
-  animation: drop 1s ease-out;
-}
-
-.drop.animate:before {
-  animation: drop2 1s ease-out;
-}
-
-@keyframes drop {
-  100% {
-    opacity: 0;
-    transform: scale(2.5);
-  }
-}
-
-@keyframes drop2 {
-  30% {
-    opacity: 1;
-    transform: scale(0);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(2.5);
-  }
-}
-
-
-
-
 
 
 
 .slider-handle {
   border-radius: 50%;
   background-color: @tintColorEdit;
+}
+
+#simulationStartStop{
+  position: absolute;
+  right:30px;
+  top:30px;
+  z-index:30000;
 }
 
 #simulationBaseTimer{

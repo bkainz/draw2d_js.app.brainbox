@@ -96,7 +96,7 @@ module.exports = function (grunt) {
             img: {
                 expand: true,
                 cwd: 'src/assets/images',
-                src: ['*.svg', '*.png'],
+                src: ['*.svg', '*.png', '*.ico'],
                 dest: 'dist/assets/images'
             },
             ionicons:{

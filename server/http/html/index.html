@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+    <link rel="icon"          href="./assets/images/favicon_edit.ico"  type="image/x-icon" id="favicon_sim">
+
     <link type="text/css" rel="stylesheet" href="./lib/ionicons/css/ionicons.min.css" />
     <link type="text/css" rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="./lib/prettify/src/prettify.css" />
@@ -243,8 +245,8 @@
                         </span>
 
                         <span class="group" id="editorgroup_fileoperations">
-                            <span id="editorFileSave" class="ion-ios-upload-outline icon" title="Save circuit"></span>
                             <span id="editorFileOpen" class="ion-ios-download-outline icon" title="Open circuit"></span>
+                            <span id="editorFileSave" class="ion-ios-upload-outline icon"   title="Save circuit"></span>
                         </span>
 
                         <span class="group">
@@ -252,34 +254,28 @@
                             <span id="editRedo" class="ion-ios-arrow-right icon disabled"></span>
                         </span>
 
-                        <span class="group">
-                            <a href="#" class="morph_btn play" id="simulationStartStop">
+
+                        <span class="group simulationBase" style="display: none;">
+                            <label>Simulation Speed</label>
+                            <input id="simulationBaseTimer"
+                                   type="text"
+                                   value="100"
+                                   data-slider-min="50"
+                                   data-slider-max="500"
+                                   data-slider-step="1"
+                                   data-slider-value="100"
+                                   data-slider-handle="round"
+                                   data-slider-tooltip="hide"
+                                   data-slider-id="simulationBaseTimerSlider"
+                                   data-slider-orientation="horizontal">
+                        </span>
+                        <a href="#" class="morph_btn play" id="simulationStartStop">
                                 <span>
                                   <span class="s1"></span>
                                   <span class="s2"></span>
                                   <span class="s3"></span>
                                 </span>
-                            </a>
-                       </span>
-
-                        <span class="group simulationBase" style="display: none;">
-
-                        <label>Simulation Speed</label>
-                        <input id="simulationBaseTimer"
-                               type="text"
-                               value="100"
-                               data-slider-min="50"
-                               data-slider-max="500"
-                               data-slider-step="1"
-                               data-slider-value="100"
-                               data-slider-handle="round"
-                               data-slider-tooltip="hide"
-                               data-slider-id="simulationBaseTimerSlider"
-                               data-slider-orientation="horizontal">
-                        </span>
-
-
-                        <a href="https://github.com/freegroup/draw2d_js.app.digital_training_studio" target="_blank"><img  class="github" src="assets/images/octocat.svg" title="Clone project on github"></a>
+                        </a>
 
                     </div>
                     <div class="content" id="draw2dCanvasWrapper">

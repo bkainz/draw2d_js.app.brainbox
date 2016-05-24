@@ -55,7 +55,7 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
 
     onMouseUp: function(canvas, x,y, shiftKey, ctrlKey)
     {
-        if(shiftKey ===true){
+        if(shiftKey ===true && this.mouseDownElement===null){
             var rx = Math.min(x, this.x);
             var ry = Math.min(y, this.y);
             var rh = Math.abs(y-this.y);

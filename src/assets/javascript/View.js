@@ -178,6 +178,12 @@ var View = draw2d.Canvas.extend({
         this.on("contextmenu", function(emitter, event){
             var figure = _this.getBestFigure(event.x, event.y);
 
+            // a connectionprovides its own context menu
+            //
+            if(figure instanceof draw2d.Connection){
+                return;
+            }
+
             if(figure!==null){
                 var x = event.x;
                 var y = event.y;
@@ -345,7 +351,13 @@ var View = draw2d.Canvas.extend({
 
     simulationToggle:function()
     {
-        if(this.simulate===true)this.simulationStop(); else this.simulationStart();
+        if(this.simulate===true){
+            this.simulationStop();
+            $("#favicon_sim").attr("href","./assets/images/favicon_edit.ico");
+        } else {
+            this.simulationStart();
+            $("#favicon_sim").attr("href","./assets/images/favicon_sim.ico");
+        }
     },
 
     simulationStart:function()
