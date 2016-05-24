@@ -227,7 +227,7 @@
   background-color: #1c9bab;
 }
 #simulationBaseTimer {
-  width: 400px;
+  width: 200px;
 }
 .simulationBase label {
   display: block;
@@ -265,6 +265,7 @@
 }
 .workspace .toolbar {
   background-color: #EAEFF3;
+  min-width: 700px;
 }
 .workspace .toolbar .group {
   padding-right: 20px;
