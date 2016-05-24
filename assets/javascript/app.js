@@ -500,7 +500,7 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
 
     onMouseUp: function(canvas, x,y, shiftKey, ctrlKey)
     {
-        if(shiftKey ===true){
+        if(shiftKey ===true && this.mouseDownElement===null){
             var rx = Math.min(x, this.x);
             var ry = Math.min(y, this.y);
             var rh = Math.abs(y-this.y);
@@ -958,6 +958,12 @@ var View = draw2d.Canvas.extend({
         this.on("contextmenu", function(emitter, event){
             var figure = _this.getBestFigure(event.x, event.y);
 
+            // a connectionprovides its own context menu
+            //
+            if(figure instanceof draw2d.Connection){
+                return;
+            }
+
             if(figure!==null){
                 var x = event.x;
                 var y = event.y;
@@ -1125,7 +1131,13 @@ var View = draw2d.Canvas.extend({
 
     simulationToggle:function()
     {
-        if(this.simulate===true)this.simulationStop(); else this.simulationStart();
+        if(this.simulate===true){
+            this.simulationStop();
+            $("#favicon_sim").attr("href","./assets/images/favicon_edit.ico");
+        } else {
+            this.simulationStart();
+            $("#favicon_sim").attr("href","./assets/images/favicon_sim.ico");
+        }
     },
 
     simulationStart:function()
@@ -2158,12 +2170,55 @@ var Raft = draw2d.shape.composite.Raft.extend({
         this._super(first);
     },
 
-
-
-    translate: function(dx, dy, untouchChildren)
+    setPosition: function(x, y, shiftKey, ctrlKey)
     {
-        this.setPosition(this.getX()+dx,this.getY()+dy, untouchChildren);
-        return this;
+        // the children didn't move away if you press the SHIFT key.
+        //
+        this._super(x,y, shiftKey);
+    },
+
+
+    onDrag: function( dx,  dy, dx2, dy2, shiftKey, ctrlKey)
+    {
+        var _this = this;
+
+        // apply all EditPolicy for DragDrop Operations
+        //
+        this.editPolicy.each(function(i,e){
+            if(e instanceof draw2d.policy.figure.DragDropEditPolicy){
+                var newPos = e.adjustPosition(_this,_this.ox+dx,_this.oy+dy);
+                if(newPos) {
+                    dx = newPos.x - _this.ox;
+                    dy = newPos.y - _this.oy;
+                }
+            }
+        });
+
+        var newPos = new draw2d.geo.Point(this.ox+dx, this.oy+dy);
+
+        // Adjust the new location if the object can snap to a helper
+        // like grid, geometry, ruler,...
+        //
+        if(this.getCanSnapToHelper()){
+            newPos = this.getCanvas().snapToHelper(this, newPos);
+        }
+
+
+        // push the shiftKey to the setPosition method
+        this.setPosition(newPos.x, newPos.y, shiftKey, ctrlKey);
+
+        // notify all installed policies
+        //
+        this.editPolicy.each(function(i,e){
+            if(e instanceof draw2d.policy.figure.DragDropEditPolicy){
+                e.onDrag(_this.canvas, _this);
+            }
+        });
+
+
+        // fire an event
+        // @since 5.3.3
+        this.fireEvent("drag",{dx:dx, dy:dy, dx2:dx2, dy2:dy2, shiftKey:shiftKey, ctrlKey:ctrlKey});
     },
 
     /**
