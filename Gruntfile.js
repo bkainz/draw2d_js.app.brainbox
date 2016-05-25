@@ -19,6 +19,7 @@ module.exports = function (grunt) {
             libs: {
                 nonull: true,
                 src: [
+                    './bower_components/d3/d3.min.js',
                     './bower_components/setimmediate/setImmediate.js',
                     './bower_components/shifty/dist/shifty.min.js',
                     './bower_components/draw2d/dist/patched_raphael.js',
@@ -154,6 +155,7 @@ module.exports = function (grunt) {
                 files: {
                     "./dist/assets/css/main.css": [
                         "./src/assets/less/widget.less",
+                        "./src/assets/less/shape.less",
                         "./src/assets/less/contextmenu.less",
                         "./src/assets/less/toolbar_editor.less",
                         "./src/assets/less/tabmenu.less",

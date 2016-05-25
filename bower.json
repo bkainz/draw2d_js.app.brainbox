@@ -23,6 +23,7 @@
     "jquery-lazyload-any": "^0.3.0",
     "setimmediate": "^1.0.1",
     "draw2d-shapes": "^1.0.10",
-    "bootstrap-slider": "*"
+    "bootstrap-slider": "*",
+    "d3": "^3.5.17"
   }
 }

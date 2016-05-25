@@ -6,11 +6,18 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
      * Creates a new Router object.
      *
      */
-    init: function () {
+    init: function ()
+    {
         this._super();
 
         this.setBridgeRadius(4);
         this.setVertexRadius(3);
+    },
+
+    onInstall: function(conn)
+    {
+        this._super.apply(this,arguments);
+        conn.installEditPolicy(new ConnectionSelectionFeedbackPolicy());
     },
 
     /**

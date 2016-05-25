@@ -8,6 +8,16 @@
   color: rgba(0, 0, 0, 0.4);
 }
 
+ellipse.draw2d_shape_basic_LineStartResizeHandle,
+ellipse.draw2d_shape_basic_LineEndResizeHandle,
+rect.draw2d_policy_line_OrthogonalSelectionFeedbackPolicy_ResizeHandle {
+  fill: #1c9bab;
+}
+ellipse.draw2d_InputPort,
+ellipse.draw2d_OutputPort {
+  fill: #c21b7a;
+}
+
 .context-menu-list {
   margin: 0;
   padding: 0;

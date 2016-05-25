@@ -33332,7 +33332,7 @@ draw2d.policy.line.OrthogonalSelectionFeedbackPolicy = draw2d.policy.line.LineSe
         // the right installed policy.
         //
         this.ResizeHandle = draw2d.ResizeHandle.extend({
-            NAME : "#ResizeHandle",
+            NAME : "draw2d.policy.line.OrthogonalSelectionFeedbackPolicy.ResizeHandle",
 
              init: function( figure, index)
              {
@@ -34337,7 +34337,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.34",
+    version : "6.1.35",
     i18n : {
         command : {
             move : "Move Shape",
@@ -67055,11 +67055,18 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
      * Creates a new Router object.
      *
      */
-    init: function () {
+    init: function ()
+    {
         this._super();
 
         this.setBridgeRadius(4);
         this.setVertexRadius(3);
+    },
+
+    onInstall: function(conn)
+    {
+        this._super.apply(this,arguments);
+        conn.installEditPolicy(new ConnectionSelectionFeedbackPolicy());
     },
 
     /**
@@ -67173,6 +67180,91 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
 
 });
 ;
+ConnectionSelectionFeedbackPolicy = draw2d.policy.line.OrthogonalSelectionFeedbackPolicy.extend({
+
+    NAME: "ConnectionSelectionFeedbackPolicy",
+
+    /**
+     * @constructor
+     * Creates a new Router object.
+     *
+     */
+    init: function ()
+    {
+        this._super();
+    },
+
+
+    onRightMouseDown: function(conn, x, y, shiftKey, ctrlKey)
+    {
+        var segment = conn.hitSegment(x,y);
+
+        if(segment===null){
+            return;
+        }
+
+        // standard menu entry "split". It is always possible to split a connection
+        //
+        var items = {
+            "split":  {name: draw2d.Configuration.i18n.menu.addSegment}
+        };
+
+        // "remove" a segment isn't always possible. depends from the router algorithm
+        //
+        if(conn.getRouter().canRemoveSegmentAt(conn, segment.index)){
+            items.remove= {name: draw2d.Configuration.i18n.menu.deleteSegment};
+        }
+
+        // add a probe label is always possible
+        //
+        items.probe= {name: "Probe"};
+
+        $.contextMenu({
+            selector: 'body',
+            events:
+            {
+                hide: function(){ $.contextMenu( 'destroy' ); }
+            },
+            callback: $.proxy(function(key, options)
+            {
+                var originalVertices, newVertices ;
+
+                switch(key){
+                    case "remove":
+                        // deep copy of the vertices of the connection for the command stack to avoid side effects
+                        originalVertices = conn.getVertices().clone(true);
+                        this.removeSegment(conn, segment.index);
+                        newVertices = conn.getVertices().clone(true);
+                        conn.getCanvas().getCommandStack().execute(new draw2d.command.CommandReplaceVertices(conn, originalVertices, newVertices));
+                        break;
+
+                    case "split":
+                        // deep copy of the vertices of the connection for the command stack to avoid side effects
+                        originalVertices = conn.getVertices().clone(true);
+                        this.splitSegment(conn, segment.index, x, y);
+                        newVertices = conn.getVertices().clone(true);
+                        conn.getCanvas().getCommandStack().execute(new draw2d.command.CommandReplaceVertices(conn, originalVertices, newVertices));
+                        break;
+
+                    case "probe":
+                        var label = new ProbeFigure({text:"Probe signal", stroke:0, x:-20, y:-40});
+                        var locator = new draw2d.layout.locator.ManhattanMidpointLocator();
+                        label.installEditor(new draw2d.ui.LabelInplaceEditor());
+                        conn.add(label,locator);
+                        break;
+                    default:
+                        break;
+                }
+            },this),
+            x:x,
+            y:y,
+            items: items
+        });
+    }
+});
+
+
+;
 var DropInterceptorPolicy = draw2d.policy.canvas.DropInterceptorPolicy.extend({
 
     NAME : "draw2d.policy.canvas.DropInterceptorPolicy",
@@ -67279,7 +67371,8 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
     onClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
     {
         // we only foreward the click-event to the MarkerFigure hich the user can show hide per
-        // defalt in the edit mode as well.
+        // default
+        // lt in the edit mode as well.
         if(figure instanceof MarkerFigure){
             this._super(figure, mouseX, mouseY, shiftKey, ctrlKey);
         }
@@ -68926,6 +69019,29 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
         return path.join("");
     }
 
+
+});
+
+;
+var ProbeFigure = draw2d.shape.basic.Label.extend({
+
+    NAME : "ProbeFigure",
+
+    /**
+     * @param attr
+     */
+    init : function(attr, setter, getter)
+    {
+        this._super($.extend({
+                padding:{left:5, top:2, bottom:2, right:10},
+                bgColor:"#FFFFFF",
+                stroke:0,
+                color:"#000000",
+                fontSize:8
+            },attr),
+            setter,
+            getter);
+    }
 
 });
 
