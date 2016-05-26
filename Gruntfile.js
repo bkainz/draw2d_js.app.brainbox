@@ -155,6 +155,7 @@ module.exports = function (grunt) {
                 files: {
                     "./dist/assets/css/main.css": [
                         "./src/assets/less/widget.less",
+                        "./src/assets/less/probe_window.less",
                         "./src/assets/less/shape.less",
                         "./src/assets/less/contextmenu.less",
                         "./src/assets/less/toolbar_editor.less",

@@ -764,6 +764,25 @@ var Palette = Class.extend(
 });
 
 ;
+var ProbeWindow = Class.extend({
+
+    init:function()
+    {
+
+    },
+
+    show:function()
+    {
+
+    },
+
+    hide:function()
+    {
+
+    }
+});
+
+;
 var SimulationEditPolicy = draw2d.policy.canvas.ReadOnlySelectionPolicy.extend({
 
 
@@ -1252,7 +1271,7 @@ var View = draw2d.Canvas.extend({
 
         $("#simulationStartStop").addClass("pause");
         $("#simulationStartStop").removeClass("play");
-        $(".simulationBase" ).fadeIn( "fast" );
+        $(".simulationBase" ).fadeIn( "slow" );
         $("#paletteElementsOverlay" ).fadeIn( "fast" );
         $("#paletteElementsOverlay").height($("#paletteElements").height());
         this.slider.slider("setValue",100);
@@ -1270,7 +1289,7 @@ var View = draw2d.Canvas.extend({
 
         $("#simulationStartStop").addClass("play");
         $("#simulationStartStop").removeClass("pause");
-        $(".simulationBase" ).fadeOut( "fast" );
+        $(".simulationBase" ).fadeOut( "slow" );
         $("#paletteElementsOverlay" ).fadeOut( "fast" );
     },
 

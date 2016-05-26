@@ -8,6 +8,17 @@
   color: rgba(0, 0, 0, 0.4);
 }
 
+#probe_window {
+  height: 150px;
+  width: 100%;
+  background: black;
+  bottom: 0;
+  display: none;
+  color: white;
+  font-size: xx-large;
+  position: absolute;
+}
+
 ellipse.draw2d_shape_basic_LineStartResizeHandle,
 ellipse.draw2d_shape_basic_LineEndResizeHandle,
 rect.draw2d_policy_line_OrthogonalSelectionFeedbackPolicy_ResizeHandle {
