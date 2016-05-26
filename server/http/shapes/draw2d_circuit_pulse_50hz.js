@@ -210,27 +210,35 @@ draw2d_circuit_pulse_50hz = draw2d_circuit_pulse_50hz.extend({
 
         this.attr({resizeable:false});
         this.installEditPolicy(new draw2d.policy.figure.AntSelectionFeedbackPolicy());
-        
-         this.currentTimer=0;
+        this.hz = 50;
+        this.running=false;
+// only for test purpose        
+//        this.onStart();
     },
     
     calculate:function()
     {
-      // 2 ticks every 10ms => 50Hz    
-       this.currentTimer = (this.currentTimer+1)%2; 
-       if(this.currentTimer===0){
-           this.value = !this.value;
-           this.getOutputPort(0).setValue(this.value);
-       }
+       this.getOutputPort(0).setValue(this.value);
     },
     
     onStart:function()
     {
-         this.currentTimer=0;
+        var _this = this;
+        this.running=true;
+        var tick = function() {
+            setTimeout(function() {
+                if(_this.running){
+                    requestAnimationFrame(tick);
+                }
+                _this.value = !_this.value;
+            }, 1000 / _this.hz);
+        }
+        tick();
     },
     
     onStop:function()
     {
+        this.running = false;
     }
 
 });

@@ -18,7 +18,7 @@ var View = draw2d.Canvas.extend({
 
         this._super(id, 6000,6000);
 
-        this.probeWindow = new ProbeWindow();
+        this.probeWindow = new ProbeWindow(this);
 
         this.simulate = false;
         this.animationFrameFunc = $.proxy(this._calculate,this);
@@ -300,6 +300,11 @@ var View = draw2d.Canvas.extend({
 
             document.getElementById("filter").focus();
         },10);
+    },
+
+    isSimulationRunning:function()
+    {
+        return this.simulate;
     },
 
     /**

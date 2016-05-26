@@ -16,6 +16,19 @@ var Connection = draw2d.Connection.extend({
         }
     },
 
+    /**
+     * Return the ProbeFigure if the connection has any or NULL
+     *
+     * @return {ProbeFigure}
+     */
+    getProbeFigure:function()
+    {
+        var entry= this.children.find(function(entry){
+               return entry.figure instanceof ProbeFigure;
+             });
+        return (entry!==null)?entry.figure:null;
+    },
+
     disconnect: function()
     {
        this._super();

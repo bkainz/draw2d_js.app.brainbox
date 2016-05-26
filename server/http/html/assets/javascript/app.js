@@ -773,12 +773,14 @@ var ProbeWindow = Class.extend({
 
     show:function()
     {
-
+        $("#probe_window").show().animate({height:'200px'},300);
+        $("#draw2dCanvasWrapper").animate({bottom:'200px'},300);
     },
 
     hide:function()
     {
-
+        $("#probe_window").animate({height:'0'},300);
+        $("#draw2dCanvasWrapper").animate({bottom:'0'},300);
     }
 });
 
@@ -909,6 +911,9 @@ var View = draw2d.Canvas.extend({
         var _this = this;
 
         this._super(id, 6000,6000);
+
+        this.probeWindow = new ProbeWindow();
+
         this.simulate = false;
         this.animationFrameFunc = $.proxy(this._calculate,this);
 
@@ -1275,6 +1280,8 @@ var View = draw2d.Canvas.extend({
         $("#paletteElementsOverlay" ).fadeIn( "fast" );
         $("#paletteElementsOverlay").height($("#paletteElements").height());
         this.slider.slider("setValue",100);
+
+        this.probeWindow.show();
     },
 
     simulationStop:function()
@@ -1291,6 +1298,7 @@ var View = draw2d.Canvas.extend({
         $("#simulationStartStop").removeClass("pause");
         $(".simulationBase" ).fadeOut( "slow" );
         $("#paletteElementsOverlay" ).fadeOut( "fast" );
+        this.probeWindow.hide();
     },
 
     _calculate:function()

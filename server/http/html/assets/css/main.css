@@ -10,13 +10,14 @@
 
 #probe_window {
   height: 150px;
-  width: 100%;
   background: black;
-  bottom: 0;
+  bottom: 0px;
+  height: 0;
   display: none;
   color: white;
-  font-size: xx-large;
   position: absolute;
+  right: 0px;
+  left: 250px;
 }
 
 ellipse.draw2d_shape_basic_LineStartResizeHandle,

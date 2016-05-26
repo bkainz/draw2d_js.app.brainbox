@@ -13,6 +13,7 @@ ConnectionSelectionFeedbackPolicy = draw2d.policy.line.OrthogonalSelectionFeedba
     },
 
 
+
     onRightMouseDown: function(conn, x, y, shiftKey, ctrlKey)
     {
         var segment = conn.hitSegment(x,y);
@@ -23,19 +24,29 @@ ConnectionSelectionFeedbackPolicy = draw2d.policy.line.OrthogonalSelectionFeedba
 
         // standard menu entry "split". It is always possible to split a connection
         //
-        var items = {
-            "split":  {name: draw2d.Configuration.i18n.menu.addSegment}
-        };
+        var items = { };
 
-        // "remove" a segment isn't always possible. depends from the router algorithm
+        // add/remove of connection segments is only possible in the edit mode
         //
-        if(conn.getRouter().canRemoveSegmentAt(conn, segment.index)){
-            items.remove= {name: draw2d.Configuration.i18n.menu.deleteSegment};
+        if(conn.getCanvas().isSimulationRunning()===false){
+            items.split= {name: draw2d.Configuration.i18n.menu.addSegment};
+
+            // "remove" a segment isn't always possible. depends from the router algorithm
+            //
+            if(conn.getRouter().canRemoveSegmentAt(conn, segment.index)){
+                items.remove= {name: draw2d.Configuration.i18n.menu.deleteSegment};
+            }
         }
 
         // add a probe label is always possible
         //
-        items.probe= {name: "Probe"};
+        var probeFigure = conn.getProbeFigure();
+        if(probeFigure===null) {
+            items.probe = {name: "Add Probe"};
+        }
+        else{
+            items.unprobe = {name: "Remove Probe"};
+        }
 
         $.contextMenu({
             selector: 'body',
@@ -69,6 +80,10 @@ ConnectionSelectionFeedbackPolicy = draw2d.policy.line.OrthogonalSelectionFeedba
                         var locator = new draw2d.layout.locator.ManhattanMidpointLocator();
                         label.installEditor(new draw2d.ui.LabelInplaceEditor());
                         conn.add(label,locator);
+                        break;
+
+                    case "unprobe":
+                        conn.remove(conn.getProbeFigure());
                         break;
                     default:
                         break;

@@ -43,7 +43,6 @@
   "dependencies": {
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
-    "gitbook-cli": "^2.1.3",
     "glob": "^7.0.3",
     "gpio": "^0.2.7",
     "grunt-gitbook": "^1.5.0",
