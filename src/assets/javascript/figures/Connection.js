@@ -1,3 +1,4 @@
+/*jshint evil:true */
 
 var Connection = draw2d.Connection.extend({
 

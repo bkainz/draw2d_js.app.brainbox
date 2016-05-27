@@ -113,7 +113,7 @@ var ProbeWindow = Class.extend({
                 var lis =  $( "#probeSortable li" );
                 $.each(lis,function(index, li){
                     probeEntry = _this.probes.find(function(entry){
-                        return entry.probe.id===li.attributes.id.value
+                        return entry.probe.id===li.attributes.id.value;
                     });
                     probeEntry.probe.setIndex(index);
                 });
