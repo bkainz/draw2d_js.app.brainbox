@@ -186,6 +186,9 @@ var View = draw2d.Canvas.extend({
             if(figure instanceof draw2d.Connection){
                 return;
             }
+            if(figure instanceof ProbeFigure){
+                return;
+            }
 
             if(figure!==null){
                 var x = event.x;
@@ -433,6 +436,8 @@ var View = draw2d.Canvas.extend({
        //     setImmediate(this.animationFrameFunc);
             setTimeout(this.animationFrameFunc,this.timerBase);
         }
+
+        this.probeWindow.tick(this.timerBase);
     },
 
     /**

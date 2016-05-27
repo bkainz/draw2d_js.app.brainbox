@@ -126,7 +126,7 @@ var Application = Class.extend(
         };
         this.view.clear();
         if(shapeTemplate){
-            var reader = new draw2d.io.json.Reader();
+            var reader = new Reader();
             reader.unmarshal(this.view, shapeTemplate);
         }
         this.view.centerDocument();
@@ -158,7 +158,7 @@ var Application = Class.extend(
             $.proxy(function(fileData){
                 try{
                     this.view.clear();
-                    var reader = new draw2d.io.json.Reader();
+                    var reader = new Reader();
                     reader.unmarshal(this.view, fileData);
                     this.view.getCommandStack().markSaveLocation();
                     this.view.centerDocument();

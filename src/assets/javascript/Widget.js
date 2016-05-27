@@ -27,7 +27,7 @@ var Widget = draw2d.Canvas.extend({
 
         var circuit= this.getParam("circuit");
         $.getJSON(circuit,function(json){
-            var reader = new draw2d.io.json.Reader();
+            var reader = new Reader();
             reader.unmarshal(widget, json);
 
             _this.shiftDocument();

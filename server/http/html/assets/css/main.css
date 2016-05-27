@@ -9,15 +9,19 @@
 }
 
 #probe_window {
-  height: 150px;
-  background: black;
-  bottom: 0px;
+  background: #989BA1;
+  bottom: 0;
   height: 0;
   display: none;
   color: white;
   position: absolute;
-  right: 0px;
+  right: 0;
   left: 250px;
+}
+#probeSortable li {
+  list-style-type: none;
+  padding-top: 10px;
+  border-bottom: 1px solid black;
 }
 
 ellipse.draw2d_shape_basic_LineStartResizeHandle,

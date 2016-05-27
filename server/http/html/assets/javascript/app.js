@@ -384,6 +384,7 @@ ConnectionSelectionFeedbackPolicy = draw2d.policy.line.OrthogonalSelectionFeedba
     },
 
 
+
     onRightMouseDown: function(conn, x, y, shiftKey, ctrlKey)
     {
         var segment = conn.hitSegment(x,y);
@@ -394,19 +395,29 @@ ConnectionSelectionFeedbackPolicy = draw2d.policy.line.OrthogonalSelectionFeedba
 
         // standard menu entry "split". It is always possible to split a connection
         //
-        var items = {
-            "split":  {name: draw2d.Configuration.i18n.menu.addSegment}
-        };
+        var items = { };
 
-        // "remove" a segment isn't always possible. depends from the router algorithm
+        // add/remove of connection segments is only possible in the edit mode
         //
-        if(conn.getRouter().canRemoveSegmentAt(conn, segment.index)){
-            items.remove= {name: draw2d.Configuration.i18n.menu.deleteSegment};
+        if(conn.getCanvas().isSimulationRunning()===false){
+            items.split= {name: draw2d.Configuration.i18n.menu.addSegment};
+
+            // "remove" a segment isn't always possible. depends from the router algorithm
+            //
+            if(conn.getRouter().canRemoveSegmentAt(conn, segment.index)){
+                items.remove= {name: draw2d.Configuration.i18n.menu.deleteSegment};
+            }
         }
 
         // add a probe label is always possible
         //
-        items.probe= {name: "Probe"};
+        var probeFigure = conn.getProbeFigure();
+        if(probeFigure===null) {
+            items.probe = {name: "Add Probe"};
+        }
+        else{
+            items.unprobe = {name: "Remove Probe"};
+        }
 
         $.contextMenu({
             selector: 'body',
@@ -440,6 +451,10 @@ ConnectionSelectionFeedbackPolicy = draw2d.policy.line.OrthogonalSelectionFeedba
                         var locator = new draw2d.layout.locator.ManhattanMidpointLocator();
                         label.installEditor(new draw2d.ui.LabelInplaceEditor());
                         conn.add(label,locator);
+                        break;
+
+                    case "unprobe":
+                        conn.remove(conn.getProbeFigure());
                         break;
                     default:
                         break;
@@ -680,8 +695,6 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         }
         $("#figureConfigDialog").hide();
     }
-
-
 });
 ;
 /*jshint sub:true*/
@@ -766,13 +779,51 @@ var Palette = Class.extend(
 ;
 var ProbeWindow = Class.extend({
 
-    init:function()
+    init:function(canvas)
     {
+        var _this = this;
+        this.canvas = canvas;
 
+        $(window).resize(function(){
+            _this.resize();
+        });
+
+        this.channelBufferSize = 500;
+        this.channelHeight  =20;
+        this.channelWidth = $("#probe_window").width();
+        this.probes = [];
+
+        this.xScale = d3.scale.linear().domain([0, this.channelBufferSize - 1]).range([0,this.channelWidth]);
+        this.yScale = d3.scale.linear().domain([0, 5]).range([this.channelHeight, 0]);
     },
 
     show:function()
     {
+        var _this = this;
+        var probes = [];
+
+        _this.channelWidth = $("#probe_window").width();
+        this.xScale = d3.scale.linear().domain([0, this.channelBufferSize - 1]).range([0,this.channelWidth]);
+        this.yScale = d3.scale.linear().domain([0, 5]).range([this.channelHeight, 0]);
+
+
+        // get all probes from the canvas and add them to the window
+        //
+        this.canvas.getLines().each(function(i,line){
+            var probe = line.getProbeFigure();
+            console.log(probe);
+            if(probe!==null){
+                probes.push(probe);
+            }
+        });
+
+        //
+        $("#probe_window").html('<ul id="probeSortable"></ul>');
+
+        probes.forEach(function(probe){
+            _this.addProbe(probe);
+        });
+
         $("#probe_window").show().animate({height:'200px'},300);
         $("#draw2dCanvasWrapper").animate({bottom:'200px'},300);
     },
@@ -780,7 +831,71 @@ var ProbeWindow = Class.extend({
     hide:function()
     {
         $("#probe_window").animate({height:'0'},300);
-        $("#draw2dCanvasWrapper").animate({bottom:'0'},300);
+        $("#draw2dCanvasWrapper").animate({bottom:'0'},300, function(){
+            $("#probe_window").html('');
+        });
+    },
+
+    resize:function()
+    {
+        console.log("resize");
+    },
+
+    tick:function( intervalTime)
+    {
+       // test fiddle for D3 line chart
+       // http://jsfiddle.net/Q5Jag/1859/
+
+       var _this= this;
+        this.probes.forEach(function(entry){
+            entry.data.unshift(entry.probe.getValue()?5:0);
+            entry.vis
+                .selectAll("path")
+                .attr("transform", "translate(-" + _this.xScale(1) + ")")
+                .attr("d", entry.path)
+                .transition()
+                .ease("linear")
+                .duration(intervalTime-1 )
+                .attr("transform", "translate(0)");
+            entry.data.pop();
+        });
+    },
+
+
+    addProbe: function(probeFigure)
+    {
+        var _this = this;
+
+        var data = d3.range(this.channelBufferSize).map(function(){return 0;});
+
+        var svg  = d3.select("#probeSortable").append("li").append("svg:svg").attr("width", this.channelWidth).attr("height", this.channelHeight);
+        var vis  = svg.append("svg:g");
+        var path = d3.svg
+            .line()
+            .x(function(d, i) {
+                return _this.xScale(i);
+            })
+            .y(function(d, i) {
+                return _this.yScale(d);
+            })
+            .interpolate("step-before");
+
+        vis.selectAll("path")
+            .data([data])
+            .enter()
+            .append("svg:path")
+            .attr("d", path)
+            .attr('stroke', 'green')
+            .attr('stroke-width', 2)
+            .attr('fill', 'none');
+
+        this.probes.push({
+            data: data,
+            svg:svg,
+            vis : vis,
+            path:path,
+            probe:probeFigure
+        });
     }
 });
 
@@ -912,7 +1027,7 @@ var View = draw2d.Canvas.extend({
 
         this._super(id, 6000,6000);
 
-        this.probeWindow = new ProbeWindow();
+        this.probeWindow = new ProbeWindow(this);
 
         this.simulate = false;
         this.animationFrameFunc = $.proxy(this._calculate,this);
@@ -1080,6 +1195,9 @@ var View = draw2d.Canvas.extend({
             if(figure instanceof draw2d.Connection){
                 return;
             }
+            if(figure instanceof ProbeFigure){
+                return;
+            }
 
             if(figure!==null){
                 var x = event.x;
@@ -1194,6 +1312,11 @@ var View = draw2d.Canvas.extend({
 
             document.getElementById("filter").focus();
         },10);
+    },
+
+    isSimulationRunning:function()
+    {
+        return this.simulate;
     },
 
     /**
@@ -1322,6 +1445,8 @@ var View = draw2d.Canvas.extend({
        //     setImmediate(this.animationFrameFunc);
             setTimeout(this.animationFrameFunc,this.timerBase);
         }
+
+        this.probeWindow.tick(this.timerBase);
     },
 
     /**
@@ -1775,6 +1900,8 @@ var MarkdownDialog = Class.extend(
 
 var Connection = draw2d.Connection.extend({
 
+    NAME: "Connection",
+
     init : function(attr, setter, getter)
     {
         this._super(attr, setter, getter);
@@ -1788,6 +1915,24 @@ var Connection = draw2d.Connection.extend({
         if(canvas===null){
 
         }
+    },
+
+    getValue:function()
+    {
+        return this.getSource().getValue();
+    },
+
+    /**
+     * Return the ProbeFigure if the connection has any or NULL
+     *
+     * @return {ProbeFigure}
+     */
+    getProbeFigure:function()
+    {
+        var entry= this.children.find(function(entry){
+               return entry.figure instanceof ProbeFigure;
+             });
+        return (entry!==null)?entry.figure:null;
     },
 
     disconnect: function()
@@ -1808,6 +1953,8 @@ var Connection = draw2d.Connection.extend({
 ;
 
 var DecoratedInputPort = draw2d.InputPort.extend({
+
+    NAME: "DecoratedInputPort",
 
     init : function(attr, setter, getter)
     {
@@ -2257,6 +2404,12 @@ var ProbeFigure = draw2d.shape.basic.Label.extend({
             },attr),
             setter,
             getter);
+    },
+
+
+    getValue:function()
+    {
+        return this.getParent().getValue();
     }
 
 });
@@ -2392,3 +2545,22 @@ var raspi={
         }
     }
 };
+;
+
+
+var Reader = draw2d.io.json.Reader.extend({
+
+    init:function(){
+        this._super();
+    },
+
+    createFigureFromType:function(type)
+    {
+        // path object types from older versions of JSON
+        if(type === "draw2d.Connection"){
+            type ="Connection";
+        }
+
+        return this._super(type);
+    }
+});

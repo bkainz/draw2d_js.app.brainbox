@@ -1,6 +1,8 @@
 
 var DecoratedInputPort = draw2d.InputPort.extend({
 
+    NAME: "DecoratedInputPort",
+
     init : function(attr, setter, getter)
     {
         this.hasChanged = false;

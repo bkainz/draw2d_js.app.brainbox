@@ -210,35 +210,32 @@ draw2d_circuit_pulse_10hz = draw2d_circuit_pulse_10hz.extend({
 
         this.attr({resizeable:false});
         this.installEditPolicy(new draw2d.policy.figure.AntSelectionFeedbackPolicy());
-        this.hz = 10;
-        this.running=false;
-// only for test purpose        
-//        this.onStart();
+
+        this.currentTimer=0;
     },
     
+    /**
+     * called every '10 [ms]' from the application. do a little bit calculation
+     * to change the state every 100ms (10Hz)
+     * 
+     **/
     calculate:function()
     {
-       this.getOutputPort(0).setValue(this.value);
+       // 10 ticks every 10ms => 10Hz    
+       this.currentTimer = (this.currentTimer+1)%10; 
+       if(this.currentTimer===0){
+           this.value = !this.value;
+           this.getOutputPort(0).setValue(this.value);
+       }
     },
     
     onStart:function()
     {
-        var _this = this;
-        this.running=true;
-        var tick = function() {
-            setTimeout(function() {
-                if(_this.running){
-                    requestAnimationFrame(tick);
-                }
-                _this.value = !_this.value;
-            }, 1000 / _this.hz);
-        }
-        tick();
+        this.currentTimer=0;
     },
     
     onStop:function()
     {
-        this.running = false;
     }
 
 });

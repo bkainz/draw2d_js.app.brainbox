@@ -143,6 +143,4 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         }
         $("#figureConfigDialog").hide();
     }
-
-
 });
