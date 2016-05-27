@@ -126,7 +126,7 @@ var Application = Class.extend(
         };
         this.view.clear();
         if(shapeTemplate){
-            var reader = new draw2d.io.json.Reader();
+            var reader = new Reader();
             reader.unmarshal(this.view, shapeTemplate);
         }
         this.view.centerDocument();
@@ -158,7 +158,7 @@ var Application = Class.extend(
             $.proxy(function(fileData){
                 try{
                     this.view.clear();
-                    var reader = new draw2d.io.json.Reader();
+                    var reader = new Reader();
                     reader.unmarshal(this.view, fileData);
                     this.view.getCommandStack().markSaveLocation();
                     this.view.centerDocument();
@@ -244,11 +244,18 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
      * Creates a new Router object.
      *
      */
-    init: function () {
+    init: function ()
+    {
         this._super();
 
         this.setBridgeRadius(4);
         this.setVertexRadius(3);
+    },
+
+    onInstall: function(conn)
+    {
+        this._super.apply(this,arguments);
+        conn.installEditPolicy(new ConnectionSelectionFeedbackPolicy());
     },
 
     /**
@@ -362,6 +369,106 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
 
 });
 ;
+ConnectionSelectionFeedbackPolicy = draw2d.policy.line.OrthogonalSelectionFeedbackPolicy.extend({
+
+    NAME: "ConnectionSelectionFeedbackPolicy",
+
+    /**
+     * @constructor
+     * Creates a new Router object.
+     *
+     */
+    init: function ()
+    {
+        this._super();
+    },
+
+
+
+    onRightMouseDown: function(conn, x, y, shiftKey, ctrlKey)
+    {
+        var segment = conn.hitSegment(x,y);
+
+        if(segment===null){
+            return;
+        }
+
+        // standard menu entry "split". It is always possible to split a connection
+        //
+        var items = { };
+
+        // add/remove of connection segments is only possible in the edit mode
+        //
+        if(conn.getCanvas().isSimulationRunning()===false){
+            items.split= {name: draw2d.Configuration.i18n.menu.addSegment};
+
+            // "remove" a segment isn't always possible. depends from the router algorithm
+            //
+            if(conn.getRouter().canRemoveSegmentAt(conn, segment.index)){
+                items.remove= {name: draw2d.Configuration.i18n.menu.deleteSegment};
+            }
+        }
+
+        // add a probe label is always possible
+        //
+        var probeFigure = conn.getProbeFigure();
+        if(probeFigure===null) {
+            items.probe = {name: "Add Probe"};
+        }
+        else{
+            items.unprobe = {name: "Remove Probe"};
+        }
+
+        $.contextMenu({
+            selector: 'body',
+            events:
+            {
+                hide: function(){ $.contextMenu( 'destroy' ); }
+            },
+            callback: $.proxy(function(key, options)
+            {
+                var originalVertices, newVertices ;
+
+                switch(key){
+                    case "remove":
+                        // deep copy of the vertices of the connection for the command stack to avoid side effects
+                        originalVertices = conn.getVertices().clone(true);
+                        this.removeSegment(conn, segment.index);
+                        newVertices = conn.getVertices().clone(true);
+                        conn.getCanvas().getCommandStack().execute(new draw2d.command.CommandReplaceVertices(conn, originalVertices, newVertices));
+                        break;
+
+                    case "split":
+                        // deep copy of the vertices of the connection for the command stack to avoid side effects
+                        originalVertices = conn.getVertices().clone(true);
+                        this.splitSegment(conn, segment.index, x, y);
+                        newVertices = conn.getVertices().clone(true);
+                        conn.getCanvas().getCommandStack().execute(new draw2d.command.CommandReplaceVertices(conn, originalVertices, newVertices));
+                        break;
+
+                    case "probe":
+                        var label = new ProbeFigure({text:"Probe signal", stroke:0, x:-20, y:-40});
+                        var locator = new draw2d.layout.locator.ManhattanMidpointLocator();
+                        label.installEditor(new draw2d.ui.LabelInplaceEditor());
+                        conn.add(label,locator);
+                        break;
+
+                    case "unprobe":
+                        conn.remove(conn.getProbeFigure());
+                        break;
+                    default:
+                        break;
+                }
+            },this),
+            x:x,
+            y:y,
+            items: items
+        });
+    }
+});
+
+
+;
 var DropInterceptorPolicy = draw2d.policy.canvas.DropInterceptorPolicy.extend({
 
     NAME : "draw2d.policy.canvas.DropInterceptorPolicy",
@@ -468,7 +575,8 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
     onClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
     {
         // we only foreward the click-event to the MarkerFigure hich the user can show hide per
-        // defalt in the edit mode as well.
+        // default
+        // lt in the edit mode as well.
         if(figure instanceof MarkerFigure){
             this._super(figure, mouseX, mouseY, shiftKey, ctrlKey);
         }
@@ -587,8 +695,6 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         }
         $("#figureConfigDialog").hide();
     }
-
-
 });
 ;
 /*jshint sub:true*/
@@ -664,6 +770,247 @@ var Palette = Class.extend(
                 $(this).parent().addClass('glowBorder');
             }).on('mouseout', function(){
                 $(this).parent().removeClass('glowBorder');
+            });
+        });
+
+    }
+});
+
+;
+var ProbeWindow = Class.extend({
+
+    init:function(canvas)
+    {
+        var _this = this;
+        this.canvas = canvas;
+        this.scrollLeftToRight = true;
+        this.stickWindow = false;
+
+        // the tick function if the oszi goes from left to the right
+        //
+        this.rightShiftTick= $.proxy(function(entry){
+            entry.data.unshift(entry.probe.getValue()?5:0);
+            entry.vis
+                .selectAll("path")
+                .attr("transform", "translate(-" + _this.xScale(1) + ")")
+                .attr("d", entry.path)
+                .transition()
+                .ease("linear")
+                .duration(this.intervalTime )
+                .attr("transform", "translate(0)");
+                entry.data.pop();
+        },this);
+
+        this.leftShiftTick= $.proxy(function(entry){
+            entry.data.push(entry.probe.getValue()?5:0);
+            entry.vis
+                .selectAll("path")
+                .attr("transform", "translate(" + _this.xScale(1) + ")")
+                .attr("d", entry.path)
+                .transition()
+                .ease("linear")
+                .duration(this.intervalTime )
+                .attr("transform", "translate(0)");
+            entry.data.shift();
+        },this);
+
+
+        $(window).resize(function(){
+            _this.resize();
+        });
+
+        this.canvas.on("probe:add", function(emitter, event){
+           _this.addProbe(event.figure);
+        });
+        this.canvas.on("probe:remove", function(emitter, event){
+            _this.removeProbe(event.figure);
+        });
+
+        this.channelBufferSize = 500;
+        this.channelHeight  =20;
+        this.channelWidth = $("#probe_window").width();
+        this.probes = [];
+
+        this.xScale = d3.scale.linear().domain([0, this.channelBufferSize - 1]).range([0,this.channelWidth]);
+        this.yScale = d3.scale.linear().domain([0, 5]).range([this.channelHeight, 0]);
+
+        $("#probe_window_stick").on("click",function(){
+            _this.stick = !_this.stick;
+            if(_this.stick){
+                $("#probe_window_stick").addClass("ion-ios-eye").removeClass("ion-ios-eye-outline");
+            }
+            else{
+                $("#probe_window_stick").addClass("ion-ios-eye-outline").removeClass("ion-ios-eye");
+            }
+
+            // try to hide the window if the simulation isn't running.
+            if(!_this.stick && !_this.canvas.isSimulationRunning()){
+                _this.hide();
+            }
+        });
+    },
+
+    show:function()
+    {
+        if(this.stick){
+            return;
+        }
+
+        var _this = this;
+        var probes = [];
+
+        this.resize();
+
+        // get all probes from the canvas and add them to the window
+        //
+        this.canvas.getLines().each(function(i,line){
+            var probe = line.getProbeFigure();
+            if(probe!==null){
+                probes.push(probe);
+            }
+        });
+
+
+        // sort the probes by the "index" attribute
+        //
+        probes.sort(function(a,b){
+            return a.index - b.index;
+        });
+
+        $("#probeSortable").remove();
+        $("#probe_window").append('<ul id="probeSortable"></ul>');
+
+
+        probes.forEach(function(probe){
+            _this.addProbe(probe);
+        });
+
+        $("#probe_window").show().animate({height:'200px'},300);
+        $("#draw2dCanvasWrapper").animate({bottom:'200px'},300);
+        $( "#probeSortable" ).sortable({
+            update: function( event, ui ) {
+                var lis =  $( "#probeSortable li" );
+                $.each(lis,function(index, li){
+                    probeEntry = _this.probes.find(function(entry){
+                        return entry.probe.id===li.attributes.id.value;
+                    });
+                    probeEntry.probe.setIndex(index);
+                });
+            }
+        });
+
+    },
+
+    hide:function()
+    {
+        if(this.stick){
+            return;
+        }
+
+        $("#probe_window").animate({height:'0'},300);
+        $("#draw2dCanvasWrapper").animate({bottom:'0'},300, function(){
+            $("#probeSortable").remove();
+        });
+    },
+
+    resize:function()
+    {
+        var _this = this;
+        this.channelWidth = $("#probe_window").width();
+        this.xScale = d3.scale.linear().domain([0, this.channelBufferSize - 1]).range([0,this.channelWidth]);
+        this.yScale = d3.scale.linear().domain([0, 5]).range([this.channelHeight, 0]);
+
+        this.probes.forEach(function(entry){
+            entry.svg.attr("width", _this.channelWidth);
+        });
+    },
+
+    tick:function( intervalTime)
+    {
+       // test fiddle for D3 line chart
+       // http://jsfiddle.net/Q5Jag/1859/
+
+       this.intervalTime = intervalTime;
+       this.probes.forEach(this.leftShiftTick);
+    },
+
+    removeProbe: function(probeFigure)
+    {
+        this.probes = $.grep(this.probes, function(entry) {
+            return entry.probe != probeFigure;
+        });
+        $("#"+probeFigure.id).remove();
+    },
+
+    addProbe: function(probeFigure)
+    {
+        probeFigure.setIndex(this.probes.length);
+
+        var _this = this;
+
+        var data = d3.range(this.channelBufferSize).map(function(){return 0;});
+
+        var li    = d3.select("#probeSortable").append("li").attr("id",probeFigure.id).attr("index",probeFigure.getIndex());
+        var label = li.append("div").text(probeFigure.getText());
+
+        var svg   = li.append("svg:svg").attr("width", this.channelWidth).attr("height", this.channelHeight);
+        var vis   = svg.append("svg:g");
+        var path  = d3.svg
+            .line()
+            .x(function(d, i) {
+                return _this.xScale(i);
+            })
+            .y(function(d, i) {
+                return _this.yScale(d);
+            })
+            .interpolate("step-before");
+
+        vis.selectAll("path")
+            .data([data])
+            .enter()
+            .append("svg:path")
+            .attr("d", path)
+            .attr('stroke', 'green')
+            .attr('stroke-width', 1)
+            .attr('fill', 'none');
+
+        this.probes.push({
+            data: data,
+            svg:svg,
+            vis : vis,
+            path:path,
+            probe:probeFigure
+        });
+
+        // direct edit of the label
+        //
+        var $label = $(label[0]);
+        $label.click(function() {
+
+            var $replaceWith = $('<input type="input" class="inplaceEdit" value="'+probeFigure.getText()+'" />');
+            $label.hide();
+            $label.after($replaceWith);
+            $replaceWith.focus();
+
+            var fire=function() {
+                var newLabel = $replaceWith.val();
+                if(newLabel!=="") {
+                    $replaceWith.remove();
+                    $label.html(newLabel);
+                    $label.show();
+                    probeFigure.setText(newLabel);
+                }
+                else{
+                    // get the value and post them here
+                    $replaceWith.remove();
+                    $label.show();
+                }
+            };
+            $replaceWith.blur(fire);
+            $replaceWith.keypress(function (e) {
+                if (e.which == 13) {
+                    fire();
+                }
             });
         });
 
@@ -797,6 +1144,9 @@ var View = draw2d.Canvas.extend({
         var _this = this;
 
         this._super(id, 6000,6000);
+
+        this.probeWindow = new ProbeWindow(this);
+
         this.simulate = false;
         this.animationFrameFunc = $.proxy(this._calculate,this);
 
@@ -963,6 +1313,9 @@ var View = draw2d.Canvas.extend({
             if(figure instanceof draw2d.Connection){
                 return;
             }
+            if(figure instanceof ProbeFigure){
+                return;
+            }
 
             if(figure!==null){
                 var x = event.x;
@@ -1079,6 +1432,11 @@ var View = draw2d.Canvas.extend({
         },10);
     },
 
+    isSimulationRunning:function()
+    {
+        return this.simulate;
+    },
+
     /**
      * @method
      * Clear the canvas and stop the simulation. Be ready for the next clean circuit
@@ -1159,10 +1517,12 @@ var View = draw2d.Canvas.extend({
 
         $("#simulationStartStop").addClass("pause");
         $("#simulationStartStop").removeClass("play");
-        $(".simulationBase" ).fadeIn( "fast" );
+        $(".simulationBase" ).fadeIn( "slow" );
         $("#paletteElementsOverlay" ).fadeIn( "fast" );
         $("#paletteElementsOverlay").height($("#paletteElements").height());
         this.slider.slider("setValue",100);
+
+        this.probeWindow.show();
     },
 
     simulationStop:function()
@@ -1177,8 +1537,9 @@ var View = draw2d.Canvas.extend({
 
         $("#simulationStartStop").addClass("play");
         $("#simulationStartStop").removeClass("pause");
-        $(".simulationBase" ).fadeOut( "fast" );
+        $(".simulationBase" ).fadeOut( "slow" );
         $("#paletteElementsOverlay" ).fadeOut( "fast" );
+        this.probeWindow.hide();
     },
 
     _calculate:function()
@@ -1202,6 +1563,8 @@ var View = draw2d.Canvas.extend({
        //     setImmediate(this.animationFrameFunc);
             setTimeout(this.animationFrameFunc,this.timerBase);
         }
+
+        this.probeWindow.tick(this.timerBase);
     },
 
     /**
@@ -1322,7 +1685,7 @@ var Widget = draw2d.Canvas.extend({
 
         var circuit= this.getParam("circuit");
         $.getJSON(circuit,function(json){
-            var reader = new draw2d.io.json.Reader();
+            var reader = new Reader();
             reader.unmarshal(widget, json);
 
             _this.shiftDocument();
@@ -1652,8 +2015,11 @@ var MarkdownDialog = Class.extend(
         }
 });
 ;
+/*jshint evil:true */
 
 var Connection = draw2d.Connection.extend({
+
+    NAME: "Connection",
 
     init : function(attr, setter, getter)
     {
@@ -1670,6 +2036,24 @@ var Connection = draw2d.Connection.extend({
         }
     },
 
+    getValue:function()
+    {
+        return this.getSource().getValue();
+    },
+
+    /**
+     * Return the ProbeFigure if the connection has any or NULL
+     *
+     * @return {ProbeFigure}
+     */
+    getProbeFigure:function()
+    {
+        var entry= this.children.find(function(entry){
+               return entry.figure instanceof ProbeFigure;
+             });
+        return (entry!==null)?entry.figure:null;
+    },
+
     disconnect: function()
     {
        this._super();
@@ -1682,12 +2066,88 @@ var Connection = draw2d.Connection.extend({
             this.vertexNodes.remove();
             delete this.vertexNodes;
         }
+    },
+
+    add: function(figure)
+    {
+        this._super.apply(this,arguments);
+
+        if(figure instanceof ProbeFigure && this.canvas !==null){
+            this.canvas.fireEvent("probe:add", {figure:figure});
+        }
+    },
+
+
+    remove: function(figure)
+    {
+        this._super.apply(this,arguments);
+
+        if(figure instanceof ProbeFigure && this.canvas !==null){
+            this.canvas.fireEvent("probe:remove", {figure:figure});
+        }
+    },
+
+    /**
+     * @method
+     * Return an objects with all important attributes for XML or JSON serialization
+     *
+     * @returns {Object}
+     */
+    getPersistentAttributes : function()
+    {
+        var memento = this._super();
+
+        // add all decorations to the memento
+        //
+        memento.labels = [];
+        this.children.each(function(i,e){
+            var labelJSON = e.figure.getPersistentAttributes();
+            labelJSON.locator=e.locator.NAME;
+            memento.labels.push(labelJSON);
+        });
+
+        return memento;
+    },
+
+    /**
+     * @method
+     * Read all attributes from the serialized properties and transfer them into the shape.
+     *
+     * @param {Object} memento
+     * @returns
+     */
+    setPersistentAttributes : function(memento)
+    {
+        this._super(memento);
+
+        // remove all decorations created in the constructor of this element
+        //
+        this.resetChildren();
+
+        // and add all children of the JSON document.
+        //
+        $.each(memento.labels, $.proxy(function(i,json){
+            // create the figure stored in the JSON
+            var figure =  eval("new "+json.type+"()");
+
+            // apply all attributes
+            figure.setPersistentAttributes(json);
+
+            // instantiate the locator
+            var locator =  eval("new "+json.locator+"()");
+
+            // add the new figure as child to this figure
+            this.add(figure, locator);
+        },this));
     }
+
 });
 
 ;
 
 var DecoratedInputPort = draw2d.InputPort.extend({
+
+    NAME: "DecoratedInputPort",
 
     init : function(attr, setter, getter)
     {
@@ -2119,6 +2579,83 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
 });
 
 ;
+var ProbeFigure = draw2d.shape.basic.Label.extend({
+
+    NAME : "ProbeFigure",
+
+    /**
+     * @param attr
+     */
+    init : function(attr, setter, getter)
+    {
+        this._super($.extend({
+                padding:{left:5, top:2, bottom:2, right:10},
+                bgColor:"#FFFFFF",
+                stroke:0,
+                color:"#000000",
+                fontSize:8
+            },attr),
+            setter,
+            getter);
+
+        // the sort index in the probe window
+        //
+        this.index = 0;
+    },
+
+
+    getValue:function()
+    {
+        return this.getParent().getValue();
+    },
+
+    getIndex: function()
+    {
+        return this.index;
+    },
+
+    setIndex: function( index)
+    {
+        this.index = index;
+
+        return this;
+    },
+
+
+    /**
+     * @method
+     * Return an objects with all important attributes for XML or JSON serialization
+     *
+     * @returns {Object}
+     */
+    getPersistentAttributes : function()
+    {
+        var memento = this._super();
+
+        memento.index = this.index;
+
+        return memento;
+    },
+
+    /**
+     * @method
+     * Read all attributes from the serialized properties and transfer them into the shape.
+     *
+     * @param {Object} memento
+     * @returns
+     */
+    setPersistentAttributes : function(memento)
+    {
+        this._super(memento);
+
+        if(typeof memento.index !=="undefined"){
+            this.index = parseInt(memento.index);
+        }
+    }
+
+});
+
+;
 /*jshint evil:true */
 
 
@@ -2168,57 +2705,6 @@ var Raft = draw2d.shape.composite.Raft.extend({
         // instead of "behind of ALL shapes"
         var first = this.canvas.getFigures().first();
         this._super(first);
-    },
-
-    setPosition: function(x, y, shiftKey, ctrlKey)
-    {
-        // the children didn't move away if you press the SHIFT key.
-        //
-        this._super(x,y, shiftKey);
-    },
-
-
-    onDrag: function( dx,  dy, dx2, dy2, shiftKey, ctrlKey)
-    {
-        var _this = this;
-
-        // apply all EditPolicy for DragDrop Operations
-        //
-        this.editPolicy.each(function(i,e){
-            if(e instanceof draw2d.policy.figure.DragDropEditPolicy){
-                var newPos = e.adjustPosition(_this,_this.ox+dx,_this.oy+dy);
-                if(newPos) {
-                    dx = newPos.x - _this.ox;
-                    dy = newPos.y - _this.oy;
-                }
-            }
-        });
-
-        var newPos = new draw2d.geo.Point(this.ox+dx, this.oy+dy);
-
-        // Adjust the new location if the object can snap to a helper
-        // like grid, geometry, ruler,...
-        //
-        if(this.getCanSnapToHelper()){
-            newPos = this.getCanvas().snapToHelper(this, newPos);
-        }
-
-
-        // push the shiftKey to the setPosition method
-        this.setPosition(newPos.x, newPos.y, shiftKey, ctrlKey);
-
-        // notify all installed policies
-        //
-        this.editPolicy.each(function(i,e){
-            if(e instanceof draw2d.policy.figure.DragDropEditPolicy){
-                e.onDrag(_this.canvas, _this);
-            }
-        });
-
-
-        // fire an event
-        // @since 5.3.3
-        this.fireEvent("drag",{dx:dx, dy:dy, dx2:dx2, dy2:dy2, shiftKey:shiftKey, ctrlKey:ctrlKey});
     },
 
     /**
@@ -2300,3 +2786,22 @@ var raspi={
         }
     }
 };
+;
+
+
+var Reader = draw2d.io.json.Reader.extend({
+
+    init:function(){
+        this._super();
+    },
+
+    createFigureFromType:function(type)
+    {
+        // path object types from older versions of JSON
+        if(type === "draw2d.Connection"){
+            type ="Connection";
+        }
+
+        return this._super(type);
+    }
+});
