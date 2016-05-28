@@ -693,6 +693,16 @@ rect.Raft {
   cursor: move;
   max-height: 80px;
 }
+.workspace .palette .request {
+  font-size: 10px;
+  color: #1c9bab;
+}
+.workspace .palette .request .icon {
+  cursor: pointer;
+  font-size: 75px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .workspace .content .canvas {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
