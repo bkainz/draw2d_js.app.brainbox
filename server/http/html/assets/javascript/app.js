@@ -743,6 +743,8 @@ var Palette = Class.extend(
                 var val = this.value.toLowerCase();
                 $grid.shuffle('shuffle', function ($el, shuffle) {
                     var text = $.trim($el.data("name")).toLowerCase();
+                    if(text==="_request_")
+                        return true;
                     return text.indexOf(val) !== -1;
                 });
             });
@@ -779,8 +781,8 @@ var Palette = Class.extend(
             //
             var requestUrl =conf.issues.url+'?title=Request for shape&body='+encodeURIComponent("Please add the description of the shape you request.\nWe try to implement it as soon as possible...");
             $("#paletteElements").append(
-             '  <div class="mix col-md-6 pallette_item">'+
-             '  <a href="'+requestUrl+'">'+
+             '  <div data-name="_request_" class="mix col-md-6 pallette_item">'+
+             '  <a href="'+requestUrl+'" target="_blank">'+
              '    <div class="request">'+
              '       <div class="icon ion-ios-plus-outline"></div>'+
              '       <div >Request a Shape</div>'+
