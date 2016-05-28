@@ -4,8 +4,13 @@ var ProbeWindow = Class.extend({
     {
         var _this = this;
         this.canvas = canvas;
-        this.scrollLeftToRight = true;
-        this.stickWindow = false;
+
+        // sync the setting in the local storage
+        this.stick = Locstor.get("stickWindow",false);
+        this.watch("stick",function(id, oldval, newval){
+            Locstor.set("stickWindow",newval);
+            return newval;
+        });
 
         // the tick function if the oszi goes from left to the right
         //
@@ -48,7 +53,7 @@ var ProbeWindow = Class.extend({
         });
 
         this.channelBufferSize = 500;
-        this.channelHeight  =20;
+        this.channelHeight =20;
         this.channelWidth = $("#probe_window").width();
         this.probes = [];
 
@@ -69,11 +74,16 @@ var ProbeWindow = Class.extend({
                 _this.hide();
             }
         });
+
+        if(this.stick){
+            $("#probe_window_stick").addClass("ion-ios-eye").removeClass("ion-ios-eye-outline");
+            this.show(true);
+        }
     },
 
-    show:function()
+    show:function(force)
     {
-        if(this.stick){
+        if(!force && this.stick){
             return;
         }
 
@@ -161,6 +171,7 @@ var ProbeWindow = Class.extend({
             return entry.probe != probeFigure;
         });
         $("#"+probeFigure.id).remove();
+        this.resize();
     },
 
     addProbe: function(probeFigure)
@@ -234,6 +245,6 @@ var ProbeWindow = Class.extend({
                 }
             });
         });
-
+        this.resize();
     }
 });

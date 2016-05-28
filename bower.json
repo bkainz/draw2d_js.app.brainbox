@@ -24,6 +24,7 @@
     "setimmediate": "^1.0.1",
     "draw2d-shapes": "^1.0.10",
     "bootstrap-slider": "*",
-    "d3": "^3.5.17"
+    "d3": "^3.5.17",
+    "locstor": "^1.0.7"
   }
 }

@@ -27,6 +27,7 @@ var Palette = Class.extend(
             data.forEach(function (element){
                 element.basename = element.name.split("_").pop();
             });
+
             var tmpl = $.templates("#shapeTemplate");
             var html = tmpl.render({
                 shapesUrl :conf.shapes.url,
@@ -43,6 +44,8 @@ var Palette = Class.extend(
                 var val = this.value.toLowerCase();
                 $grid.shuffle('shuffle', function ($el, shuffle) {
                     var text = $.trim($el.data("name")).toLowerCase();
+                    if(text==="_request_")
+                        return true;
                     return text.indexOf(val) !== -1;
                 });
             });
@@ -67,11 +70,28 @@ var Palette = Class.extend(
                 }
             });
 
-            $('.draw2d_droppable').on('mouseover', function(){
-                $(this).parent().addClass('glowBorder');
-            }).on('mouseout', function(){
+            $('.draw2d_droppable')
+                .on('mouseover', function(){
+                    $(this).parent().addClass('glowBorder');
+                })
+                .on('mouseout', function(){
                 $(this).parent().removeClass('glowBorder');
             });
+
+            // add the "+" to the palette
+            //
+            var requestUrl =conf.issues.url+'?title=Request for shape&body='+encodeURIComponent("Please add the description of the shape you request.\nWe try to implement it as soon as possible...");
+            $("#paletteElements").append(
+             '  <div data-name="_request_" class="mix col-md-6 pallette_item">'+
+             '  <a href="'+requestUrl+'" target="_blank">'+
+             '    <div class="request">'+
+             '       <div class="icon ion-ios-plus-outline"></div>'+
+             '       <div >Request a Shape</div>'+
+             '   </div>'+
+             '   </a>  '+
+             '  </div>');
+
+        //    $("#paletteElements").append("<div>++</div>");
         });
 
     }

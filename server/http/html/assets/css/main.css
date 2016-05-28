@@ -9,7 +9,7 @@
 }
 
 #probe_window {
-  background: #989BA1;
+  background: #009DAC;
   bottom: 0;
   height: 0;
   display: none;
@@ -18,10 +18,40 @@
   right: 0;
   left: 250px;
 }
+#probe_window_stick {
+  font-size: 34px;
+  position: absolute;
+  right: 10px;
+  top: -5px;
+  cursor: pointer;
+}
+#probeSortable {
+  padding-left: 0;
+}
 #probeSortable li {
   list-style-type: none;
   padding-top: 10px;
-  border-bottom: 1px solid black;
+  padding-left: 0;
+}
+#probeSortable li path {
+  stroke: white;
+}
+#probeSortable li div {
+  cursor: pointer;
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: absolute;
+  background: rgba(0, 157, 172, 0.8);
+}
+#probeSortable li:nth-child(even) {
+  background: #04A9B9;
+}
+#probeSortable li:nth-child(even) div {
+  background: rgba(4, 169, 185, 0.5);
+}
+#probeSortable .inplaceEdit {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 ellipse.draw2d_shape_basic_LineStartResizeHandle,
@@ -30,6 +60,7 @@ rect.draw2d_policy_line_OrthogonalSelectionFeedbackPolicy_ResizeHandle {
   fill: #1c9bab;
 }
 ellipse.draw2d_InputPort,
+ellipse.DecoratedInputPort,
 ellipse.draw2d_OutputPort {
   fill: #c21b7a;
 }
@@ -661,6 +692,16 @@ rect.Raft {
 .workspace .palette .draw2d_droppable {
   cursor: move;
   max-height: 80px;
+}
+.workspace .palette .request {
+  font-size: 10px;
+  color: #1c9bab;
+}
+.workspace .palette .request .icon {
+  cursor: pointer;
+  font-size: 75px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .workspace .content .canvas {
   -webkit-touch-callout: none;

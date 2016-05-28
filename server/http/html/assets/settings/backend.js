@@ -24,5 +24,8 @@ var conf={
     },
     shapes :{
         url: "http://freegroup.github.io/draw2d_js.shapes/assets/shapes/"
+    },
+    issues: {
+        url: "https://github.com/freegroup/draw2d_js.shapes/issues/new"
     }
 };

@@ -126,7 +126,7 @@ var Application = Class.extend(
         };
         this.view.clear();
         if(shapeTemplate){
-            var reader = new draw2d.io.json.Reader();
+            var reader = new Reader();
             reader.unmarshal(this.view, shapeTemplate);
         }
         this.view.centerDocument();
@@ -158,7 +158,7 @@ var Application = Class.extend(
             $.proxy(function(fileData){
                 try{
                     this.view.clear();
-                    var reader = new draw2d.io.json.Reader();
+                    var reader = new Reader();
                     reader.unmarshal(this.view, fileData);
                     this.view.getCommandStack().markSaveLocation();
                     this.view.centerDocument();
@@ -726,6 +726,7 @@ var Palette = Class.extend(
             data.forEach(function (element){
                 element.basename = element.name.split("_").pop();
             });
+
             var tmpl = $.templates("#shapeTemplate");
             var html = tmpl.render({
                 shapesUrl :conf.shapes.url,
@@ -766,11 +767,28 @@ var Palette = Class.extend(
                 }
             });
 
-            $('.draw2d_droppable').on('mouseover', function(){
-                $(this).parent().addClass('glowBorder');
-            }).on('mouseout', function(){
+            $('.draw2d_droppable')
+                .on('mouseover', function(){
+                    $(this).parent().addClass('glowBorder');
+                })
+                .on('mouseout', function(){
                 $(this).parent().removeClass('glowBorder');
             });
+
+            // add the "+" to the palette
+            //
+            var requestUrl =conf.issues.url+'?title=Request for shape&body='+encodeURIComponent("Please add the description of the shape you request.\nWe try to implement it as soon as possible...");
+            $("#paletteElements").append(
+             '  <div class="mix col-md-6 pallette_item">'+
+             '  <a href="'+requestUrl+'">'+
+             '    <div class="request">'+
+             '       <div class="icon ion-ios-plus-outline"></div>'+
+             '       <div >Request a Shape</div>'+
+             '   </div>'+
+             '   </a>  '+
+             '  </div>');
+
+        //    $("#paletteElements").append("<div>++</div>");
         });
 
     }
@@ -784,70 +802,16 @@ var ProbeWindow = Class.extend({
         var _this = this;
         this.canvas = canvas;
 
-        $(window).resize(function(){
-            _this.resize();
+        // sync the setting in the local storage
+        this.stick = Locstor.get("stickWindow",false);
+        this.watch("stick",function(id, oldval, newval){
+            Locstor.set("stickWindow",newval);
+            return newval;
         });
 
-        this.channelBufferSize = 500;
-        this.channelHeight  =20;
-        this.channelWidth = $("#probe_window").width();
-        this.probes = [];
-
-        this.xScale = d3.scale.linear().domain([0, this.channelBufferSize - 1]).range([0,this.channelWidth]);
-        this.yScale = d3.scale.linear().domain([0, 5]).range([this.channelHeight, 0]);
-    },
-
-    show:function()
-    {
-        var _this = this;
-        var probes = [];
-
-        _this.channelWidth = $("#probe_window").width();
-        this.xScale = d3.scale.linear().domain([0, this.channelBufferSize - 1]).range([0,this.channelWidth]);
-        this.yScale = d3.scale.linear().domain([0, 5]).range([this.channelHeight, 0]);
-
-
-        // get all probes from the canvas and add them to the window
+        // the tick function if the oszi goes from left to the right
         //
-        this.canvas.getLines().each(function(i,line){
-            var probe = line.getProbeFigure();
-            console.log(probe);
-            if(probe!==null){
-                probes.push(probe);
-            }
-        });
-
-        //
-        $("#probe_window").html('<ul id="probeSortable"></ul>');
-
-        probes.forEach(function(probe){
-            _this.addProbe(probe);
-        });
-
-        $("#probe_window").show().animate({height:'200px'},300);
-        $("#draw2dCanvasWrapper").animate({bottom:'200px'},300);
-    },
-
-    hide:function()
-    {
-        $("#probe_window").animate({height:'0'},300);
-        $("#draw2dCanvasWrapper").animate({bottom:'0'},300, function(){
-            $("#probe_window").html('');
-        });
-    },
-
-    resize:function()
-    {
-        console.log("resize");
-    },
-
-    tick:function( intervalTime)
-    {
-       // test fiddle for D3 line chart
-       // http://jsfiddle.net/Q5Jag/1859/
-
-       var _this= this;
-        this.probes.forEach(function(entry){
+        this.rightShiftTick= $.proxy(function(entry){
             entry.data.unshift(entry.probe.getValue()?5:0);
             entry.vis
                 .selectAll("path")
@@ -855,22 +819,172 @@ var ProbeWindow = Class.extend({
                 .attr("d", entry.path)
                 .transition()
                 .ease("linear")
-                .duration(intervalTime-1 )
+                .duration(this.intervalTime )
                 .attr("transform", "translate(0)");
-            entry.data.pop();
+                entry.data.pop();
+        },this);
+
+        this.leftShiftTick= $.proxy(function(entry){
+            entry.data.push(entry.probe.getValue()?5:0);
+            entry.vis
+                .selectAll("path")
+                .attr("transform", "translate(" + _this.xScale(1) + ")")
+                .attr("d", entry.path)
+                .transition()
+                .ease("linear")
+                .duration(this.intervalTime )
+                .attr("transform", "translate(0)");
+            entry.data.shift();
+        },this);
+
+
+        $(window).resize(function(){
+            _this.resize();
+        });
+
+        this.canvas.on("probe:add", function(emitter, event){
+           _this.addProbe(event.figure);
+        });
+        this.canvas.on("probe:remove", function(emitter, event){
+            _this.removeProbe(event.figure);
+        });
+
+        this.channelBufferSize = 500;
+        this.channelHeight =20;
+        this.channelWidth = $("#probe_window").width();
+        this.probes = [];
+
+        this.xScale = d3.scale.linear().domain([0, this.channelBufferSize - 1]).range([0,this.channelWidth]);
+        this.yScale = d3.scale.linear().domain([0, 5]).range([this.channelHeight, 0]);
+
+        $("#probe_window_stick").on("click",function(){
+            _this.stick = !_this.stick;
+            if(_this.stick){
+                $("#probe_window_stick").addClass("ion-ios-eye").removeClass("ion-ios-eye-outline");
+            }
+            else{
+                $("#probe_window_stick").addClass("ion-ios-eye-outline").removeClass("ion-ios-eye");
+            }
+
+            // try to hide the window if the simulation isn't running.
+            if(!_this.stick && !_this.canvas.isSimulationRunning()){
+                _this.hide();
+            }
+        });
+
+        if(this.stick){
+            $("#probe_window_stick").addClass("ion-ios-eye").removeClass("ion-ios-eye-outline");
+            this.show(true);
+        }
+    },
+
+    show:function(force)
+    {
+        if(!force && this.stick){
+            return;
+        }
+
+        var _this = this;
+        var probes = [];
+
+        this.resize();
+
+        // get all probes from the canvas and add them to the window
+        //
+        this.canvas.getLines().each(function(i,line){
+            var probe = line.getProbeFigure();
+            if(probe!==null){
+                probes.push(probe);
+            }
+        });
+
+
+        // sort the probes by the "index" attribute
+        //
+        probes.sort(function(a,b){
+            return a.index - b.index;
+        });
+
+        $("#probeSortable").remove();
+        $("#probe_window").append('<ul id="probeSortable"></ul>');
+
+
+        probes.forEach(function(probe){
+            _this.addProbe(probe);
+        });
+
+        $("#probe_window").show().animate({height:'200px'},300);
+        $("#draw2dCanvasWrapper").animate({bottom:'200px'},300);
+        $( "#probeSortable" ).sortable({
+            update: function( event, ui ) {
+                var lis =  $( "#probeSortable li" );
+                $.each(lis,function(index, li){
+                    probeEntry = _this.probes.find(function(entry){
+                        return entry.probe.id===li.attributes.id.value;
+                    });
+                    probeEntry.probe.setIndex(index);
+                });
+            }
+        });
+
+    },
+
+    hide:function()
+    {
+        if(this.stick){
+            return;
+        }
+
+        $("#probe_window").animate({height:'0'},300);
+        $("#draw2dCanvasWrapper").animate({bottom:'0'},300, function(){
+            $("#probeSortable").remove();
         });
     },
 
+    resize:function()
+    {
+        var _this = this;
+        this.channelWidth = $("#probe_window").width();
+        this.xScale = d3.scale.linear().domain([0, this.channelBufferSize - 1]).range([0,this.channelWidth]);
+        this.yScale = d3.scale.linear().domain([0, 5]).range([this.channelHeight, 0]);
+
+        this.probes.forEach(function(entry){
+            entry.svg.attr("width", _this.channelWidth);
+        });
+    },
+
+    tick:function( intervalTime)
+    {
+       // test fiddle for D3 line chart
+       // http://jsfiddle.net/Q5Jag/1859/
+
+       this.intervalTime = intervalTime;
+       this.probes.forEach(this.leftShiftTick);
+    },
+
+    removeProbe: function(probeFigure)
+    {
+        this.probes = $.grep(this.probes, function(entry) {
+            return entry.probe != probeFigure;
+        });
+        $("#"+probeFigure.id).remove();
+        this.resize();
+    },
 
     addProbe: function(probeFigure)
     {
+        probeFigure.setIndex(this.probes.length);
+
         var _this = this;
 
         var data = d3.range(this.channelBufferSize).map(function(){return 0;});
 
-        var svg  = d3.select("#probeSortable").append("li").append("svg:svg").attr("width", this.channelWidth).attr("height", this.channelHeight);
-        var vis  = svg.append("svg:g");
-        var path = d3.svg
+        var li    = d3.select("#probeSortable").append("li").attr("id",probeFigure.id).attr("index",probeFigure.getIndex());
+        var label = li.append("div").text(probeFigure.getText());
+
+        var svg   = li.append("svg:svg").attr("width", this.channelWidth).attr("height", this.channelHeight);
+        var vis   = svg.append("svg:g");
+        var path  = d3.svg
             .line()
             .x(function(d, i) {
                 return _this.xScale(i);
@@ -886,7 +1000,7 @@ var ProbeWindow = Class.extend({
             .append("svg:path")
             .attr("d", path)
             .attr('stroke', 'green')
-            .attr('stroke-width', 2)
+            .attr('stroke-width', 1)
             .attr('fill', 'none');
 
         this.probes.push({
@@ -896,6 +1010,39 @@ var ProbeWindow = Class.extend({
             path:path,
             probe:probeFigure
         });
+
+        // direct edit of the label
+        //
+        var $label = $(label[0]);
+        $label.click(function() {
+
+            var $replaceWith = $('<input type="input" class="inplaceEdit" value="'+probeFigure.getText()+'" />');
+            $label.hide();
+            $label.after($replaceWith);
+            $replaceWith.focus();
+
+            var fire=function() {
+                var newLabel = $replaceWith.val();
+                if(newLabel!=="") {
+                    $replaceWith.remove();
+                    $label.html(newLabel);
+                    $label.show();
+                    probeFigure.setText(newLabel);
+                }
+                else{
+                    // get the value and post them here
+                    $replaceWith.remove();
+                    $label.show();
+                }
+            };
+            $replaceWith.blur(fire);
+            $replaceWith.keypress(function (e) {
+                if (e.which == 13) {
+                    fire();
+                }
+            });
+        });
+        this.resize();
     }
 });
 
@@ -1246,8 +1393,7 @@ var View = draw2d.Canvas.extend({
                                 });
                                 break;
                             case "bug":
-                                var pathToIssues = "https://github.com/freegroup/draw2d_js.shapes/issues/new";
-                                var createUrl = pathToIssues+"?title=Error in shape '"+figure.NAME+"'&body="+encodeURIComponent("I found a bug in "+figure.NAME+".\n\nError Description here...\n\n\nLinks to the code;\n[GitHub link]("+pathToFile+")\n[Designer Link]("+pathToDesign+")\n");
+                                var createUrl = conf.issues.url+"?title=Error in shape '"+figure.NAME+"'&body="+encodeURIComponent("I found a bug in "+figure.NAME+".\n\nError Description here...\n\n\nLinks to the code;\n[GitHub link]("+pathToFile+")\n[Designer Link]("+pathToDesign+")\n");
                                 window.open(createUrl);
                                 break;
                             case "delete":
@@ -1567,7 +1713,7 @@ var Widget = draw2d.Canvas.extend({
 
         var circuit= this.getParam("circuit");
         $.getJSON(circuit,function(json){
-            var reader = new draw2d.io.json.Reader();
+            var reader = new Reader();
             reader.unmarshal(widget, json);
 
             _this.shiftDocument();
@@ -1897,6 +2043,7 @@ var MarkdownDialog = Class.extend(
         }
 });
 ;
+/*jshint evil:true */
 
 var Connection = draw2d.Connection.extend({
 
@@ -1947,7 +2094,85 @@ var Connection = draw2d.Connection.extend({
             this.vertexNodes.remove();
             delete this.vertexNodes;
         }
+    },
+
+    add: function(figure)
+    {
+        this._super.apply(this,arguments);
+
+        if(figure instanceof ProbeFigure && this.canvas !==null){
+            this.canvas.fireEvent("probe:add", {figure:figure});
+        }
+    },
+
+
+    remove: function(figure)
+    {
+        this._super.apply(this,arguments);
+
+        if(figure instanceof ProbeFigure && this.canvas !==null){
+            this.canvas.fireEvent("probe:remove", {figure:figure});
+        }
+    },
+
+    /**
+     * @method
+     * Return an objects with all important attributes for XML or JSON serialization
+     *
+     * @returns {Object}
+     */
+    getPersistentAttributes : function()
+    {
+        var memento = this._super();
+
+        // add all decorations to the memento
+        //
+        memento.labels = [];
+        this.children.each(function(i,e){
+            var labelJSON = e.figure.getPersistentAttributes();
+            labelJSON.locator=e.locator.NAME;
+            memento.labels.push(labelJSON);
+        });
+
+        return memento;
+    },
+
+    /**
+     * @method
+     * Read all attributes from the serialized properties and transfer them into the shape.
+     *
+     * @param {Object} memento
+     * @returns
+     */
+    setPersistentAttributes : function(memento)
+    {
+        // patch the router from some legacy data
+        //
+        memento.router ="ConnectionRouter";
+
+        this._super(memento);
+
+        // remove all decorations created in the constructor of this element
+        //
+        this.resetChildren();
+
+        // and add all children of the JSON document.
+        //
+        $.each(memento.labels, $.proxy(function(i,json){
+            // create the figure stored in the JSON
+            var figure =  eval("new "+json.type+"()");
+
+            // apply all attributes
+            figure.setPersistentAttributes(json);
+
+            // instantiate the locator
+            var locator =  eval("new "+json.locator+"()");
+
+            // add the new figure as child to this figure
+            this.add(figure, locator);
+        },this));
     }
+
 });
 
 ;
@@ -2404,12 +2629,60 @@ var ProbeFigure = draw2d.shape.basic.Label.extend({
             },attr),
             setter,
             getter);
+
+        // the sort index in the probe window
+        //
+        this.index = 0;
     },
 
 
     getValue:function()
     {
         return this.getParent().getValue();
+    },
+
+    getIndex: function()
+    {
+        return this.index;
+    },
+
+    setIndex: function( index)
+    {
+        this.index = index;
+
+        return this;
+    },
+
+
+    /**
+     * @method
+     * Return an objects with all important attributes for XML or JSON serialization
+     *
+     * @returns {Object}
+     */
+    getPersistentAttributes : function()
+    {
+        var memento = this._super();
+
+        memento.index = this.index;
+
+        return memento;
+    },
+
+    /**
+     * @method
+     * Read all attributes from the serialized properties and transfer them into the shape.
+     *
+     * @param {Object} memento
+     * @returns
+     */
+    setPersistentAttributes : function(memento)
+    {
+        this._super(memento);
+
+        if(typeof memento.index !=="undefined"){
+            this.index = parseInt(memento.index);
+        }
     }
 
 });
@@ -2558,9 +2831,64 @@ var Reader = draw2d.io.json.Reader.extend({
     {
         // path object types from older versions of JSON
         if(type === "draw2d.Connection"){
-            type ="Connection";
+            type = "Connection";
         }
 
         return this._super(type);
     }
 });
+;
+/*
+ * object.watch polyfill
+ *
+ * 2012-04-03
+ *
+ * By Eli Grey, http://eligrey.com
+ * Public Domain.
+ * NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+ */
+
+// object.watch
+if (!Object.prototype.watch) {
+    Object.defineProperty(Object.prototype, "watch", {
+        enumerable: false ,
+        configurable: true,
+        writable: false,
+        value: function (prop, handler) {
+            var
+                oldval = this[prop],
+                newval = oldval,
+                getter = function () {
+                    return newval;
+                },
+                setter = function (val) {
+                    oldval = newval;
+                    newval = handler.call(this, prop, oldval, val);
+                    return newval;
+                };
+
+            if (delete this[prop]) { // can't watch constants
+                Object.defineProperty(this, prop, {
+                    get: getter,
+                    set: setter,
+                    enumerable: true,
+                    configurable: true
+                });
+            }
+        }
+    });
+}
+
+// object.unwatch
+if (!Object.prototype.unwatch) {
+    Object.defineProperty(Object.prototype, "unwatch", {
+        enumerable: false,
+        configurable: true,
+        writable: false,
+        value: function (prop) {
+            var val = this[prop];
+            delete this[prop]; // remove accessors
+            this[prop] = val;
+        }
+    });
+}

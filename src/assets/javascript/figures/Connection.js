@@ -101,6 +101,10 @@ var Connection = draw2d.Connection.extend({
      */
     setPersistentAttributes : function(memento)
     {
+        // patch the router from some legacy data
+        //
+        memento.router ="ConnectionRouter";
+
         this._super(memento);
 
         // remove all decorations created in the constructor of this element

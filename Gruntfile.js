@@ -41,6 +41,7 @@ module.exports = function (grunt) {
                     './bower_components/draw2d/dist/pathfinding-browser.min.js',
                     './bower_components/bootstrap-growl/jquery.bootstrap-growl.js',
                     './bower_components/remarkable/dist/remarkable.min.js',
+                    './bower_components/locstor/locstor.min.js',
                     './bower_components/draw2d/dist/draw2d.js'
                 ],
                 dest: './dist/assets/javascript/dependencies.js'

@@ -10,7 +10,7 @@ var Reader = draw2d.io.json.Reader.extend({
     {
         // path object types from older versions of JSON
         if(type === "draw2d.Connection"){
-            type ="Connection";
+            type = "Connection";
         }
 
         return this._super(type);
