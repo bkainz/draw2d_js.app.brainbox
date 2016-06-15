@@ -16306,7 +16306,15 @@ Raphael.fn.polygon = function(pointString) {
                 }
             }
             return result;
+        },
+
+        ensureDefault:function( json, attribute, value)
+        {
+            if (!json.hasOwnProperty(attribute)) {
+                json[attribute] = value;
+            }
         }
+
         
         
 };
@@ -34337,7 +34345,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.37",
+    version : "6.1.41",
     i18n : {
         command : {
             move : "Move Shape",
@@ -37518,7 +37526,12 @@ draw2d.Figure = Class.extend({
              }
          }
          else{
-             this.getShapeElement().insertAfter(figure.getTopLevelShapeElement());
+             // the canvas of the figure can be NULL if we delete objects in complex zenario
+             // e.g. A shape with a lot of Ports and Connections are deleted. In this case it can
+             // happen that a connect fires an event that he want draw in front of an (already deleted) port
+             if(figure.getCanvas()!==null) {
+                 this.getShapeElement().insertAfter(figure.getTopLevelShapeElement());
+             }
              
              if(this.canvas!==null){
                  var figures = this.canvas.getFigures();
@@ -37571,14 +37584,17 @@ draw2d.Figure = Class.extend({
              }else if(lines.remove(this)!==null){
                  lines.insertElementAt(this,0);
              }
-         }
-         
-
-         if(typeof figure !=="undefined"){
-             this.getShapeElement().insertBefore(figure.getShapeElement());
-         }
-         else{
-             this.getShapeElement().toBack();
+             if(typeof figure !=="undefined"){
+                 // the canvas of the figure can be NULL if we delete objects in complex zenario
+                 // e.g. A shape with a lot of Ports and Connections are deleted. In this case it can
+                 // happen that a connect fires an event that he want draw in front of an (already deleted) port
+                 if(figure.getCanvas()!==null) {
+                     this.getShapeElement().insertBefore(figure.getShapeElement());
+                 }
+             }
+             else{
+                 this.getShapeElement().toBack();
+             }
          }
 
          // Bring all children in front of "this" figure
@@ -41131,12 +41147,14 @@ draw2d.SetFigure = draw2d.shape.basic.Rectangle.extend({
             }
         }
 
-        
-        if(typeof figure !=="undefined"){
-            this.getShapeElement().insertBefore(figure.getShapeElement());
-        }
-        else{
-            this.getShapeElement().toBack();
+
+        if(this.canvas!==null) {
+            if (typeof figure !== "undefined") {
+                this.getShapeElement().insertBefore(figure.getShapeElement());
+            }
+            else {
+                this.getShapeElement().toBack();
+            }
         }
         
         // and last but not least - the ports are always on top
@@ -44900,8 +44918,8 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
             attributes = {};
         }
         attributes.path=this.svgPathString;
-        attributes["stroke-linecap"]="round";
-        attributes["stroke-linejoin"]="round";
+        draw2d.util.JSON.ensureDefault(attributes,"stroke-linecap" , "round");
+        draw2d.util.JSON.ensureDefault(attributes,"stroke-linejoin", "round");
 
         this._super( attributes);
 
@@ -67550,6 +67568,7 @@ var Palette = Class.extend(
             data.forEach(function (element){
                 element.basename = element.name.split("_").pop();
             });
+
             var tmpl = $.templates("#shapeTemplate");
             var html = tmpl.render({
                 shapesUrl :conf.shapes.url,
@@ -67566,6 +67585,8 @@ var Palette = Class.extend(
                 var val = this.value.toLowerCase();
                 $grid.shuffle('shuffle', function ($el, shuffle) {
                     var text = $.trim($el.data("name")).toLowerCase();
+                    if(text==="_request_")
+                        return true;
                     return text.indexOf(val) !== -1;
                 });
             });
@@ -67590,11 +67611,28 @@ var Palette = Class.extend(
                 }
             });
 
-            $('.draw2d_droppable').on('mouseover', function(){
-                $(this).parent().addClass('glowBorder');
-            }).on('mouseout', function(){
+            $('.draw2d_droppable')
+                .on('mouseover', function(){
+                    $(this).parent().addClass('glowBorder');
+                })
+                .on('mouseout', function(){
                 $(this).parent().removeClass('glowBorder');
             });
+
+            // add the "+" to the palette
+            //
+            var requestUrl =conf.issues.url+'?title=Request for shape&body='+encodeURIComponent("Please add the description of the shape you request.\nWe try to implement it as soon as possible...");
+            $("#paletteElements").append(
+             '  <div data-name="_request_" class="mix col-md-6 pallette_item">'+
+             '  <a href="'+requestUrl+'" target="_blank">'+
+             '    <div class="request">'+
+             '       <div class="icon ion-ios-plus-outline"></div>'+
+             '       <div >Request a Shape</div>'+
+             '   </div>'+
+             '   </a>  '+
+             '  </div>');
+
+        //    $("#paletteElements").append("<div>++</div>");
         });
 
     }
@@ -67607,8 +67645,13 @@ var ProbeWindow = Class.extend({
     {
         var _this = this;
         this.canvas = canvas;
-        this.scrollLeftToRight = true;
-        this.stickWindow = false;
+
+        // sync the setting in the local storage
+        this.stick = Locstor.get("stickWindow",false);
+        this.watch("stick",function(id, oldval, newval){
+            Locstor.set("stickWindow",newval);
+            return newval;
+        });
 
         // the tick function if the oszi goes from left to the right
         //
@@ -67651,7 +67694,7 @@ var ProbeWindow = Class.extend({
         });
 
         this.channelBufferSize = 500;
-        this.channelHeight  =20;
+        this.channelHeight =20;
         this.channelWidth = $("#probe_window").width();
         this.probes = [];
 
@@ -67672,11 +67715,16 @@ var ProbeWindow = Class.extend({
                 _this.hide();
             }
         });
+
+        if(this.stick){
+            $("#probe_window_stick").addClass("ion-ios-eye").removeClass("ion-ios-eye-outline");
+            this.show(true);
+        }
     },
 
-    show:function()
+    show:function(force)
     {
-        if(this.stick){
+        if(!force && this.stick){
             return;
         }
 
@@ -67764,6 +67812,7 @@ var ProbeWindow = Class.extend({
             return entry.probe != probeFigure;
         });
         $("#"+probeFigure.id).remove();
+        this.resize();
     },
 
     addProbe: function(probeFigure)
@@ -67837,7 +67886,7 @@ var ProbeWindow = Class.extend({
                 }
             });
         });
-
+        this.resize();
     }
 });
 
@@ -68188,8 +68237,7 @@ var View = draw2d.Canvas.extend({
                                 });
                                 break;
                             case "bug":
-                                var pathToIssues = "https://github.com/freegroup/draw2d_js.shapes/issues/new";
-                                var createUrl = pathToIssues+"?title=Error in shape '"+figure.NAME+"'&body="+encodeURIComponent("I found a bug in "+figure.NAME+".\n\nError Description here...\n\n\nLinks to the code;\n[GitHub link]("+pathToFile+")\n[Designer Link]("+pathToDesign+")\n");
+                                var createUrl = conf.issues.url+"?title=Error in shape '"+figure.NAME+"'&body="+encodeURIComponent("I found a bug in "+figure.NAME+".\n\nError Description here...\n\n\nLinks to the code;\n[GitHub link]("+pathToFile+")\n[Designer Link]("+pathToDesign+")\n");
                                 window.open(createUrl);
                                 break;
                             case "delete":
@@ -68942,6 +68990,10 @@ var Connection = draw2d.Connection.extend({
      */
     setPersistentAttributes : function(memento)
     {
+        // patch the router from some legacy data
+        //
+        memento.router ="ConnectionRouter";
+
         this._super(memento);
 
         // remove all decorations created in the constructor of this element
@@ -69623,9 +69675,64 @@ var Reader = draw2d.io.json.Reader.extend({
     {
         // path object types from older versions of JSON
         if(type === "draw2d.Connection"){
-            type ="Connection";
+            type = "Connection";
         }
 
         return this._super(type);
     }
 });
+;
+/*
+ * object.watch polyfill
+ *
+ * 2012-04-03
+ *
+ * By Eli Grey, http://eligrey.com
+ * Public Domain.
+ * NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+ */
+
+// object.watch
+if (!Object.prototype.watch) {
+    Object.defineProperty(Object.prototype, "watch", {
+        enumerable: false ,
+        configurable: true,
+        writable: false,
+        value: function (prop, handler) {
+            var
+                oldval = this[prop],
+                newval = oldval,
+                getter = function () {
+                    return newval;
+                },
+                setter = function (val) {
+                    oldval = newval;
+                    newval = handler.call(this, prop, oldval, val);
+                    return newval;
+                };
+
+            if (delete this[prop]) { // can't watch constants
+                Object.defineProperty(this, prop, {
+                    get: getter,
+                    set: setter,
+                    enumerable: true,
+                    configurable: true
+                });
+            }
+        }
+    });
+}
+
+// object.unwatch
+if (!Object.prototype.unwatch) {
+    Object.defineProperty(Object.prototype, "unwatch", {
+        enumerable: false,
+        configurable: true,
+        writable: false,
+        value: function (prop) {
+            var val = this[prop];
+            delete this[prop]; // remove accessors
+            this[prop] = val;
+        }
+    });
+}
