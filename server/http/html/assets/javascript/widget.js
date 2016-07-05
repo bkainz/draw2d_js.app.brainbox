@@ -67785,8 +67785,8 @@ var Palette = Class.extend(
             //
             $(".draw2d_droppable").draggable({
                 appendTo:"body",
-                stack:"body",
-                zIndex: 27000,
+              //  stack:"body",
+              //  zIndex: 27000,
                 helper:"clone",
                 drag: function(event, ui){
                     event = app.view._getEvent(event);
@@ -67797,7 +67797,9 @@ var Palette = Class.extend(
                 },
                 start: function(e, ui){
                     $(ui.helper).addClass("shadow");
-                    console.log(ui);
+                    console.log(ui.helper.html());
+                    console.log("Width",ui.helper.naturalWidth);
+                    console.log("Height",ui.helper.naturalHeight);
                 }
             });
 

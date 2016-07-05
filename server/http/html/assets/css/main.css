@@ -594,6 +594,9 @@ ellipse.draw2d_OutputPort {
   text-decoration: underline;
 }
 
+.shadow {
+  border: 1px solid #1c9bab;
+}
 text.highlightOnHover:hover {
   fill: #1c9bab;
   cursor: pointer;

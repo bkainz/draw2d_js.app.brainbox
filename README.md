@@ -13,17 +13,17 @@ Now you can  edit and run your digital circuit simulation designs online on PCs,
 
 
 # How to install and use it
-You have different options to use the digital ciscuit simulator.
+You have different options to use the brainbox.
 
 ## Internet
-just go to [http://freegroup.github.io/draw2d_js.app.digital_training_studio/](http://freegroup.github.io/draw2d_js.app.digital_training_studio/) and you can build your own digital circuits. You can save and load your created schemas if you login with your Google+ account.
+just go to [http://freegroup.github.io/draw2d_js.app.brainbox/](http://freegroup.github.io/draw2d_js.app.brainbox/) and you can build your own digital circuits. You can save and load your created schemas if you login with your Google+ account.
 
 
 ## Intranet
 You can install the application even in your local intranet for training purpose. Just install and run the backend server (to store and load the circuit files) on every computer which can run a simple node.js server. 
 
 ```
-npm install -g digitalstudio
+npm install -g brainbox
 ```
 
 
@@ -32,10 +32,10 @@ You have **full access to the `GPIO`** pins on you RaspberryPi with the browser 
 like on your desktop
 
 ```
-npm install -g digitalstudio
+npm install -g brainbox
 ```
 
-and start the server with `digitalstudio`. The server reports the URL how to connect to 
+and start the server with `brainbox`. The server reports the URL how to connect to 
 your RaspberryPi with the browser.
 
 See the running example on YouTube: [https://www.youtube.com/watch?v=fUkAIjTaNXI](https://www.youtube.com/watch?v=fUkAIjTaNXI)

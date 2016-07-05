@@ -1,17 +1,17 @@
 {
-  "name": "digitalstudio",
+  "name": "brainbox",
   "version": "1.0.12",
-  "description": "DigitalTrainingStudio. A browser based circuit simulator which is able to run on a raspi with a node.js backend and has access to the GPIO pins.",
+  "description": "BrainBox. A browser based circuit simulator which is able to run on a raspi with a node.js backend and has access to the GPIO pins.",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "digitalstudio": "./server/http/index.js"
+    "brainbox": "./server/http/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/freegroup/draw2d_js.app.digital_training_studio.git"
+    "url": "https://github.com/freegroup/draw2d_js.app.brainbox.git"
   },
   "keywords": [
     "diagramming",
@@ -20,9 +20,9 @@
     "js"
   ],
   "author": "Andreas Herz (FreeGroup)",
-  "license": "GPL",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/freegroup/draw2d_js.app.digital_training_studio/issues"
+    "url": "https://github.com/freegroup/draw2d_js.app.brainbox/issues"
   },
   "devDependencies": {
     "gitbook-cli": "^2.1.3",
