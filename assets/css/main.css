@@ -368,12 +368,12 @@ ellipse.draw2d_OutputPort {
   color: white;
 }
 #leftTabStrip:after {
-  content: "Digital Training Studio";
-  -webkit-transform: rotate(-90deg) translate(-160px, -127px);
-  -moz-transform: rotate(-90deg) translate(-160px, -127px);
-  -ms-transform: rotate(-90deg) translate(-160px, -127px);
-  transform: rotate(-90deg) translate(-160px, -127px);
-  font-size: 34px;
+  content: "BrainBox";
+  -webkit-transform: rotate(-90deg) translate(-90px, -60px);
+  -moz-transform: rotate(-90deg) translate(-90px, -60px);
+  -ms-transform: rotate(-90deg) translate(-90px, -60px);
+  transform: rotate(-90deg) translate(-90px, -60px);
+  font-size: 50px;
   color: white;
   white-space: nowrap;
   opacity: 0.4;
@@ -594,6 +594,9 @@ ellipse.draw2d_OutputPort {
   text-decoration: underline;
 }
 
+.shadow {
+  border: 1px solid #1c9bab;
+}
 text.highlightOnHover:hover {
   fill: #1c9bab;
   cursor: pointer;
