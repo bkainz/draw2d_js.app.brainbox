@@ -7,6 +7,8 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "jquery": "~1.9.0",
+    "shifty": "^1.4.2",
     "draw2d": "~6.1.27",
     "jquery.browser": "~0.0.7",
     "bootstrap": "^3.3.6",
@@ -19,12 +21,14 @@
     "mousetrap": "^1.5.3",
     "google-code-prettify": "^1.0.4",
     "remarkable": "^1.6.2",
-    "shifty": "~1.5.2",
     "jquery-lazyload-any": "^0.3.0",
     "setimmediate": "^1.0.1",
     "draw2d-shapes": "^1.0.10",
     "bootstrap-slider": "*",
     "d3": "^3.5.17",
     "locstor": "^1.0.7"
+  },
+  "resolutions": {
+    "jquery": "~1.10.2"
   }
 }

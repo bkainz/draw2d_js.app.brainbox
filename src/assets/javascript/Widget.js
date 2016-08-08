@@ -25,14 +25,15 @@ var Widget = draw2d.Canvas.extend({
         this.grid =  new draw2d.policy.canvas.ShowGridEditPolicy(20);
         this.installEditPolicy( this.grid);
 
-        var circuit= this.getParam("circuit");
-        $.getJSON(circuit,function(json){
+        var circuit = this.getParam("circuit");
+       $.getJSON(circuit, function (json) {
             var reader = new Reader();
             reader.unmarshal(widget, json);
 
             _this.shiftDocument();
             _this.simulationStart();
         });
+
     },
 
     simulationStart:function()

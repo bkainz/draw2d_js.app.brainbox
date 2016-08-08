@@ -766,9 +766,6 @@ var Palette = Class.extend(
                 },
                 start: function(e, ui){
                     $(ui.helper).addClass("shadow");
-                    console.log(ui.helper.html());
-                    console.log("Width",ui.helper.naturalWidth);
-                    console.log("Height",ui.helper.naturalHeight);
                 }
             });
 
@@ -1716,14 +1713,15 @@ var Widget = draw2d.Canvas.extend({
         this.grid =  new draw2d.policy.canvas.ShowGridEditPolicy(20);
         this.installEditPolicy( this.grid);
 
-        var circuit= this.getParam("circuit");
-        $.getJSON(circuit,function(json){
+        var circuit = this.getParam("circuit");
+       $.getJSON(circuit, function (json) {
             var reader = new Reader();
             reader.unmarshal(widget, json);
 
             _this.shiftDocument();
             _this.simulationStart();
         });
+
     },
 
     simulationStart:function()
@@ -2163,19 +2161,21 @@ var Connection = draw2d.Connection.extend({
 
         // and add all children of the JSON document.
         //
-        $.each(memento.labels, $.proxy(function(i,json){
-            // create the figure stored in the JSON
-            var figure =  eval("new "+json.type+"()");
+        if(memento.labels) {
+            $.each(memento.labels, $.proxy(function (i, json) {
+                // create the figure stored in the JSON
+                var figure = eval("new " + json.type + "()");
 
-            // apply all attributes
-            figure.setPersistentAttributes(json);
+                // apply all attributes
+                figure.setPersistentAttributes(json);
 
-            // instantiate the locator
-            var locator =  eval("new "+json.locator+"()");
+                // instantiate the locator
+                var locator = eval("new " + json.locator + "()");
 
-            // add the new figure as child to this figure
-            this.add(figure, locator);
-        },this));
+                // add the new figure as child to this figure
+                this.add(figure, locator);
+            }, this));
+        }
     }
 
 });

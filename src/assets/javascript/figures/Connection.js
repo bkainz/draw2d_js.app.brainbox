@@ -113,19 +113,21 @@ var Connection = draw2d.Connection.extend({
 
         // and add all children of the JSON document.
         //
-        $.each(memento.labels, $.proxy(function(i,json){
-            // create the figure stored in the JSON
-            var figure =  eval("new "+json.type+"()");
+        if(memento.labels) {
+            $.each(memento.labels, $.proxy(function (i, json) {
+                // create the figure stored in the JSON
+                var figure = eval("new " + json.type + "()");
 
-            // apply all attributes
-            figure.setPersistentAttributes(json);
+                // apply all attributes
+                figure.setPersistentAttributes(json);
 
-            // instantiate the locator
-            var locator =  eval("new "+json.locator+"()");
+                // instantiate the locator
+                var locator = eval("new " + json.locator + "()");
 
-            // add the new figure as child to this figure
-            this.add(figure, locator);
-        },this));
+                // add the new figure as child to this figure
+                this.add(figure, locator);
+            }, this));
+        }
     }
 
 });

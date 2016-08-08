@@ -67,9 +67,6 @@ var Palette = Class.extend(
                 },
                 start: function(e, ui){
                     $(ui.helper).addClass("shadow");
-                    console.log(ui.helper.html());
-                    console.log("Width",ui.helper.naturalWidth);
-                    console.log("Height",ui.helper.naturalHeight);
                 }
             });
 

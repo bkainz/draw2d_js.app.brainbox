@@ -1,6 +1,6 @@
 {
   "name": "brainbox",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "BrainBox. A browser based circuit simulator which is able to run on a raspi with a node.js backend and has access to the GPIO pins.",
   "main": "index.html",
   "scripts": {

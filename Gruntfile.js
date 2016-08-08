@@ -23,7 +23,7 @@ module.exports = function (grunt) {
                     './bower_components/setimmediate/setImmediate.js',
                     './bower_components/shifty/dist/shifty.min.js',
                     './bower_components/draw2d/dist/patched_raphael.js',
-                    './bower_components/jquery/dist/jquery.min.js',
+                    './bower_components/jquery/jquery.min.js',
                     './bower_components/jquery-ui/jquery-ui.min.js',
                     './bower_components/jquery-lazyload-any/build/jquery.lazyload-any.min.js',
                     './bower_components/jsrender/jsrender.min.js',
@@ -62,7 +62,7 @@ module.exports = function (grunt) {
                 src: [
                     './bower_components/shifty/dist/shifty.min.js',
                     './bower_components/draw2d/dist/patched_raphael.js',
-                    './bower_components/jquery/dist/jquery.min.js',
+                    './bower_components/jquery/jquery.min.js',
                     './bower_components/draw2d/dist/jquery.contextmenu.js',
                     './bower_components/draw2d/dist/rgbcolor.js',
                     './bower_components/draw2d/dist/patched_canvg.js',
