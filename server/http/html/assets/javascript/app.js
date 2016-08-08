@@ -590,6 +590,7 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         // provide configuration menu if the mouse is close to a shape
         //
         canvas.on("mousemove", this.mouseMoveProxy);
+        canvas.on("zoom", this.mouseMoveProxy);
 
         $("#figureConfigDialog .figureAddLabel").on("click",function(){
             _this._attachLabel(_this.configFigure);
@@ -1182,15 +1183,9 @@ var View = draw2d.Canvas.extend({
         this.animationFrameFunc = $.proxy(this._calculate,this);
 
 
-        // configuration icon to open the config-panel of a shape
-        // dynamic floating to the current shape which are close to the cursor
-        //
-        this.configIcon=null;
-        // the figure which is related to the current open config dialog
-        //
-        this.configFigure=null;
-
         this.timerBase = 10; // ms calculate every 10ms all elements
+
+        this.setScrollArea("#draw2dCanvasWrapper");
 
         // register this class as event listener for the canvas
         // CommandStack. This is required to update the state of
@@ -1299,9 +1294,7 @@ var View = draw2d.Canvas.extend({
             var bb = _this.getBoundingBox().getCenter();
             var c = $("#draw2dCanvasWrapper");
             _this.setZoom(newZoom);
-            c.scrollTop((bb.y/newZoom- c.height()/2));
-            c.scrollLeft((bb.x/newZoom- c.width()/2));
-
+            _this.scrollTo((bb.y/newZoom- c.height()/2), (bb.x/newZoom- c.width()/2));
         };
         //  ZoomIn Button and the callbacks
         //
@@ -1649,39 +1642,48 @@ var View = draw2d.Canvas.extend({
             // into the center of the canvas. Scroll to the top left corner after them
             //
             bb = this.getBoundingBox();
-
-            /*
-            var dx = (this.getWidth()/2)-(bb.x+bb.w/2);
-            var dy = (this.getHeight()/2)-(bb.y+bb.h/2);
-
-
-            this.getFigures().each(function(i,f){
-                f.translate(dx,dy, true);
-            });
-
-            this.getLines().each(function(i,f){
-                f.translate(dx,dy);
-            });
-            bb = this.getBoundingBox().getCenter();
-*/
-
-            c.scrollTop(bb.y- c.height()/2);
-            c.scrollLeft(bb.x- c.width()/2);
+            this.scrollTo(bb.y- c.height()/2,bb.x- c.width()/2);
         }
         else{
             bb={
                 x:this.getWidth()/2,
                 y:this.getHeight()/2
             };
-            c.scrollTop(bb.y- c.height()/2);
-            c.scrollLeft(bb.x- c.width()/2);
+            this.scrollTo(bb.y- c.height()/2,bb.x- c.width()/2);
 
         }
     },
 
-    calculateConnectionIntersection: function()
+    /**
+     * @method
+     * Transforms a document coordinate to canvas coordinate.
+     *
+     * @param {Number} x the x coordinate relative to the window
+     * @param {Number} y the y coordinate relative to the window
+     *
+     * @returns {draw2d.geo.Point} The coordinate in relation to the canvas [0,0] position
+     */
+    fromDocumentToCanvasCoordinate: function(x, y)
     {
-        this._super();
+        return new draw2d.geo.Point(
+            (x - this.getAbsoluteX())*this.zoomFactor,
+            (y - this.getAbsoluteY())*this.zoomFactor);
+    },
+
+    /**
+     * @method
+     * Transforms a canvas coordinate to document coordinate.
+     *
+     * @param {Number} x the x coordinate in the canvas
+     * @param {Number} y the y coordinate in the canvas
+     *
+     * @returns {draw2d.geo.Point} the coordinate in relation to the document [0,0] position
+     */
+    fromCanvasToDocumentCoordinate: function(x,y)
+    {
+        return new draw2d.geo.Point(
+            ((x*(1/this.zoomFactor)) + this.getAbsoluteX()),
+            ((y*(1/this.zoomFactor)) + this.getAbsoluteY()));
     }
 });
 
