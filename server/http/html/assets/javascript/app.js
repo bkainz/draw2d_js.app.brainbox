@@ -590,11 +590,6 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         // provide configuration menu if the mouse is close to a shape
         //
         canvas.on("mousemove", this.mouseMoveProxy);
-        canvas.on("zoom", this.mouseMoveProxy);
-
-        $("#figureConfigDialog .figureAddLabel").on("click",function(){
-            _this._attachLabel(_this.configFigure);
-        });
     },
 
 
@@ -603,7 +598,6 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         this._super(canvas);
 
         canvas.off(this.mouseMoveProxy);
-        $("#figureConfigDialog .figureAddLabel").off("click");
     },
 
 
@@ -655,7 +649,7 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
             }
         });
 
-        if(hit!==null){
+        if(hit!==null && hit.getParameterSettings().length>0){
             var pos = hit.getBoundingBox().getTopLeft();
             pos = emitter.fromCanvasToDocumentCoordinate(pos.x, pos.y);
             pos.y -=30;
@@ -663,9 +657,9 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
             if(_this.configIcon===null) {
                 _this.configIcon = $("<div class='ion-gear-a' id='configMenuIcon'></div>");
                 $("body").append(_this.configIcon);
-                $("#figureConfigDialog").hide();
+                FigureConfigDialog.hide();
                 _this.configIcon.on("click",function(){
-                    $("#figureConfigDialog").show().css({top: pos.y, left: pos.x, position:'absolute'});
+                    FigureConfigDialog.show(hit, pos);
                     _this.configFigure = hit;
                     if(_this.configIcon!==null) {
                         _this.configIcon.remove();
@@ -682,19 +676,6 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
                 x.fadeOut(500, function(){ x.remove(); });
             }
         }
-    },
-
-
-    _attachLabel:function(figure)
-    {
-        var text = prompt("Label");
-        if(text) {
-            var label = new draw2d.shape.basic.Label({text:text, stroke:0, x:-20, y:-40});
-            var locator = new draw2d.layout.locator.SmartDraggableLocator();
-            label.installEditor(new draw2d.ui.LabelInplaceEditor());
-            this.configFigure.add(label,locator);
-        }
-        $("#figureConfigDialog").hide();
     }
 });
 ;
@@ -1350,18 +1331,24 @@ var View = draw2d.Canvas.extend({
                 var pathToCustom = conf.shapes.url+figure.NAME+".custom";
                 var pathToDesign = conf.designer.url+"#file="+ figure.NAME+".shape";
                 var items = {
-                    "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
+                    "label":   {name: "Add Label"        , icon :"x ion-ios-pricetag-outline"     },
                     "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
                     "sep1":    "---------",
-                    "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
+//                   "code":    {name: "Show JS Code"     , icon :"x ion-social-javascript-outline"},
                     "design":  {name: "Open Designer"    , icon :"x ion-ios-compose-outline"      },
-                    "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            }
+                    "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            },
+                    "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  }
                 };
+
+                // if the designer is running on the Raspi
+                //
                 if(conf.designer.url===null){
                      items = {
-                        "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
-                        "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
-                        "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        }
+                        "label":   {name: "Add Label"        , icon :"x ion-ios-pricetag-outline"     },
+//                       "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
+                        "sep1":    "---------",
+                        "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
+                        "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  }
                      };
                 }
 
@@ -1378,6 +1365,15 @@ var View = draw2d.Canvas.extend({
                                 $.get(pathToCustom, function(content){
                                     new CodeDialog().show(content);
                                 });
+                                break;
+                            case "label":
+                                var text = prompt("Label");
+                                if(text) {
+                                    var label = new draw2d.shape.basic.Label({text:text, stroke:0, x:-20, y:-40});
+                                    var locator = new draw2d.layout.locator.SmartDraggableLocator();
+                                    label.installEditor(new draw2d.ui.LabelInplaceEditor());
+                                    figure.add(label,locator);
+                                }
                                 break;
                             case "design":
                                 window.open(pathToDesign);
@@ -1866,6 +1862,68 @@ var CodeDialog = Class.extend(
             $('#codePreviewDialog').modal('show');
         }
 });
+;
+var FigureConfigDialog = (function () {
+
+    //"private" variables
+    var currentFigure =null;
+
+
+    //"public" stuff
+    return {
+        show: function(figure, pos)
+        {
+            currentFigure=figure;
+
+            var settings = figure.getParameterSettings().slice(0);
+            $.each(settings,function(i,el){
+                el.value = currentFigure.attr("userData."+el.name);
+            });
+            var compiled = Hogan.compile(
+                '                       '+
+                '  {{#settings}}               '+
+                '      <div class="form-group">'+
+                '           <label for="figure_property_{{name}}">{{label}}</label>'+
+                '           <input type="text" class="form-control" id="figure_property_{{name}}" data-name="{{name}}" value="{{value}}" placeholder="{{label}}">'+
+                '      </div>                  '+
+                '  {{/settings}}               '+
+                ''
+            );
+            var output = compiled.render({
+                settings: settings
+            });
+
+            $("#figureConfigDialog").html(output);
+            $("#figureConfigDialog").show().css({top: pos.y, left: pos.x, position:'absolute'});
+            $("#figureConfigDialog input").focus();
+
+            $("#figureConfigDialog input").keypress(function(e) {
+                if(e.which == 13) {
+                    FigureConfigDialog.hide();
+                }
+            });
+        },
+
+        hide: function()
+        {
+            if(currentFigure!==null) {
+                $("#figureConfigDialog input").each(function (i, element) {
+                    element = $(element);
+                    var value = element.val();
+                    var name = element.data("name");
+
+                    currentFigure.attr("userData." + name, value);
+                    console.log(name, value);
+                });
+                console.log(currentFigure);
+            }
+            $("#figureConfigDialog").hide();
+
+            currentFigure=null;
+        }
+    };
+})();
+
 ;
 FileOpen = Class.extend({
 

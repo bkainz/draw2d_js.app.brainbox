@@ -34447,7 +34447,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.53",
+    version : "6.1.55",
     i18n : {
         command : {
             move : "Move Shape",
@@ -34879,19 +34879,7 @@ draw2d.Canvas = Class.extend(
     init: function(canvasId, width, height)
     {
         var _this = this;
-        // Hook the canvas calculation for IE8
-        //
-        if (navigator.appName == 'Microsoft Internet Explorer')
-        {
-          var ua = navigator.userAgent;
-          var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-          if (re.exec(ua) != null){
-            var rv = parseInt( RegExp.$1 );
-            if(rv===8){
-                this.fromDocumentToCanvasCoordinate = this._fromDocumentToCanvasCoordinate_IE8_HACK;
-            }
-          }
-        }
+
 
         this.setScrollArea(document.body);
         this.canvasId = canvasId;
@@ -35561,13 +35549,6 @@ draw2d.Canvas = Class.extend(
                 (y - this.getAbsoluteY() + this.getScrollTop())*this.zoomFactor);
     },
   
-    _fromDocumentToCanvasCoordinate_IE8_HACK: function(x, y)
-    {
-        return new draw2d.geo.Point(
-                (x - this.getAbsoluteX())*this.zoomFactor,
-                (y - this.getAbsoluteY())*this.zoomFactor);
-    },
-
     /**
      * @method
      * Transforms a canvas coordinate to document coordinate.
@@ -37064,16 +37045,16 @@ draw2d.Figure = Class.extend({
      * 
      *     // setting multiple attributes:
      *     figure.attr({
-     *       userData.my.property.x: 30,
-     *       userData.my.property.y: 40
+     *       "userData.my.property.x": 30,
+     *       "userData.my.property.y": 40
      *     });
      * 
      * Also set using array notation is possible for the userData:
      * 
      *     // dot notation and array brackets:
      *     figure.attr({
-     *       userData.my.names[0]: "John",
-     *       userData.my.names[1]: "Doe"
+     *       "userData.my.names[0]": "John",
+     *       "userData.my.names[1]": "Doe"
      *     });
      *     
      *     
@@ -37115,14 +37096,16 @@ draw2d.Figure = Class.extend({
                     // index/brackets are allowed too.
                     //
                     if(key.substring(0,9)==="userData."){
+                        if(this.userData===null){this.userData={};}
                         draw2d.util.JSON.set({userData:this.userData}, key, name[key]);
+                        this.fireEvent("change:"+key,{value:name[key]});
                     }
                     else{
                         var func=this.setterWhitelist[key];
                         if(func){
                             func.call(this,name[key]); 
                         }
-                        // maby the ussser adds a function as property to the attr call
+                        // maybe the user adds a function as property to the attr call
                         // e.g.:
                         // {
                         //     doIt: function(){}
@@ -37160,7 +37143,9 @@ draw2d.Figure = Class.extend({
                     value = value();
                 }
                 if(name.substring(0,9)==="userData."){
+                    if(this.userData===null){this.userData={};}
                     draw2d.util.JSON.set({userData:this.userData}, name, value);
+                    this.fireEvent("change:"+name,{value:value});
                 }
                 else{
                     var setter = this.setterWhitelist[name];
@@ -67636,11 +67621,6 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         // provide configuration menu if the mouse is close to a shape
         //
         canvas.on("mousemove", this.mouseMoveProxy);
-        canvas.on("zoom", this.mouseMoveProxy);
-
-        $("#figureConfigDialog .figureAddLabel").on("click",function(){
-            _this._attachLabel(_this.configFigure);
-        });
     },
 
 
@@ -67649,7 +67629,6 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         this._super(canvas);
 
         canvas.off(this.mouseMoveProxy);
-        $("#figureConfigDialog .figureAddLabel").off("click");
     },
 
 
@@ -67701,7 +67680,7 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
             }
         });
 
-        if(hit!==null){
+        if(hit!==null && hit.getParameterSettings().length>0){
             var pos = hit.getBoundingBox().getTopLeft();
             pos = emitter.fromCanvasToDocumentCoordinate(pos.x, pos.y);
             pos.y -=30;
@@ -67709,9 +67688,9 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
             if(_this.configIcon===null) {
                 _this.configIcon = $("<div class='ion-gear-a' id='configMenuIcon'></div>");
                 $("body").append(_this.configIcon);
-                $("#figureConfigDialog").hide();
+                FigureConfigDialog.hide();
                 _this.configIcon.on("click",function(){
-                    $("#figureConfigDialog").show().css({top: pos.y, left: pos.x, position:'absolute'});
+                    FigureConfigDialog.show(hit, pos);
                     _this.configFigure = hit;
                     if(_this.configIcon!==null) {
                         _this.configIcon.remove();
@@ -67728,19 +67707,6 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
                 x.fadeOut(500, function(){ x.remove(); });
             }
         }
-    },
-
-
-    _attachLabel:function(figure)
-    {
-        var text = prompt("Label");
-        if(text) {
-            var label = new draw2d.shape.basic.Label({text:text, stroke:0, x:-20, y:-40});
-            var locator = new draw2d.layout.locator.SmartDraggableLocator();
-            label.installEditor(new draw2d.ui.LabelInplaceEditor());
-            this.configFigure.add(label,locator);
-        }
-        $("#figureConfigDialog").hide();
     }
 });
 ;
@@ -68396,18 +68362,24 @@ var View = draw2d.Canvas.extend({
                 var pathToCustom = conf.shapes.url+figure.NAME+".custom";
                 var pathToDesign = conf.designer.url+"#file="+ figure.NAME+".shape";
                 var items = {
-                    "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
+                    "label":   {name: "Add Label"        , icon :"x ion-ios-pricetag-outline"     },
                     "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
                     "sep1":    "---------",
-                    "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
+//                   "code":    {name: "Show JS Code"     , icon :"x ion-social-javascript-outline"},
                     "design":  {name: "Open Designer"    , icon :"x ion-ios-compose-outline"      },
-                    "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            }
+                    "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            },
+                    "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  }
                 };
+
+                // if the designer is running on the Raspi
+                //
                 if(conf.designer.url===null){
                      items = {
-                        "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
-                        "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
-                        "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        }
+                        "label":   {name: "Add Label"        , icon :"x ion-ios-pricetag-outline"     },
+//                       "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
+                        "sep1":    "---------",
+                        "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
+                        "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  }
                      };
                 }
 
@@ -68424,6 +68396,15 @@ var View = draw2d.Canvas.extend({
                                 $.get(pathToCustom, function(content){
                                     new CodeDialog().show(content);
                                 });
+                                break;
+                            case "label":
+                                var text = prompt("Label");
+                                if(text) {
+                                    var label = new draw2d.shape.basic.Label({text:text, stroke:0, x:-20, y:-40});
+                                    var locator = new draw2d.layout.locator.SmartDraggableLocator();
+                                    label.installEditor(new draw2d.ui.LabelInplaceEditor());
+                                    figure.add(label,locator);
+                                }
                                 break;
                             case "design":
                                 window.open(pathToDesign);
@@ -68912,6 +68893,68 @@ var CodeDialog = Class.extend(
             $('#codePreviewDialog').modal('show');
         }
 });
+;
+var FigureConfigDialog = (function () {
+
+    //"private" variables
+    var currentFigure =null;
+
+
+    //"public" stuff
+    return {
+        show: function(figure, pos)
+        {
+            currentFigure=figure;
+
+            var settings = figure.getParameterSettings().slice(0);
+            $.each(settings,function(i,el){
+                el.value = currentFigure.attr("userData."+el.name);
+            });
+            var compiled = Hogan.compile(
+                '                       '+
+                '  {{#settings}}               '+
+                '      <div class="form-group">'+
+                '           <label for="figure_property_{{name}}">{{label}}</label>'+
+                '           <input type="text" class="form-control" id="figure_property_{{name}}" data-name="{{name}}" value="{{value}}" placeholder="{{label}}">'+
+                '      </div>                  '+
+                '  {{/settings}}               '+
+                ''
+            );
+            var output = compiled.render({
+                settings: settings
+            });
+
+            $("#figureConfigDialog").html(output);
+            $("#figureConfigDialog").show().css({top: pos.y, left: pos.x, position:'absolute'});
+            $("#figureConfigDialog input").focus();
+
+            $("#figureConfigDialog input").keypress(function(e) {
+                if(e.which == 13) {
+                    FigureConfigDialog.hide();
+                }
+            });
+        },
+
+        hide: function()
+        {
+            if(currentFigure!==null) {
+                $("#figureConfigDialog input").each(function (i, element) {
+                    element = $(element);
+                    var value = element.val();
+                    var name = element.data("name");
+
+                    currentFigure.attr("userData." + name, value);
+                    console.log(name, value);
+                });
+                console.log(currentFigure);
+            }
+            $("#figureConfigDialog").hide();
+
+            currentFigure=null;
+        }
+    };
+})();
+
 ;
 FileOpen = Class.extend({
 

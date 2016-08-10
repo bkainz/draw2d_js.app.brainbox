@@ -26,13 +26,13 @@ var draw2d_circuit_flipflop_SRFlipFlop = draw2d.SetFigure.extend({
      port.setName("output_q_not");
      port.setMaxFanOut(20);
      // input_s
-     port = this.addPort(new DecoratedInputPort(), new draw2d.layout.locator.XYRelPortLocator(-3.717999999996664, 16.919013694029815));
+     port = this.addPort(new DecoratedInputPort(), new draw2d.layout.locator.XYRelPortLocator(12.5, 16.919013694029815));
      port.setConnectionDirection(3);
      port.setBackgroundColor("#1C9BAB");
      port.setName("input_s");
      port.setMaxFanOut(1);
      // input_r
-     port = this.addPort(new DecoratedInputPort(), new draw2d.layout.locator.XYRelPortLocator(-5.052799999996296, 81.5763777993222));
+     port = this.addPort(new DecoratedInputPort(), new draw2d.layout.locator.XYRelPortLocator(12.5, 81.5763777993222));
      port.setConnectionDirection(3);
      port.setBackgroundColor("#1C9BAB");
      port.setName("input_r");
@@ -84,12 +84,12 @@ var draw2d_circuit_flipflop_SRFlipFlop = draw2d.SetFigure.extend({
         
         // Line_shadow
         shape = this.canvas.paper.path('M26.5 45.5L33.5,45.5');
-        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"none","stroke-width":1,"dasharray":null,"opacity":1});
+        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"none","stroke-width":1,"stroke-dasharray":null,"opacity":1});
         shape.data("name","Line_shadow");
         
         // Line
         shape = this.canvas.paper.path('M26.5 45.5L33.5,45.5');
-        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"#000000","stroke-width":1,"dasharray":null,"opacity":1});
+        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"#000000","stroke-width":1,"stroke-dasharray":null,"opacity":1});
         shape.data("name","Line");
         
 
@@ -162,6 +162,11 @@ var draw2d_circuit_flipflop_SRFlipFlop = draw2d.SetFigure.extend({
 
     onStop:function()
     {
+    },
+
+    getParameterSettings: function()
+    {
+        return [];
     },
 
     /**

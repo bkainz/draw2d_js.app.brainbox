@@ -51,12 +51,12 @@ var draw2d_circuit_pulse_50hz = draw2d.SetFigure.extend({
         
         // Line_shadow
         shape = this.canvas.paper.path('M3.5 41.5L10.5,41.5L10.5,30.5L22.5,30.5L22.5,40.5L28.5,40.5');
-        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"none","stroke-width":1,"dasharray":null,"opacity":1});
+        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"none","stroke-width":1,"stroke-dasharray":null,"opacity":1});
         shape.data("name","Line_shadow");
         
         // Line
         shape = this.canvas.paper.path('M3.5 41.5L10.5,41.5L10.5,30.5L22.5,30.5L22.5,40.5L28.5,40.5');
-        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"#000000","stroke-width":1,"dasharray":null,"opacity":1});
+        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"#000000","stroke-width":1,"stroke-dasharray":null,"opacity":1});
         shape.data("name","Line");
         
 
@@ -129,6 +129,11 @@ var draw2d_circuit_pulse_50hz = draw2d.SetFigure.extend({
 
     onStop:function()
     {
+    },
+
+    getParameterSettings: function()
+    {
+        return [];
     },
 
     /**
@@ -211,12 +216,12 @@ draw2d_circuit_pulse_50hz = draw2d_circuit_pulse_50hz.extend({
         this.attr({resizeable:false});
         this.installEditPolicy(new draw2d.policy.figure.AntSelectionFeedbackPolicy());
         
-         this.currentTimer=0;
+        this.currentTimer=0;
     },
     
     calculate:function()
     {
-      // 2 ticks every 10ms => 50Hz    
+      // 2 ticks => 50Hz    
        this.currentTimer = (this.currentTimer+1)%2; 
        if(this.currentTimer===0){
            this.value = !this.value;

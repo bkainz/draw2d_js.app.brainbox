@@ -76,10 +76,13 @@ ConnectionSelectionFeedbackPolicy = draw2d.policy.line.OrthogonalSelectionFeedba
                         break;
 
                     case "probe":
-                        var label = new ProbeFigure({text:"Probe signal", stroke:0, x:-20, y:-40});
-                        var locator = new draw2d.layout.locator.ManhattanMidpointLocator();
-                        label.installEditor(new draw2d.ui.LabelInplaceEditor());
-                        conn.add(label,locator);
+                        var text = prompt("Probe Signal Label");
+                        if(text) {
+                            var label = new ProbeFigure({text: text, stroke: 0, x: -20, y: -40});
+                            var locator = new draw2d.layout.locator.ManhattanMidpointLocator();
+                            label.installEditor(new draw2d.ui.LabelInplaceEditor());
+                            conn.add(label, locator);
+                        }
                         break;
 
                     case "unprobe":

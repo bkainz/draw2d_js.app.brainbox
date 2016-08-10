@@ -191,18 +191,24 @@ var View = draw2d.Canvas.extend({
                 var pathToCustom = conf.shapes.url+figure.NAME+".custom";
                 var pathToDesign = conf.designer.url+"#file="+ figure.NAME+".shape";
                 var items = {
-                    "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
+                    "label":   {name: "Add Label"        , icon :"x ion-ios-pricetag-outline"     },
                     "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
                     "sep1":    "---------",
-                    "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
+//                   "code":    {name: "Show JS Code"     , icon :"x ion-social-javascript-outline"},
                     "design":  {name: "Open Designer"    , icon :"x ion-ios-compose-outline"      },
-                    "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            }
+                    "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            },
+                    "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  }
                 };
+
+                // if the designer is running on the Raspi
+                //
                 if(conf.designer.url===null){
                      items = {
-                        "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
-                        "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
-                        "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        }
+                        "label":   {name: "Add Label"        , icon :"x ion-ios-pricetag-outline"     },
+//                       "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
+                        "sep1":    "---------",
+                        "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
+                        "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  }
                      };
                 }
 
@@ -219,6 +225,15 @@ var View = draw2d.Canvas.extend({
                                 $.get(pathToCustom, function(content){
                                     new CodeDialog().show(content);
                                 });
+                                break;
+                            case "label":
+                                var text = prompt("Label");
+                                if(text) {
+                                    var label = new draw2d.shape.basic.Label({text:text, stroke:0, x:-20, y:-40});
+                                    var locator = new draw2d.layout.locator.SmartDraggableLocator();
+                                    label.installEditor(new draw2d.ui.LabelInplaceEditor());
+                                    figure.add(label,locator);
+                                }
                                 break;
                             case "design":
                                 window.open(pathToDesign);
