@@ -128,5 +128,4 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
         }
         conn.svgPathString = path.join("");
     }
-
 });

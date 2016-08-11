@@ -11,6 +11,10 @@ var glob = require("glob");
 var path = require('path');
 var bodyParser = require('body-parser');
 
+var fileSuffix = ".brain";
+var port       = 7400;
+var debug      = false;
+
 // determine the ip address of the running node server
 //
 var ifaces = os.networkInterfaces();
@@ -25,11 +29,9 @@ for (var dev in ifaces) {
 // get the local storage for files in the home directory of the
 // current user
 //
-var circuitDir = process.env.HOME+ "/.digitalstudio";
+var circuitDir = process.env.HOME+ "/.brainbox";
 try {fs.mkdirSync(path);} catch(e) {}
 
-
-var port = 7400;
 
 // provide the DigitalTrainingStudio WebApp with this very simple
 // HTTP server. good enough for an private raspi access
@@ -47,9 +49,9 @@ app.get('/backend/isLoggedIn', function (req, res) {
 });
 
 app.get('/backend/file/list', function (req, res) {
-    glob(circuitDir+"/*.circuit", {}, function (er, files) {
+    glob(circuitDir+"/*"+fileSuffix, {}, function (er, files) {
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify( {files:files.map(function(f){f= path.basename(f,".circuit");return {id:f+".circuit", name: f};})}));
+        res.send(JSON.stringify( {files:files.map(function(f){f= path.basename(f,fileSuffix);return {id:f+fileSuffix, name: f};})}));
     });
 });
 
@@ -59,7 +61,7 @@ app.post('/backend/file/get', function (req, res) {
 });
 
 app.post('/backend/file/save', function (req, res) {
-    fs.writeFile(circuitDir + "/" + req.body.id + ".circuit", req.body.content, function (err) {
+    fs.writeFile(circuitDir + "/" + req.body.id + fileSuffix, req.body.content, function (err) {
         res.send('true');
     });
 });
@@ -90,6 +92,7 @@ io.on('connection', function(socket){
     socket.on('gpi:set', function(msg){
         var pin = pins[msg.pin];
         pin.set(1-msg.value);
+        if(debug){console.log(arguments);}
     });
 });
 
@@ -107,5 +110,10 @@ pins.gpo_16.on("change", function(val){io.sockets.emit("gpo:change",{pin:"gpo_16
 
 
 http.listen(port, function(){
-    console.log('listening on http://'+address+':'+port+'/');
+    console.log('+------------------------------------------------------------+');
+    console.log('| Welcome to brainbox - the begin of something awesome       |');
+    console.log('|------------------------------------------------------------|');
+    console.log('| System is up and running. Copy the URL below and open this |');
+    console.log('| in your browser: http://'+address+':'+port+'/                |');
+    console.log('+------------------------------------------------------------+');
 });
