@@ -366,7 +366,6 @@ ConnectionRouter = draw2d.layout.connection.InteractiveManhattanConnectionRouter
         }
         conn.svgPathString = path.join("");
     }
-
 });
 ;
 ConnectionSelectionFeedbackPolicy = draw2d.policy.line.OrthogonalSelectionFeedbackPolicy.extend({
@@ -447,10 +446,13 @@ ConnectionSelectionFeedbackPolicy = draw2d.policy.line.OrthogonalSelectionFeedba
                         break;
 
                     case "probe":
-                        var label = new ProbeFigure({text:"Probe signal", stroke:0, x:-20, y:-40});
-                        var locator = new draw2d.layout.locator.ManhattanMidpointLocator();
-                        label.installEditor(new draw2d.ui.LabelInplaceEditor());
-                        conn.add(label,locator);
+                        var text = prompt("Probe Signal Label");
+                        if(text) {
+                            var label = new ProbeFigure({text: text, stroke: 0, x: -20, y: -40});
+                            var locator = new draw2d.layout.locator.ManhattanMidpointLocator();
+                            label.installEditor(new draw2d.ui.LabelInplaceEditor());
+                            conn.add(label, locator);
+                        }
                         break;
 
                     case "unprobe":
@@ -590,10 +592,6 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         // provide configuration menu if the mouse is close to a shape
         //
         canvas.on("mousemove", this.mouseMoveProxy);
-
-        $("#figureConfigDialog .figureAddLabel").on("click",function(){
-            _this._attachLabel(_this.configFigure);
-        });
     },
 
 
@@ -602,7 +600,6 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         this._super(canvas);
 
         canvas.off(this.mouseMoveProxy);
-        $("#figureConfigDialog .figureAddLabel").off("click");
     },
 
 
@@ -654,7 +651,7 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
             }
         });
 
-        if(hit!==null){
+        if(hit!==null && hit.getParameterSettings().length>0){
             var pos = hit.getBoundingBox().getTopLeft();
             pos = emitter.fromCanvasToDocumentCoordinate(pos.x, pos.y);
             pos.y -=30;
@@ -662,9 +659,9 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
             if(_this.configIcon===null) {
                 _this.configIcon = $("<div class='ion-gear-a' id='configMenuIcon'></div>");
                 $("body").append(_this.configIcon);
-                $("#figureConfigDialog").hide();
+                FigureConfigDialog.hide();
                 _this.configIcon.on("click",function(){
-                    $("#figureConfigDialog").show().css({top: pos.y, left: pos.x, position:'absolute'});
+                    FigureConfigDialog.show(hit, pos);
                     _this.configFigure = hit;
                     if(_this.configIcon!==null) {
                         _this.configIcon.remove();
@@ -681,19 +678,6 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
                 x.fadeOut(500, function(){ x.remove(); });
             }
         }
-    },
-
-
-    _attachLabel:function(figure)
-    {
-        var text = prompt("Label");
-        if(text) {
-            var label = new draw2d.shape.basic.Label({text:text, stroke:0, x:-20, y:-40});
-            var locator = new draw2d.layout.locator.SmartDraggableLocator();
-            label.installEditor(new draw2d.ui.LabelInplaceEditor());
-            this.configFigure.add(label,locator);
-        }
-        $("#figureConfigDialog").hide();
     }
 });
 ;
@@ -766,9 +750,6 @@ var Palette = Class.extend(
                 },
                 start: function(e, ui){
                     $(ui.helper).addClass("shadow");
-                    console.log(ui.helper.html());
-                    console.log("Width",ui.helper.naturalWidth);
-                    console.log("Height",ui.helper.naturalHeight);
                 }
             });
 
@@ -918,6 +899,7 @@ var ProbeWindow = Class.extend({
             _this.addProbe(probe);
         });
 
+        if(probes.length>0)$("#probe_hint").hide(); else $("#probe_hint").show();
         $("#probe_window").show().animate({height:'200px'},300);
         $("#draw2dCanvasWrapper").animate({bottom:'200px'},300);
         $( "#probeSortable" ).sortable({
@@ -974,6 +956,7 @@ var ProbeWindow = Class.extend({
         });
         $("#"+probeFigure.id).remove();
         this.resize();
+        if(this.probes.length>0)$("#probe_hint").fadeOut(); else $("#probe_hint").fadeIn();
     },
 
     addProbe: function(probeFigure)
@@ -1015,6 +998,7 @@ var ProbeWindow = Class.extend({
             path:path,
             probe:probeFigure
         });
+        if(this.probes.length>0)$("#probe_hint").hide(); else $("#probe_hint").show();
 
         // direct edit of the label
         //
@@ -1185,15 +1169,9 @@ var View = draw2d.Canvas.extend({
         this.animationFrameFunc = $.proxy(this._calculate,this);
 
 
-        // configuration icon to open the config-panel of a shape
-        // dynamic floating to the current shape which are close to the cursor
-        //
-        this.configIcon=null;
-        // the figure which is related to the current open config dialog
-        //
-        this.configFigure=null;
-
         this.timerBase = 10; // ms calculate every 10ms all elements
+
+        this.setScrollArea("#draw2dCanvasWrapper");
 
         // register this class as event listener for the canvas
         // CommandStack. This is required to update the state of
@@ -1302,10 +1280,9 @@ var View = draw2d.Canvas.extend({
             var bb = _this.getBoundingBox().getCenter();
             var c = $("#draw2dCanvasWrapper");
             _this.setZoom(newZoom);
-            c.scrollTop((bb.y/newZoom- c.height()/2));
-            c.scrollLeft((bb.x/newZoom- c.width()/2));
-
+            _this.scrollTo((bb.y/newZoom- c.height()/2), (bb.x/newZoom- c.width()/2));
         };
+
         //  ZoomIn Button and the callbacks
         //
         $("#canvas_zoom_in").on("click",function(){
@@ -1360,18 +1337,22 @@ var View = draw2d.Canvas.extend({
                 var pathToCustom = conf.shapes.url+figure.NAME+".custom";
                 var pathToDesign = conf.designer.url+"#file="+ figure.NAME+".shape";
                 var items = {
-                    "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
+                    "label":   {name: "Add Label"        , icon :"x ion-ios-pricetag-outline"     },
                     "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
                     "sep1":    "---------",
-                    "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
                     "design":  {name: "Open Designer"    , icon :"x ion-ios-compose-outline"      },
-                    "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            }
+                    "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            },
+                    "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  }
                 };
+
+                // if the designer is running on the Raspi
+                //
                 if(conf.designer.url===null){
                      items = {
-                        "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  },
-                        "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
-                        "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        }
+                        "label":   {name: "Add Label"        , icon :"x ion-ios-pricetag-outline"     },
+                        "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
+                        "sep1":    "---------",
+                        "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  }
                      };
                 }
 
@@ -1388,6 +1369,15 @@ var View = draw2d.Canvas.extend({
                                 $.get(pathToCustom, function(content){
                                     new CodeDialog().show(content);
                                 });
+                                break;
+                            case "label":
+                                var text = prompt("Label");
+                                if(text) {
+                                    var label = new draw2d.shape.basic.Label({text:text, stroke:0, x:-20, y:-40});
+                                    var locator = new draw2d.layout.locator.SmartDraggableLocator();
+                                    label.installEditor(new draw2d.ui.LabelInplaceEditor());
+                                    figure.add(label,locator);
+                                }
                                 break;
                             case "design":
                                 window.open(pathToDesign);
@@ -1463,6 +1453,15 @@ var View = draw2d.Canvas.extend({
 
             document.getElementById("filter").focus();
         },10);
+
+
+        socket.on('disconnect',function(){
+            $(".raspiConnection").fadeIn();
+        });
+
+        socket.on('connect',function(){
+            $(".raspiConnection").fadeOut();
+        });
     },
 
     isSimulationRunning:function()
@@ -1652,39 +1651,48 @@ var View = draw2d.Canvas.extend({
             // into the center of the canvas. Scroll to the top left corner after them
             //
             bb = this.getBoundingBox();
-
-            /*
-            var dx = (this.getWidth()/2)-(bb.x+bb.w/2);
-            var dy = (this.getHeight()/2)-(bb.y+bb.h/2);
-
-
-            this.getFigures().each(function(i,f){
-                f.translate(dx,dy, true);
-            });
-
-            this.getLines().each(function(i,f){
-                f.translate(dx,dy);
-            });
-            bb = this.getBoundingBox().getCenter();
-*/
-
-            c.scrollTop(bb.y- c.height()/2);
-            c.scrollLeft(bb.x- c.width()/2);
+            this.scrollTo(bb.y- c.height()/2,bb.x- c.width()/2);
         }
         else{
             bb={
                 x:this.getWidth()/2,
                 y:this.getHeight()/2
             };
-            c.scrollTop(bb.y- c.height()/2);
-            c.scrollLeft(bb.x- c.width()/2);
+            this.scrollTo(bb.y- c.height()/2,bb.x- c.width()/2);
 
         }
     },
 
-    calculateConnectionIntersection: function()
+    /**
+     * @method
+     * Transforms a document coordinate to canvas coordinate.
+     *
+     * @param {Number} x the x coordinate relative to the window
+     * @param {Number} y the y coordinate relative to the window
+     *
+     * @returns {draw2d.geo.Point} The coordinate in relation to the canvas [0,0] position
+     */
+    fromDocumentToCanvasCoordinate: function(x, y)
     {
-        this._super();
+        return new draw2d.geo.Point(
+            (x - this.getAbsoluteX())*this.zoomFactor,
+            (y - this.getAbsoluteY())*this.zoomFactor);
+    },
+
+    /**
+     * @method
+     * Transforms a canvas coordinate to document coordinate.
+     *
+     * @param {Number} x the x coordinate in the canvas
+     * @param {Number} y the y coordinate in the canvas
+     *
+     * @returns {draw2d.geo.Point} the coordinate in relation to the document [0,0] position
+     */
+    fromCanvasToDocumentCoordinate: function(x,y)
+    {
+        return new draw2d.geo.Point(
+            ((x*(1/this.zoomFactor)) + this.getAbsoluteX()),
+            ((y*(1/this.zoomFactor)) + this.getAbsoluteY()));
     }
 });
 
@@ -1716,14 +1724,15 @@ var Widget = draw2d.Canvas.extend({
         this.grid =  new draw2d.policy.canvas.ShowGridEditPolicy(20);
         this.installEditPolicy( this.grid);
 
-        var circuit= this.getParam("circuit");
-        $.getJSON(circuit,function(json){
+        var circuit = this.getParam("circuit");
+       $.getJSON(circuit, function (json) {
             var reader = new Reader();
             reader.unmarshal(widget, json);
 
             _this.shiftDocument();
             _this.simulationStart();
         });
+
     },
 
     simulationStart:function()
@@ -1866,6 +1875,68 @@ var CodeDialog = Class.extend(
             $('#codePreviewDialog').modal('show');
         }
 });
+;
+var FigureConfigDialog = (function () {
+
+    //"private" variables
+    var currentFigure =null;
+
+
+    //"public" stuff
+    return {
+        show: function(figure, pos)
+        {
+            currentFigure=figure;
+
+            var settings = figure.getParameterSettings().slice(0);
+            $.each(settings,function(i,el){
+                el.value = currentFigure.attr("userData."+el.name);
+            });
+            var compiled = Hogan.compile(
+                '                       '+
+                '  {{#settings}}               '+
+                '      <div class="form-group">'+
+                '           <label for="figure_property_{{name}}">{{label}}</label>'+
+                '           <input type="text" class="form-control" id="figure_property_{{name}}" data-name="{{name}}" value="{{value}}" placeholder="{{label}}">'+
+                '      </div>                  '+
+                '  {{/settings}}               '+
+                ''
+            );
+            var output = compiled.render({
+                settings: settings
+            });
+
+            $("#figureConfigDialog").html(output);
+            $("#figureConfigDialog").show().css({top: pos.y, left: pos.x, position:'absolute'});
+            $("#figureConfigDialog input").focus();
+
+            $("#figureConfigDialog input").keypress(function(e) {
+                if(e.which == 13) {
+                    FigureConfigDialog.hide();
+                }
+            });
+        },
+
+        hide: function()
+        {
+            if(currentFigure!==null) {
+                $("#figureConfigDialog input").each(function (i, element) {
+                    element = $(element);
+                    var value = element.val();
+                    var name = element.data("name");
+
+                    currentFigure.attr("userData." + name, value);
+                    console.log(name, value);
+                });
+                console.log(currentFigure);
+            }
+            $("#figureConfigDialog").hide();
+
+            currentFigure=null;
+        }
+    };
+})();
+
 ;
 FileOpen = Class.extend({
 
@@ -2163,19 +2234,21 @@ var Connection = draw2d.Connection.extend({
 
         // and add all children of the JSON document.
         //
-        $.each(memento.labels, $.proxy(function(i,json){
-            // create the figure stored in the JSON
-            var figure =  eval("new "+json.type+"()");
+        if(memento.labels) {
+            $.each(memento.labels, $.proxy(function (i, json) {
+                // create the figure stored in the JSON
+                var figure = eval("new " + json.type + "()");
 
-            // apply all attributes
-            figure.setPersistentAttributes(json);
+                // apply all attributes
+                figure.setPersistentAttributes(json);
 
-            // instantiate the locator
-            var locator =  eval("new "+json.locator+"()");
+                // instantiate the locator
+                var locator = eval("new " + json.locator + "()");
 
-            // add the new figure as child to this figure
-            this.add(figure, locator);
-        },this));
+                // add the new figure as child to this figure
+                this.add(figure, locator);
+            }, this));
+        }
     }
 
 });
@@ -2801,28 +2874,32 @@ var Raft = draw2d.shape.composite.Raft.extend({
 });
 
 ;
-var raspi={
+var raspi=(function(){
 
-    gpio:{
-        values:{
+    var values= {};
+    var socket= null;
+    return {
+        gpio: {
+            init: function (s) {
+                socket = s;
+                socket.on("gpo:change", function (msg) {
+                    values[msg.pin] = msg.value;
+                });
+            },
+            set: function (pin, value) {
+                socket.emit('gpi:set', {
+                    pin: pin,
+                    value: value
+                });
+            },
+            get: function (pin) {
+                return !!values[pin];
+            }
 
-        },
-        init:function(socket){
-            socket.on("gpo:change", function(msg){
-                raspi.gpio.values[msg.pin]=msg.value;
-            });
-        },
-        set: function(pin, value){
-            socket.emit('gpi:set', {
-                pin:pin,
-                value:value
-            });
-        },
-        get:function(pin){
-            return !!raspi.gpio.values[pin];
+
         }
-    }
-};
+    };
+})();
 ;
 
 

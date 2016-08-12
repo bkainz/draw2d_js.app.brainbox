@@ -8,6 +8,13 @@
   color: rgba(0, 0, 0, 0.4);
 }
 
+#probe_hint {
+  display: block;
+  padding: 30px;
+  color: white;
+  font-size: 20px;
+  font-weight: 100;
+}
 #probe_window {
   background: #009DAC;
   bottom: 0;
@@ -17,6 +24,11 @@
   position: absolute;
   right: 0;
   left: 250px;
+}
+#probe_window span {
+  font-size: 45px;
+  vertical-align: middle;
+  padding-right: 10px;
 }
 #probe_window_stick {
   font-size: 34px;
@@ -178,6 +190,12 @@ ellipse.draw2d_OutputPort {
   text-decoration: underline;
 }
 
+.raspiConnection {
+  color: red !important;
+  border: 1px solid red;
+  padding: 10px;
+  border-radius: 5px;
+}
 .morph_btn {
   display: inline-block;
   width: 4em;
@@ -379,7 +397,7 @@ ellipse.draw2d_OutputPort {
   opacity: 0.4;
 }
 #layout .nav-tabs {
-  background-color: #8F98A7;
+  background-color: #c21b7a;
 }
 #layout .nav-tabs li a {
   text-align: center;
@@ -673,6 +691,7 @@ rect.Raft {
   background-color: #1c9bab;
   color: white;
   font-size: 25px;
+  font-weight: 200;
   line-height: 45px;
   right: 0px;
   top: 30px;

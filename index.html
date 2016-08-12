@@ -39,8 +39,6 @@
         $(window).load(function () {
             $.getScript(conf.shapes.url+"index.js",function(){
 
-                var random = d3.random.normal(0.5, 0.4);
-
                 socket = io();
                 app = new Application();
                 $('.lazyload').lazyload({ trigger: "appear"});
@@ -261,6 +259,11 @@
                                    data-slider-id="simulationBaseTimerSlider"
                                    data-slider-orientation="horizontal">
                         </span>
+
+                        <span class="group raspiConnection">
+                            Connection to RaspberryPi lost..
+                        </span>
+
                         <a href="#" class="morph_btn play" id="simulationStartStop">
                                 <span>
                                   <span class="s1"></span>
@@ -281,6 +284,7 @@
                     </div>
                     <div id='probe_window'>
                         <div id="probe_window_stick" class="ion-ios-eye-outline" title="Stick Window"></div>
+                        <div id="probe_hint"><span class="ion-ios-information-outline"></span>Right click on a connection to add a probe signal to this logic analyzer window</div>
                     </div>
                 </div>
             </div>
@@ -516,9 +520,10 @@
     </div>
 </div>
 
-<div id="figureConfigDialog">
 
-    <div class="figureAddLabel"><span class="ion-ios-pricetag-outline"></span> add label</div>
+<div id="figureConfigDialog">
+    Please configure me
 </div>
+
 </body>
 </html>
