@@ -34447,7 +34447,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.55",
+    version : "6.1.57",
     i18n : {
         command : {
             move : "Move Shape",
@@ -35782,7 +35782,9 @@ draw2d.Canvas = Class.extend(
         figure.setCanvas(this);
 
         // to avoid drag&drop outside of this canvas
-        figure.installEditPolicy(this.regionDragDropConstraint);
+        if(!(figure instanceof draw2d.Port)) {
+            figure.installEditPolicy(this.regionDragDropConstraint);
+        }
 
         // important inital call
         figure.getShapeElement();
@@ -37750,8 +37752,9 @@ draw2d.Figure = Class.extend({
          // deinstall all instances of the policy
          //
          var _this = this;
+         var name = (typeof policy === "string")?policy:policy.NAME;
          this.editPolicy.grep(function(p){
-             if(p.NAME === policy.NAME){
+             if(p.NAME === name){
                  p.onUninstall(_this);
                  return false;
              }
@@ -67930,6 +67933,7 @@ var ProbeWindow = Class.extend({
             _this.addProbe(probe);
         });
 
+        if(probes.length>0)$("#probe_hint").hide(); else $("#probe_hint").show();
         $("#probe_window").show().animate({height:'200px'},300);
         $("#draw2dCanvasWrapper").animate({bottom:'200px'},300);
         $( "#probeSortable" ).sortable({
@@ -67986,6 +67990,7 @@ var ProbeWindow = Class.extend({
         });
         $("#"+probeFigure.id).remove();
         this.resize();
+        if(this.probes.length>0)$("#probe_hint").fadeOut(); else $("#probe_hint").fadeIn();
     },
 
     addProbe: function(probeFigure)
@@ -68027,6 +68032,7 @@ var ProbeWindow = Class.extend({
             path:path,
             probe:probeFigure
         });
+        if(this.probes.length>0)$("#probe_hint").hide(); else $("#probe_hint").show();
 
         // direct edit of the label
         //
@@ -68310,6 +68316,7 @@ var View = draw2d.Canvas.extend({
             _this.setZoom(newZoom);
             _this.scrollTo((bb.y/newZoom- c.height()/2), (bb.x/newZoom- c.width()/2));
         };
+
         //  ZoomIn Button and the callbacks
         //
         $("#canvas_zoom_in").on("click",function(){
@@ -68367,7 +68374,6 @@ var View = draw2d.Canvas.extend({
                     "label":   {name: "Add Label"        , icon :"x ion-ios-pricetag-outline"     },
                     "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
                     "sep1":    "---------",
-//                   "code":    {name: "Show JS Code"     , icon :"x ion-social-javascript-outline"},
                     "design":  {name: "Open Designer"    , icon :"x ion-ios-compose-outline"      },
                     "bug":     {name: "Report Bug"       , icon :"x ion-social-github"            },
                     "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  }
@@ -68378,9 +68384,8 @@ var View = draw2d.Canvas.extend({
                 if(conf.designer.url===null){
                      items = {
                         "label":   {name: "Add Label"        , icon :"x ion-ios-pricetag-outline"     },
-//                       "code":    {name: "Show Code"        , icon :"x ion-social-javascript-outline"},
-                        "sep1":    "---------",
                         "delete":  {name: "Delete"           , icon :"x ion-ios-close-outline"        },
+                        "sep1":    "---------",
                         "help":    {name: "Help"             , icon :"x ion-ios-information-outline"  }
                      };
                 }
@@ -68482,6 +68487,15 @@ var View = draw2d.Canvas.extend({
 
             document.getElementById("filter").focus();
         },10);
+
+
+        socket.on('disconnect',function(){
+            $(".raspiConnection").fadeIn();
+        });
+
+        socket.on('connect',function(){
+            $(".raspiConnection").fadeOut();
+        });
     },
 
     isSimulationRunning:function()

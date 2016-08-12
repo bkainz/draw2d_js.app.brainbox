@@ -116,6 +116,7 @@ var ProbeWindow = Class.extend({
             _this.addProbe(probe);
         });
 
+        if(probes.length>0)$("#probe_hint").hide(); else $("#probe_hint").show();
         $("#probe_window").show().animate({height:'200px'},300);
         $("#draw2dCanvasWrapper").animate({bottom:'200px'},300);
         $( "#probeSortable" ).sortable({
@@ -172,6 +173,7 @@ var ProbeWindow = Class.extend({
         });
         $("#"+probeFigure.id).remove();
         this.resize();
+        if(this.probes.length>0)$("#probe_hint").fadeOut(); else $("#probe_hint").fadeIn();
     },
 
     addProbe: function(probeFigure)
@@ -213,6 +215,7 @@ var ProbeWindow = Class.extend({
             path:path,
             probe:probeFigure
         });
+        if(this.probes.length>0)$("#probe_hint").hide(); else $("#probe_hint").show();
 
         // direct edit of the label
         //

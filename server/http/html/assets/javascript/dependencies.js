@@ -35707,7 +35707,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.55",
+    version : "6.1.57",
     i18n : {
         command : {
             move : "Move Shape",
@@ -37042,7 +37042,9 @@ draw2d.Canvas = Class.extend(
         figure.setCanvas(this);
 
         // to avoid drag&drop outside of this canvas
-        figure.installEditPolicy(this.regionDragDropConstraint);
+        if(!(figure instanceof draw2d.Port)) {
+            figure.installEditPolicy(this.regionDragDropConstraint);
+        }
 
         // important inital call
         figure.getShapeElement();
@@ -39010,8 +39012,9 @@ draw2d.Figure = Class.extend({
          // deinstall all instances of the policy
          //
          var _this = this;
+         var name = (typeof policy === "string")?policy:policy.NAME;
          this.editPolicy.grep(function(p){
-             if(p.NAME === policy.NAME){
+             if(p.NAME === name){
                  p.onUninstall(_this);
                  return false;
              }
