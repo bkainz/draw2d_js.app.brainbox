@@ -67777,8 +67777,8 @@ var Files = Class.extend(
      */
     init : function(app)
     {
-        this.render();
         this.app = app;
+        this.render();
     },
 
     render: function()
