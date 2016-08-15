@@ -2202,6 +2202,7 @@ FileSave = Class.extend({
         //
         $("#githubSaveFileDialog .okButton").on("click", function () {
 
+            canvas.setCurrentSelection(null);
             new draw2d.io.png.Writer().marshal(canvas, function (imageDataUrl){
                 var writer = new draw2d.io.json.Writer();
                 writer.marshal(canvas, function (json, base64) {
