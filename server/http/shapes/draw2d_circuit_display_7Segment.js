@@ -187,11 +187,6 @@ var draw2d_circuit_display_7Segment = draw2d.SetFigure.extend({
     {
     },
 
-    getParameterSettings: function()
-    {
-        return [];
-    },
-
     /**
      * @method
      */

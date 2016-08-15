@@ -205,14 +205,5 @@
       "switch",
       "PushButton"
     ]
-  },
-  {
-    "name": "draw2d_circuit_timer_Delay",
-    "tags": [
-      "draw2d",
-      "circuit",
-      "timer",
-      "Delay"
-    ]
   }
 ]

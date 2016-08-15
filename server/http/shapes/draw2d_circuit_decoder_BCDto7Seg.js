@@ -246,11 +246,6 @@ var draw2d_circuit_decoder_BCDto7Seg = draw2d.SetFigure.extend({
     {
     },
 
-    getParameterSettings: function()
-    {
-        return [];
-    },
-
     /**
      * @method
      */

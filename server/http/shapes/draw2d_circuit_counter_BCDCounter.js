@@ -175,11 +175,6 @@ var draw2d_circuit_counter_BCDCounter = draw2d.SetFigure.extend({
     {
     },
 
-    getParameterSettings: function()
-    {
-        return [];
-    },
-
     /**
      * @method
      */
