@@ -70149,6 +70149,11 @@ var Raft = draw2d.shape.composite.Raft.extend({
         this._super(first);
     },
 
+    getParameterSettings: function()
+    {
+        return [];
+    },
+
     /**
      * @method
      * Return an objects with all important attributes for XML or JSON serialization
