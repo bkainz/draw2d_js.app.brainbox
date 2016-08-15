@@ -783,7 +783,7 @@ var Files = Class.extend(
                     '<div class="col-lg-3 col-md-4 col-xs-6 thumb">'+
                     '  <span class="ion-ios-close-outline deleteIcon"  data-toggle="confirmation"  data-id="{{id}}"></span>'+
                     '  <a class="thumbnail" data-id="{{id}}">'+
-                    '    <img class="img-responsive" src="/backend/file/image?id={{id}}" alt="">'+
+                    '    <img class="img-responsive" src="'+conf.backend.file.image+'?id={{id}}" alt="">'+
                     '    <h4>{{name}}</h4>'+
                     '  </a>'+
                     '</div>'+
