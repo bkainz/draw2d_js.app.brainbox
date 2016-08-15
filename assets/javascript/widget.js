@@ -67055,6 +67055,8 @@ var Application = Class.extend(
         var _this = this;
 
         this.localStorage = [];
+        this.loggedIn = false;
+
         try {
             if( 'localStorage' in window && window.localStorage !== null){
                 this.localStorage = localStorage;
@@ -67293,6 +67295,8 @@ var Application = Class.extend(
             $("#editorgroup_login").show();
             $("#editorgroup_fileoperations").hide();
         }
+
+        this.filePane.render();
 
         var id = this.localStorage["pane"];
         if(id){
