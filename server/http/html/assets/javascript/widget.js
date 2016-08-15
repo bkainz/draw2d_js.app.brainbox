@@ -67055,6 +67055,8 @@ var Application = Class.extend(
         var _this = this;
 
         this.localStorage = [];
+        this.loggedIn = false;
+
         try {
             if( 'localStorage' in window && window.localStorage !== null){
                 this.localStorage = localStorage;
@@ -67293,6 +67295,8 @@ var Application = Class.extend(
             $("#editorgroup_login").show();
             $("#editorgroup_fileoperations").hide();
         }
+
+        this.filePane.render();
 
         var id = this.localStorage["pane"];
         if(id){
@@ -67777,11 +67781,16 @@ var Files = Class.extend(
      */
     init : function(app)
     {
+        this.app = app;
         this.render();
     },
 
     render: function()
     {
+        if(this.app.loggedIn!==true){
+            return;
+        }
+
         $.ajax({
             url:conf.backend.file.list ,
             xhrFields: {
@@ -70138,6 +70147,11 @@ var Raft = draw2d.shape.composite.Raft.extend({
         // instead of "behind of ALL shapes"
         var first = this.canvas.getFigures().first();
         this._super(first);
+    },
+
+    getParameterSettings: function()
+    {
+        return [];
     },
 
     /**

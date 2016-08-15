@@ -18,11 +18,16 @@ var Files = Class.extend(
      */
     init : function(app)
     {
+        this.app = app;
         this.render();
     },
 
     render: function()
     {
+        if(this.app.loggedIn!==true){
+            return;
+        }
+
         $.ajax({
             url:conf.backend.file.list ,
             xhrFields: {
