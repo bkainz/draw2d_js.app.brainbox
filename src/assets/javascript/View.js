@@ -490,8 +490,8 @@ var View = draw2d.Canvas.extend({
         });
         var minX   = Math.min.apply(Math, xCoords);
         var minY   = Math.min.apply(Math, yCoords);
-        var width  = Math.max(10,Math.max.apply(Math, xCoords)-minX);
-        var height = Math.max(10,Math.max.apply(Math, yCoords)-minY);
+        var width  = Math.max(100,Math.max.apply(Math, xCoords)-minX);
+        var height = Math.max(100,Math.max.apply(Math, yCoords)-minY);
 
         return new draw2d.geo.Rectangle(minX,minY,width,height);
     },

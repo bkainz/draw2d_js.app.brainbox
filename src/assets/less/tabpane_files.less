@@ -1,0 +1,49 @@
+@import "colors.less";
+
+
+
+#files{
+  overflow-y: scroll;
+  padding:30px !important;
+
+  .deleteIcon{
+    position: absolute;
+    right: 24px;
+    font-size: 24px;
+    color:@tintColorFiles;
+    top: 8px;
+    cursor:pointer;
+  }
+
+  .editorLogin{
+    white-space: nowrap;
+    width: auto !important;
+    background-color: white;
+    color: black;
+    font-size: 20px;
+    padding: 10px !important;
+    margin-left:20px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.2s;
+    cursor:pointer;
+    border-radius:1px;
+    &:hover{
+      box-shadow: 0 2px 5px 0 @googleBlue;
+      transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .googleIcon{
+      width:20px;
+      height:20px;
+      display: inline-block;
+    }
+    .googleText{
+      display: inline-block;
+      font-size: 18px;
+      vertical-align: top;
+      color: rgba(0,0,0,0.6);
+    }
+  }
+
+
+}

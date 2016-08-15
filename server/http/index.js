@@ -29,8 +29,8 @@ for (var dev in ifaces) {
 // get the local storage for files in the home directory of the
 // current user
 //
-var circuitDir = process.env.HOME+ "/.brainbox";
-try {fs.mkdirSync(path);} catch(e) {}
+var brainDir = process.env.HOME+ "/.brainbox";
+try {fs.mkdirSync(brainDir);} catch(e) {console.log(e)}
 
 
 // provide the DigitalTrainingStudio WebApp with this very simple
@@ -49,19 +49,42 @@ app.get('/backend/isLoggedIn', function (req, res) {
 });
 
 app.get('/backend/file/list', function (req, res) {
-    glob(circuitDir+"/*"+fileSuffix, {}, function (er, files) {
+    glob(brainDir+"/*"+fileSuffix, {}, function (er, files) {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify( {files:files.map(function(f){f= path.basename(f,fileSuffix);return {id:f+fileSuffix, name: f};})}));
     });
 });
 
-app.post('/backend/file/get', function (req, res) {
-    res.setHeader('Content-Type', 'application/json');
-    fs.createReadStream(circuitDir+"/"+req.body.id).pipe(res);
+app.get('/backend/file/image', function (req, res) {
+    var contents = fs.readFileSync(brainDir+"/"+req.param('id'));
+    var json = JSON.parse(contents);
+    var base64data = json.image.replace(/^data:image\/png;base64,/, '');
+    var img = new Buffer(base64data, 'base64');
+    res.writeHead(200, {
+        'Content-Type': 'image/png',
+        'Content-Length': img.length
+    });
+    res.end(img);
 });
 
+app.post('/backend/file/get', function (req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    fs.createReadStream(brainDir+"/"+req.body.id).pipe(res);
+});
+
+app.post('/backend/file/delete', function (req, res) {
+    try {
+        fs.unlink(brainDir + "/" + req.body.id);
+    }
+    catch(e){
+        console.log(e);
+    }
+    res.send('true');
+});
+
+
 app.post('/backend/file/save', function (req, res) {
-    fs.writeFile(circuitDir + "/" + req.body.id + fileSuffix, req.body.content, function (err) {
+    fs.writeFile(brainDir + "/" + req.body.id.toLowerCase().replace(new RegExp(fileSuffix+"$"), "") + fileSuffix, req.body.content, function (err) {
         res.send('true');
     });
 });

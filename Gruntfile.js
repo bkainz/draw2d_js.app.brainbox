@@ -161,13 +161,15 @@ module.exports = function (grunt) {
                         "./src/assets/less/contextmenu.less",
                         "./src/assets/less/toolbar_editor.less",
                         "./src/assets/less/tabmenu.less",
+                        "./src/assets/less/tabpane_home.less",
                         "./src/assets/less/tabpane_about.less",
-                        "./src/assets/less/tabpane_folder.less",
+                        "./src/assets/less/tabpane_files.less",
                         "./src/assets/less/tabpane_editor.less",
                         "./src/assets/less/tabpane_setting.less",
                         "./src/assets/less/layout.less",
                         "./src/assets/less/file_dialog.less",
                         "./src/assets/less/markdown_dialog.less",
+                        "./src/assets/less/popconfirm_dialog.less",
                         "./src/assets/less/code_dialog.less",
                         "./src/assets/less/file_open_dialog.less",
                         "./src/assets/less/file_save_dialog.less",
@@ -209,26 +211,20 @@ module.exports = function (grunt) {
                 files: [
                     './src/assets/javascript/**/*.js'
                 ],
-                tasks: ['concat:application'],
-                options: {
-                    livereload: true
-                }
+                tasks: ['default']
             },
             html: {
                 files: [
                     './src/*.html'
                 ],
-                tasks: ['copy:application']
+                tasks: ['default']
             },
 
             less: {
                 files: [
                     "./src/assets/less/**/*.less"
                 ],
-                tasks: ['less'],
-                options: {
-                    livereload: true
-                }
+                tasks: ['default']
             }
         },
         'gh-pages': {

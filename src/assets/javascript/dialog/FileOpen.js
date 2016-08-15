@@ -75,24 +75,8 @@ FileOpen = Class.extend({
 
                     $('.githubPath[data-draw2d="true"]').on("click", function () {
                         var id   = $(this).data("id");
-                        var name = $(this).data("name");
-                        $.ajax({
-                                url: conf.backend.file.get,
-                                method: "POST",
-                                xhrFields: {
-                                    withCredentials: true
-                                },
-                                data:{
-                                    id:id
-                                }
-                            }
-                        ).done(function(content){
-                                _this.currentFileHandle.title=name;
-                                successCallback(content);
-                                $('#githubFileSelectDialog').modal('hide');
-                            }
-                        );
-
+                        $('#githubFileSelectDialog').modal('hide');
+                        successCallback(id);
                     });
                 }
         });

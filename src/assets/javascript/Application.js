@@ -32,11 +32,12 @@ var Application = Class.extend(
         this.currentFileHandle= {
             title: "Untitled"+conf.fileSuffix
         };
-        this.palette = new Palette(this);
-        this.view    = new View(this, "draw2dCanvas");
+        this.palette  = new Palette(this);
+        this.view     = new View(this, "draw2dCanvas");
+        this.filePane = new Files(this);
         this.loggedIn = false;
 
-        $("#appLogin, #editorLogin").on("click", function(){_this.login();});
+        $("#appLogin, .editorLogin").on("click", function(){_this.login();});
         $("#fileOpen, #editorFileOpen").on("click", function(){ _this.fileOpen(); });
         $("#fileNew").on("click", function(){_this.fileNew();});
         $("#fileSave, #editorFileSave").on("click", function(){ _this.fileSave();});
@@ -135,40 +136,81 @@ var Application = Class.extend(
 
     fileSave: function()
     {
+        var _this = this;
+
         if(this.loggedIn!==true){
             this.loginFirstMessage();
             return;
         }
 
-        new FileSave(this.currentFileHandle).show(this.view);
+        new FileSave(this.currentFileHandle).show(this.view, function(){
+            _this.filePane.render();
+        });
     },
 
 
-    fileOpen: function()
+    fileOpen: function(name)
+    {
+        var _this = this;
+
+        if(this.loggedIn!==true){
+            this.loginFirstMessage();
+            return;
+        }
+
+        var openByIdCallback = function(id){
+            $.ajax({
+                    url: conf.backend.file.get,
+                    method: "POST",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    data:{
+                        id:id
+                    }
+                }
+            ).done(function(content){
+                _this.currentFileHandle.title=name;
+                _this.view.clear();
+                var reader = new Reader();
+                reader.unmarshal(_this.view, content);
+                _this.view.getCommandStack().markSaveLocation();
+                _this.view.centerDocument();
+            });
+        };
+
+
+        $("#leftTabStrip .editor").click();
+        if(name){
+            openByIdCallback(name);
+        }
+        else {
+            new FileOpen(this.currentFileHandle).show(openByIdCallback);
+        }
+    },
+
+
+    fileDelete: function(id, successCallback)
     {
         if(this.loggedIn!==true){
             this.loginFirstMessage();
             return;
         }
 
-        $("#leftTabStrip .edit").click();
-        new FileOpen(this.currentFileHandle).show(
-
-            // success callback
-            $.proxy(function(fileData){
-                try{
-                    this.view.clear();
-                    var reader = new Reader();
-                    reader.unmarshal(this.view, fileData);
-                    this.view.getCommandStack().markSaveLocation();
-                    this.view.centerDocument();
+        $.ajax({
+                url: conf.backend.file.del,
+                method: "POST",
+                xhrFields: {
+                    withCredentials: true
+                },
+                data:{
+                    id:id
                 }
-                catch(e){
-                    this.view.clear();
-                }
-            },this));
+            }
+        ).done(function(){
+            successCallback();
+        });
     },
-
 
     autoLogin:function()
     {

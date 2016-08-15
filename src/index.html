@@ -56,19 +56,25 @@
 <div id="layout">
         <ul class="nav nav-tabs" id="leftTabStrip">
 
-            <li id="folder_tab" class="active">
-                <a href="#file" class="leftTab folder"   data-toggle="tab">
+            <li id="index_tab" class="active">
+                <a href="#home" class="leftTab home"   data-toggle="tab">
+                    <img class="svg" src="./assets/images/index.svg">
+                </a>
+            </li>
+
+            <li id="files_tab" class="">
+                <a href="#files" class="leftTab files"   data-toggle="tab">
                     <img class="svg" src="./assets/images/folder.svg">
                 </a>
             </li>
 
-            <li id="edit_tab">
-                <a href="#editor" class="leftTab edit"     data-toggle="tab">
+            <li id="editor_tab">
+                <a href="#editor" class="leftTab editor"     data-toggle="tab">
                     <img class="svg" src="./assets/images/edit.svg">
                 </a>
             </li>
 
-            <li id="help_tab">
+            <li id="gitbook_tab">
                 <a href="#gitbook" class="leftTab gitbook"  data-toggle="tab">
                     <img class="svg" src="./assets/images/help.svg">
                 </a>
@@ -84,7 +90,7 @@
 
 
         <div class="tab-content">
-            <div class="tab-pane active" id="file">
+            <div class="tab-pane active" id="home">
                 <div class="row hidden-xs teaser">
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="lazyload">
@@ -120,94 +126,76 @@
                     </div>
 
                 </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="tile blue container-fluid " id="appLogin">
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6 icon ion-social-googleplus-outline" ></div>
 
-                                <span class="col-xs-6 col-sm-6 col-md-6 title">Sign in</span>
-                            </div>
-                            <div class="row description">
-                                <div class="col-md-12">Sign in with Google to save and load files</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 ">
-                        <div class="tile red container-fluid notLoggedIn" id="fileOpen">
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6 icon ion-ios-download-outline" ></div>
-
-                                <span class="col-xs-6 col-sm-6 col-md-6 title">File Open</span>
-                            </div>
-                            <div class="row description">
-                                <div class="col-md-12">Open a circuit from your private repository</div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="tile orange container-fluid " id="fileNew">
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6 icon ion-ios-plus-outline" ></div>
-
-                                <span class="col-xs-6 col-sm-6 col-md-6 title">New Circuit</span>
-                            </div>
-                            <div class="row description">
-                                <div class="col-md-12">Open a new document to edit</div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="tile red container-fluid" id="appAbout">
-                            <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6  ion-ios-information-outline icon"></div>
-
-                            <span class="col-xs-6 col-sm-6 col-md-6 title">About</span>
-                            </div>
-                            <div class="row description">
-                                <div class="col-md-12">Information about the simulator</div>
-                            </div>
-                        </div>
+                <div class="introText">
+                    <div class="paragraph">
+                       <h3>Building Hardware was always cool</h3>
+                        Physical things are great. Hardware companies like Apple,
+                        Arduino, etc are disrupting our lives in a big way. At <span class="branding">BrainBox</span> we love hardware hackers
+                        and are in absolute awe of their awesome design and applications they build.
+                        <br>
+                        Hobbyists can create some of these fun circuits and run them on an RaspberryPi or just
+                        in your browser with our virtual instruments to test and measure appropriate signals.
                     </div>
 
-                    <div class="col-xs-12 col-sm-8 col-md-8">
-                        <div class="tile green container-fluid " id="appHelp">
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6 ion-ios-help-outline icon"></div>
 
-                                <span class="col-xs-6 col-sm-6 col-md-6 title">Help</span>
-                            </div>
-                            <div class="row description">
-                                <div class="col-md-12">Introduction to digital circuits</div>
-                            </div>
+                    <div class="paragraph">
+                        <h3>Getting Started on Hackster.io</h3>
+                        <div class="block">
+                            One function that makes the Internet of Things the Internet of Things is remote control
+                            of devices, being able to trigger action from a remote location.
+                            With <span class="branding">BrainBox</span>  you can edit and run your digital circuit simulation
+                            designs online on RPi, PC, Mac, thin clients, tablets within your browser and trigger any
+                            physical device.
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-4 col-md-5">
-                        <a href="https://github.com/freegroup/draw2d_js.app.brainbox" target="_blank">
-                        <div class="tile orange container-fluid" id="appClone">
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6  ion-social-github icon"></div>
+                        <iframe class="hacksterProjectCard" frameborder='0' height='327.5' scrolling='no' src='https://www.hackster.io/draw2dtouch/getting-started-with-brainbox-and-raspberry-pi-5d56a1/embed?use_route=project' width='350'></iframe>
 
-                                <span class="col-xs-6 col-sm-6 col-md-6 title">Clone me</span>
-                            </div>
-                            <div class="row description">
-                                <div class="col-md-12">Get the source code of the BrainBox from github</div>
-                            </div>
-                        </div>
-                        </a>
+                        <iframe class="hacksterProjectCard" frameborder='0' height='327.5' scrolling='no' src='https://www.hackster.io/draw2dtouch/how-to-use-a-push-button-da257c/embed?use_route=project' width='350'></iframe>
                     </div>
 
+
+                    <div class="paragraph">
+                    <h3>Open- minded</h3>
+                        <div class="block">
+                            At <span class="branding">BrainBox</span> – we have been listening to your feedback and we are working on features such as
+                        </div>
+
+                        <ul>
+                            <li>more supported Hardware</li>
+                            <li>Making simulation faster</li>
+                            <li>Introducing more components</li>
+                            <li>Better wiring capabilities</li>
+                            <li>Better messaging for debugging</li>
+                            <li>Private Sharing of Circuits</li>
+                        </ul>
+
+                        <div  class="block">
+                            among other things. Please keep on giving us your valuable feedback and help us make  <span class="branding">BrainBox</span>
+                            the best Circuit Simulation and IoT tool for everyone.
+                        </div>
+                    </div>
 
                 </div>
                 <footer>Coded with ♥ and the powerful <a href="http://www.draw2d.org" target="_blank">Draw2D</a> library by Andreas Herz</footer>
             </div>
 
+            <div class="tab-pane" id="files">
+                <div class="container">
+                    <div class="row">
+                        Login with Github to open/save files....
+
+                        <span id="" class="editorLogin">
+                                <div class="googleIcon">
+                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 48 48" class="abcRioButtonSvg"><g><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></g></svg>
+                                </div>
+                                <div class="googleText">
+                                    Sign In
+                                </div>
+                            </span>
+
+                    </div>
+                </div>
+            </div>
 
 
             <div class="tab-pane" id="editor">
@@ -224,7 +212,7 @@
                     </div>
                     <div class="toolbar">
                         <span class="group" id="editorgroup_login">
-                            <span id="editorLogin" class="">
+                            <span class="editorLogin">
                                 <div class="googleIcon">
                                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 48 48" class="abcRioButtonSvg"><g><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></g></svg>
                                 </div>
@@ -310,6 +298,7 @@
 
                     <li>Design circuits quickly and easily with a modern and intuitive user interface with drag-and-drop, copy/paste, zoom & more</li>
                     <li>Take control of debugging by pausing the simulation and watching the signal propagate as you advance step-by-step.</li>
+                    <li>Connect any Hardware to the simulator if Brainbox is running on your RaspberryPi</li>
                     <li>Don't worry about multiple platforms on student computers. BrainBox runs within your browser</li>
 
 

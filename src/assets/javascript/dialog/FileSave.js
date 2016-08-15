@@ -18,7 +18,7 @@ FileSave = Class.extend({
      *
      * @since 4.0.0
      */
-    show: function(canvas)
+    show: function(canvas, successCallback)
     {
         var _this = this;
 
@@ -32,24 +32,30 @@ FileSave = Class.extend({
         // Button: Commit to GitHub
         //
         $("#githubSaveFileDialog .okButton").on("click", function () {
-            var writer = new draw2d.io.json.Writer();
-            writer.marshal(canvas, function (json, base64) {
-                $.ajax({
-                        url: conf.backend.file.save,
-                        method: "POST",
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        data:{
-                            id:$("#githubSaveFileDialog .githubFileName").val(),
-                            content:JSON.stringify(json, undefined, 2)
-                        }
-                    }
-                ).done(function(){
-                        $('#githubSaveFileDialog').modal('hide');
-                });
 
-            });
+            new draw2d.io.png.Writer().marshal(canvas, function (imageDataUrl){
+                var writer = new draw2d.io.json.Writer();
+                writer.marshal(canvas, function (json, base64) {
+                    var name = $("#githubSaveFileDialog .githubFileName").val();
+                    $.ajax({
+                            url: conf.backend.file.save,
+                            method: "POST",
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            data:{
+                                id:name,
+                                content:JSON.stringify({draw2d:json, image:imageDataUrl}, undefined, 2)
+                            }
+                        }
+                    ).done(function(){
+                        _this.currentFileHandle.title=name;
+                        $('#githubSaveFileDialog').modal('hide');
+                        successCallback();
+                    });
+
+                });
+            }, canvas.getBoundingBox().scale(10, 10));
         });
 
     }

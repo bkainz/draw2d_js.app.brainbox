@@ -9,7 +9,7 @@
 //
 //
 var conf={
-    fileSuffix : ".circuit",
+    fileSuffix : ".brain",
     designer: {
         url:"http://freegroup.github.io/draw2d_js.app.shape_designer/"
     },
@@ -17,9 +17,11 @@ var conf={
         oauth     : "http://draw2d.org/backend/oauth2.php",
         isLoggedIn: "http://draw2d.org/backend/isLoggedIn.php",
         file:{
-            list : "http://draw2d.org/backend/file_list.php",
-            get  : "http://draw2d.org/backend/file_get.php",
-            save : "http://draw2d.org/backend/file_save.php"
+            list  : "http://draw2d.org/backend/file_list.php",
+            get   : "http://draw2d.org/backend/file_get.php",
+            del   : "http://draw2d.org/backend/file_delete.php",
+            save  : "http://draw2d.org/backend/file_save.php",
+            image : "http://draw2d.org/backend/file_image.php"
         }
     },
     shapes :{
