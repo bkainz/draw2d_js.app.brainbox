@@ -32,11 +32,12 @@ var Application = Class.extend(
         this.currentFileHandle= {
             title: "Untitled"+conf.fileSuffix
         };
-        this.palette = new Palette(this);
-        this.view    = new View(this, "draw2dCanvas");
+        this.palette  = new Palette(this);
+        this.view     = new View(this, "draw2dCanvas");
+        this.filePane = new Files(this);
         this.loggedIn = false;
 
-        $("#appLogin, #editorLogin").on("click", function(){_this.login();});
+        $("#appLogin, .editorLogin").on("click", function(){_this.login();});
         $("#fileOpen, #editorFileOpen").on("click", function(){ _this.fileOpen(); });
         $("#fileNew").on("click", function(){_this.fileNew();});
         $("#fileSave, #editorFileSave").on("click", function(){ _this.fileSave();});
@@ -135,40 +136,81 @@ var Application = Class.extend(
 
     fileSave: function()
     {
+        var _this = this;
+
         if(this.loggedIn!==true){
             this.loginFirstMessage();
             return;
         }
 
-        new FileSave(this.currentFileHandle).show(this.view);
+        new FileSave(this.currentFileHandle).show(this.view, function(){
+            _this.filePane.render();
+        });
     },
 
 
-    fileOpen: function()
+    fileOpen: function(name)
+    {
+        var _this = this;
+
+        if(this.loggedIn!==true){
+            this.loginFirstMessage();
+            return;
+        }
+
+        var openByIdCallback = function(id){
+            $.ajax({
+                    url: conf.backend.file.get,
+                    method: "POST",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    data:{
+                        id:id
+                    }
+                }
+            ).done(function(content){
+                _this.currentFileHandle.title=name;
+                _this.view.clear();
+                var reader = new Reader();
+                reader.unmarshal(_this.view, content);
+                _this.view.getCommandStack().markSaveLocation();
+                _this.view.centerDocument();
+            });
+        };
+
+
+        $("#leftTabStrip .editor").click();
+        if(name){
+            openByIdCallback(name);
+        }
+        else {
+            new FileOpen(this.currentFileHandle).show(openByIdCallback);
+        }
+    },
+
+
+    fileDelete: function(id, successCallback)
     {
         if(this.loggedIn!==true){
             this.loginFirstMessage();
             return;
         }
 
-        $("#leftTabStrip .edit").click();
-        new FileOpen(this.currentFileHandle).show(
-
-            // success callback
-            $.proxy(function(fileData){
-                try{
-                    this.view.clear();
-                    var reader = new Reader();
-                    reader.unmarshal(this.view, fileData);
-                    this.view.getCommandStack().markSaveLocation();
-                    this.view.centerDocument();
+        $.ajax({
+                url: conf.backend.file.del,
+                method: "POST",
+                xhrFields: {
+                    withCredentials: true
+                },
+                data:{
+                    id:id
                 }
-                catch(e){
-                    this.view.clear();
-                }
-            },this));
+            }
+        ).done(function(){
+            successCallback();
+        });
     },
-
 
     autoLogin:function()
     {
@@ -680,6 +722,104 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
         }
     }
 });
+;
+/*jshint sub:true*/
+
+
+/**
+ * 
+ * The **GraphicalEditor** is responsible for layout and dialog handling.
+ * 
+ * @author Andreas Herz
+ */
+
+var Files = Class.extend(
+{
+
+    /**
+     * @constructor
+     * 
+     * @param {String} canvasId the id of the DOM element to use as paint container
+     */
+    init : function(app)
+    {
+        this.render();
+        this.app = app;
+    },
+
+    render: function()
+    {
+        if(this.app.loggedIn!==true){
+            return;
+        }
+
+        $.ajax({
+            url:conf.backend.file.list ,
+            xhrFields: {
+                withCredentials: true
+            },
+            success:function(response) {
+                var files = response.files;
+                // sort the result
+                // Directories are always on top
+                //
+                files.sort(function (a, b) {
+                    if (a.type === b.type) {
+                        if (a.id.toLowerCase() < b.id.toLowerCase())
+                            return -1;
+                        if (a.id.toLowerCase() > b.id.toLowerCase())
+                            return 1;
+                        return 0;
+                    }
+                    return 1;
+                });
+
+                var compiled = Hogan.compile(
+                    '{{#files}}' +
+                    '<div class="col-lg-3 col-md-4 col-xs-6 thumb">'+
+                    '  <span class="ion-ios-close-outline deleteIcon"  data-toggle="confirmation"  data-id="{{id}}"></span>'+
+                    '  <a class="thumbnail" data-id="{{id}}">'+
+                    '    <img class="img-responsive" src="/backend/file/image?id={{id}}" alt="">'+
+                    '    <h4>{{name}}</h4>'+
+                    '  </a>'+
+                    '</div>'+
+                    '{{/files}}'
+                );
+
+
+                var output = compiled.render({
+                    files: files
+                });
+                $("#files .container > .row").html($(output));
+
+                $("#files .container .deleteIcon").on("click", function(){
+                    var $el = $(this);
+                    var name =  $el.data("id");
+                    app.fileDelete(name,function(){
+                        var parent = $el.parent();
+                        parent.hide('slow', function(){ parent.remove(); });
+                    });
+                });
+
+                $("[data-toggle='confirmation']").popConfirm({
+                    title: "Delete File?",
+                    content: "",
+                    placement: "bottom" // (top, right, bottom, left)
+                });
+
+
+
+                $("#files .container .thumbnail").on("click", function(){
+                    var $el = $(this);
+                    var name =  $el.data("id");
+                    app.fileOpen(name);
+                });
+
+            }
+        });
+    }
+});
+
 ;
 /*jshint sub:true*/
 
@@ -1635,8 +1775,8 @@ var View = draw2d.Canvas.extend({
         });
         var minX   = Math.min.apply(Math, xCoords);
         var minY   = Math.min.apply(Math, yCoords);
-        var width  = Math.max(10,Math.max.apply(Math, xCoords)-minX);
-        var height = Math.max(10,Math.max.apply(Math, yCoords)-minY);
+        var width  = Math.max(100,Math.max.apply(Math, xCoords)-minX);
+        var height = Math.max(100,Math.max.apply(Math, yCoords)-minY);
 
         return new draw2d.geo.Rectangle(minX,minY,width,height);
     },
@@ -2015,24 +2155,8 @@ FileOpen = Class.extend({
 
                     $('.githubPath[data-draw2d="true"]').on("click", function () {
                         var id   = $(this).data("id");
-                        var name = $(this).data("name");
-                        $.ajax({
-                                url: conf.backend.file.get,
-                                method: "POST",
-                                xhrFields: {
-                                    withCredentials: true
-                                },
-                                data:{
-                                    id:id
-                                }
-                            }
-                        ).done(function(content){
-                                _this.currentFileHandle.title=name;
-                                successCallback(content);
-                                $('#githubFileSelectDialog').modal('hide');
-                            }
-                        );
-
+                        $('#githubFileSelectDialog').modal('hide');
+                        successCallback(id);
                     });
                 }
         });
@@ -2059,7 +2183,7 @@ FileSave = Class.extend({
      *
      * @since 4.0.0
      */
-    show: function(canvas)
+    show: function(canvas, successCallback)
     {
         var _this = this;
 
@@ -2073,24 +2197,30 @@ FileSave = Class.extend({
         // Button: Commit to GitHub
         //
         $("#githubSaveFileDialog .okButton").on("click", function () {
-            var writer = new draw2d.io.json.Writer();
-            writer.marshal(canvas, function (json, base64) {
-                $.ajax({
-                        url: conf.backend.file.save,
-                        method: "POST",
-                        xhrFields: {
-                            withCredentials: true
-                        },
-                        data:{
-                            id:$("#githubSaveFileDialog .githubFileName").val(),
-                            content:JSON.stringify(json, undefined, 2)
-                        }
-                    }
-                ).done(function(){
-                        $('#githubSaveFileDialog').modal('hide');
-                });
 
-            });
+            new draw2d.io.png.Writer().marshal(canvas, function (imageDataUrl){
+                var writer = new draw2d.io.json.Writer();
+                writer.marshal(canvas, function (json, base64) {
+                    var name = $("#githubSaveFileDialog .githubFileName").val();
+                    $.ajax({
+                            url: conf.backend.file.save,
+                            method: "POST",
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            data:{
+                                id:name,
+                                content:JSON.stringify({draw2d:json, image:imageDataUrl}, undefined, 2)
+                            }
+                        }
+                    ).done(function(){
+                        _this.currentFileHandle.title=name;
+                        $('#githubSaveFileDialog').modal('hide');
+                        successCallback();
+                    });
+
+                });
+            }, canvas.getBoundingBox().scale(10, 10));
         });
 
     }
@@ -2118,6 +2248,170 @@ var MarkdownDialog = Class.extend(
             $('#markdownDialog').modal('show');
         }
 });
+;
+/*!
+
+ <!-- Complete usage -->
+ <button class=" popconfirm_full" data-toggle='confirmation' id="important_action">Full featured</button>
+
+
+ // (example jquery click event)
+ $('#important_action').on("click",function() {
+     alert('You clicked, and valided this button !');
+ });
+
+ // Full featured example
+ $("[data-toggle='confirmation']").popConfirm({
+     title: "Delete File?",
+     content: "",
+     placement: "bottom" // (top, right, bottom, left)
+ });
+
+
+ */
+
+(function ($) {
+    'use strict';
+    /*global jQuery, $*/
+    /*jslint nomen: true, evil: true*/
+    $.fn.extend({
+        popConfirm: function (options) {
+            var defaults = {
+                    title: 'Confirmation',
+                    content: 'Are you really sure ?',
+                    placement: 'right',
+                    container: 'body',
+                    yesBtn: 'Yes',
+                    noBtn: 'No'
+                },
+                last = null;
+            options = $.extend(defaults, options);
+            return this.each(function () {
+                var self = $(this),
+                    arrayActions = [],
+                    arrayDelegatedActions = [],
+                    eventToConfirm,
+                    optName,
+                    optValue,
+                    i,
+                    elmType,
+                    code,
+                    form;
+
+                // Load data-* attriutes
+                for (optName in options) {
+                    if (options.hasOwnProperty(optName)) {
+                        optValue = $(this).attr('data-confirm-' + optName);
+                        if (optValue) {
+                            options[optName] = optValue;
+                        }
+                    }
+                }
+
+                // If there are jquery click events
+                if (jQuery._data(this, "events") && jQuery._data(this, "events").click) {
+
+                    // Save all click handlers
+                    for (i = 0; i < jQuery._data(this, "events").click.length; i = i + 1) {
+                        arrayActions.push(jQuery._data(this, "events").click[i].handler);
+                    }
+
+                    // unbind it to prevent it firing
+                    $(self).unbind("click");
+                }
+
+                // If there are jquery delegated click events
+                if (self.data('remote') && jQuery._data(document, "events") && jQuery._data(document, "events").click) {
+
+                    // Save all delegated click handlers that apply
+                    for (i = 0; i < jQuery._data(document, "events").click.length; i = i + 1) {
+                        elmType = self[0].tagName.toLowerCase();
+                        if (jQuery._data(document, "events").click[i].selector && jQuery._data(document, "events").click[i].selector.indexOf(elmType + "[data-remote]") !== -1) {
+                            arrayDelegatedActions.push(jQuery._data(document, "events").click[i].handler);
+                        }
+                    }
+                }
+
+                // If there are hard onclick attribute
+                if (self.attr('onclick')) {
+                    // Extracting the onclick code to evaluate and bring it into a closure
+                    code = self.attr('onclick');
+                    arrayActions.push(function () {
+                        eval(code);
+                    });
+                    $(self).prop("onclick", null);
+                }
+
+                // If there are href link defined
+                if (!self.data('remote') && self.attr('href')) {
+                    // Assume there is a href attribute to redirect to
+                    arrayActions.push(function () {
+                        window.location.href = self.attr('href');
+                    });
+                }
+
+                // If the button is a submit one
+                if (self.attr('type') && self.attr('type') === 'submit') {
+                    // Get the form related to this button then store submiting in closure
+                    form = $(this).parents('form:first');
+                    arrayActions.push(function () {
+                        // Add the button name / value if specified
+                        if(typeof self.attr('name') !== "undefined") {
+                            $('<input type="hidden">').attr('name', self.attr('name')).attr('value', self.attr('value')).appendTo(form);
+                        }
+                        form.submit();
+                    });
+                }
+
+                self.popover({
+                    trigger: 'manual',
+                    title: options.title,
+                    html: true,
+                    placement: options.placement,
+                    container: options.container,
+                    //Avoid using multiline strings, no support in older browsers.
+                    content: options.content + '<p class="button-group" style="margin-top: 10px; text-align: center;"><button type="button" class="btn btn-small confirm-dialog-btn-abort">' + options.noBtn + '</button> <button type="button" class="btn btn-small btn-danger confirm-dialog-btn-confirm">' + options.yesBtn + '</button></p>'
+                }).click(function (e) {
+                    if (last && last !== self) {
+                        last.popover('hide').removeClass('popconfirm-active');
+                    }
+                    last = self;
+                });
+
+                $(document).on('click', function () {
+                    if (last) {
+                        last.popover('hide').removeClass('popconfirm-active');
+                    }
+                });
+
+                self.bind('click', function (e) {
+                    eventToConfirm = e;
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    $('.popconfirm-active').not(self).popover('hide').removeClass('popconfirm-active');
+                    self.popover('show').addClass('popconfirm-active');
+
+                    $(document).find('.popover .confirm-dialog-btn-confirm').one('click', function (e) {
+                        for (i = 0; i < arrayActions.length; i = i + 1) {
+                            arrayActions[i].apply(self);
+                        }
+
+                        for (i = 0; i < arrayDelegatedActions.length; i = i + 1) {
+                            arrayDelegatedActions[i].apply(self, [eventToConfirm.originalEvent]);
+                        }
+
+                        self.popover('hide').removeClass('popconfirm-active');
+                    });
+                    $(document).find('.popover .confirm-dialog-btn-abord').bind('click', function (e) {
+                        self.popover('hide').removeClass('popconfirm-active');
+                    });
+                });
+            });
+        }
+    });
+}(jQuery));
 ;
 /*jshint evil:true */
 
@@ -2909,6 +3203,18 @@ var Reader = draw2d.io.json.Reader.extend({
         this._super();
     },
 
+    unmarshal:function(view, fileData)
+    {
+        // new JSON format with draw2&image content
+        if(fileData.draw2d){
+            this._super(view, fileData.draw2d);
+        }
+        // native JSON format
+        else{
+            this._super(view, fileData);
+        }
+    },
+
     createFigureFromType:function(type)
     {
         // path object types from older versions of JSON
@@ -2919,6 +3225,7 @@ var Reader = draw2d.io.json.Reader.extend({
         return this._super(type);
     }
 });
+
 ;
 /*
  * object.watch polyfill
