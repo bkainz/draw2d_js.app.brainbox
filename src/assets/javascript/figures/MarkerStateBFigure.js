@@ -37,7 +37,6 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
             fontColor:"#303030"
         });
         this.add(this.label);
-        // don't catch the mouse events. This is done by the parent container
         this.label.hitTest = function(){return false;};
         this.label.addCssClass("highlightOnHover");
 

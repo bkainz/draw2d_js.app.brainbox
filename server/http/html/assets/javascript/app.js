@@ -68,8 +68,6 @@ var Application = Class.extend(
             }, 'xml');
 
         });
-
-   //     $("#folder_tab a").click();
     },
 
 
@@ -1501,8 +1499,19 @@ var View = draw2d.Canvas.extend({
 
 
         $(".toolbar").delegate("#editDelete:not(.disabled)","click", function(){
+            var selection = _this.getSelection();
             _this.getCommandStack().startTransaction(draw2d.Configuration.i18n.command.deleteShape);
-            _this.getSelection().each(function(index, figure){
+            selection.each(function(index, figure){
+
+                // Don't delete the conection if the source or target node part of the
+                // selection. In this case the nodes deletes all connections by itself.
+                //
+                if(figure instanceof draw2d.Connection){
+                    if(selection.contains(figure.getSource().getRoot()) || selection.contains(figure.getTarget().getRoot())){
+                       return;
+                    }
+                }
+
                 var cmd = figure.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.DELETE));
                 if(cmd!==null){
                     _this.getCommandStack().execute(cmd);
@@ -2976,7 +2985,6 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
             fontColor:"#303030"
         });
         this.add(this.label);
-        // don't catch the mouse events. This is done by the parent container
         this.label.hitTest = function(){return false;};
         this.label.addCssClass("highlightOnHover");
 

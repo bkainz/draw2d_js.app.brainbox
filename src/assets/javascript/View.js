@@ -158,8 +158,19 @@ var View = draw2d.Canvas.extend({
 
 
         $(".toolbar").delegate("#editDelete:not(.disabled)","click", function(){
+            var selection = _this.getSelection();
             _this.getCommandStack().startTransaction(draw2d.Configuration.i18n.command.deleteShape);
-            _this.getSelection().each(function(index, figure){
+            selection.each(function(index, figure){
+
+                // Don't delete the conection if the source or target node part of the
+                // selection. In this case the nodes deletes all connections by itself.
+                //
+                if(figure instanceof draw2d.Connection){
+                    if(selection.contains(figure.getSource().getRoot()) || selection.contains(figure.getTarget().getRoot())){
+                       return;
+                    }
+                }
+
                 var cmd = figure.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.DELETE));
                 if(cmd!==null){
                     _this.getCommandStack().execute(cmd);

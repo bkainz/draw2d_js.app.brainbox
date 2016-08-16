@@ -39245,7 +39245,7 @@ draw2d.Figure = Class.extend({
          // Only apply attributes which has changed. This ends in a big performance improvement
          // because the raphael shape isn't redraw at all.
          //
-         attributes = draw2d.util.JSON.flatDiff(attributes, this.lastAppliedAttributes);
+       //  attributes = draw2d.util.JSON.flatDiff(attributes, this.lastAppliedAttributes);
          this.lastAppliedAttributes= attributes;
 
 

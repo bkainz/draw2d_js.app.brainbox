@@ -68,8 +68,6 @@ var Application = Class.extend(
             }, 'xml');
 
         });
-
-   //     $("#folder_tab a").click();
     },
 
 
