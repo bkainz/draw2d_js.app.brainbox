@@ -585,6 +585,38 @@ ellipse.draw2d_OutputPort {
   top: 8px;
   cursor: pointer;
 }
+#files .thumb .thumbnail img {
+  cursor: pointer;
+}
+#files .thumb .filenameInplaceEdit {
+  font-size: 18px;
+  color: #0078f2;
+  margin-top: 5px;
+}
+#files .thumb h4 {
+  font-size: 18px;
+  color: #0078f2;
+}
+#files .thumbAdd {
+  color: #0078f2;
+  border: 1px solid rgba(0, 120, 242, 0.33);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 1s;
+  -webkit-transition: all 1s;
+}
+#files .thumbAdd div {
+  font-size: 160px;
+  text-align: center;
+}
+#files .thumbAdd h4 {
+  text-align: center;
+}
+#files .thumbAdd:hover {
+  border: 1px solid #0078f2;
+  transition: all 1s;
+  -webkit-transition: all 1s;
+}
 #files .editorLogin {
   white-space: nowrap;
   width: auto !important;
@@ -619,11 +651,10 @@ ellipse.draw2d_OutputPort {
   border: 1px solid #1c9bab;
 }
 text.highlightOnHover:hover {
-  fill: #1c9bab;
   cursor: pointer;
+  font-weight: bold;
 }
 ellipse.highlightOnHover:hover {
-  stroke: #1c9bab;
   cursor: pointer;
 }
 rect.Raft {
@@ -863,6 +894,13 @@ body #layout .tab-content .active {
   border: 0;
 }
 
+.modal-content {
+  border-radius: 2px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+.modal-backdrop.in {
+  opacity: 0.3;
+}
 .githubFileDialog .githubNavigation *[data-draw2d="true"] {
   font-weight: bold;
   color: #0078f2;
@@ -991,6 +1029,11 @@ body #layout .tab-content .active {
 #githubFileSelectDialog .githubNavigation {
   height: 300px;
   overflow: scroll;
+}
+
+#githubNewFileDialog .githubFilePreview {
+  font-size: 115px;
+  color: #0078f2;
 }
 
 #githubSaveFileDialog .githubFilePreview {

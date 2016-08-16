@@ -21,6 +21,7 @@ var conf={
             get   : "http://draw2d.org/backend/file_get.php",
             del   : "http://draw2d.org/backend/file_delete.php",
             save  : "http://draw2d.org/backend/file_save.php",
+            rename: "http://draw2d.org/backend/file_rename.php",
             image : "http://draw2d.org/backend/file_image.php"
         }
     },
@@ -29,5 +30,9 @@ var conf={
     },
     issues: {
         url: "https://github.com/freegroup/draw2d_js.shapes/issues/new"
+    },
+    color:{
+        high: "#C21B7A",
+        low:  "#0078F2"
     }
 };

@@ -68,8 +68,6 @@ var Application = Class.extend(
             }, 'xml');
 
         });
-
-   //     $("#folder_tab a").click();
     },
 
 
@@ -123,7 +121,7 @@ var Application = Class.extend(
 
     fileNew: function(shapeTemplate)
     {
-        $("#edit_tab a").click();
+        $("#leftTabStrip .editor").click();
         this.currentFileHandle = {
             title: "Untitled"+conf.fileSuffix
         };
@@ -753,6 +751,7 @@ var Files = Class.extend(
 
     render: function()
     {
+        var _this = this;
         if(this.app.loggedIn!==true){
             return;
         }
@@ -783,8 +782,8 @@ var Files = Class.extend(
                     '<div class="col-lg-3 col-md-4 col-xs-6 thumb">'+
                     '  <span class="ion-ios-close-outline deleteIcon"  data-toggle="confirmation"  data-id="{{id}}"></span>'+
                     '  <a class="thumbnail" data-id="{{id}}">'+
-                    '    <img class="img-responsive" src="'+conf.backend.file.image+'?id={{id}}" alt="">'+
-                    '    <h4>{{name}}</h4>'+
+                    '    <img class="img-responsive" src="'+conf.backend.file.image+'?id={{id}}" data-id="{{id}}">'+
+                    '    <h4 data-name="{{name}}">{{name}}</h4>'+
                     '  </a>'+
                     '</div>'+
                     '{{/files}}'
@@ -794,7 +793,14 @@ var Files = Class.extend(
                 var output = compiled.render({
                     files: files
                 });
-                $("#files .container > .row").html($(output));
+
+                $("#files .container > .row").html(
+                '<div class="col-lg-3 col-md-4 col-xs-6 thumbAdd">'+
+                '    <div class="img-responsive ion-ios-plus-outline"></div>'+
+                '    <h4>New File</h4>'+
+                '</div>');
+
+                $("#files .container > .row").append($(output));
 
                 $("#files .container .deleteIcon").on("click", function(){
                     var $el = $(this);
@@ -812,13 +818,59 @@ var Files = Class.extend(
                 });
 
 
+                $("#files .container .thumbnail h4").on("click", function() {
+                    var $el = $(this);
+                    var name = $el.data("name");
+                    var $replaceWith = $('<input type="input" class="filenameInplaceEdit" value="' + name + '" />');
+                    $el.hide();
+                    $el.after($replaceWith);
+                    $replaceWith.focus();
 
-                $("#files .container .thumbnail").on("click", function(){
+                    var fire = function () {
+                        var newName = $replaceWith.val();
+                        if (newName !== "") {
+                            // get the value and post them here
+                            $.ajax({
+                                    url: conf.backend.file.rename,
+                                    method: "POST",
+                                    xhrFields: { withCredentials: true},
+                                    data:{
+                                        from:name+conf.fileSuffix,
+                                        to:newName+conf.fileSuffix
+                                    }
+                                }
+                            ).done(function(){
+                                $replaceWith.remove();
+                                $el.html(newName);
+                                $el.show();
+                                $el.data("name", newName);
+                                $(".thumb [data-id='"+name+conf.fileSuffix+"']").data("id",newName+conf.fileSuffix);
+                            });
+
+                        }
+                        else {
+                            // get the value and post them here
+                            $replaceWith.remove();
+                            $el.show();
+                        }
+                    };
+                    $replaceWith.blur(fire);
+                    $replaceWith.keypress(function (e) {
+                        if (e.which === 13) {
+                            fire();
+                        }
+                    });
+                });
+
+                $("#files .container .thumbnail img").on("click", function(){
                     var $el = $(this);
                     var name =  $el.data("id");
                     app.fileOpen(name);
                 });
 
+                $("#files .thumbAdd").on("click", function(){
+                    new FileNew(_this.app).show();
+                });
             }
         });
     }
@@ -1446,12 +1498,35 @@ var View = draw2d.Canvas.extend({
         });
 
 
+        $(".toolbar").delegate("#editDelete:not(.disabled)","click", function(){
+            var selection = _this.getSelection();
+            _this.getCommandStack().startTransaction(draw2d.Configuration.i18n.command.deleteShape);
+            selection.each(function(index, figure){
 
-        $("#editUndo").on("click", function(){
+                // Don't delete the conection if the source or target node part of the
+                // selection. In this case the nodes deletes all connections by itself.
+                //
+                if(figure instanceof draw2d.Connection){
+                    if(selection.contains(figure.getSource().getRoot()) || selection.contains(figure.getTarget().getRoot())){
+                       return;
+                    }
+                }
+
+                var cmd = figure.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.DELETE));
+                if(cmd!==null){
+                    _this.getCommandStack().execute(cmd);
+                }
+            });
+            // execute all single commands at once.
+            _this.getCommandStack().commitTransaction();
+        });
+
+
+        $(".toolbar").delegate("#editUndo:not(.disabled)","click", function(){
             _this.getCommandStack().undo();
         });
 
-        $("#editRedo").on("click", function(){
+        $(".toolbar").delegate("#editRedo:not(.disabled)","click", function(){
             _this.getCommandStack().redo();
         });
 
@@ -1459,6 +1534,18 @@ var View = draw2d.Canvas.extend({
             _this.simulationToggle();
         });
 
+
+        // Register a Selection listener for the state hnadling
+        // of the Delete Button
+        //
+        this.on("select", function(emitter, event){
+            if(event.figure===null ) {
+                $("#editDelete").addClass("disabled");
+            }
+            else{
+                $("#editDelete").removeClass("disabled");
+            }
+        });
 
         this.on("contextmenu", function(emitter, event){
             var figure = _this.getBestFigure(event.x, event.y);
@@ -1732,7 +1819,7 @@ var View = draw2d.Canvas.extend({
             var outPort = line.getSource();
             var inPort  = line.getTarget();
             inPort.setValue(outPort.getValue());
-            line.setColor(outPort.getValue()?"#C21B7A":"#0078F2");
+            line.setColor(outPort.getValue()?conf.color.high:conf.color.low);
         });
 
         if(this.simulate===true){
@@ -1766,7 +1853,6 @@ var View = draw2d.Canvas.extend({
         }
 
     },
-
 
     getBoundingBox: function()
     {
@@ -1974,9 +2060,8 @@ var Widget = draw2d.Canvas.extend({
 });
 
 ;
-About = Class.extend(
+var About = Class.extend(
 {
-    NAME : "shape_designer.dialog.About", 
 
     init:function(){
      },
@@ -1993,10 +2078,10 @@ About = Class.extend(
 	    $("body").append(this.splash);
 	    
 	    this.splash.fadeIn("fast");
-	    
 	},
 	
-	hide: function(){
+	hide: function()
+	{
         this.splash.delay(2500)
         .fadeOut( "slow", $.proxy(function() {
             this.splash.remove();
@@ -2081,6 +2166,44 @@ var FigureConfigDialog = (function () {
     };
 })();
 
+;
+var FileNew = Class.extend({
+
+    /**
+     * @constructor
+     *
+     */
+    init:function(app){
+        this.app = app;
+    },
+
+    /**
+     * @method
+     *
+     * Open the file picker and load the selected file.<br>
+     *
+     * @param {Function} successCallback callback method if the user select a file and the content is loaded
+     * @param {Function} errorCallback method to call if any error happens
+     *
+     * @since 4.0.0
+     */
+    show: function()
+    {
+        var _this = this;
+        $("#githubNewFileDialog .githubFileName").val("NewDocument");
+        $('#githubNewFileDialog').on('shown.bs.modal', function () {
+            $(this).find('input:first').focus();
+        });
+        $("#githubNewFileDialog").modal("show");
+
+        $("#githubNewFileDialog .okButton").on("click", function () {
+             var name = $("#githubNewFileDialog .githubFileName").val();
+            $('#githubNewFileDialog').modal('hide');
+            _this.app.fileNew();
+            _this.app.currentFileHandle.title = name;
+        });
+    }
+});
 ;
 FileOpen = Class.extend({
 
@@ -2167,7 +2290,7 @@ FileOpen = Class.extend({
     }
 });
 ;
-FileSave = Class.extend({
+var FileSave = Class.extend({
 
     /**
      * @constructor
@@ -2235,7 +2358,8 @@ FileSave = Class.extend({
 var MarkdownDialog = Class.extend(
     {
 
-        init:function(){
+        init:function()
+        {
             this.defaults = {
                 html:         false,        // Enable HTML tags in source
                 xhtmlOut:     false,        // Use '/' to close single tags (<br />)
@@ -2247,7 +2371,8 @@ var MarkdownDialog = Class.extend(
             };
         },
 
-        show:function(markdown){
+        show:function(markdown)
+        {
             var markdownParser = new Remarkable('full', this.defaults);
             $('#markdownDialog .html').html(markdownParser.render(markdown));
             $('#markdownDialog').modal('show');
@@ -2689,9 +2814,11 @@ var MarkerFigure = draw2d.shape.layout.VerticalLayout.extend({
                         switch(key){
                             case "high":
                                 _this.setDefaultValue(true);
+                                _this.setStick(true);
                                 break;
                             case "low":
                                 _this.setDefaultValue(false);
+                                _this.setStick(true);
                                 break;
                             default:
                                 break;
@@ -2776,7 +2903,9 @@ var MarkerFigure = draw2d.shape.layout.VerticalLayout.extend({
     setDefaultValue: function(value)
     {
         this.defaultValue = value;
+
         this.setText((this.defaultValue===true)?"High":"Low ");
+        this.stateB.setTintColor((this.defaultValue===true)?conf.color.high:conf.color.low);
 
         // only propagate the value to the parent if the decoration permanent visible
         //
@@ -2830,10 +2959,12 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
      */
     init : function(attr, setter, getter)
     {
+        this.tintColor = conf.color.low;
+
         this._super($.extend({
             bgColor:"#FFFFFF",
             stroke:1,
-            color:"#00bcd4",
+            color:conf.color.low,
             radius:2,
             padding:{left:3, top:2, bottom:0, right:8},
             gap:5
@@ -2860,7 +2991,6 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
             fontColor:"#303030"
         });
         this.add(this.label);
-        // don't catch the mouse events. This is done by the parent container
         this.label.hitTest = function(){return false;};
         this.label.addCssClass("highlightOnHover");
 
@@ -2876,10 +3006,17 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
         this.label.setText(text);
     },
 
+    setTintColor: function(color)
+    {
+        this.tintColor = color;
+        this.attr({color:color});
+        this.label.attr({fontColor:color});
+    },
+
     setTick :function(flag)
     {
-        this.stickTick.attr({bgColor:flag?"#00bcd4":"#f0f0f0"});
-   },
+        this.stickTick.attr({bgColor:flag?this.tintColor:"#f0f0f0"});
+    },
 
     getStickTickFigure:function()
     {
