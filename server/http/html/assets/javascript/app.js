@@ -1819,7 +1819,7 @@ var View = draw2d.Canvas.extend({
             var outPort = line.getSource();
             var inPort  = line.getTarget();
             inPort.setValue(outPort.getValue());
-            line.setColor(outPort.getValue()?"#C21B7A":"#0078F2");
+            line.setColor(outPort.getValue()?conf.color.high:conf.color.low);
         });
 
         if(this.simulate===true){
@@ -2814,9 +2814,11 @@ var MarkerFigure = draw2d.shape.layout.VerticalLayout.extend({
                         switch(key){
                             case "high":
                                 _this.setDefaultValue(true);
+                                _this.setStick(true);
                                 break;
                             case "low":
                                 _this.setDefaultValue(false);
+                                _this.setStick(true);
                                 break;
                             default:
                                 break;
@@ -2901,7 +2903,9 @@ var MarkerFigure = draw2d.shape.layout.VerticalLayout.extend({
     setDefaultValue: function(value)
     {
         this.defaultValue = value;
+
         this.setText((this.defaultValue===true)?"High":"Low ");
+        this.stateB.setTintColor((this.defaultValue===true)?conf.color.high:conf.color.low);
 
         // only propagate the value to the parent if the decoration permanent visible
         //
@@ -2955,10 +2959,12 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
      */
     init : function(attr, setter, getter)
     {
+        this.tintColor = conf.color.low;
+
         this._super($.extend({
             bgColor:"#FFFFFF",
             stroke:1,
-            color:"#00bcd4",
+            color:conf.color.low,
             radius:2,
             padding:{left:3, top:2, bottom:0, right:8},
             gap:5
@@ -3000,10 +3006,17 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
         this.label.setText(text);
     },
 
+    setTintColor: function(color)
+    {
+        this.tintColor = color;
+        this.attr({color:color});
+        this.label.attr({fontColor:color});
+    },
+
     setTick :function(flag)
     {
-        this.stickTick.attr({bgColor:flag?"#00bcd4":"#f0f0f0"});
-   },
+        this.stickTick.attr({bgColor:flag?this.tintColor:"#f0f0f0"});
+    },
 
     getStickTickFigure:function()
     {

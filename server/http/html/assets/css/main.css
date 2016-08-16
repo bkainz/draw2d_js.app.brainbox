@@ -651,11 +651,10 @@ ellipse.draw2d_OutputPort {
   border: 1px solid #1c9bab;
 }
 text.highlightOnHover:hover {
-  fill: #1c9bab;
   cursor: pointer;
+  font-weight: bold;
 }
 ellipse.highlightOnHover:hover {
-  stroke: #1c9bab;
   cursor: pointer;
 }
 rect.Raft {

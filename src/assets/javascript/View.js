@@ -478,7 +478,7 @@ var View = draw2d.Canvas.extend({
             var outPort = line.getSource();
             var inPort  = line.getTarget();
             inPort.setValue(outPort.getValue());
-            line.setColor(outPort.getValue()?"#C21B7A":"#0078F2");
+            line.setColor(outPort.getValue()?conf.color.high:conf.color.low);
         });
 
         if(this.simulate===true){

@@ -65,9 +65,11 @@ var MarkerFigure = draw2d.shape.layout.VerticalLayout.extend({
                         switch(key){
                             case "high":
                                 _this.setDefaultValue(true);
+                                _this.setStick(true);
                                 break;
                             case "low":
                                 _this.setDefaultValue(false);
+                                _this.setStick(true);
                                 break;
                             default:
                                 break;
@@ -152,7 +154,9 @@ var MarkerFigure = draw2d.shape.layout.VerticalLayout.extend({
     setDefaultValue: function(value)
     {
         this.defaultValue = value;
+
         this.setText((this.defaultValue===true)?"High":"Low ");
+        this.stateB.setTintColor((this.defaultValue===true)?conf.color.high:conf.color.low);
 
         // only propagate the value to the parent if the decoration permanent visible
         //

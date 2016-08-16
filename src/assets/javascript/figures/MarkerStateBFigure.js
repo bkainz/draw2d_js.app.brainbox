@@ -7,10 +7,12 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
      */
     init : function(attr, setter, getter)
     {
+        this.tintColor = conf.color.low;
+
         this._super($.extend({
             bgColor:"#FFFFFF",
             stroke:1,
-            color:"#00bcd4",
+            color:conf.color.low,
             radius:2,
             padding:{left:3, top:2, bottom:0, right:8},
             gap:5
@@ -52,10 +54,17 @@ var MarkerStateBFigure = draw2d.shape.layout.HorizontalLayout.extend({
         this.label.setText(text);
     },
 
+    setTintColor: function(color)
+    {
+        this.tintColor = color;
+        this.attr({color:color});
+        this.label.attr({fontColor:color});
+    },
+
     setTick :function(flag)
     {
-        this.stickTick.attr({bgColor:flag?"#00bcd4":"#f0f0f0"});
-   },
+        this.stickTick.attr({bgColor:flag?this.tintColor:"#f0f0f0"});
+    },
 
     getStickTickFigure:function()
     {

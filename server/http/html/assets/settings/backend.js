@@ -30,5 +30,9 @@ var conf={
     },
     issues: {
         url: "https://github.com/freegroup/draw2d_js.shapes/issues/new"
+    },
+    color:{
+        high: "#C21B7A",
+        low:  "#0078F2"
     }
 };
