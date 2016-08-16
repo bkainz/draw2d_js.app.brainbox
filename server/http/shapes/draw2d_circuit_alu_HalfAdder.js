@@ -164,6 +164,11 @@ var draw2d_circuit_alu_HalfAdder = draw2d.SetFigure.extend({
     {
     },
 
+    getParameterSettings: function()
+    {
+        return [];
+    },
+
     /**
      * @method
      */

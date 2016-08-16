@@ -1,6 +1,5 @@
-About = Class.extend(
+var About = Class.extend(
 {
-    NAME : "shape_designer.dialog.About", 
 
     init:function(){
      },
@@ -17,10 +16,10 @@ About = Class.extend(
 	    $("body").append(this.splash);
 	    
 	    this.splash.fadeIn("fast");
-	    
 	},
 	
-	hide: function(){
+	hide: function()
+	{
         this.splash.delay(2500)
         .fadeOut( "slow", $.proxy(function() {
             this.splash.remove();

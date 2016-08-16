@@ -1,4 +1,4 @@
-FileSave = Class.extend({
+var FileSave = Class.extend({
 
     /**
      * @constructor

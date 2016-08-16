@@ -1,7 +1,8 @@
 var MarkdownDialog = Class.extend(
     {
 
-        init:function(){
+        init:function()
+        {
             this.defaults = {
                 html:         false,        // Enable HTML tags in source
                 xhtmlOut:     false,        // Use '/' to close single tags (<br />)
@@ -13,7 +14,8 @@ var MarkdownDialog = Class.extend(
             };
         },
 
-        show:function(markdown){
+        show:function(markdown)
+        {
             var markdownParser = new Remarkable('full', this.defaults);
             $('#markdownDialog .html').html(markdownParser.render(markdown));
             $('#markdownDialog').modal('show');

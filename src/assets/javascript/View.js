@@ -157,12 +157,24 @@ var View = draw2d.Canvas.extend({
         });
 
 
+        $(".toolbar").delegate("#editDelete:not(.disabled)","click", function(){
+            _this.getCommandStack().startTransaction(draw2d.Configuration.i18n.command.deleteShape);
+            _this.getSelection().each(function(index, figure){
+                var cmd = figure.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.DELETE));
+                if(cmd!==null){
+                    _this.getCommandStack().execute(cmd);
+                }
+            });
+            // execute all single commands at once.
+            _this.getCommandStack().commitTransaction();
+        });
 
-        $("#editUndo").on("click", function(){
+
+        $(".toolbar").delegate("#editUndo:not(.disabled)","click", function(){
             _this.getCommandStack().undo();
         });
 
-        $("#editRedo").on("click", function(){
+        $(".toolbar").delegate("#editRedo:not(.disabled)","click", function(){
             _this.getCommandStack().redo();
         });
 
@@ -170,6 +182,18 @@ var View = draw2d.Canvas.extend({
             _this.simulationToggle();
         });
 
+
+        // Register a Selection listener for the state hnadling
+        // of the Delete Button
+        //
+        this.on("select", function(emitter, event){
+            if(event.figure===null ) {
+                $("#editDelete").addClass("disabled");
+            }
+            else{
+                $("#editDelete").removeClass("disabled");
+            }
+        });
 
         this.on("contextmenu", function(emitter, event){
             var figure = _this.getBestFigure(event.x, event.y);
@@ -477,7 +501,6 @@ var View = draw2d.Canvas.extend({
         }
 
     },
-
 
     getBoundingBox: function()
     {

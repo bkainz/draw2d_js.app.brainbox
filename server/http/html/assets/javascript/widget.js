@@ -26186,6 +26186,10 @@ draw2d.policy.canvas.WheelZoomPolicy = draw2d.policy.canvas.ZoomPolicy.extend({
      _zoom: function(zoom, center){
          var canvas = this.canvas;
 
+         if(zoom === canvas.zoomFactor){
+            return;
+         }
+
          canvas.zoomFactor=zoom;
 
          canvas.paper.setViewBox(0, 0, canvas.initialWidth, canvas.initialHeight);
@@ -34443,7 +34447,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.52",
+    version : "6.1.57",
     i18n : {
         command : {
             move : "Move Shape",
@@ -34875,19 +34879,7 @@ draw2d.Canvas = Class.extend(
     init: function(canvasId, width, height)
     {
         var _this = this;
-        // Hook the canvas calculation for IE8
-        //
-        if (navigator.appName == 'Microsoft Internet Explorer')
-        {
-          var ua = navigator.userAgent;
-          var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-          if (re.exec(ua) != null){
-            var rv = parseInt( RegExp.$1 );
-            if(rv===8){
-                this.fromDocumentToCanvasCoordinate = this._fromDocumentToCanvasCoordinate_IE8_HACK;
-            }
-          }
-        }
+
 
         this.setScrollArea(document.body);
         this.canvasId = canvasId;
@@ -35557,13 +35549,6 @@ draw2d.Canvas = Class.extend(
                 (y - this.getAbsoluteY() + this.getScrollTop())*this.zoomFactor);
     },
   
-    _fromDocumentToCanvasCoordinate_IE8_HACK: function(x, y)
-    {
-        return new draw2d.geo.Point(
-                (x - this.getAbsoluteX())*this.zoomFactor,
-                (y - this.getAbsoluteY())*this.zoomFactor);
-    },
-
     /**
      * @method
      * Transforms a canvas coordinate to document coordinate.
@@ -35797,7 +35782,9 @@ draw2d.Canvas = Class.extend(
         figure.setCanvas(this);
 
         // to avoid drag&drop outside of this canvas
-        figure.installEditPolicy(this.regionDragDropConstraint);
+        if(!(figure instanceof draw2d.Port)) {
+            figure.installEditPolicy(this.regionDragDropConstraint);
+        }
 
         // important inital call
         figure.getShapeElement();
@@ -37060,16 +37047,16 @@ draw2d.Figure = Class.extend({
      * 
      *     // setting multiple attributes:
      *     figure.attr({
-     *       userData.my.property.x: 30,
-     *       userData.my.property.y: 40
+     *       "userData.my.property.x": 30,
+     *       "userData.my.property.y": 40
      *     });
      * 
      * Also set using array notation is possible for the userData:
      * 
      *     // dot notation and array brackets:
      *     figure.attr({
-     *       userData.my.names[0]: "John",
-     *       userData.my.names[1]: "Doe"
+     *       "userData.my.names[0]": "John",
+     *       "userData.my.names[1]": "Doe"
      *     });
      *     
      *     
@@ -37111,14 +37098,16 @@ draw2d.Figure = Class.extend({
                     // index/brackets are allowed too.
                     //
                     if(key.substring(0,9)==="userData."){
+                        if(this.userData===null){this.userData={};}
                         draw2d.util.JSON.set({userData:this.userData}, key, name[key]);
+                        this.fireEvent("change:"+key,{value:name[key]});
                     }
                     else{
                         var func=this.setterWhitelist[key];
                         if(func){
                             func.call(this,name[key]); 
                         }
-                        // maby the ussser adds a function as property to the attr call
+                        // maybe the user adds a function as property to the attr call
                         // e.g.:
                         // {
                         //     doIt: function(){}
@@ -37156,7 +37145,9 @@ draw2d.Figure = Class.extend({
                     value = value();
                 }
                 if(name.substring(0,9)==="userData."){
+                    if(this.userData===null){this.userData={};}
                     draw2d.util.JSON.set({userData:this.userData}, name, value);
+                    this.fireEvent("change:"+name,{value:value});
                 }
                 else{
                     var setter = this.setterWhitelist[name];
@@ -37761,8 +37752,9 @@ draw2d.Figure = Class.extend({
          // deinstall all instances of the policy
          //
          var _this = this;
+         var name = (typeof policy === "string")?policy:policy.NAME;
          this.editPolicy.grep(function(p){
-             if(p.NAME === policy.NAME){
+             if(p.NAME === name){
                  p.onUninstall(_this);
                  return false;
              }
@@ -67165,7 +67157,7 @@ var Application = Class.extend(
 
     fileNew: function(shapeTemplate)
     {
-        $("#edit_tab a").click();
+        $("#leftTabStrip .editor").click();
         this.currentFileHandle = {
             title: "Untitled"+conf.fileSuffix
         };
@@ -68488,12 +68480,24 @@ var View = draw2d.Canvas.extend({
         });
 
 
+        $(".toolbar").delegate("#editDelete:not(.disabled)","click", function(){
+            _this.getCommandStack().startTransaction(draw2d.Configuration.i18n.command.deleteShape);
+            _this.getSelection().each(function(index, figure){
+                var cmd = figure.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.DELETE));
+                if(cmd!==null){
+                    _this.getCommandStack().execute(cmd);
+                }
+            });
+            // execute all single commands at once.
+            _this.getCommandStack().commitTransaction();
+        });
 
-        $("#editUndo").on("click", function(){
+
+        $(".toolbar").delegate("#editUndo:not(.disabled)","click", function(){
             _this.getCommandStack().undo();
         });
 
-        $("#editRedo").on("click", function(){
+        $(".toolbar").delegate("#editRedo:not(.disabled)","click", function(){
             _this.getCommandStack().redo();
         });
 
@@ -68501,6 +68505,18 @@ var View = draw2d.Canvas.extend({
             _this.simulationToggle();
         });
 
+
+        // Register a Selection listener for the state hnadling
+        // of the Delete Button
+        //
+        this.on("select", function(emitter, event){
+            if(event.figure===null ) {
+                $("#editDelete").addClass("disabled");
+            }
+            else{
+                $("#editDelete").removeClass("disabled");
+            }
+        });
 
         this.on("contextmenu", function(emitter, event){
             var figure = _this.getBestFigure(event.x, event.y);
@@ -68809,7 +68825,6 @@ var View = draw2d.Canvas.extend({
 
     },
 
-
     getBoundingBox: function()
     {
         var xCoords = [];
@@ -69016,9 +69031,8 @@ var Widget = draw2d.Canvas.extend({
 });
 
 ;
-About = Class.extend(
+var About = Class.extend(
 {
-    NAME : "shape_designer.dialog.About", 
 
     init:function(){
      },
@@ -69035,10 +69049,10 @@ About = Class.extend(
 	    $("body").append(this.splash);
 	    
 	    this.splash.fadeIn("fast");
-	    
 	},
 	
-	hide: function(){
+	hide: function()
+	{
         this.splash.delay(2500)
         .fadeOut( "slow", $.proxy(function() {
             this.splash.remove();
@@ -69123,6 +69137,44 @@ var FigureConfigDialog = (function () {
     };
 })();
 
+;
+var FileNew = Class.extend({
+
+    /**
+     * @constructor
+     *
+     */
+    init:function(app){
+        this.app = app;
+    },
+
+    /**
+     * @method
+     *
+     * Open the file picker and load the selected file.<br>
+     *
+     * @param {Function} successCallback callback method if the user select a file and the content is loaded
+     * @param {Function} errorCallback method to call if any error happens
+     *
+     * @since 4.0.0
+     */
+    show: function()
+    {
+        var _this = this;
+        $("#githubNewFileDialog .githubFileName").val("NewDocument");
+        $('#githubNewFileDialog').on('shown.bs.modal', function () {
+            $(this).find('input:first').focus();
+        });
+        $("#githubNewFileDialog").modal("show");
+
+        $("#githubNewFileDialog .okButton").on("click", function () {
+             var name = $("#githubNewFileDialog .githubFileName").val();
+            $('#githubNewFileDialog').modal('hide');
+            _this.app.fileNew();
+            _this.app.currentFileHandle.title = name;
+        });
+    }
+});
 ;
 FileOpen = Class.extend({
 
@@ -69209,7 +69261,7 @@ FileOpen = Class.extend({
     }
 });
 ;
-FileSave = Class.extend({
+var FileSave = Class.extend({
 
     /**
      * @constructor
@@ -69277,7 +69329,8 @@ FileSave = Class.extend({
 var MarkdownDialog = Class.extend(
     {
 
-        init:function(){
+        init:function()
+        {
             this.defaults = {
                 html:         false,        // Enable HTML tags in source
                 xhtmlOut:     false,        // Use '/' to close single tags (<br />)
@@ -69289,7 +69342,8 @@ var MarkdownDialog = Class.extend(
             };
         },
 
-        show:function(markdown){
+        show:function(markdown)
+        {
             var markdownParser = new Remarkable('full', this.defaults);
             $('#markdownDialog .html').html(markdownParser.render(markdown));
             $('#markdownDialog').modal('show');

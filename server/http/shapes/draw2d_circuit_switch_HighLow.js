@@ -56,22 +56,22 @@ var draw2d_circuit_switch_HighLow = draw2d.SetFigure.extend({
         
         // high_shadow
         shape = this.canvas.paper.path('M39.5 22.5L13.5,11.5');
-        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"none","stroke-width":2,"dasharray":null,"opacity":1});
+        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"none","stroke-width":2,"stroke-dasharray":null,"opacity":1});
         shape.data("name","high_shadow");
         
         // high
         shape = this.canvas.paper.path('M39.5 22.5L13.5,11.5');
-        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"#000000","stroke-width":2,"dasharray":null,"opacity":1});
+        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"#000000","stroke-width":2,"stroke-dasharray":null,"opacity":1});
         shape.data("name","high");
         
         // low_shadow
         shape = this.canvas.paper.path('M38.5 22.5L13.5,32.5');
-        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"none","stroke-width":2,"dasharray":null,"opacity":1});
+        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"none","stroke-width":2,"stroke-dasharray":null,"opacity":1});
         shape.data("name","low_shadow");
         
         // low
         shape = this.canvas.paper.path('M38.5 22.5L13.5,32.5');
-        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"#000000","stroke-width":2,"dasharray":null,"opacity":1});
+        shape.attr({"stroke-linecap":"round","stroke-linejoin":"round","stroke":"#000000","stroke-width":2,"stroke-dasharray":null,"opacity":1});
         shape.data("name","low");
         
 
@@ -144,6 +144,11 @@ var draw2d_circuit_switch_HighLow = draw2d.SetFigure.extend({
 
     onStop:function()
     {
+    },
+
+    getParameterSettings: function()
+    {
+        return [];
     },
 
     /**

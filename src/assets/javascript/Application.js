@@ -123,7 +123,7 @@ var Application = Class.extend(
 
     fileNew: function(shapeTemplate)
     {
-        $("#edit_tab a").click();
+        $("#leftTabStrip .editor").click();
         this.currentFileHandle = {
             title: "Untitled"+conf.fileSuffix
         };

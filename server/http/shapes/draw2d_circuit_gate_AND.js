@@ -133,6 +133,11 @@ var draw2d_circuit_gate_AND = draw2d.SetFigure.extend({
     {
     },
 
+    getParameterSettings: function()
+    {
+        return [];
+    },
+
     /**
      * @method
      */

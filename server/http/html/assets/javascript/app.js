@@ -123,7 +123,7 @@ var Application = Class.extend(
 
     fileNew: function(shapeTemplate)
     {
-        $("#edit_tab a").click();
+        $("#leftTabStrip .editor").click();
         this.currentFileHandle = {
             title: "Untitled"+conf.fileSuffix
         };
@@ -1446,12 +1446,24 @@ var View = draw2d.Canvas.extend({
         });
 
 
+        $(".toolbar").delegate("#editDelete:not(.disabled)","click", function(){
+            _this.getCommandStack().startTransaction(draw2d.Configuration.i18n.command.deleteShape);
+            _this.getSelection().each(function(index, figure){
+                var cmd = figure.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.DELETE));
+                if(cmd!==null){
+                    _this.getCommandStack().execute(cmd);
+                }
+            });
+            // execute all single commands at once.
+            _this.getCommandStack().commitTransaction();
+        });
 
-        $("#editUndo").on("click", function(){
+
+        $(".toolbar").delegate("#editUndo:not(.disabled)","click", function(){
             _this.getCommandStack().undo();
         });
 
-        $("#editRedo").on("click", function(){
+        $(".toolbar").delegate("#editRedo:not(.disabled)","click", function(){
             _this.getCommandStack().redo();
         });
 
@@ -1459,6 +1471,18 @@ var View = draw2d.Canvas.extend({
             _this.simulationToggle();
         });
 
+
+        // Register a Selection listener for the state hnadling
+        // of the Delete Button
+        //
+        this.on("select", function(emitter, event){
+            if(event.figure===null ) {
+                $("#editDelete").addClass("disabled");
+            }
+            else{
+                $("#editDelete").removeClass("disabled");
+            }
+        });
 
         this.on("contextmenu", function(emitter, event){
             var figure = _this.getBestFigure(event.x, event.y);
@@ -1767,7 +1791,6 @@ var View = draw2d.Canvas.extend({
 
     },
 
-
     getBoundingBox: function()
     {
         var xCoords = [];
@@ -1974,9 +1997,8 @@ var Widget = draw2d.Canvas.extend({
 });
 
 ;
-About = Class.extend(
+var About = Class.extend(
 {
-    NAME : "shape_designer.dialog.About", 
 
     init:function(){
      },
@@ -1993,10 +2015,10 @@ About = Class.extend(
 	    $("body").append(this.splash);
 	    
 	    this.splash.fadeIn("fast");
-	    
 	},
 	
-	hide: function(){
+	hide: function()
+	{
         this.splash.delay(2500)
         .fadeOut( "slow", $.proxy(function() {
             this.splash.remove();
@@ -2081,6 +2103,44 @@ var FigureConfigDialog = (function () {
     };
 })();
 
+;
+var FileNew = Class.extend({
+
+    /**
+     * @constructor
+     *
+     */
+    init:function(app){
+        this.app = app;
+    },
+
+    /**
+     * @method
+     *
+     * Open the file picker and load the selected file.<br>
+     *
+     * @param {Function} successCallback callback method if the user select a file and the content is loaded
+     * @param {Function} errorCallback method to call if any error happens
+     *
+     * @since 4.0.0
+     */
+    show: function()
+    {
+        var _this = this;
+        $("#githubNewFileDialog .githubFileName").val("NewDocument");
+        $('#githubNewFileDialog').on('shown.bs.modal', function () {
+            $(this).find('input:first').focus();
+        });
+        $("#githubNewFileDialog").modal("show");
+
+        $("#githubNewFileDialog .okButton").on("click", function () {
+             var name = $("#githubNewFileDialog .githubFileName").val();
+            $('#githubNewFileDialog').modal('hide');
+            _this.app.fileNew();
+            _this.app.currentFileHandle.title = name;
+        });
+    }
+});
 ;
 FileOpen = Class.extend({
 
@@ -2167,7 +2227,7 @@ FileOpen = Class.extend({
     }
 });
 ;
-FileSave = Class.extend({
+var FileSave = Class.extend({
 
     /**
      * @constructor
@@ -2235,7 +2295,8 @@ FileSave = Class.extend({
 var MarkdownDialog = Class.extend(
     {
 
-        init:function(){
+        init:function()
+        {
             this.defaults = {
                 html:         false,        // Enable HTML tags in source
                 xhtmlOut:     false,        // Use '/' to close single tags (<br />)
@@ -2247,7 +2308,8 @@ var MarkdownDialog = Class.extend(
             };
         },
 
-        show:function(markdown){
+        show:function(markdown)
+        {
             var markdownParser = new Remarkable('full', this.defaults);
             $('#markdownDialog .html').html(markdownParser.render(markdown));
             $('#markdownDialog').modal('show');

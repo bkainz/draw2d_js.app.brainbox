@@ -193,6 +193,11 @@ var draw2d_circuit_switch_HighLowArray = draw2d.SetFigure.extend({
     {
     },
 
+    getParameterSettings: function()
+    {
+        return [];
+    },
+
     /**
      * @method
      */

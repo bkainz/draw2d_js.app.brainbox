@@ -13,6 +13,7 @@ var conf= {
             get :  "backend/file/get",
             del :  "backend/file/delete",
             save:  "backend/file/save",
+            rename:"backend/file/rename",
             image: "backend/file/image"
         }
     },

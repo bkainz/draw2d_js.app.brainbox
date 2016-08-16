@@ -138,6 +138,11 @@ var draw2d_circuit_gate_NAND = draw2d.SetFigure.extend({
     {
     },
 
+    getParameterSettings: function()
+    {
+        return [];
+    },
+
     /**
      * @method
      */

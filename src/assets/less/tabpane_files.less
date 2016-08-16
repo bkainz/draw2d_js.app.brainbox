@@ -6,6 +6,7 @@
   overflow-y: scroll;
   padding:30px !important;
 
+
   .deleteIcon{
     position: absolute;
     right: 24px;
@@ -13,6 +14,45 @@
     color:@tintColorFiles;
     top: 8px;
     cursor:pointer;
+  }
+
+  .thumb{
+    .thumbnail{
+      img{
+        cursor:pointer;
+      }
+    }
+    .filenameInplaceEdit{
+      font-size:18px;
+      color:@tintColorFiles;
+      margin-top:5px;
+    }
+    h4{
+      font-size:18px;
+      color:@tintColorFiles;
+    }
+  }
+
+  .thumbAdd{
+    color:@tintColorFiles;
+    color: #0078f2;
+    border: 1px solid rgba(0, 120, 242, 0.33);
+    border-radius: 6px;
+    cursor:pointer;
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    div{
+      font-size: 160px;
+      text-align: center;
+    }
+    h4{
+      text-align: center;
+    }
+    &:hover{
+      border: 1px solid rgba(0, 120, 242, 1);
+      transition: all 1s;
+      -webkit-transition: all 1s;
+    }
   }
 
   .editorLogin{

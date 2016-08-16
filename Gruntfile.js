@@ -172,6 +172,7 @@ module.exports = function (grunt) {
                         "./src/assets/less/popconfirm_dialog.less",
                         "./src/assets/less/code_dialog.less",
                         "./src/assets/less/file_open_dialog.less",
+                        "./src/assets/less/file_new_dialog.less",
                         "./src/assets/less/file_save_dialog.less",
                         "./src/assets/less/file_saveas_dialog.less"
                     ]

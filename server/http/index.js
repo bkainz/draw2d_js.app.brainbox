@@ -72,6 +72,13 @@ app.post('/backend/file/get', function (req, res) {
     fs.createReadStream(brainDir+"/"+req.body.id).pipe(res);
 });
 
+app.post('/backend/file/rename', function (req, res) {
+    fs.rename(brainDir + "/" + req.body.from, brainDir + "/" + req.body.to, function(err){
+        res.send('true');
+    });
+});
+
+
 app.post('/backend/file/delete', function (req, res) {
     try {
         fs.unlink(brainDir + "/" + req.body.id);
