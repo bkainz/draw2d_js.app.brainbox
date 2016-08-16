@@ -67787,6 +67787,7 @@ var Files = Class.extend(
 
     render: function()
     {
+        var _this = this;
         if(this.app.loggedIn!==true){
             return;
         }
@@ -67817,8 +67818,8 @@ var Files = Class.extend(
                     '<div class="col-lg-3 col-md-4 col-xs-6 thumb">'+
                     '  <span class="ion-ios-close-outline deleteIcon"  data-toggle="confirmation"  data-id="{{id}}"></span>'+
                     '  <a class="thumbnail" data-id="{{id}}">'+
-                    '    <img class="img-responsive" src="'+conf.backend.file.image+'?id={{id}}" alt="">'+
-                    '    <h4>{{name}}</h4>'+
+                    '    <img class="img-responsive" src="'+conf.backend.file.image+'?id={{id}}" data-id="{{id}}">'+
+                    '    <h4 data-name="{{name}}">{{name}}</h4>'+
                     '  </a>'+
                     '</div>'+
                     '{{/files}}'
@@ -67828,7 +67829,14 @@ var Files = Class.extend(
                 var output = compiled.render({
                     files: files
                 });
-                $("#files .container > .row").html($(output));
+
+                $("#files .container > .row").html(
+                '<div class="col-lg-3 col-md-4 col-xs-6 thumbAdd">'+
+                '    <div class="img-responsive ion-ios-plus-outline"></div>'+
+                '    <h4>New File</h4>'+
+                '</div>');
+
+                $("#files .container > .row").append($(output));
 
                 $("#files .container .deleteIcon").on("click", function(){
                     var $el = $(this);
@@ -67846,13 +67854,59 @@ var Files = Class.extend(
                 });
 
 
+                $("#files .container .thumbnail h4").on("click", function() {
+                    var $el = $(this);
+                    var name = $el.data("name");
+                    var $replaceWith = $('<input type="input" class="filenameInplaceEdit" value="' + name + '" />');
+                    $el.hide();
+                    $el.after($replaceWith);
+                    $replaceWith.focus();
 
-                $("#files .container .thumbnail").on("click", function(){
+                    var fire = function () {
+                        var newName = $replaceWith.val();
+                        if (newName !== "") {
+                            // get the value and post them here
+                            $.ajax({
+                                    url: conf.backend.file.rename,
+                                    method: "POST",
+                                    xhrFields: { withCredentials: true},
+                                    data:{
+                                        from:name+conf.fileSuffix,
+                                        to:newName+conf.fileSuffix
+                                    }
+                                }
+                            ).done(function(){
+                                $replaceWith.remove();
+                                $el.html(newName);
+                                $el.show();
+                                $el.data("name", newName);
+                                $(".thumb [data-id='"+name+conf.fileSuffix+"']").data("id",newName+conf.fileSuffix);
+                            });
+
+                        }
+                        else {
+                            // get the value and post them here
+                            $replaceWith.remove();
+                            $el.show();
+                        }
+                    };
+                    $replaceWith.blur(fire);
+                    $replaceWith.keypress(function (e) {
+                        if (e.which === 13) {
+                            fire();
+                        }
+                    });
+                });
+
+                $("#files .container .thumbnail img").on("click", function(){
                     var $el = $(this);
                     var name =  $el.data("id");
                     app.fileOpen(name);
                 });
 
+                $("#files .thumbAdd").on("click", function(){
+                    new FileNew(_this.app).show();
+                });
             }
         });
     }
