@@ -877,6 +877,51 @@ var Files = Class.extend(
 });
 
 ;
+var hardware=(function(){
+
+    var values= {};
+    var blocs = [];
+    var socket= null;
+    return {
+        init: function (s) {
+            socket = s;
+            socket.on("gpo:change", function (msg) {
+                values[msg.pin] = !!msg.value;
+            });
+            socket.on("bloc:value", function (msg) {
+               values[msg.blocId] = !!msg.value;
+            });
+        },
+        gpio: {
+            set: function (pin, value) {
+                socket.emit('gpi:set', {
+                    pin: pin,
+                    value: value
+                });
+            },
+            get: function (pin) {
+                return values[pin];
+            }
+        },
+        bloc: {
+            set: function (blocId, value) {
+                socket.emit('bloc:set', {
+                    blocId: blocId,
+                    value: value
+                });
+            },
+            get: function (blocId) {
+                return values[blocId];
+            }
+        }
+    };
+})();
+
+// deprecated
+var raspi = hardware;
+
+
+;
 /*jshint sub:true*/
 
 
@@ -3314,33 +3359,6 @@ var Raft = draw2d.shape.composite.Raft.extend({
 
 });
 
-;
-var raspi=(function(){
-
-    var values= {};
-    var socket= null;
-    return {
-        gpio: {
-            init: function (s) {
-                socket = s;
-                socket.on("gpo:change", function (msg) {
-                    values[msg.pin] = msg.value;
-                });
-            },
-            set: function (pin, value) {
-                socket.emit('gpi:set', {
-                    pin: pin,
-                    value: value
-                });
-            },
-            get: function (pin) {
-                return !!values[pin];
-            }
-
-
-        }
-    };
-})();
 ;
 
 
