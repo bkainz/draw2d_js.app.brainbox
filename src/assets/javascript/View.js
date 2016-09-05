@@ -328,6 +328,7 @@ var View = draw2d.Canvas.extend({
 
         // force focus for the searchbox in the object palette
         //
+        /*
         setInterval(function(){
             // force only the focus if the editor tab pane is visible
             if(!$("#editor").hasClass("active")){
@@ -343,6 +344,7 @@ var View = draw2d.Canvas.extend({
 
             document.getElementById("filter").focus();
         },10);
+        */
 
 
         socket.on('disconnect',function(){

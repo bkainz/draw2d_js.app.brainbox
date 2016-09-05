@@ -32,7 +32,8 @@ module.exports = function (grunt) {
                     './bower_components/draw2d/dist/jquery.autoresize.js',
                     './bower_components/draw2d/dist/jquery-touch_punch.js',
                     './bower_components/draw2d/dist/jquery.contextmenu.js',
-                    './bower_components/hogan.js/web/1.0.0/hogan.min.js',
+                    './bower_components/hogan.js/web/1.0.0/hogan.min.js', // deprecated. migrate code to handlebars
+                    './bower_components/handlebars/handlebars.min.js',
                     './bower_components/draw2d/dist/rgbcolor.js',
                     './bower_components/draw2d/dist/patched_canvg.js',
                     './bower_components/draw2d/dist/patched_Class.js',

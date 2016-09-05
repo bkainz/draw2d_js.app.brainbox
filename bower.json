@@ -1,6 +1,6 @@
 {
   "name": "draw2d_js.app.brainbox",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "homepage": "https://github.com/freegroup/draw2d_js.app.brainbox",
   "authors": [
     "Andreas Herz <FreeGroup>"
@@ -26,7 +26,8 @@
     "draw2d-shapes": "^1.0.10",
     "bootstrap-slider": "*",
     "d3": "^3.5.17",
-    "locstor": "^1.0.7"
+    "locstor": "^1.0.7",
+    "handlebars": "^4.0.5"
   },
   "resolutions": {
     "jquery": "~1.10.2"

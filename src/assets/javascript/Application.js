@@ -31,6 +31,9 @@ var Application = Class.extend(
 
         }
 
+        hardware.bloc.on("bloc:register", function(){
+            console.log("register",arguments);
+        });
         this.currentFileHandle= {
             title: "Untitled"+conf.fileSuffix
         };

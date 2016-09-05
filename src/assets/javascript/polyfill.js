@@ -1,3 +1,33 @@
+// Handlebars isn't loaded if "brain" circuit is running within an widget
+//
+if(typeof Handlebars !=="undefined") {
+    Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+        switch (operator) {
+            case '==':
+                return (v1 == v2) ? options.fn(this) : options.inverse(this);
+            case '===':
+                return (v1 === v2) ? options.fn(this) : options.inverse(this);
+            case '!==':
+                return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+            case '<':
+                return (v1 < v2) ? options.fn(this) : options.inverse(this);
+            case '<=':
+                return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+            case '>':
+                return (v1 > v2) ? options.fn(this) : options.inverse(this);
+            case '>=':
+                return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+            case '&&':
+                return (v1 && v2) ? options.fn(this) : options.inverse(this);
+            case '||':
+                return (v1 || v2) ? options.fn(this) : options.inverse(this);
+            default:
+                return options.inverse(this);
+        }
+    });
+}
+
+
 /*
  * object.watch polyfill
  *
@@ -7,7 +37,6 @@
  * Public Domain.
  * NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
  */
-
 // object.watch
 if (!Object.prototype.watch) {
     Object.defineProperty(Object.prototype, "watch", {

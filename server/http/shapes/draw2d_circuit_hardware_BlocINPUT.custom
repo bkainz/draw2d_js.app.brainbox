@@ -1,0 +1,79 @@
+/**
+ * by 'Draw2D Shape Designer'
+ *
+ * Custom JS code to tweak the standard behaviour of the generated
+ * shape. add your custome code and event handler here.
+ *
+ *
+ */
+draw2d_circuit_hardware_BlocINPUT = draw2d_circuit_hardware_BlocINPUT.extend({
+
+    init: function(attr, setter, getter){
+        var _this = this;
+        this._super(attr, setter, getter);
+
+        this.attr({
+            resizeable:false,
+            "userData.blockID":"-unset-"
+        });
+        this.installEditPolicy(new draw2d.policy.figure.AntSelectionFeedbackPolicy());
+        this.on("added",function(){
+            console.log("added");
+            hardware.bloc.on("bloc:register",function(){
+                console.log("device registered",arguments);
+                _this.layerAttr("indicator",{fill:"#00FF00"});
+            });
+            hardware.bloc.on("bloc:unregister",function(){
+                console.log("device unregistered",arguments);
+                _this.layerAttr("indicator",{fill:"#FF0000"});
+            });            
+        });
+        this.on("removed",function(){
+            console.log("removed");
+            hardware.bloc.off("bloc:register");
+            hardware.bloc.off("bloc:unregister");            
+        });
+        
+    },
+    
+    /**
+     * called every '10 [ms]' from the application.
+     * 
+     **/
+    calculate:function()
+    {
+        var blocValue = hardware.bloc.get(this.getUserData().blocId);
+        
+       this.getOutputPort(0).setValue(blocValue);
+    },
+    
+
+    /**
+     *  Called if the simulation mode is starting
+     *  @required
+     **/
+    onStart:function()
+    {
+    },
+
+    /**
+     *  Called if the simulation mode is stopping
+     *  @required
+     **/
+    onStop:function()
+    {
+    },
+    
+    getParameterSettings: function()
+    {
+        return [
+        {
+            name:"blocId",
+            label:"Bloc Id",
+            property:{
+                type: "blocid"
+        }
+        
+        }];
+    }
+});
