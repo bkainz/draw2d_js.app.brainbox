@@ -238,8 +238,11 @@ module.exports = {
     getAll:function()
     {
         var result= cache.get(devices);
-        if(Array.isArray(result)){
+        if(Array.isArray(result)) {
             return result;
+        }
+        if(result===null){
+            return [];
         }
         return [result];
     }

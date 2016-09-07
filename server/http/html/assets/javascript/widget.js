@@ -68015,6 +68015,11 @@ var hardware=(function(){
             connected: function () {
                 return blocs;
             },
+
+            isConnected: function(blocId){
+                return $.grep(blocs, function(e){ return e.blocId == blocId; }).length>0;
+            },
+
             /**
              * @method
              * Attach an event handler function to "bloc" based events
