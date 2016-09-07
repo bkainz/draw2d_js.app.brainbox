@@ -128,8 +128,8 @@ module.exports = function (grunt) {
             },
             help:{
                 expand: true,
-                cwd: 'src/assets/help/_book/',
-                src: ['**/*'],
+                cwd: 'src/assets/help/',
+                src: ['*/_book/**/*'],
                 dest: 'dist/assets/help/'
             },
             // copies the build result from the "dist" directory to the server subdirectory
@@ -239,11 +239,18 @@ module.exports = function (grunt) {
             options: {
                 // Task-specific options go here.
             },
-            gitbook: {
+            digital_basics: {
                 cmd: 'gitbook',
                 args: [
                     'build',
-                    './src/assets/help/'
+                    './src/assets/help/digital_basics'
+                ]
+            },
+            platform: {
+                cmd: 'gitbook',
+                args: [
+                    'build',
+                    './src/assets/help/platform'
                 ]
             }
         }
@@ -267,12 +274,12 @@ module.exports = function (grunt) {
         'jshint',
         'concat',
         'less',
-        'run:gitbook',
+        'run:digital_basics','run:platform',
         'copy:socketIO', 'copy:conf','copy:circuit', 'copy:img','copy:ionicons','copy:application','copy:bootstrap','copy:prettify','copy:help',
         'string-replace',
         'copy:server', "copy:shapes"
     ]);
     grunt.registerTask('publish', ['default','gh-pages']);
-    grunt.registerTask('gitbook', ['run:gitbook']);
+    grunt.registerTask('gitbook', ['run:digital_basics','run:platform']);
 };
 
