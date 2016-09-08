@@ -51,14 +51,14 @@ var hardware=(function(){
             });
             socket.on("bloc:register", function (msg) {
                 blocs= blocs.filter(function(bloc) {
-                    return bloc.blockId != msg.blocId;
+                    return bloc.blocId != msg.blocId;
                 });
                 blocs.push(msg);
                 fireEvent("bloc:register",msg );
             });
             socket.on("bloc:unregister", function (msg) {
                 blocs= blocs.filter(function(bloc) {
-                    return bloc.blockId != msg.blocId;
+                    return bloc.blocId != msg.blocId;
                 });
                 fireEvent("bloc:unregister",msg );
             });
