@@ -34,72 +34,38 @@
         text-align: center;
         padding: 0;
         padding-top: 5px;
+        span{
+          font-size: 45px;
+          color: white;
+        }
         &:hover {
           background-color: rgba(0, 0, 0, 0.1);
         }
       }
     }
 
-    svg{
-      *[stroke='#000000'] {
-        stroke: white;
-      }
-      *[fill='#000000'] {
-        fill: white;
-      }
-    }
     li.active {
       background-color: white;
       a:hover {
         background-color: transparent;
       }
-      .home{
-        *[stroke='#000000'] {
-          stroke: @tintColorIndex;
-        }
-        *[fill='#000000'] {
-          fill: @tintColorIndex;
-        }
+      .home span{
+        color: @tintColorIndex;
       }
-      .files{
-        *[stroke='#000000'] {
-          stroke: @tintColorFiles;
-        }
-        *[fill='#000000'] {
-          fill: @tintColorFiles;
-        }
+      .files span{
+        color: @tintColorFiles;
       }
-      .editor {
-        *[stroke='#000000'] {
-          stroke: @tintColorEdit;
-        }
-        *[fill='#000000'] {
-          fill: @tintColorEdit;
-        }
+      .editor span{
+        color: @tintColorEdit;
       }
-      .setting {
-        *[stroke='#000000'] {
-          stroke: @tintColorSetting;
-        }
-        *[fill='#000000'] {
-          fill: @tintColorSetting;
-        }
+      .setting span {
+        color: @tintColorSetting;
       }
-      .gitbook {
-        *[stroke='#000000'] {
-          stroke: @tintColorHelp;
-        }
-        *[fill='#000000'] {
-          fill: @tintColorHelp;
-        }
+      .gitbook span {
+        color: @tintColorHelp;
       }
-      .about {
-        *[stroke='#000000'] {
-          stroke: @tintColorAbout;
-        }
-        *[fill='#000000'] {
-          fill: @tintColorAbout;
-        }
+      .about span {
+        color: @tintColorAbout;
       }
       &:hover {
         background-color: white;

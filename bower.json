@@ -27,7 +27,8 @@
     "bootstrap-slider": "*",
     "d3": "^3.5.17",
     "locstor": "^1.0.7",
-    "handlebars": "^4.0.5"
+    "handlebars": "^4.0.5",
+    "octicons": "^4.3.0"
   },
   "resolutions": {
     "jquery": "~1.10.2"

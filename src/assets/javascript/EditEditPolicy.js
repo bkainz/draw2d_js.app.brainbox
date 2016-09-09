@@ -105,7 +105,7 @@ var EditEditPolicy = draw2d.policy.canvas.BoundingboxSelectionPolicy.extend({
             if(_this.configIcon===null) {
                 _this.configIcon = $("<div class='ion-gear-a' id='configMenuIcon'></div>");
                 $("body").append(_this.configIcon);
-                FigureConfigDialog.hide();
+              //  FigureConfigDialog.hide();
                 _this.configIcon.on("click",function(){
                     FigureConfigDialog.show(hit, pos);
                     _this.configFigure = hit;

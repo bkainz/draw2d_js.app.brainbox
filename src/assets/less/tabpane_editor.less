@@ -63,16 +63,38 @@ rect.Raft{
   background-color:white;
   border: 1px solid rgba(0,0,0,0.2);
   padding: 10px;
+  margin-left:30px;
   border-left: 3px solid @tintColorEdit;
+  border-radius:4px;
+  .header{
+    font-size: 16px;
+    font-weight: 600;
+    padding-bottom: 15px;
+  }
   .figureAddLabel{
-    font-size:14px;
+    font-size:12px;
     font-weight: 200;
     cursor:pointer;
     &:hover{
       color:@tintColorEdit;
     }
   }
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -20px;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border-right: 10px solid @tintColorEdit;
+    border-top: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+  }
 }
+
 
 .pallette_item
 {

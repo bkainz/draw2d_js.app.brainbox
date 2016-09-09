@@ -14,13 +14,13 @@ var FigureConfigDialog = (function () {
                 el.value = currentFigure.attr("userData."+el.name);
             });
             var compiled = Handlebars.compile(
-                '                       '+
+                '  <div class="header">Object Configuration</div>   '+
                 '  {{#each settings}}               '+
                 '      {{#ifCond property.type "===" "blocid"}}      '+
                 '         <div class="form-group">'+
                 '           <label for="figure_property_{{name}}">{{label}}</label>'+
                 '           <select class="form-control" id="figure_property_{{name}}" data-name="{{name}}" size="4"> '+
-                '               <option value="not-selected">- not bounded -</option>   '+
+                '               <option value="-unconnected-">no device selected</option>   '+
                 '               {{#each ../blocs_push}}               '+
                 '               <option data-name="{{name}}" value="{{blocId}}">Push {{blocNr}}</option>   '+
                 '               {{/each}}               '+
@@ -42,7 +42,7 @@ var FigureConfigDialog = (function () {
 
             $("#figureConfigDialog").html(output);
             $("#figureConfigDialog").show().css({top: pos.y, left: pos.x, position:'absolute'});
-            $("#figureConfigDialog input").focus();
+            $("#figureConfigDialog input, #figureConfigDialog select").focus();
 
             $("#figureConfigDialog input").keypress(function(e) {
                 if(e.which == 13) {
@@ -67,11 +67,10 @@ var FigureConfigDialog = (function () {
                     var name = element.data("name");
 
                     currentFigure.attr("userData." + name, value);
-                    console.log(name, value);
                 });
-                console.log(currentFigure);
             }
             $("#figureConfigDialog").hide();
+            $("#figureConfigDialog").html("");
 
             currentFigure=null;
         }

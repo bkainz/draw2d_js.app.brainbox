@@ -415,10 +415,8 @@ var View = draw2d.Canvas.extend({
     {
         if(this.simulate===true){
             this.simulationStop();
-            $("#favicon_sim").attr("href","./assets/images/favicon_edit.ico");
         } else {
             this.simulationStart();
-            $("#favicon_sim").attr("href","./assets/images/favicon_sim.ico");
         }
     },
 

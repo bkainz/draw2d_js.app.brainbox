@@ -108,6 +108,12 @@ module.exports = function (grunt) {
                 src: ['./css/*', "./fonts/*"],
                 dest: './dist/lib/ionicons'
             },
+            octicons:{
+                expand: true,
+                cwd: 'bower_components/octicons/build/',
+                src: ["./font/*"],
+                dest: './dist/lib/octicons'
+            },
             application: {
                 expand: true,
                 cwd: 'src/',
@@ -275,7 +281,7 @@ module.exports = function (grunt) {
         'concat',
         'less',
         'run:digital_basics','run:platform',
-        'copy:socketIO', 'copy:conf','copy:circuit', 'copy:img','copy:ionicons','copy:application','copy:bootstrap','copy:prettify','copy:help',
+        'copy:socketIO', 'copy:conf','copy:circuit', 'copy:img','copy:ionicons','copy:octicons','copy:application','copy:bootstrap','copy:prettify','copy:help',
         'string-replace',
         'copy:server', "copy:shapes"
     ]);
