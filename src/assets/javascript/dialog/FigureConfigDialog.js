@@ -32,7 +32,8 @@ var FigureConfigDialog = (function () {
                 '           <input type="text" class="form-control" id="figure_property_{{name}}" data-name="{{name}}" value="{{value}}" placeholder="{{label}}">'+
                 '         </div>                  '+
                     '{{/ifCond}}                  '+
-                '  {{/each}}                  '
+                '  {{/each}}                  '+
+                '<button class="submit">Ok</button> '
             );
             var output = compiled({
                 settings: settings,
@@ -48,6 +49,7 @@ var FigureConfigDialog = (function () {
                     FigureConfigDialog.hide();
                 }
             });
+            $("#figureConfigDialog .submit").on("click",function(){FigureConfigDialog.hide();});
 
             $.each(settings,function(index, setting){
                 var figureValue = currentFigure.attr("userData." + setting.name);
