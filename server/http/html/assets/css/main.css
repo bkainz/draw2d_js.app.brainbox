@@ -404,14 +404,12 @@ ellipse.draw2d_OutputPort {
   padding: 0;
   padding-top: 5px;
 }
+#layout .nav-tabs li a span {
+  font-size: 45px;
+  color: white;
+}
 #layout .nav-tabs li a:hover {
   background-color: rgba(0, 0, 0, 0.1);
-}
-#layout .nav-tabs svg *[stroke='#000000'] {
-  stroke: white;
-}
-#layout .nav-tabs svg *[fill='#000000'] {
-  fill: white;
 }
 #layout .nav-tabs li.active {
   background-color: white;
@@ -419,41 +417,23 @@ ellipse.draw2d_OutputPort {
 #layout .nav-tabs li.active a:hover {
   background-color: transparent;
 }
-#layout .nav-tabs li.active .home *[stroke='#000000'] {
-  stroke: #f47a1f;
+#layout .nav-tabs li.active .home span {
+  color: #f47a1f;
 }
-#layout .nav-tabs li.active .home *[fill='#000000'] {
-  fill: #f47a1f;
+#layout .nav-tabs li.active .files span {
+  color: #0078f2;
 }
-#layout .nav-tabs li.active .files *[stroke='#000000'] {
-  stroke: #0078f2;
+#layout .nav-tabs li.active .editor span {
+  color: #1c9bab;
 }
-#layout .nav-tabs li.active .files *[fill='#000000'] {
-  fill: #0078f2;
+#layout .nav-tabs li.active .setting span {
+  color: #f47a1f;
 }
-#layout .nav-tabs li.active .editor *[stroke='#000000'] {
-  stroke: #1c9bab;
+#layout .nav-tabs li.active .gitbook span {
+  color: #008cff;
 }
-#layout .nav-tabs li.active .editor *[fill='#000000'] {
-  fill: #1c9bab;
-}
-#layout .nav-tabs li.active .setting *[stroke='#000000'] {
-  stroke: #f47a1f;
-}
-#layout .nav-tabs li.active .setting *[fill='#000000'] {
-  fill: #f47a1f;
-}
-#layout .nav-tabs li.active .gitbook *[stroke='#000000'] {
-  stroke: #008cff;
-}
-#layout .nav-tabs li.active .gitbook *[fill='#000000'] {
-  fill: #008cff;
-}
-#layout .nav-tabs li.active .about *[stroke='#000000'] {
-  stroke: #ac193d;
-}
-#layout .nav-tabs li.active .about *[fill='#000000'] {
-  fill: #ac193d;
+#layout .nav-tabs li.active .about span {
+  color: #ac193d;
 }
 #layout .nav-tabs li.active:hover {
   background-color: white;
@@ -701,15 +681,35 @@ rect.Raft {
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.2);
   padding: 10px;
+  margin-left: 30px;
   border-left: 3px solid #1c9bab;
+  border-radius: 4px;
+}
+#figureConfigDialog .header {
+  font-size: 16px;
+  font-weight: 600;
+  padding-bottom: 15px;
 }
 #figureConfigDialog .figureAddLabel {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 200;
   cursor: pointer;
 }
 #figureConfigDialog .figureAddLabel:hover {
   color: #1c9bab;
+}
+#figureConfigDialog:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: -20px;
+  top: 10px;
+  width: 0;
+  height: 0;
+  border-right: 10px solid #1c9bab;
+  border-top: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-bottom: 10px solid transparent;
 }
 .pallette_item {
   text-align: center;
