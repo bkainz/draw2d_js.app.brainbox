@@ -23,6 +23,12 @@ var conf={
             save  : "http://draw2d.org/backend/file_save.php",
             rename: "http://draw2d.org/backend/file_rename.php",
             image : "http://draw2d.org/backend/file_image.php"
+        },
+        // registry of RF24 registered devices. Only available if we use
+        // a node.js server and a connected RF24 receiver (e.g. Raspi or arduino with a RF24 receiver)
+        //
+        bloc: {
+            list: null
         }
     },
     shapes :{

@@ -1,0 +1,711 @@
+
+<!DOCTYPE HTML>
+<html lang="de" >
+    <head>
+        <title>XOR-Gatter · GitBook</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../part17/" />
+    
+    
+    <link rel="prev" href="../part15/" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Suchbegriff eingeben" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Grundlagen</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../part01/">
+            
+                <a href="../part01/">
+            
+                    
+                    Analog-Technik und Digital-Technik
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../part02/">
+            
+                <a href="../part02/">
+            
+                    
+                    Das Dualsystem
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../part03/">
+            
+                <a href="../part03/">
+            
+                    
+                    Anmerkung zu Elektronik
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../part10/">
+            
+                <a href="../part10/">
+            
+                    
+                    Grundgatter
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../part11/">
+            
+                <a href="../part11/">
+            
+                    
+                    AND-Gatter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="../part12/">
+            
+                <a href="../part12/">
+            
+                    
+                    OR-Gatter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.3" data-path="../part13/">
+            
+                <a href="../part13/">
+            
+                    
+                    Inverter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.4" data-path="../part14/">
+            
+                <a href="../part14/">
+            
+                    
+                    NAND-Gatter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.5" data-path="../part15/">
+            
+                <a href="../part15/">
+            
+                    
+                    NOR-Gatter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.1.6" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    XOR-Gatter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.7" data-path="../part17/">
+            
+                <a href="../part17/">
+            
+                    
+                    XNOR-Gatter
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../part20/">
+            
+                <a href="../part20/">
+            
+                    
+                    Gatter mit mehrer Eingängen
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.2.1" data-path="../part21/">
+            
+                <a href="../part21/">
+            
+                    
+                    AND mit 3 Eingängen
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.2" data-path="../part22/">
+            
+                <a href="../part22/">
+            
+                    
+                    NOR mit 3 Eingängen
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2.3" data-path="../part23/">
+            
+                <a href="../part23/">
+            
+                    
+                    Kombischaltungen
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../part30/">
+            
+                <a href="../part30/">
+            
+                    
+                    Taktgeber
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../part40/">
+            
+                <a href="../part40/">
+            
+                    
+                    FlipFlops
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.4.1" data-path="../part41/">
+            
+                <a href="../part41/">
+            
+                    
+                    RS-FlipFlop
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.2" data-path="../part42/">
+            
+                <a href="../part42/">
+            
+                    
+                    JK-FlipFlop
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.3" data-path="../part43/">
+            
+                <a href="../part43/">
+            
+                    
+                    Dualzähler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.4" data-path="../part44/">
+            
+                <a href="../part44/">
+            
+                    
+                    Dualzähler für beliebige Zahlenreihen
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4.5" data-path="../part45/">
+            
+                <a href="../part45/">
+            
+                    
+                    D-FlipFlop
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="../part50/">
+            
+                <a href="../part50/">
+            
+                    
+                    KV-Tafel
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="../part60/">
+            
+                <a href="../part60/">
+            
+                    
+                    Frequenzteiler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="../part70/">
+            
+                <a href="../part70/">
+            
+                    
+                    Zähler und Teiler
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.7.1" data-path="../part71/">
+            
+                <a href="../part71/">
+            
+                    
+                    SN7490 als Teiler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.2" data-path="../part72/">
+            
+                <a href="../part72/">
+            
+                    
+                    Integrierter Zähler und Teiler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.3" data-path="../part73/">
+            
+                <a href="../part73/">
+            
+                    
+                    BCD-to-7-Segment Decoder
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.4" data-path="../part74/">
+            
+                <a href="../part74/">
+            
+                    
+                    Dezimalzähler mit Anzeige (7-Segment)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7.5" data-path="../part75/">
+            
+                <a href="../part75/">
+            
+                    
+                    BCD-to-Decimal Decoder
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="../part80/">
+            
+                <a href="../part80/">
+            
+                    
+                    Schieberegister
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="../part90/">
+            
+                <a href="../part90/">
+            
+                    
+                    Volladdierer
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >XOR-Gatter</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <style>
+pre{
+ text-align:center;
+ padding:20px;
+}
+</style>
+
+
+
+
+<h1 id="ex-or-gatter-exklusiv-oder">EX-OR-Gatter (Exklusiv-ODER)</h1><p>Eine Variation der Zusammenschaltung der 5 Grundgatter ist das <em>Exklusiv-ODER</em>. Im Gegensatz zur ODER-Verkn&#xFC;pfung tritt am Ausgang nicht der Wert 1 auf, wenn beide Eing&#xE4;nge den Wert 1 haben. Diese Funktion entspricht jetzt dem <em>oder</em> wie es im normalen Sprachgebrauch verwendet wird. Das hei&#xDF;t, dass am Ausgang der Wert 1 vorliegt, wenn <strong>entwedder <code>E1</code> oder <code>E2</code></strong> den Wert 1 haben. Sobald <code>E1</code> und <code>E2</code> den gleichen Wert haben, liegt am Ausgang A der Wert 0.</p><h3 id="logiktabelle">Logiktabelle</h3><table>
+<thead>
+<tr><th>E1</th>
+<th>E2</th>
+<th>A</th>
+</tr></thead><tbody>
+<tr><td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"><strong>0</strong></td>
+</tr><tr><td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center"><strong>1</strong></td>
+</tr><tr><td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center"><strong>1</strong></td>
+</tr><tr><td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center"><strong>0</strong></td>
+</tr></tbody></table>
+
+<h3 id="symbol">Symbol</h3><p><img alt="symbol" src="img01.png"></p><p>Da diese Verkn&#xFC;pfungsschaltung sehr h&#xE4;ufig vorkommt, hat auch sie ihr eigenes Schaltsymbol. Sie kann aber auch durch die Zusammenschaltung von 2 Invertern, 2 AND-Gattern und einem NOR-Gatter aufgebaut werden. Die mathematische Funktion lautet:</p><pre><code>A = (&#xAC;E1 &#x2227; E2) &#x2228; (E1 &#x2227; &#xAC;E2</code></pre>
+<p>Nun zum Schaltbild des Exklusiv-ODER. Ein Praktiker kann schon anhand der mathematischen Gleichung das Schaltbild zeichnen. Man muss dabei nur genau die Gleichung in die Schaltsymbole der logischen Verkn&#xFC;pfung umwandeln.</p><p><img alt="schaltung" src="img02.png"></p><p>Bei dieser Schaltung wollen wir nun einmal einen anderen Weg gehen, der sich vor allem bei komplexen und komplizierteren Schaltungen als sehr einfach herausstellt. Dabei wird an die beiden Eing&#xE4;nge <code>E1</code> und <code>E2</code> jede m&#xF6;gliche Eingangskombination gelegt und bis zum Ausgang <code>A</code> <em>durchgespielt</em>. Im vorliegenden Fall sind das genau 4 Kombinationen.</p><ol><li><p>An E1 und E2 liegt jeweils der Wert 0. Das obere AND-Gatter hat also am Eingang den Wert 0 von E1 und den Wert 1 vom invertierten E2. Das ergibt einen Zwischenwert G1 = 0. Das untere AND-Gatter hat ebenfalls den Wert 0 (von E2) und den Wert 1 (invertiertes E1) und somit ebenfalls den Zwischenwert G2 = 0. Diese beiden Zwischenwerte liegen nun an einem OR-GATTER, das dadurch am Ausgang den Wert 0 hat. Damit ist die erste Zeile der Logik-Tafel schon festgelegt.</p></li>
+<li><p>Nun legt man an E1 den Wert 0 und an E2 den Wert 1. Da E2 invertiert an das obere AND-Gatter gelangt und E1 von vorneherein 0 ist, erscheint am oberen Zwischenausgang G1 der Wert 0. Beim unteren AND-Gatter sind dagegen beide Eing&#xE4;nge auf dem Wert 1, da E1 invertiert wird und E2 den Wert 1 hat. Das ergibt am Zwischenausgang G2 den Wert 1. Am OR-Gatter liegt also nun einmal der Wert 0 (G1) und einmal der Wert 1 (G2). Der Ausgang A hat somit den Wert 1.</p></li>
+<li><p>Wenn man nun an den Eingang E1 den Wert 1 und an E2 den Wert 0 legt, so l&#xE4;uft die Logik genau den gleichen Weg. Nur liegen dabei die Werte die vorher am oberen AND-Gatter lagen nun am unteren und umgekehrt. Am Ausgang erscheint deshalb wie unter 2. der Wert.</p></li>
+<li><p>Die letzte Kombinationsm&#xF6;glichkeit ist nun die, dass beide Eing&#xE4;nge E1 und E2 den Wert 1 bekommen. Durch die Invertierung von E2 am oberen und E1 am unteren AND-Gatter haben die Zwischenausg&#xE4;nge G1 und G2 die gleichen Werte, n&#xE4;mlich 0. Eine Parallele dazu ist die erste Kombination. Am Ausgang A erscheint deshalb der Wert 0.</p></li></ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../part15/" class="navigation navigation-prev " aria-label="Previous page: NOR-Gatter">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../part17/" class="navigation navigation-next " aria-label="Next page: XNOR-Gatter">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"XOR-Gatter","level":"2.1.6","depth":2,"next":{"title":"XNOR-Gatter","level":"2.1.7","depth":2,"path":"part17/README.md","ref":"part17/README.md","articles":[]},"previous":{"title":"NOR-Gatter","level":"2.1.5","depth":2,"path":"part15/README.md","ref":"part15/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"de","gitbook":"*"},"file":{"path":"part16/README.md","mtime":"2016-09-13T09:36:14.919Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2016-09-13T09:38:02.528Z"},"basePath":"..","book":{"language":"de"}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
