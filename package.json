@@ -4,7 +4,7 @@
   "description": "BrainBox. A browser based circuit simulator which is able to run on a raspi with a node.js backend and has access to the GPIO pins.",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Warning: no test specified\" && exit 0"
   },
   "bin": {
     "brainbox": "./server/http/index.js"
