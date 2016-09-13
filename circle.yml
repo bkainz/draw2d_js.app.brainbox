@@ -10,5 +10,6 @@ deployment:
   default:
     branch: [master]
     commands:
+      - pip install mkdocs
       - bower install
       - grunt publish
