@@ -1,3 +1,10 @@
+body{
+    background: white;
+}
+
+.main{
+     max-width: none;
+ }
 .article a, .article h1, .article h2,
 .drawer .toc a.current, .drawer .toc a:focus, .drawer .toc a:hover{
     color: #008cff;
@@ -10,7 +17,7 @@
 }
 
 .backdrop{
-    background:rgb(236, 240, 241) none repeat scroll 0% 0%;
+    display:none !important;
 }
 
 .drawer .anchor a {
@@ -23,11 +30,14 @@
     display:none !important;
 }
 
-.header{
-    left:260px;
+@media only screen and (min-width: 960px) {
+    .header {
+        left: 260px;
+    }
 }
 
 .drawer{
     margin-top:0px;
     padding-top:0px;
+    border-right:1px solid rgba(0,0,0,0.2);
 }
