@@ -69,7 +69,7 @@
 	<key>hasManuallyChangedCSSPositioning</key>
 	<false/>
 	<key>lastCheckDate</key>
-	<date>2016-09-08T15:42:36Z</date>
+	<date>2016-09-15T20:29:52Z</date>
 	<key>layout</key>
 	<dict>
 		<key>currentInspectorPane</key>
@@ -77,7 +77,7 @@
 		<key>customizableLayout</key>
 		<dict>
 			<key>frame</key>
-			<string>{{0, 0}, {1440, 753}}</string>
+			<string>{{0, 0}, {1440, 752}}</string>
 			<key>identifier</key>
 			<string>container 9</string>
 			<key>isCustomizableViewContainer</key>
@@ -90,7 +90,7 @@
 			<array>
 				<dict>
 					<key>frame</key>
-					<string>{{0, 0}, {1169, 753}}</string>
+					<string>{{0, 0}, {1169, 752}}</string>
 					<key>identifier</key>
 					<string>container 7</string>
 					<key>isCustomizableViewContainer</key>
@@ -103,7 +103,7 @@
 					<array>
 						<dict>
 							<key>frame</key>
-							<string>{{0, 0}, {135, 753}}</string>
+							<string>{{0, 0}, {135, 752}}</string>
 							<key>identifier</key>
 							<string>container 2</string>
 							<key>isCustomizableViewContainer</key>
@@ -116,7 +116,7 @@
 							<array>
 								<dict>
 									<key>frame</key>
-									<string>{{0, 0}, {135, 753}}</string>
+									<string>{{0, 0}, {135, 752}}</string>
 									<key>identifier</key>
 									<string>sceneSelectorCustomizableContainer</string>
 									<key>isCustomizableViewContainer</key>
@@ -126,7 +126,7 @@
 						</dict>
 						<dict>
 							<key>frame</key>
-							<string>{{136, 0}, {1033, 753}}</string>
+							<string>{{136, 0}, {1033, 752}}</string>
 							<key>identifier</key>
 							<string>container 5</string>
 							<key>isCustomizableViewContainer</key>
@@ -162,7 +162,7 @@
 								</dict>
 								<dict>
 									<key>frame</key>
-									<string>{{136, 328}, {1033, 425}}</string>
+									<string>{{136, 328}, {1033, 424}}</string>
 									<key>identifier</key>
 									<string>container 3</string>
 									<key>isCustomizableViewContainer</key>
@@ -175,7 +175,7 @@
 									<array>
 										<dict>
 											<key>frame</key>
-											<string>{{136, 328}, {1033, 425}}</string>
+											<string>{{136, 328}, {1033, 424}}</string>
 											<key>identifier</key>
 											<string>sceneEditorCustomizableContainer</string>
 											<key>isCustomizableViewContainer</key>
@@ -189,7 +189,7 @@
 				</dict>
 				<dict>
 					<key>frame</key>
-					<string>{{1170, 0}, {270, 753}}</string>
+					<string>{{1170, 0}, {270, 752}}</string>
 					<key>identifier</key>
 					<string>container 6</string>
 					<key>isCustomizableViewContainer</key>
@@ -202,7 +202,7 @@
 					<array>
 						<dict>
 							<key>frame</key>
-							<string>{{1170, 0}, {270, 753}}</string>
+							<string>{{1170, 0}, {270, 752}}</string>
 							<key>identifier</key>
 							<string>inspectorCustomizableContainer</string>
 							<key>isCustomizableViewContainer</key>
@@ -215,7 +215,7 @@
 		<key>keyframeTimelineHeight</key>
 		<real>123.5</real>
 		<key>mainWindowFrame</key>
-		<string>0 102 1440 775 0 0 1440 877 </string>
+		<string>0 103 1440 774 0 0 1440 877 </string>
 		<key>openTabs</key>
 		<array/>
 		<key>selectedTabIndex</key>
@@ -387,19 +387,17 @@
 					<key>animationController</key>
 					<dict>
 						<key>expandedItems</key>
-						<array>
-							<string>25</string>
-						</array>
+						<array/>
 						<key>timeCursors</key>
 						<dict>
 							<key>kTimelineDefaultIdentifier</key>
-							<real>2.2666666507720947</real>
+							<real>2.5</real>
 						</dict>
 						<key>timescale</key>
 						<integer>40</integer>
 					</dict>
 					<key>canvasSize</key>
-					<string>{1033, 425}</string>
+					<string>{1033, 424}</string>
 					<key>hypeScene</key>
 					<dict>
 						<key>backgroundColor</key>
@@ -451,7 +449,7 @@
 	<array>
 		<dict>
 			<key>documentIdentifier</key>
-			<string>9C69B001-4C95-48CB-B415-F8000E620D89-10019-0000183D19BBDE7C</string>
+			<string>4699994F-D027-4FF2-B080-7BD5AE5E7273-21995-0000F69B8ED0C98B</string>
 			<key>selectedObjects</key>
 			<array/>
 			<key>symbol</key>
@@ -468,27 +466,27 @@
 					<array>
 						<dict>
 							<key>identifier</key>
-							<string>BorderRadiusTopRight</string>
+							<string>RotationAngle</string>
+							<key>objectValue</key>
+							<string>0deg</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BorderRadiusBottomRight</string>
 							<key>objectValue</key>
 							<string>2px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
-							<key>objectValue</key>
-							<string>Rechteck</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BorderWidthLeft</string>
+							<string>BorderWidthBottom</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BackgroundColor</string>
+							<string>TagName</string>
 							<key>objectValue</key>
-							<string>#CB2F66</string>
+							<string>div</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -624,58 +622,52 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
+							<string>BorderRadiusTopRight</string>
+							<key>objectValue</key>
+							<string>2px</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
 							<string>Overflow</string>
 							<key>objectValue</key>
 							<string>visible</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>RotationAngle</string>
+							<string>DisplayName</string>
 							<key>objectValue</key>
-							<string>0deg</string>
+							<string>Rechteck</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderRadiusBottomRight</string>
-							<key>objectValue</key>
-							<string>2px</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BorderWidthBottom</string>
+							<string>BorderWidthLeft</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>TagName</string>
+							<string>BackgroundColor</string>
 							<key>objectValue</key>
-							<string>div</string>
+							<string>#CB2F66</string>
 						</dict>
 					</array>
 					<key>21</key>
 					<array>
 						<dict>
 							<key>identifier</key>
-							<string>BorderRadiusBottomRight</string>
+							<string>DisplayName</string>
 							<key>objectValue</key>
-							<string>1px</string>
+							<string>Rechteck</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthBottom</string>
+							<string>BorderWidthLeft</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>TagName</string>
-							<key>objectValue</key>
-							<string>div</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BorderColorBottom</string>
+							<string>BackgroundColor</string>
 							<key>objectValue</key>
 							<string>#CB2F66</string>
 						</dict>
@@ -684,6 +676,12 @@
 							<string>ExplicitDimensions</string>
 							<key>objectValue</key>
 							<string>YES</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BorderColorBottom</string>
+							<key>objectValue</key>
+							<string>#CB2F66</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -813,40 +811,46 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
+							<string>BorderRadiusBottomRight</string>
 							<key>objectValue</key>
-							<string>Rechteck</string>
+							<string>1px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthLeft</string>
+							<string>BorderWidthBottom</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BackgroundColor</string>
+							<string>TagName</string>
 							<key>objectValue</key>
-							<string>#CB2F66</string>
+							<string>div</string>
 						</dict>
 					</array>
 					<key>22</key>
 					<array>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
+							<string>BorderRadiusBottomRight</string>
 							<key>objectValue</key>
-							<string>Rechteck</string>
+							<string>1px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthLeft</string>
+							<string>BorderWidthBottom</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BackgroundColor</string>
+							<string>TagName</string>
+							<key>objectValue</key>
+							<string>div</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BorderColorBottom</string>
 							<key>objectValue</key>
 							<string>#CB2F66</string>
 						</dict>
@@ -855,12 +859,6 @@
 							<string>ExplicitDimensions</string>
 							<key>objectValue</key>
 							<string>YES</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BorderColorBottom</string>
-							<key>objectValue</key>
-							<string>#CB2F66</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -990,46 +988,40 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderRadiusBottomRight</string>
+							<string>DisplayName</string>
 							<key>objectValue</key>
-							<string>1px</string>
+							<string>Rechteck</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthBottom</string>
+							<string>BorderWidthLeft</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>TagName</string>
+							<string>BackgroundColor</string>
 							<key>objectValue</key>
-							<string>div</string>
+							<string>#CB2F66</string>
 						</dict>
 					</array>
 					<key>23</key>
 					<array>
 						<dict>
 							<key>identifier</key>
-							<string>BorderRadiusBottomRight</string>
+							<string>DisplayName</string>
 							<key>objectValue</key>
-							<string>1px</string>
+							<string>Rechteck</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthBottom</string>
+							<string>BorderWidthLeft</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>TagName</string>
-							<key>objectValue</key>
-							<string>div</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BorderColorBottom</string>
+							<string>BackgroundColor</string>
 							<key>objectValue</key>
 							<string>#CB2F66</string>
 						</dict>
@@ -1038,6 +1030,12 @@
 							<string>ExplicitDimensions</string>
 							<key>objectValue</key>
 							<string>YES</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BorderColorBottom</string>
+							<key>objectValue</key>
+							<string>#CB2F66</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -1167,27 +1165,6 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
-							<key>objectValue</key>
-							<string>Rechteck</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BorderWidthLeft</string>
-							<key>objectValue</key>
-							<string>0px</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BackgroundColor</string>
-							<key>objectValue</key>
-							<string>#CB2F66</string>
-						</dict>
-					</array>
-					<key>24</key>
-					<array>
-						<dict>
-							<key>identifier</key>
 							<string>BorderRadiusBottomRight</string>
 							<key>objectValue</key>
 							<string>1px</string>
@@ -1204,9 +1181,24 @@
 							<key>objectValue</key>
 							<string>div</string>
 						</dict>
+					</array>
+					<key>24</key>
+					<array>
 						<dict>
 							<key>identifier</key>
-							<string>BorderColorBottom</string>
+							<string>DisplayName</string>
+							<key>objectValue</key>
+							<string>Rechteck</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BorderWidthLeft</string>
+							<key>objectValue</key>
+							<string>0px</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BackgroundColor</string>
 							<key>objectValue</key>
 							<string>#CB2F66</string>
 						</dict>
@@ -1215,6 +1207,12 @@
 							<string>ExplicitDimensions</string>
 							<key>objectValue</key>
 							<string>YES</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BorderColorBottom</string>
+							<key>objectValue</key>
+							<string>#CB2F66</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -1344,21 +1342,21 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
+							<string>BorderRadiusBottomRight</string>
 							<key>objectValue</key>
-							<string>Rechteck</string>
+							<string>1px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthLeft</string>
+							<string>BorderWidthBottom</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BackgroundColor</string>
+							<string>TagName</string>
 							<key>objectValue</key>
-							<string>#CB2F66</string>
+							<string>div</string>
 						</dict>
 					</array>
 					<key>25</key>
@@ -1503,19 +1501,25 @@
 					<array>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
+							<string>BorderRadiusBottomRight</string>
 							<key>objectValue</key>
-							<string>Rechteck</string>
+							<string>1px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthLeft</string>
+							<string>BorderWidthBottom</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BackgroundColor</string>
+							<string>TagName</string>
+							<key>objectValue</key>
+							<string>div</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BorderColorBottom</string>
 							<key>objectValue</key>
 							<string>#CB2F66</string>
 						</dict>
@@ -1524,12 +1528,6 @@
 							<string>ExplicitDimensions</string>
 							<key>objectValue</key>
 							<string>YES</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BorderColorBottom</string>
-							<key>objectValue</key>
-							<string>#CB2F66</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -1659,46 +1657,40 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderRadiusBottomRight</string>
+							<string>DisplayName</string>
 							<key>objectValue</key>
-							<string>1px</string>
+							<string>Rechteck</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthBottom</string>
+							<string>BorderWidthLeft</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>TagName</string>
+							<string>BackgroundColor</string>
 							<key>objectValue</key>
-							<string>div</string>
+							<string>#CB2F66</string>
 						</dict>
 					</array>
 					<key>28</key>
 					<array>
 						<dict>
 							<key>identifier</key>
-							<string>BorderRadiusBottomRight</string>
+							<string>DisplayName</string>
 							<key>objectValue</key>
-							<string>1px</string>
+							<string>Rechteck</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthBottom</string>
+							<string>BorderWidthLeft</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>TagName</string>
-							<key>objectValue</key>
-							<string>div</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BorderColorBottom</string>
+							<string>BackgroundColor</string>
 							<key>objectValue</key>
 							<string>#CB2F66</string>
 						</dict>
@@ -1707,6 +1699,12 @@
 							<string>ExplicitDimensions</string>
 							<key>objectValue</key>
 							<string>YES</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BorderColorBottom</string>
+							<key>objectValue</key>
+							<string>#CB2F66</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -1842,21 +1840,21 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
+							<string>BorderRadiusBottomRight</string>
 							<key>objectValue</key>
-							<string>Rechteck</string>
+							<string>1px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthLeft</string>
+							<string>BorderWidthBottom</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BackgroundColor</string>
+							<string>TagName</string>
 							<key>objectValue</key>
-							<string>#CB2F66</string>
+							<string>div</string>
 						</dict>
 					</array>
 					<key>29</key>
@@ -1932,33 +1930,33 @@
 					<array>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
+							<string>BorderRadiusBottomRight</string>
 							<key>objectValue</key>
-							<string>Rechteck</string>
+							<string>1px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthLeft</string>
+							<string>BorderWidthBottom</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BackgroundColor</string>
+							<string>TagName</string>
 							<key>objectValue</key>
-							<string>#F25569</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>ExplicitDimensions</string>
-							<key>objectValue</key>
-							<string>YES</string>
+							<string>div</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
 							<string>BorderColorBottom</string>
 							<key>objectValue</key>
 							<string>#CB2F66</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>ExplicitDimensions</string>
+							<key>objectValue</key>
+							<string>YES</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -2094,54 +2092,54 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderRadiusBottomRight</string>
+							<string>DisplayName</string>
 							<key>objectValue</key>
-							<string>1px</string>
+							<string>Rechteck</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthBottom</string>
+							<string>BorderWidthLeft</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>TagName</string>
+							<string>BackgroundColor</string>
 							<key>objectValue</key>
-							<string>div</string>
+							<string>#F25569</string>
 						</dict>
 					</array>
 					<key>67</key>
 					<array>
 						<dict>
 							<key>identifier</key>
-							<string>BorderRadiusBottomRight</string>
+							<string>DisplayName</string>
 							<key>objectValue</key>
-							<string>1px</string>
+							<string>Rechteck</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthBottom</string>
+							<string>BorderWidthLeft</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>TagName</string>
+							<string>BackgroundColor</string>
 							<key>objectValue</key>
-							<string>div</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BorderColorBottom</string>
-							<key>objectValue</key>
-							<string>#CB2F66</string>
+							<string>#F25569</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
 							<string>ExplicitDimensions</string>
 							<key>objectValue</key>
 							<string>YES</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BorderColorBottom</string>
+							<key>objectValue</key>
+							<string>#CB2F66</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -2277,27 +2275,6 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
-							<key>objectValue</key>
-							<string>Rechteck</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BorderWidthLeft</string>
-							<key>objectValue</key>
-							<string>0px</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BackgroundColor</string>
-							<key>objectValue</key>
-							<string>#F25569</string>
-						</dict>
-					</array>
-					<key>68</key>
-					<array>
-						<dict>
-							<key>identifier</key>
 							<string>BorderRadiusBottomRight</string>
 							<key>objectValue</key>
 							<string>1px</string>
@@ -2314,17 +2291,38 @@
 							<key>objectValue</key>
 							<string>div</string>
 						</dict>
+					</array>
+					<key>68</key>
+					<array>
 						<dict>
 							<key>identifier</key>
-							<string>BorderColorBottom</string>
+							<string>DisplayName</string>
 							<key>objectValue</key>
-							<string>#CB2F66</string>
+							<string>Rechteck</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BorderWidthLeft</string>
+							<key>objectValue</key>
+							<string>0px</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BackgroundColor</string>
+							<key>objectValue</key>
+							<string>#F25569</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
 							<string>ExplicitDimensions</string>
 							<key>objectValue</key>
 							<string>YES</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BorderColorBottom</string>
+							<key>objectValue</key>
+							<string>#CB2F66</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -2460,54 +2458,54 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
+							<string>BorderRadiusBottomRight</string>
 							<key>objectValue</key>
-							<string>Rechteck</string>
+							<string>1px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthLeft</string>
+							<string>BorderWidthBottom</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BackgroundColor</string>
+							<string>TagName</string>
 							<key>objectValue</key>
-							<string>#F25569</string>
+							<string>div</string>
 						</dict>
 					</array>
 					<key>69</key>
 					<array>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
+							<string>BorderRadiusBottomRight</string>
 							<key>objectValue</key>
-							<string>Rechteck</string>
+							<string>1px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthLeft</string>
+							<string>BorderWidthBottom</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BackgroundColor</string>
+							<string>TagName</string>
 							<key>objectValue</key>
-							<string>#F25569</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>ExplicitDimensions</string>
-							<key>objectValue</key>
-							<string>YES</string>
+							<string>div</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
 							<string>BorderColorBottom</string>
 							<key>objectValue</key>
 							<string>#CB2F66</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>ExplicitDimensions</string>
+							<key>objectValue</key>
+							<string>YES</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -2643,21 +2641,21 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderRadiusBottomRight</string>
+							<string>DisplayName</string>
 							<key>objectValue</key>
-							<string>1px</string>
+							<string>Rechteck</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthBottom</string>
+							<string>BorderWidthLeft</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>TagName</string>
+							<string>BackgroundColor</string>
 							<key>objectValue</key>
-							<string>div</string>
+							<string>#F25569</string>
 						</dict>
 					</array>
 					<key>7</key>
@@ -2856,9 +2854,9 @@
 					<array>
 						<dict>
 							<key>identifier</key>
-							<string>OriginalWidth</string>
+							<string>TagName</string>
 							<key>objectValue</key>
-							<string>512px</string>
+							<string>div</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -2888,7 +2886,7 @@
 							<key>identifier</key>
 							<string>Top</string>
 							<key>objectValue</key>
-							<string>261px</string>
+							<string>142px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -2918,7 +2916,7 @@
 							<key>identifier</key>
 							<string>Left</string>
 							<key>objectValue</key>
-							<string>519px</string>
+							<string>511px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -2976,42 +2974,42 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>TagName</string>
+							<string>OriginalWidth</string>
 							<key>objectValue</key>
-							<string>div</string>
+							<string>512px</string>
 						</dict>
 					</array>
 					<key>8</key>
 					<array>
 						<dict>
 							<key>identifier</key>
-							<string>BorderRadiusBottomRight</string>
+							<string>DisplayName</string>
 							<key>objectValue</key>
-							<string>50px</string>
+							<string>Ellipse</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthLeft</string>
+							<string>BorderWidthBottom</string>
 							<key>objectValue</key>
 							<string>1px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BackgroundColor</string>
+							<string>TagName</string>
 							<key>objectValue</key>
-							<string>#EAEAEA</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>ExplicitDimensions</string>
-							<key>objectValue</key>
-							<string>YES</string>
+							<string>div</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
 							<string>BorderColorBottom</string>
 							<key>objectValue</key>
 							<string>#D8DDE4</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>ExplicitDimensions</string>
+							<key>objectValue</key>
+							<string>YES</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -3147,15 +3145,36 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
+							<string>BorderRadiusBottomRight</string>
 							<key>objectValue</key>
-							<string>Ellipse</string>
+							<string>50px</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BorderWidthLeft</string>
+							<key>objectValue</key>
+							<string>1px</string>
+						</dict>
+						<dict>
+							<key>identifier</key>
+							<string>BackgroundColor</string>
+							<key>objectValue</key>
+							<string>#EAEAEA</string>
+						</dict>
+					</array>
+					<key>9</key>
+					<array>
+						<dict>
+							<key>identifier</key>
+							<string>BorderRadiusBottomRight</string>
+							<key>objectValue</key>
+							<string>1px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
 							<string>BorderWidthBottom</string>
 							<key>objectValue</key>
-							<string>1px</string>
+							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -3163,24 +3182,9 @@
 							<key>objectValue</key>
 							<string>div</string>
 						</dict>
-					</array>
-					<key>9</key>
-					<array>
 						<dict>
 							<key>identifier</key>
-							<string>DisplayName</string>
-							<key>objectValue</key>
-							<string>Rechteck</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BorderWidthLeft</string>
-							<key>objectValue</key>
-							<string>0px</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BackgroundColor</string>
+							<string>BorderColorBottom</string>
 							<key>objectValue</key>
 							<string>#CB2F66</string>
 						</dict>
@@ -3189,12 +3193,6 @@
 							<string>ExplicitDimensions</string>
 							<key>objectValue</key>
 							<string>YES</string>
-						</dict>
-						<dict>
-							<key>identifier</key>
-							<string>BorderColorBottom</string>
-							<key>objectValue</key>
-							<string>#CB2F66</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
@@ -3324,21 +3322,21 @@
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderRadiusBottomRight</string>
+							<string>DisplayName</string>
 							<key>objectValue</key>
-							<string>1px</string>
+							<string>Rechteck</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>BorderWidthBottom</string>
+							<string>BorderWidthLeft</string>
 							<key>objectValue</key>
 							<string>0px</string>
 						</dict>
 						<dict>
 							<key>identifier</key>
-							<string>TagName</string>
+							<string>BackgroundColor</string>
 							<key>objectValue</key>
-							<string>div</string>
+							<string>#CB2F66</string>
 						</dict>
 					</array>
 				</dict>
@@ -3823,7 +3821,7 @@
 							</dict>
 							<dict>
 								<key>duration</key>
-								<real>6.1666663885116577</real>
+								<real>6.1666665077209473</real>
 								<key>endValue</key>
 								<dict>
 									<key>identifier</key>
