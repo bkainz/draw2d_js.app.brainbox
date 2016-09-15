@@ -1,11 +1,10 @@
 site_name: Documentation
-site_dir : ../../dist/assets/help/howto
+#site_dir : ../../dist/assets/help/howto
 
 pages:
- - Home: index.md
- - Geting Startet: getting_startet/index.md
- - Platforms: platforms/index.md
+ - Home : index.md
+ - Platform : platforms/index.md
 
-theme: readthedocs
+theme: material
 
 extra_css: [extra.css]
