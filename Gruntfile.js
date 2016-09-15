@@ -7,7 +7,7 @@ module.exports = function (grunt) {
         // this way we can use things like name and version (pkg.name)
         pkg: grunt.file.readJSON('package.json'),
 
-        clean: ['dist'],
+        clean: ['dist','server/http/html'],
 
 
         // Task configuration
@@ -136,7 +136,12 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: 'src/assets/help/',
                 src: ['*/_book/**/*'],
-                dest: 'dist/assets/help/'
+                dest: 'dist/assets/help/',
+
+                    rename: function(dest, src) {
+                        console.log(src)
+                        return dest + src.replace("_book/","");
+                    }
             },
             // copies the build result from the "dist" directory to the server subdirectory
             // for "npm publish"
@@ -197,23 +202,6 @@ module.exports = function (grunt) {
             build: ['Grunfile.js', 'src/assets/javascript/**/*.js']
         },
 
-        'string-replace': {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: 'dist/assets/help',
-                    src: '**/*.html',
-                    dest: 'dist/assets/help/'
-                }],
-                options: {
-                    replacements: [{
-                        pattern: /<a href="https:\/\/www.gitbook.com" [ :.\n\w="></\t\-äöü]*class="gitbook-link"[ :.\n\w="></\t\-äöü]*<\/a>/ig,
-                        replacement: ''
-                    }]
-                }
-            }
-        },
-
         watch: {
             js: {
                 files: [
@@ -227,7 +215,6 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['default']
             },
-
             less: {
                 files: [
                     "./src/assets/less/**/*.less"
@@ -245,26 +232,14 @@ module.exports = function (grunt) {
             },
             src: ['**']
         },
-        run: {
-            options: {
-                // Task-specific options go here.
-            },
-            digital_basics: {
-                cmd: 'gitbook',
-                args: [
-                    'build',
-                    './src/assets/help/digital_basics'
-                ]
-            },
-            platform: {
-                cmd: 'gitbook',
-                args: [
-                    'build',
-                    './src/assets/help/platform'
-                ]
+        mkdocs: {
+            dist: {
+                src: './documentation/basics',
+                options: {
+                    clean: true
+                }
             }
         }
-
     });
 
     // Plugin loading
@@ -274,9 +249,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-gh-pages');
-    grunt.loadNpmTasks('grunt-string-replace');
     grunt.loadNpmTasks('grunt-run');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-file-append');
+    grunt.loadNpmTasks('grunt-mkdocs');
 
     // Task definition
     grunt.registerTask('default', [
@@ -284,12 +260,10 @@ module.exports = function (grunt) {
         'jshint',
         'concat',
         'less',
-        'run:digital_basics','run:platform',
+        'mkdocs',
         'copy:socketIO', 'copy:conf','copy:circuit', 'copy:img','copy:ionicons','copy:octicons','copy:application','copy:bootstrap','copy:prettify','copy:help',
-        'string-replace',
         'copy:server', "copy:shapes"
     ]);
     grunt.registerTask('publish', ['default','gh-pages']);
-    grunt.registerTask('gitbook', ['run:digital_basics','run:platform']);
 };
 

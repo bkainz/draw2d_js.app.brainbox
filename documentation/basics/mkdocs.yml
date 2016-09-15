@@ -1,0 +1,20 @@
+site_name: Grundlagen der Digitaltechnik
+site_dir : ../../dist/assets/help/basics
+
+pages:
+ - Grundlagen : index.md
+ - 'Grundgatter' : part10/README.md
+ - 'Gatter mit mehrer Eingängen' : part20/README.md
+ - 'Taktgeber' : part30/README.md
+ - 'FlipFlops' : part40/README.md
+ - 'KV-Tafel' : part50/README.md
+ - 'Frequenzteiler' : part60/README.md
+ - 'Zähler und Teiler' : part70/README.md
+ - 'Schieberegister' : part80/README.md
+ - 'Volladdierer' : part90/README.md
+
+theme: material
+
+extra_css: [extra.css]
+
+

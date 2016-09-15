@@ -11,5 +11,6 @@ deployment:
     branch: [master]
     commands:
       - pip install mkdocs
+      - pip install mkdocs-material
       - bower install
       - grunt publish
