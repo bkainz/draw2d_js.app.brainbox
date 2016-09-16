@@ -1,0 +1,64 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Overview\n\n\nWelcome to the \nbrainbox\n documentation and the awesome world of Iot.\n\"Brainbox\" allows anyone to graphically create new unlimited interactions with connected objects from a simple\nweb-browser.\n\n\n\n\n\n\n\n\n\n\n\n\nWhat the brainbox is NOT\n\n\n\"Brainbox\" is not a (yet another) new home automation server. It's purpose is to cover key components of\nnetworking, IoT and digital circuits to ensure that you understand how to connect their device to the Internet with fun.\n\n\n\n\n\nBrowser-based editing\n\n\n\n\n\n    \n\n\n\n\n\n \nbrainbox\n provides a browser-based flow editor that makes it easy to\n wire  things together using the wide range of nodes in the palette. The created files, named \nbrains\n, can be then\n deployed to the runtime in  a single-click. New JavaScript based nodes, named \nblocs\n can be created within the web based\n designer.\n\n\n\n\n\n\n\n\n\nBuilt on Node.js\n\n\n\n\n\n The \nbrainbox\n application runs as a web server on your Raspberry Pi or on\n your Desktop.\n Additional you can connect any arduino or RF24 module to extend the pin count and go wireless\n\n\n\n\n    \n\n\n\n\n\n\n\n\n\n\nConnectivity\n\n\n\n\n\n   \n\n\n\n\n\nDo you want to add wireless capability to your project? Using the NRF24L01+ module is a very easy and\nreliable way to do so. This transceiver module works at the 2.4GHz band and it is extremely easy to use with\nany Arduino board and brainbox. Download the ready to use Arduino sketches and connect the wires and you are\nready to use them within the browser base editor.\nYou can find detailed information how to setup the RF24 or\nthe arduino in the platform section of this documentation", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#overview", 
+            "text": "Welcome to the  brainbox  documentation and the awesome world of Iot.\n\"Brainbox\" allows anyone to graphically create new unlimited interactions with connected objects from a simple\nweb-browser.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/#what-the-brainbox-is-not", 
+            "text": "\"Brainbox\" is not a (yet another) new home automation server. It's purpose is to cover key components of\nnetworking, IoT and digital circuits to ensure that you understand how to connect their device to the Internet with fun.", 
+            "title": "What the brainbox is NOT"
+        }, 
+        {
+            "location": "/#browser-based-editing", 
+            "text": "brainbox  provides a browser-based flow editor that makes it easy to\n wire  things together using the wide range of nodes in the palette. The created files, named  brains , can be then\n deployed to the runtime in  a single-click. New JavaScript based nodes, named  blocs  can be created within the web based\n designer.", 
+            "title": "Browser-based editing"
+        }, 
+        {
+            "location": "/#built-on-nodejs", 
+            "text": "The  brainbox  application runs as a web server on your Raspberry Pi or on\n your Desktop.\n Additional you can connect any arduino or RF24 module to extend the pin count and go wireless", 
+            "title": "Built on Node.js"
+        }, 
+        {
+            "location": "/#connectivity", 
+            "text": "Do you want to add wireless capability to your project? Using the NRF24L01+ module is a very easy and\nreliable way to do so. This transceiver module works at the 2.4GHz band and it is extremely easy to use with\nany Arduino board and brainbox. Download the ready to use Arduino sketches and connect the wires and you are\nready to use them within the browser base editor. You can find detailed information how to setup the RF24 or\nthe arduino in the platform section of this documentation", 
+            "title": "Connectivity"
+        }, 
+        {
+            "location": "/platforms/", 
+            "text": "Web\n\n\nDesktop\n\n\nRaspberry Pi\n\n\nHow to setup Node.js on a Raspberry Pi and run brainbox on it\n\n\n\n  \n\n\n\n\n\n1.) Setting up your Raspberry Pi\n\n\nRunning a basic setup of Raspbian on a Raspberry Pi is very easy and\nclearly explained in their \nGetting Started Guide\n\n\nDownload NOOBS, extract it on your SD, plug it in and turn\non the Raspberry Pi. When prompted, choose to install Raspbian and let it run.\n\n\nAduino", 
+            "title": "Platform"
+        }, 
+        {
+            "location": "/platforms/#web", 
+            "text": "", 
+            "title": "Web"
+        }, 
+        {
+            "location": "/platforms/#desktop", 
+            "text": "", 
+            "title": "Desktop"
+        }, 
+        {
+            "location": "/platforms/#raspberry-pi", 
+            "text": "How to setup Node.js on a Raspberry Pi and run brainbox on it", 
+            "title": "Raspberry Pi"
+        }, 
+        {
+            "location": "/platforms/#1-setting-up-your-raspberry-pi", 
+            "text": "Running a basic setup of Raspbian on a Raspberry Pi is very easy and\nclearly explained in their  Getting Started Guide  Download NOOBS, extract it on your SD, plug it in and turn\non the Raspberry Pi. When prompted, choose to install Raspbian and let it run.", 
+            "title": "1.) Setting up your Raspberry Pi"
+        }, 
+        {
+            "location": "/platforms/#aduino", 
+            "text": "", 
+            "title": "Aduino"
+        }
+    ]
+}

@@ -132,17 +132,6 @@ module.exports = function (grunt) {
                 src: ['**/*'],
                 dest: 'dist/lib/prettify'
             },
-            help:{
-                expand: true,
-                cwd: 'src/assets/help/',
-                src: ['*/_book/**/*'],
-                dest: 'dist/assets/help/',
-
-                    rename: function(dest, src) {
-                        console.log(src)
-                        return dest + src.replace("_book/","");
-                    }
-            },
             // copies the build result from the "dist" directory to the server subdirectory
             // for "npm publish"
             server:{
@@ -174,7 +163,6 @@ module.exports = function (grunt) {
                         "./src/assets/less/toolbar_editor.less",
                         "./src/assets/less/tabmenu.less",
                         "./src/assets/less/tabpane_home.less",
-                        "./src/assets/less/tabpane_about.less",
                         "./src/assets/less/tabpane_files.less",
                         "./src/assets/less/tabpane_editor.less",
                         "./src/assets/less/tabpane_setting.less",
@@ -233,8 +221,14 @@ module.exports = function (grunt) {
             src: ['**']
         },
         mkdocs: {
-            dist: {
+            basic: {
                 src: './documentation/basics',
+                options: {
+                    clean: true
+                }
+            },
+            howto: {
+                src: './documentation/howto',
                 options: {
                     clean: true
                 }
@@ -251,7 +245,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-gh-pages');
     grunt.loadNpmTasks('grunt-run');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-file-append');
     grunt.loadNpmTasks('grunt-mkdocs');
 
     // Task definition
@@ -261,7 +254,7 @@ module.exports = function (grunt) {
         'concat',
         'less',
         'mkdocs',
-        'copy:socketIO', 'copy:conf','copy:circuit', 'copy:img','copy:ionicons','copy:octicons','copy:application','copy:bootstrap','copy:prettify','copy:help',
+        'copy:socketIO', 'copy:conf','copy:circuit', 'copy:img','copy:ionicons','copy:octicons','copy:application','copy:bootstrap','copy:prettify',
         'copy:server', "copy:shapes"
     ]);
     grunt.registerTask('publish', ['default','gh-pages']);
