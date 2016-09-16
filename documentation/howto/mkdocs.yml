@@ -4,6 +4,7 @@ site_dir : ../../dist/assets/help/howto
 
 pages:
  - Home : index.md
+ - Getting Startet: startet/index.md
  - Platform : platforms/index.md
 
 theme: material
