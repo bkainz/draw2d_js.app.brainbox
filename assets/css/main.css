@@ -432,7 +432,7 @@ ellipse.draw2d_OutputPort {
 #layout .nav-tabs li.active .gitbook span {
   color: #008cff;
 }
-#layout .nav-tabs li.active .about span {
+#layout .nav-tabs li.active .howto span {
   color: #ac193d;
 }
 #layout .nav-tabs li.active:hover {
@@ -516,40 +516,6 @@ ellipse.draw2d_OutputPort {
 }
 #home footer a {
   color: #0078f2;
-  text-decoration: underline;
-}
-
-#about {
-  overflow: auto;
-  padding: 30px !important;
-}
-#about h1 {
-  font-size: 36px;
-  display: inline-block;
-  color: white;
-  background-color: #ac193d;
-  padding: 11px;
-  font-weight: 200;
-  margin-bottom: 50px;
-}
-#about ul {
-  font-size: 25px;
-  font-weight: 200;
-}
-#about ul li {
-  margin-bottom: 30px;
-  max-width: 70%;
-  border-left: 6px solid #ac193d;
-  padding-left: 10px;
-  list-style-type: none;
-}
-#about footer {
-  text-align: center;
-  margin-top: 100px;
-  color: #ac193d;
-}
-#about footer a {
-  color: #ac193d;
   text-decoration: underline;
 }
 
