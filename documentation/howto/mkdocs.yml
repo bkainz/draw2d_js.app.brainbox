@@ -1,6 +1,7 @@
 site_name: Documentation
 site_dir : ../../dist/assets/help/howto
 #site_dir : ../../dist/assets/help/howto
+repo_url: http:github.com/freegroup
 
 pages:
  - Home : index.md
