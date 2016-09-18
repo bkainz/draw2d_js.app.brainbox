@@ -1,7 +1,7 @@
-site_name: Documentation
-site_dir : ../../dist/assets/help/howto
+site_name: Brainbox Getting Started Guide
 #site_dir : ../../dist/assets/help/howto
-repo_url: http:github.com/freegroup
+repo_url: https://github.com/freegroup/draw2d_js.app.brainbox
+edit_uri: blob/dev/docs/
 
 pages:
  - Home : index.md

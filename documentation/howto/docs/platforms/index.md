@@ -1,5 +1,34 @@
+There are a number of different ways to use or install the brainbox software. "brainbox" is an
+browser base application which **can** be served from a node.js server.
+<br>
+<br>
+Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network
+applications. The Node.js applications are written in JavaScript, and can be run within the
+Node.js engine. You need the Node.js environment if you want have access to any hardware GPIO
+or connect any wireless device...*welcome to awesome the world of IoT.*
+
+### Feature Matrix
+
+ Feature             | <center> Web</center>   | <center>Desktop</center> | <center>Raspberry Pi</center> | ESP8266
+---------------------| :---------------------: | :---------------------- :| :---------------------------: | ---------
+ Auto Update         | <center>**X**</center>  | <center>**-**</center>   | <center>**-**</center>        | <center>**-**</center>
+ HTML5 UI            | <center>**X**</center>  | <center>**X**</center>   | <center>**X**</center>        | <center>**X**</center>
+ Running simulation  | <center>**X**</center>  | <center>**X**</center>   | <center>**X**</center>        | <center>**X**</center>
+ Load / Save of files| <center>**X**</center>  | <center>**X**</center>   | <center>**X**</center>        | <center>**-**</center>
+ In App Docu         | <center>**X**</center>  | <center>**X**</center>   | <center>**X**</center>        | <center>**-**</center>
+ Access to GPIO Pins | <center>**-**</center>  | <center>**X**</center>   | <center>**X**</center>        | <center>**X**</center>
+ Arduino Slaves      | <center>**-**</center>  | <center>**X**</center>   | <center>**X**</center>        | <center>**-**</center>
+ RF24 Slaves         | <center>**-**</center>  | <center>**X**</center>   | <center>**X**</center>        | <center>**-**</center>
+
 
 ## Web
+This, zero-install, Web and Cloud-based version can be used to go the very first steps. t's very helpful for
+experimentation and visualization. Best of all, thanks to the power of HTML5, no plug-ins are required!
+<br>
+<br>
+** *Explore:* [Brainbox online](http://freegroup.github.io/draw2d_js.app.brainbox)**
+
+
 ## Desktop
 ## Raspberry Pi
 How to setup Node.js on a Raspberry Pi and run brainbox on it

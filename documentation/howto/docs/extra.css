@@ -15,11 +15,12 @@
 
     .primary {
         float: left;
-        width: 400px;
+        width: 40%;
         padding-right:50px;
     }
     .secondary {
-        width: 300px;
+        width: 40%;
+
     }
 }
 
@@ -45,21 +46,21 @@ body{
 }
 
 .article h1 {
-    font-size: 22px;
-    font-weight: 100;
+    font-size: 30px;
+    font-weight: 600;
     border-bottom:0;
     padding:0;
 }
 
 .article h2{
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 600;
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 .article h3{
     font-size: 18px;
-    font-weight: 100;
+    font-weight: 200;
 }
 
 .article table th,
@@ -68,8 +69,18 @@ body{
     background: #ac193d;
 }
 
+.article ol,
+.article p,
+.article ul{
+    margin-top:0px;
+}
+
 .branding {
-    color: #AC193D;
+    color: #FF9A03;
+    font-family: 'Courier New', 'Courier', monospace;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 100;
 }
 .backdrop{
     display:none !important;
