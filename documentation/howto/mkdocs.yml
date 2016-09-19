@@ -4,7 +4,7 @@ repo_url: https://github.com/freegroup/draw2d_js.app.brainbox
 edit_uri: blob/dev/docs/
 
 pages:
- - Home : index.md
+ - About : index.md
  - Getting Startet: startet/index.md
  - Platform : platforms/index.md
 

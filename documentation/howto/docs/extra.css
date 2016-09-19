@@ -20,7 +20,10 @@
     }
     .secondary {
         width: 40%;
+    }
 
+    .secondary img{
+        width: 400px;
     }
 }
 
@@ -46,6 +49,7 @@ body{
 }
 
 .article h1 {
+    display: none;
     font-size: 30px;
     font-weight: 600;
     border-bottom:0;
@@ -56,11 +60,14 @@ body{
     font-size: 20px;
     font-weight: 600;
     border-bottom: 1px solid rgba(0,0,0,0.05);
+    margin-bottom:30px;
 }
 
 .article h3{
     font-size: 18px;
     font-weight: 200;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    margin-bottom:20px;
 }
 
 .article table th,
