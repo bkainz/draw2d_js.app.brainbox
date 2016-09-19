@@ -1,10 +1,3 @@
-<div id="video-container" style="width:100%; height:200px; overflow:hidden">
-<video autoplay="" loop=""  >
-<source src="//benkaminski.com/wp-content/themes/coffee-cream-sugar/img/header-video.mp4" type="video/mp4">
-<source src="//benkaminski.com/wp-content/themes/coffee-cream-sugar/img/header-video.ogv" type="video/ogg">
-<source src="//benkaminski.com/wp-content/themes/coffee-cream-sugar/img/header-video.webm" type="video/webm">
-Your browser does not support the video tag. I suggest you upgrade your browser.
-</video></div>
 
 ## What is brainbox
 The starting point for *<b>Internet of Things</b>* applications are the things themselves.
