@@ -5,6 +5,10 @@ The starting point for *<b>Internet of Things</b>* applications are the things t
 and students who want to design and build tangible Internet of Things projects. <span class='branding'>brainbox</span>
 allows anyone to graphically create new unlimited interactions between this physical and virtual objects within a
 simple web-browser application without knowing coding or hacking.
+<br>
+<br>
+Brainbox can accept input data from devices connected to the PC, such as a switch, sensor, joystick or even an
+RF24 wireles device.
 
 ## What it is NOT
 <span class='branding' >brainbox</span> is not a (yet another) new home automation server. It's purpose
@@ -12,28 +16,6 @@ is to cover key components of networking, IoT and digital circuits to ensure tha
 device to the Internet with fun.
 <br>
 <br>
-
-## Easy To Use
-<span class="container clearfix">
-<span  class='primary' style="max-width:500px" markdown='1'>
-  **1. Place**
-  <br>
-  Select an element. Place it on the board.
-  <br>
-  <br>
-  **2. Connect**
-  <br>
-  Use the Wire Tool to connect your elements.
-  <br>
-  <br>
-  **3. Test**
-  <br>
-  Click RUN to start the simulation.
-</span>
-<span  class='secondary' style="width:200px" markdown='1'>
-   ![overview](overview_thumb.png)
-</span>
-</span>
 
 
 ## Browser-based editing
@@ -70,6 +52,7 @@ device to the Internet with fun.
 
 
 ## Hook up Sensors
+A good way to get started with an Arduino is to hook up some sensors and read them with brainbox.
 
 ### USB
 

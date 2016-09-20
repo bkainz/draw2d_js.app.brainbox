@@ -1,25 +1,49 @@
 ## Brainbox Basics
-"BrainBox" is a HTML5 application served by a *Node.js* server. You can customize and manipulate
-functional “brains” from any computer’s browser, local or remote. Every BrainBox app consists of nodes which are
-linked together to form the logical flow of your application. The nodes typically fall under input, operation or
-output.
-
+You can customize and manipulate functional “brains” from any computer’s browser, local or remote.
+Every <span class='branding'>brainbox</span> file consists of nodes which are linked together to form the logical flow of your
+application. The nodes typically fall under **input**, **operation** or **output**.<br>
+<br>
 Based on a friendly user interface, the user can interact with its logic blocks, flip switches, change the
 input data, connect any device via *wireless communication* modules and watch the output data changes for sequential
 models. We are sure that this tool will be of great help to any student who has interest in this field, and enable
 him to better understand the logic circuit design process.
 
 Below is a very simple example of how these different nodes would interact with each other.
-
+<br>
+<br>
+<center>
 ![example](example_brain.png)
+</center>
 
-## Working with nodes
-*BrainBox* lets you drag and drop components or nodes onto the editing surface and manipulate them easily with
-your mouse.
+
+## Easy To Use
+<span class="container clearfix">
+<span  class='primary' style="max-width:500px" markdown='1'>
+  **1. Place**
+  <br>
+  Select an element. Place it on the board.
+  <br>
+  <br>
+  **2. Connect**
+  <br>
+  Use the Wire Tool to connect your elements.
+  <br>
+  <br>
+  **3. Test**
+  <br>
+  Click RUN to start the simulation.
+</span>
+<span  class='secondary' style="width:200px" markdown='1'>
+   ![overview](overview_thumb.png)
+</span>
+</span>
+
+
+## Place nodes
+<span class='branding'>brainbox</span> lets you drag and drop components or nodes onto the editing surface and
+manipulate them easily with your mouse.
 <br>
-<br>
-<br>
-<br>
+
 
 ### Placing nodes
 To add a component to the document, drag it from the left palette on the left side of the window to the
@@ -70,7 +94,7 @@ and choose *Delete* from the context menu.
 ![](delete_nodes.gif)
 
 
-## Working with Connections
+## Connect nodes
 Signal is passed around the circuit by connecting nodes with **wires**.
 
 ### Create a Connection
@@ -85,9 +109,16 @@ single output pin. An output pin may be connected to many input pins.
 <br>
 
 
-## Running the Simulation
+## Run the Simulation
 *BrainBox* starts simulating when you press the green arrow at the top right corner. The signal will instantly
 propagate among the connected components, and if your circuit contains one or more Clocks, they will start
 oscillating.
 
 ![](run_simulation.gif)
+
+## ...open an example
+go to the editor and open your very first example and start the simulation. <a href="/index.html?pane=files_tab" target="_parent">open</a>
+<br>
+<br>
+<br>
+<br>

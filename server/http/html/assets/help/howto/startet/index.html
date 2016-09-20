@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     
       
-        <title>Platform - Brainbox Getting Started Guide</title>
+        <title>Getting Startet - Brainbox Getting Started Guide</title>
       
       
       
@@ -92,7 +92,7 @@
             
           </span>
         
-        Platform
+        Getting Startet
       </div>
     </div>
     
@@ -171,17 +171,8 @@
           
             
   <li>
-    <a class="" title="Getting Startet" href="../startet/">
+    <a class="current" title="Getting Startet" href="./">
       Getting Startet
-    </a>
-    
-  </li>
-
-          
-            
-  <li>
-    <a class="current" title="Platform" href="./">
-      Platform
     </a>
     
       
@@ -189,37 +180,52 @@
         <ul>
           
             <li class="anchor">
-              <a title="Feature Matrix" href="#feature-matrix">
-                Feature Matrix
+              <a title="Brainbox Basics" href="#brainbox-basics">
+                Brainbox Basics
               </a>
             </li>
           
             <li class="anchor">
-              <a title="Web" href="#web">
-                Web
+              <a title="Easy To Use" href="#easy-to-use">
+                Easy To Use
               </a>
             </li>
           
             <li class="anchor">
-              <a title="Desktop" href="#desktop">
-                Desktop
+              <a title="Place nodes" href="#place-nodes">
+                Place nodes
               </a>
             </li>
           
             <li class="anchor">
-              <a title="Raspberry Pi" href="#raspberry-pi">
-                Raspberry Pi
+              <a title="Connect nodes" href="#connect-nodes">
+                Connect nodes
               </a>
             </li>
           
             <li class="anchor">
-              <a title="Aduino" href="#aduino">
-                Aduino
+              <a title="Run the Simulation" href="#run-the-simulation">
+                Run the Simulation
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="...open an example" href="#open-an-example">
+                ...open an example
               </a>
             </li>
           
         </ul>
       
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Platform" href="../platforms/">
+      Platform
+    </a>
     
   </li>
 
@@ -234,105 +240,107 @@
       <article class="article">
         <div class="wrapper">
           
-            <h1>Platform</h1>
+            <h1>Getting Startet</h1>
           
-          <p>There are a number of different ways to use or install the brainbox software. "brainbox" is an
-browser base application which <strong>can</strong> be served from a node.js server.
+          <h2 id="brainbox-basics">Brainbox Basics</h2>
+<p>You can customize and manipulate functional “brains” from any computer’s browser, local or remote.
+Every <span class='branding'>brainbox</span> file consists of nodes which are linked together to form the logical flow of your
+application. The nodes typically fall under <strong>input</strong>, <strong>operation</strong> or <strong>output</strong>.<br>
+<br>
+Based on a friendly user interface, the user can interact with its logic blocks, flip switches, change the
+input data, connect any device via <em>wireless communication</em> modules and watch the output data changes for sequential
+models. We are sure that this tool will be of great help to any student who has interest in this field, and enable
+him to better understand the logic circuit design process.</p>
+<p>Below is a very simple example of how these different nodes would interact with each other.
 <br>
 <br>
-Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network
-applications. The Node.js applications are written in JavaScript, and can be run within the
-Node.js engine. You need the Node.js environment if you want have access to any hardware GPIO
-or connect any wireless device...<em>welcome to awesome the world of IoT.</em></p>
-<h3 id="feature-matrix">Feature Matrix</h3>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th><center> Web</center></th>
-<th align="right"><center>Desktop</center></th>
-<th><center>Raspberry Pi</center></th>
-<th>ESP8266</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Auto Update</td>
-<td><center><strong>X</strong></center></td>
-<td align="right"><center><strong>-</strong></center></td>
-<td><center><strong>-</strong></center></td>
-<td><center><strong>-</strong></center></td>
-</tr>
-<tr>
-<td>HTML5 UI</td>
-<td><center><strong>X</strong></center></td>
-<td align="right"><center><strong>X</strong></center></td>
-<td><center><strong>X</strong></center></td>
-<td><center><strong>X</strong></center></td>
-</tr>
-<tr>
-<td>Running simulation</td>
-<td><center><strong>X</strong></center></td>
-<td align="right"><center><strong>X</strong></center></td>
-<td><center><strong>X</strong></center></td>
-<td><center><strong>X</strong></center></td>
-</tr>
-<tr>
-<td>Load / Save of files</td>
-<td><center><strong>X</strong></center></td>
-<td align="right"><center><strong>X</strong></center></td>
-<td><center><strong>X</strong></center></td>
-<td><center><strong>-</strong></center></td>
-</tr>
-<tr>
-<td>In App Docu</td>
-<td><center><strong>X</strong></center></td>
-<td align="right"><center><strong>X</strong></center></td>
-<td><center><strong>X</strong></center></td>
-<td><center><strong>-</strong></center></td>
-</tr>
-<tr>
-<td>Access to GPIO Pins</td>
-<td><center><strong>-</strong></center></td>
-<td align="right"><center><strong>X</strong></center></td>
-<td><center><strong>X</strong></center></td>
-<td><center><strong>X</strong></center></td>
-</tr>
-<tr>
-<td>Arduino Slaves</td>
-<td><center><strong>-</strong></center></td>
-<td align="right"><center><strong>X</strong></center></td>
-<td><center><strong>X</strong></center></td>
-<td><center><strong>-</strong></center></td>
-</tr>
-<tr>
-<td>RF24 Slaves</td>
-<td><center><strong>-</strong></center></td>
-<td align="right"><center><strong>X</strong></center></td>
-<td><center><strong>X</strong></center></td>
-<td><center><strong>-</strong></center></td>
-</tr>
-</tbody>
-</table>
-<h2 id="web">Web</h2>
-<p>This, zero-install, Web and Cloud-based version can be used to go the very first steps. t's very helpful for
-experimentation and visualization. Best of all, thanks to the power of HTML5, no plug-ins are required!
+<center>
+<img alt="example" src="./example_brain.png" />
+</center></p>
+<h2 id="easy-to-use">Easy To Use</h2>
+<p><span class="container clearfix">
+<span  class='primary' style="max-width:500px" markdown='1'>
+  <strong>1. Place</strong>
+  <br>
+  Select an element. Place it on the board.
+  <br>
+  <br>
+  <strong>2. Connect</strong>
+  <br>
+  Use the Wire Tool to connect your elements.
+  <br>
+  <br>
+  <strong>3. Test</strong>
+  <br>
+  Click RUN to start the simulation.
+</span>
+<span  class='secondary' style="width:200px" markdown='1'>
+   <img alt="overview" src="./overview_thumb.png" />
+</span>
+</span></p>
+<h2 id="place-nodes">Place nodes</h2>
+<p><span class='branding'>brainbox</span> lets you drag and drop components or nodes onto the editing surface and
+manipulate them easily with your mouse.
+<br></p>
+<h3 id="placing-nodes">Placing nodes</h3>
+<p>To add a component to the document, drag it from the left palette on the left side of the window to the
+editing surface on the right. Drop it at any location on the editing surface by releasing the left mouse button.</p>
+<p><img alt="" src="./placing_nodes.gif" />
 <br>
 <br>
-<strong> <em>Explore:</em> <a href="http://freegroup.github.io/draw2d_js.app.brainbox">Brainbox online</a></strong></p>
-<h2 id="desktop">Desktop</h2>
-<h2 id="raspberry-pi">Raspberry Pi</h2>
-<p>How to setup Node.js on a Raspberry Pi and run brainbox on it</p>
-<div id="platformraspiani_hype_container" style="margin:auto;position:relative;width:850px;height:330px;overflow:hidden;" aria-live="polite">
-  <script type="text/javascript" charset="utf-8" src="platform_raspi_ani.hyperesources/platformraspiani_hype_generated_script.js?2077"></script>
-</div>
-
-<h3 id="1-setting-up-your-raspberry-pi">1.) Setting up your Raspberry Pi</h3>
-<p>Running a basic setup of Raspbian on a Raspberry Pi is very easy and
-clearly explained in their <a href="http://www.raspberrypi.org/wp-content/uploads/2012/04/quick-start-guide-v2_1.pdf">Getting Started Guide</a></p>
-<p>Download NOOBS, extract it on your SD, plug it in and turn
-on the Raspberry Pi. When prompted, choose to install Raspbian and let it run.</p>
-<h2 id="aduino">Aduino</h2>
+<br>
+<br></p>
+<h3 id="select-single-component">Select single component</h3>
+<p>To select a <strong>single component</strong> in the document, click it with your mouse. It will be highlighted blue to indicate
+that it has been selected.</p>
+<p><img alt="" src="./select_single_nodes.gif" />
+<br>
+<br>
+<br>
+<br></p>
+<h3 id="select-multiple-components">Select multiple components</h3>
+<p>Drag and drop is not restricted only to single element. To select a <strong>multiple component</strong> in the document, click
+anywhere in the document and drag a bounding box covering all elements to select.</p>
+<p><img alt="" src="./select_multiple_nodes.gif" />
+<br>
+<br>
+<br>
+<br></p>
+<h3 id="grouping-components">Grouping components</h3>
+<p>You can group multiple elements if you press the <strong>shift key</strong> during the multiple selection operation. The created <em>group</em>
+ist more a raft than a closed group.</p>
+<p><img alt="" src="./group_multiple_nodes.gif" />
+<br>
+<br>
+<br>
+<br></p>
+<h3 id="delete-a-node">Delete a node</h3>
+<p>To delete a node from the document, select it, and then click the Delete button in the upper tool bar. Alternatively,
+press either Delete/Entf on your keyboard to delete the selected component. You may also right-click the editing surface
+and choose <em>Delete</em> from the context menu.</p>
+<p><img alt="" src="./delete_nodes.gif" /></p>
+<h2 id="connect-nodes">Connect nodes</h2>
+<p>Signal is passed around the circuit by connecting nodes with <strong>wires</strong>.</p>
+<h3 id="create-a-connection">Create a Connection</h3>
+<p>To create a connection click a component's output pin (a circular connector, usually on the right side), and drag a
+wire to an unconnected input pin. Compatible pins will be highlighted. Input pins may only be connected to a
+single output pin. An output pin may be connected to many input pins.</p>
+<p><img alt="" src="./connect_nodes.gif" />
+<br>
+<br>
+<br>
+<br></p>
+<h2 id="run-the-simulation">Run the Simulation</h2>
+<p><em>BrainBox</em> starts simulating when you press the green arrow at the top right corner. The signal will instantly
+propagate among the connected components, and if your circuit contains one or more Clocks, they will start
+oscillating.</p>
+<p><img alt="" src="./run_simulation.gif" /></p>
+<h2 id="open-an-example">...open an example</h2>
+<p>go to the editor and open your very first example and start the simulation. <a href="/index.html?pane=files_tab" target="_parent">open</a>
+<br>
+<br>
+<br>
+<br></p>
           <aside class="copyright" role="note">
             
             Documentation built with
@@ -349,7 +357,7 @@ on the Raspberry Pi. When prompted, choose to install Raspbian and let it run.</
   <nav class="pagination" aria-label="Footer">
     <div class="previous">
       
-        <a href="../startet/" title="Getting Startet">
+        <a href=".." title="About">
           <span class="direction">
             Previous
           </span>
@@ -359,7 +367,7 @@ on the Raspberry Pi. When prompted, choose to install Raspbian and let it run.</
             </div>
             <div class="stretch">
               <div class="title">
-                Getting Startet
+                About
               </div>
             </div>
           </div>
@@ -367,6 +375,22 @@ on the Raspberry Pi. When prompted, choose to install Raspbian and let it run.</
       
     </div>
     <div class="next">
+      
+        <a href="../platforms/" title="Platform">
+          <span class="direction">
+            Next
+          </span>
+          <div class="page">
+            <div class="stretch">
+              <div class="title">
+                Platform
+              </div>
+            </div>
+            <div class="button button-next" role="button" aria-label="Next">
+              <i class="icon icon-forward"></i>
+            </div>
+          </div>
+        </a>
       
     </div>
   </nav>

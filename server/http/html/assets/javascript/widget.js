@@ -20862,7 +20862,6 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
      */
     onInstall: function(connection)
     {
-        
     },
     
     /**
@@ -20941,6 +20940,18 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
      * @param {Number} dy2 The y diff since the last call of this dragging operation
      */
     onDrag: function(line, dx, dy, dx2, dy2)
+    {
+    },
+
+    /**
+     * @methid
+     * Called by the connection if the vertices set outside.
+     * This enforce the router to avoid full autoroute. E.g. InteractiveManhattanRouter
+     *
+     * @protected
+     * @param {draw2d.shape.basic.Line}
+     */
+    verticesSet: function(line)
     {
     }
     
@@ -21988,9 +21999,16 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
             this.route(conn, oldVertices);
         }
 
+        // TODO: detection for switch back to autoroute isn'T good enough.
+        //       Add more logic. e.g. if the fromDir!==1. This happens if
+        //       The ports are at bottom and top.
+        //       The code below covers only the classic workflow configuration left->right
+        //
         //  go back to the default if no routing is possible anymore
         //
-        if((fromDir===1 ) && (toDir === 3) && (fromPt.x > toPt.x) && (vertexCount<=4)){
+        if(    (fromDir===draw2d.geo.Rectangle.DIRECTION_RIGHT ) && (toDir === draw2d.geo.Rectangle.DIRECTION_LEFT)
+            && (fromPt.x > toPt.x) && (vertexCount<=4)){
+
             conn._routingMetaData.routedByUserInteraction = false;
             this.route(conn, {oldVertices:oldVertices});
         }
@@ -22205,8 +22223,9 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
                 return false;
             }
 
-            // unable to make the decision on the easy way. calculate the route again and
-            // check if the segment count of the new routed connection allows a removal
+            // unable to make the decision on the easy way. calculate the route again with an
+            // temporary connection and check if the segment count of the new routed connection
+            // allows a removal
             //
             var tmpConn = new draw2d.Connection();
             tmpConn.lineSegments = new draw2d.util.ArrayList();
@@ -22242,12 +22261,13 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
      */
     onDrag: function(line, dx, dy, dx2, dy2)
     {
+        var i=0;
         // Connection is dragged by source and origin port movement
-        // or MultiSelection in this case we dragg the complete
+        // or MultiSelection in this case we drag the complete
         // connection
         if(line.draggedSegment===null){
             var count = line.getVertices().getSize()-1;
-            for(var i=1; i<count;i++){
+            for( i=1; i<count;i++){
                 line.getVertex(i).translate(dx2, dy2);
             }
             return;
@@ -22261,9 +22281,9 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
 
         line._routingMetaData.routedByUserInteraction = true;
 
-        var p0 = line.draggedSegment.start;
-        var p1 = line.draggedSegment.end;
-        var i  = line.draggedSegment.index;
+        var p0  = line.draggedSegment.start;
+        var p1  = line.draggedSegment.end;
+            i   = line.draggedSegment.index;
         var lp0 = line.getVertices().first();
         var lp1 = line.getVertices().last();
 
@@ -22276,8 +22296,8 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
         //  .
         //  x Px
         //
+        var distance=0;
         if(p0.y === p1.y) {
-            var distance=0;
             // ensure that the segment is the min distance away from the source/target port
             // (Px is endpoints of the connection and bounded to a port)
             if(i === 1) distance =p0.y - lp0.y;
@@ -22298,22 +22318,50 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
         // vertical segment movement
         //
         else if(p0.x === p1.x){
-            var distance=0;
             // ensure that the segment is the min distance away from the source/target port
             //
-            if (i === 1) distance =p0.x - lp0.x;
-            if(i === line.getSegments().getSize()-2)  distance =p1.x - lp1.x;
-
-
-            if(distance<0 && dx2>0) {
-                dx2 = Math.min(dx2, (-distance)-this.MINDIST);
+            if (i === 1) {
+                distance =p0.x - lp0.x;
+                if(distance<0 && dx2>0) {
+                    dx2 = Math.min(dx2, (-distance)-this.MINDIST);
+                }
+                else if(distance>0 && dx2<0) {
+                    dx2 = -Math.min(-dx2, (distance)-this.MINDIST);
+                }
             }
-            else if(distance>0 && dx2<0) {
-                dx2 = -Math.min(-dx2, (distance)-this.MINDIST);
+
+            // we need this additional test too. No "else if" because the special
+            // case of "index===1". In this case the segment can be the last AND first
+            // segment if the connection has only three segments at all.
+            //
+            if(i === line.getSegments().getSize()-2)  {
+                distance =p1.x - lp1.x;
+                if(distance<0 && dx2>0) {
+                    dx2 = Math.min(dx2, (-distance)-this.MINDIST);
+                }
+                else if(distance>0 && dx2<0) {
+                    dx2 = -Math.min(-dx2, (distance)-this.MINDIST);
+                }
             }
 
             line.getVertex(i).translate(dx2, 0);
             line.getVertex(i+1).translate(dx2, 0);
+        }
+    },
+
+    /**
+     * @methid
+     * Called by the connection if the vertices set outside.
+     * This enforce the router to avoid full autoroute. E.g. InteractiveManhattanRouter
+     *
+     * @protected
+     */
+    verticesSet: function(conn)
+    {
+        conn._routingMetaData.routedByUserInteraction = true;
+        if(conn.getSource()!==null && conn.getTarget()!==null) {
+            conn._routingMetaData.fromDir = conn.getSource().getConnectionDirection(conn.getTarget());
+            conn._routingMetaData.toDir = conn.getTarget().getConnectionDirection(conn.getSource());
         }
     },
 
@@ -34447,7 +34495,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.59",
+    version : "6.1.60",
     i18n : {
         command : {
             move : "Move Shape",
@@ -44281,15 +44329,14 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     */
    setVertices: function(vertices)
    {
+       var _this = this;
        // convert json document/array to draw2d ArrayList
        //
        if($.isArray(vertices)){
-           var _this = this;
            this.vertices= new draw2d.util.ArrayList();
            $.each(vertices,function(index, element){
                 _this.vertices.add(new draw2d.geo.Point(element));
            });
-
        }
        // use the given ArrayList
        //
@@ -44299,7 +44346,6 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
        else{
            throw "invalid argument for Line.setVertices";
        }
-
 
        // can happen if the given vertices array is empty
        //
@@ -44312,7 +44358,6 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
        this.svgPathString = null;
        this.repaint();
 
-       var _this = this;
        // align the SelectionHandles to the new situation
        // This is a Hack....normally this should be done below and the Line shouldn't know 
        // something about this issue....this is complete a "EditPolicy" domain to handle this. 
@@ -45115,6 +45160,15 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
         return result;
     },
 
+    setVertices: function(vertices)
+    {
+        // inform the router tha the vertices has set outside. This switch some
+        // router from full autoroute to half autoroute
+        this.router.verticesSet(this);
+
+        this._super(vertices);
+    },
+
 
     /**
      * @method
@@ -45704,7 +45758,8 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
     {
         return this.vertices.get(index);
     },
-  
+
+
     resetVertices: function()
     {
         this.vertices = new draw2d.util.ArrayList();
@@ -67066,9 +67121,7 @@ var Application = Class.extend(
 
         }
 
-        hardware.bloc.on("bloc:register", function(){
-            console.log("register",arguments);
-        });
+
         this.currentFileHandle= {
             title: "Untitled"+conf.fileSuffix
         };
@@ -67083,7 +67136,6 @@ var Application = Class.extend(
         $("#fileSave, #editorFileSave").on("click", function(){ _this.fileSave();});
         $("#appHelp").on("click", function(){$("#leftTabStrip .gitbook").click();});
         $("#appAbout").on("click", function(){ $("#leftTabStrip .about").click();});
-
 
         // First check if a valid token is inside the local storage
         //
@@ -67252,7 +67304,6 @@ var Application = Class.extend(
 
     autoLogin:function()
     {
-
         var _this = this;
         $.ajax({
             url:conf.backend.isLoggedIn,
@@ -67290,7 +67341,6 @@ var Application = Class.extend(
             $(".notLoggedIn").removeClass("notLoggedIn");
             $("#editorgroup_login").hide();
             $("#editorgroup_fileoperations").show();
-
         }
         else{
             $(".notLoggedIn").addClass("notLoggedIn");
@@ -67301,6 +67351,10 @@ var Application = Class.extend(
         this.filePane.render();
 
         var id = this.localStorage["pane"];
+        if(!id){
+            id = this.getParam("pane");
+        }
+        console.log(id);
         if(id){
             this.localStorage.removeItem("pane");
             window.setTimeout(function(){
