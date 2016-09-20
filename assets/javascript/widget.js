@@ -67121,9 +67121,7 @@ var Application = Class.extend(
 
         }
 
-        hardware.bloc.on("bloc:register", function(){
-            console.log("register",arguments);
-        });
+
         this.currentFileHandle= {
             title: "Untitled"+conf.fileSuffix
         };
@@ -67138,7 +67136,6 @@ var Application = Class.extend(
         $("#fileSave, #editorFileSave").on("click", function(){ _this.fileSave();});
         $("#appHelp").on("click", function(){$("#leftTabStrip .gitbook").click();});
         $("#appAbout").on("click", function(){ $("#leftTabStrip .about").click();});
-
 
         // First check if a valid token is inside the local storage
         //
@@ -67307,7 +67304,6 @@ var Application = Class.extend(
 
     autoLogin:function()
     {
-
         var _this = this;
         $.ajax({
             url:conf.backend.isLoggedIn,
@@ -67345,7 +67341,6 @@ var Application = Class.extend(
             $(".notLoggedIn").removeClass("notLoggedIn");
             $("#editorgroup_login").hide();
             $("#editorgroup_fileoperations").show();
-
         }
         else{
             $(".notLoggedIn").addClass("notLoggedIn");
@@ -67356,6 +67351,10 @@ var Application = Class.extend(
         this.filePane.render();
 
         var id = this.localStorage["pane"];
+        if(!id){
+            id = this.getParam("pane");
+        }
+        console.log(id);
         if(id){
             this.localStorage.removeItem("pane");
             window.setTimeout(function(){
