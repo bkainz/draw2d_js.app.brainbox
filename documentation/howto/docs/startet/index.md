@@ -117,7 +117,7 @@ oscillating.
 ![](run_simulation.gif)
 
 ## ...open an example
-go to the editor and open your very first example and start the simulation. <a href="/index.html?pane=files_tab" target="_parent">open</a>
+go to the editor and open your very first example and start the simulation. <a href="../../../../index.html?pane=files_tab" target="_parent">open</a>
 <br>
 <br>
 <br>
