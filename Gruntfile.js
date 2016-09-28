@@ -43,7 +43,7 @@ module.exports = function (grunt) {
                     './bower_components/bootstrap-growl/jquery.bootstrap-growl.js',
                     './bower_components/remarkable/dist/remarkable.min.js',
                     './bower_components/locstor/locstor.min.js',
-                    './bower_components/draw2d/dist/draw2d.js'
+                    './bower_components/draw2d/dist/draw2d_core.js'
                 ],
                 dest: './dist/assets/javascript/dependencies.js'
             },
@@ -70,7 +70,7 @@ module.exports = function (grunt) {
                     './bower_components/draw2d/dist/patched_Class.js',
                     './bower_components/draw2d/dist/json2.js',
                     './bower_components/draw2d/dist/pathfinding-browser.min.js',
-                    './bower_components/draw2d/dist/draw2d.js',
+                    './bower_components/draw2d/dist/draw2d_core.js',
                     './src/assets/javascript/**/*.js'
                 ],
                 dest: './dist/assets/javascript/widget.js'
