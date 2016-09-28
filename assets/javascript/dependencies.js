@@ -16001,10 +16001,12 @@ var draw2d =
 };
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************/// Production steps of ECMA-262, Edition 5, 15.4.4.21
+ ****************************************/
+// Production steps of ECMA-262, Edition 5, 15.4.4.21
 // Reference: http://es5.github.io/#x15.4.4.21
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce#Browser_compatibility
 if (!Array.prototype.reduce) {
@@ -16231,10 +16233,12 @@ if (!Object.prototype.unwatch) {
     }
   });
 }
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************/draw2d.util.Base64 = {
+ ****************************************/
+draw2d.util.Base64 = {
 
     /**
      * Maps bytes to characters.
@@ -16428,10 +16432,12 @@ if (!Object.prototype.unwatch) {
         }
     }
 };
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//*!
+ ****************************************/
+/*!
  * JavaScript Debug - v0.4 - 6/22/2010
  * http://benalman.com/projects/javascript-debug-console-log/
  * 
@@ -16699,10 +16705,12 @@ window.debug = (function(){
 })();
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class
  * Util class to handle colors in the draw2d enviroment.
  * 
@@ -16979,10 +16987,12 @@ draw2d.util.Color = Class.extend({
 	
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.util.ArrayList
  * 
@@ -17455,10 +17465,12 @@ draw2d.util.ArrayList.EMPTY_LIST = new draw2d.util.ArrayList();
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 // extending raphael with a polygon function
 Raphael.fn.polygon = function(pointString) {
   var poly  = ['M'];
@@ -17478,10 +17490,12 @@ Raphael.fn.polygon = function(pointString) {
   
   return this.path(poly);
 };
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************/draw2d.util.JSON = {
+ ****************************************/
+draw2d.util.JSON = {
 
         /**
          * @method
@@ -17610,10 +17624,12 @@ Raphael.fn.polygon = function(pointString) {
         
         
 };
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.util.UUID
  * Generates a (pseudo) UUID's
@@ -17649,10 +17665,12 @@ draw2d.util.UUID.create=function()
   return (segment()+segment()+"-"+segment()+"-"+segment()+"-"+segment()+"-"+segment()+segment()+segment());
 };
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.util.spline.Spline
  * 
@@ -17682,10 +17700,12 @@ draw2d.util.spline.Spline = Class.extend({
     }
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.util.spline.CubicSpline
  * 
  * A cubic spline object.
@@ -17775,10 +17795,12 @@ draw2d.util.spline.CubicSpline = draw2d.util.spline.Spline.extend(
   
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.util.spline.CatmullRomSpline
  * 
  * A catmull-rom spline object.
@@ -17814,10 +17836,12 @@ draw2d.util.spline.CatmullRomSpline = draw2d.util.spline.CubicSpline.extend(
   
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.util.spline.BezierSpline
  * 
  * A bezier spline object.
@@ -17898,10 +17922,12 @@ draw2d.util.spline.BezierSpline = draw2d.util.spline.Spline.extend(
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.geo.PositionConstants
  * Static values for point orientation.
@@ -17916,10 +17942,12 @@ draw2d.geo.PositionConstants.SOUTH =  4;
 draw2d.geo.PositionConstants.WEST  =  8;
 draw2d.geo.PositionConstants.EAST  = 16;
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.geo.Point Util class for geometrie handling.
  */
@@ -18267,10 +18295,12 @@ draw2d.geo.Point = Class.extend({
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.geo.Rectangle
  * 
  * Util class for geometrie handling.
@@ -19116,10 +19146,12 @@ draw2d.geo.Rectangle.DIRECTION_DOWN  =2;
 draw2d.geo.Rectangle.DIRECTION_LEFT  =3;
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 
 /**
  * @class draw2d.geo.Ray
@@ -19147,10 +19179,12 @@ draw2d.geo.Util=
     }
 
 };
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 
 /**
  * @class draw2d.geo.Ray
@@ -19194,10 +19228,12 @@ draw2d.geo.Ray = draw2d.geo.Point.extend({
     }
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * Static util function to determine the minimal distance of point(px,py) on the line(x1,y1,x2,y2)
  *
@@ -19326,10 +19362,12 @@ draw2d.geo.Line = {
 };
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 
 /**
  * @class draw2d.command.CommandType
@@ -19384,10 +19422,12 @@ draw2d.command.CommandType.ROTATE               = "ROTATE";
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.Command
  * 
@@ -19485,10 +19525,12 @@ draw2d.command.Command = Class.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandCollection
  * 
@@ -19622,10 +19664,12 @@ draw2d.command.CommandCollection = draw2d.command.Command.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandStack
  * Stack for undo/redo operations
@@ -19962,10 +20006,12 @@ draw2d.command.CommandStack.PRE_MASK  = draw2d.command.CommandStack.PRE_EXECUTE 
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandStackEvent
  * Event class which will be fired for every CommandStack operation. Required for CommandStackListener.
@@ -20046,10 +20092,12 @@ draw2d.command.CommandStackEvent = Class.extend({
        return 0 != (this.getDetails() & draw2d.command.CommandStack.PRE_MASK);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandStackEventListener
  * 
@@ -20083,10 +20131,12 @@ draw2d.command.CommandStackEventListener = Class.extend({
 
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandMove
  * 
@@ -20197,10 +20247,12 @@ draw2d.command.CommandMove = draw2d.command.Command.extend({
        this.figure.setPosition(this.newX, this.newY);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandAattr
  * 
@@ -20285,10 +20337,12 @@ draw2d.command.CommandAttr = draw2d.command.Command.extend({
         this.figure.attr(this.newAttributes);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandMoveLine
  * 
@@ -20383,10 +20437,12 @@ draw2d.command.CommandMoveLine = draw2d.command.Command.extend({
        this.line.setPosition(this.line.getStartPoint());
    }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandMoveConnection
  * 
@@ -20481,10 +20537,12 @@ draw2d.command.CommandMoveConnection = draw2d.command.Command.extend({
        this.line.setPosition(this.line.getStartPoint());
    }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandMoveVertex
  * 
@@ -20578,10 +20636,12 @@ draw2d.command.CommandMoveVertex = draw2d.command.Command.extend({
         this.line.setVertex(this.index, this.newPoint.x, this.newPoint.y);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandMoveVertices
  * 
@@ -20664,10 +20724,12 @@ draw2d.command.CommandMoveVertices = draw2d.command.Command.extend({
         this.line.setVertices(this.newVertices);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandResize
  * Resize command for figures. Can be execute/undo/redo via a CommandStack.
@@ -20762,10 +20824,12 @@ draw2d.command.CommandResize = draw2d.command.Command.extend({
        this.figure.setDimension(this.newWidth, this.newHeight);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandRotate
  * 
@@ -20853,10 +20917,12 @@ draw2d.command.CommandRotate = draw2d.command.Command.extend({
         this.figure.portRelayoutRequired=true;
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandConnect
  * 
@@ -20967,10 +21033,12 @@ draw2d.command.CommandConnect = draw2d.command.Command.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandReconnect
  * 
@@ -21107,10 +21175,12 @@ draw2d.command.CommandReconnect = draw2d.command.Command.extend({
 
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandDelete
  * Command to remove a figure with CommandStack support.
@@ -21239,10 +21309,12 @@ draw2d.command.CommandDelete = draw2d.command.Command.extend({
        }
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandDeleteGroup
  *
@@ -21351,10 +21423,12 @@ draw2d.command.CommandDeleteGroup = draw2d.command.Command.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandAdd
  * 
@@ -21429,10 +21503,12 @@ draw2d.command.CommandAdd = draw2d.command.Command.extend({
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandGroup
  * Command to group a given set of figures
@@ -21526,10 +21602,12 @@ draw2d.command.CommandGroup = draw2d.command.Command.extend({
         this.canvas.setCurrentSelection(this.group);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandUngroup
  * Command to ungroup a given group figures
@@ -21616,10 +21694,12 @@ draw2d.command.CommandUngroup = draw2d.command.Command.extend({
         this.canvas.remove(this.group);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandAddVertex
  * 
@@ -21699,10 +21779,12 @@ draw2d.command.CommandAddVertex = draw2d.command.Command.extend({
         this.line.insertVertexAt(this.index, this.newPoint.x, this.newPoint.y);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandAssignFigure
  * 
@@ -21822,10 +21904,12 @@ draw2d.command.CommandAssignFigure = draw2d.command.Command.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandBoundingBox
  * Set the bounding box of a figure with undo/redo support
@@ -21898,10 +21982,12 @@ draw2d.command.CommandBoundingBox = draw2d.command.Command.extend({
         this.figure.setBoundingBox(this.newBoundingBox);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandRemoveVertex
  * 
@@ -21979,10 +22065,12 @@ draw2d.command.CommandRemoveVertex = draw2d.command.Command.extend({
     	this.line.removeVertexAt(this.index);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.command.CommandReplaceVertices
  * 
@@ -22061,10 +22149,12 @@ draw2d.command.CommandReplaceVertices = draw2d.command.Command.extend({
         this.line.setVertices(this.newVertices);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.connection.ConnectionRouter
  * Routes a {@link draw2d.Connection}, possibly using a constraint.
@@ -22246,10 +22336,12 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.connection.DirectRouter
  *
@@ -22352,10 +22444,12 @@ draw2d.layout.connection.DirectRouter = draw2d.layout.connection.ConnectionRoute
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.connection.RubberbandRouter
  * Router for direct connections between two ports with a rubber band effect
@@ -22543,10 +22637,12 @@ draw2d.layout.connection.RubberbandRouter = draw2d.layout.connection.ConnectionR
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.connection.VertexRouter
  *
@@ -22765,10 +22861,12 @@ draw2d.layout.connection.VertexRouter = draw2d.layout.connection.ConnectionRoute
 
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.connection.ManhattanConnectionRouter
  * Provides a {@link draw2d.Connection} with an orthogonal route between the Connection's source 
@@ -23038,10 +23136,12 @@ draw2d.layout.connection.ManhattanConnectionRouter = draw2d.layout.connection.Co
 	}
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.connection.ManhattanBridgedConnectionRouter
  * Provides a {@link draw2d.Connection} with an orthogonal route between the Connection's source 
@@ -23148,10 +23248,12 @@ draw2d.layout.connection.ManhattanBridgedConnectionRouter = draw2d.layout.connec
 	}
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.connection.InteractiveManhattanConnectionRouter
  * Route the connection in an Manhattan style and add resize handles to all vertex for interactive alignment of the
@@ -23709,10 +23811,12 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
     }
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.connection.CircuitConnectionRouter
  *
@@ -23961,10 +24065,12 @@ draw2d.layout.connection.CircuitConnectionRouter = draw2d.layout.connection.Manh
 		conn.svgPathString = path.join("");
 	}
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.connection.SplineConnectionRouter 
  * 
  * A ManhattanConnectionRouter with an spline interpolation between the bend points.
@@ -24077,10 +24183,12 @@ draw2d.layout.connection.SplineConnectionRouter = draw2d.layout.connection.Manha
         conn.svgPathString = path.join("");
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.connection.FanConnectionRouter
  * 
  * Automatic router that spreads its  {@link draw2d.Connection Connections} in a fan-like fashion upon collision. 
@@ -24242,10 +24350,12 @@ draw2d.layout.connection.FanConnectionRouter = draw2d.layout.connection.DirectRo
     }
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.connection.MazeConnectionRouter
  * <b>BETA VERSION. Not for production!!!<br></b>
  * 
@@ -24765,10 +24875,12 @@ draw2d.layout.connection.MazeConnectionRouter = draw2d.layout.connection.Connect
     		return points;
     	}
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.connection.MuteableManhattanConnectionRouter
  * 
@@ -25321,10 +25433,12 @@ draw2d.layout.connection.MuteableManhattanConnectionRouter = draw2d.layout.conne
 
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.connection.SketchConnectionRouter
  * 
@@ -25399,10 +25513,12 @@ draw2d.layout.connection.SketchConnectionRouter = draw2d.layout.connection.MazeC
     }
  
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.mesh.MeshLayouter
  * Layouter for a mesh or grid. 
@@ -25434,10 +25550,12 @@ draw2d.layout.mesh.MeshLayouter = Class.extend({
     	return new draw2d.util.ArrayList();
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.mesh.ExplodeLayouter
  * Routes a {@link draw2d.Connection}, possibly using a constraint.
@@ -25634,10 +25752,12 @@ draw2d.layout.mesh.ExplodeLayouter = draw2d.layout.mesh.MeshLayouter.extend({
 		return oct;
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.mesh.ProposedMeshChange
  * Change proposal for grid/mesh layout changes.
@@ -25691,10 +25811,12 @@ draw2d.layout.mesh.ProposedMeshChange = Class.extend({
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.locator.Locator
  * 
  * Controls the location of an IFigure. 
@@ -25771,10 +25893,12 @@ draw2d.layout.locator.Locator= Class.extend({
         return eval("new "+this.NAME+"()");
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.locator.PortLocator
  * 
  * The port locator calculates the position of an port. All ports MUST have a locator
@@ -25816,10 +25940,12 @@ draw2d.layout.locator.PortLocator = draw2d.layout.locator.Locator.extend({
         port.setPosition( m.x(x,y), m.y(x,y));
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.locator.DraggableLocator
  * 
@@ -25871,10 +25997,12 @@ draw2d.layout.locator.DraggableLocator= draw2d.layout.locator.Locator.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.locator.DraggableLocator
  * 
@@ -26017,10 +26145,12 @@ draw2d.layout.locator.SmartDraggableLocator= draw2d.layout.locator.Locator.exten
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.locator.XYAbsPortLocator
  * 
  * Create a locator for fixed x/y coordinate position. The port in the example below is
@@ -26077,10 +26207,12 @@ draw2d.layout.locator.XYAbsPortLocator = draw2d.layout.locator.PortLocator.exten
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.locator.XYRelPortLocator
  * 
  * Create a locator for a relative x/y coordinate position. The coordinates are named in percentage [0..100%]
@@ -26144,10 +26276,12 @@ draw2d.layout.locator.XYRelPortLocator = draw2d.layout.locator.PortLocator.exten
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.locator.InputPortLocator
  * 
  * Repositions a Figure attached to a Connection when the 
@@ -26199,10 +26333,12 @@ draw2d.layout.locator.InputPortLocator = draw2d.layout.locator.PortLocator.exten
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.locator.OutputPortLocator
  * 
  * Repositions a Figure attached to a Connection when the 
@@ -26253,10 +26389,12 @@ draw2d.layout.locator.OutputPortLocator = draw2d.layout.locator.PortLocator.exte
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.locator.ConnectionLocator
  * 
  * Repositions a Figure attached to a Connection when the 
@@ -26280,10 +26418,12 @@ draw2d.layout.locator.ConnectionLocator= draw2d.layout.locator.Locator.extend({
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.locator.ManhattanMidpointLocator
  * 
@@ -26362,10 +26502,12 @@ draw2d.layout.locator.ManhattanMidpointLocator= draw2d.layout.locator.Connection
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.locator.PolylineMidpointLocator
  * 
@@ -26417,10 +26559,12 @@ draw2d.layout.locator.PolylineMidpointLocator= draw2d.layout.locator.ManhattanMi
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.locator.ParallelMidpointLocator
  * 
@@ -26531,10 +26675,12 @@ draw2d.layout.locator.ParallelMidpointLocator= draw2d.layout.locator.ConnectionL
 
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.locator.TopLocator
  * 
@@ -26605,10 +26751,12 @@ draw2d.layout.locator.TopLocator= draw2d.layout.locator.Locator.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.locator.BottomLocator
  * 
@@ -26679,10 +26827,12 @@ draw2d.layout.locator.BottomLocator= draw2d.layout.locator.Locator.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.locator.LeftLocator
  * 
@@ -26751,10 +26901,12 @@ draw2d.layout.locator.LeftLocator= draw2d.layout.locator.Locator.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.locator.RightLocator
  * 
@@ -26821,10 +26973,12 @@ draw2d.layout.locator.RightLocator = draw2d.layout.locator.Locator.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.locator.CenterLocator
  * 
@@ -26888,10 +27042,12 @@ draw2d.layout.locator.CenterLocator= draw2d.layout.locator.Locator.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.EditPolicy
  * 
@@ -27016,10 +27172,12 @@ draw2d.policy.EditPolicy = Class.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.CanvasPolicy
  * 
@@ -27282,10 +27440,12 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.ZoomPolicy
  * Generic zoom policy installable into a canvas object.
@@ -27369,10 +27529,12 @@ draw2d.policy.canvas.ZoomPolicy = draw2d.policy.canvas.CanvasPolicy.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.WheelZoomPolicy
  * Zoom support for a canvas. Use the mouse wheel and the shift key to zoom in/out.
@@ -27571,10 +27733,12 @@ draw2d.policy.canvas.WheelZoomPolicy = draw2d.policy.canvas.ZoomPolicy.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.KeyboardPolicy
  * Default interface for keyboard interaction with the canvas.
@@ -27628,10 +27792,12 @@ draw2d.policy.canvas.KeyboardPolicy = draw2d.policy.canvas.CanvasPolicy.extend({
 
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.DefaultKeyboardPolicy
  * Standard keyboard policy. This is the standard installed keyboard policy.
@@ -27695,10 +27861,12 @@ draw2d.policy.canvas.DefaultKeyboardPolicy = draw2d.policy.canvas.KeyboardPolicy
 
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.ExtendedKeyboardPolicy
  * Extended keyboard policy to <b>delete</b> and <b>group</b> figures in the canvas. 
@@ -27764,10 +27932,12 @@ draw2d.policy.canvas.ExtendedKeyboardPolicy = draw2d.policy.canvas.KeyboardPolic
 
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.SelectionPolicy
  * 
@@ -27827,10 +27997,12 @@ draw2d.policy.canvas.SelectionPolicy = draw2d.policy.canvas.CanvasPolicy.extend(
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.SingleSelectionPolicy
  * 
@@ -28144,10 +28316,12 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
 
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.GhostMoveSelectionPolicy
  * 
@@ -28379,10 +28553,12 @@ draw2d.policy.canvas.GhostMoveSelectionPolicy =  draw2d.policy.canvas.SingleSele
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.PanningSelectionPolicy
  * 
@@ -28429,10 +28605,12 @@ draw2d.policy.canvas.PanningSelectionPolicy =  draw2d.policy.canvas.SingleSelect
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.BoundingboxSelectionPolicy
  * 
@@ -28789,10 +28967,12 @@ draw2d.policy.canvas.BoundingboxSelectionPolicy =  draw2d.policy.canvas.SingleSe
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.ReadOnlySelectionPolicy
  * 
@@ -28862,10 +29042,12 @@ draw2d.policy.canvas.ReadOnlySelectionPolicy = draw2d.policy.canvas.SelectionPol
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.DecorationPolicy 
  * The base class for any canvas decoration like grid, chessboard, graph paper or
@@ -28890,10 +29072,12 @@ draw2d.policy.canvas.DecorationPolicy = draw2d.policy.canvas.CanvasPolicy.extend
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.FadeoutDecorationPolicy
  * 
@@ -29058,10 +29242,12 @@ draw2d.policy.canvas.FadeoutDecorationPolicy = draw2d.policy.canvas.DecorationPo
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.CoronaDecorationPolicy
  * This decorations hides draw2d.Ports which are to far from the current cursor position.
@@ -29244,10 +29430,12 @@ draw2d.policy.canvas.CoronaDecorationPolicy = draw2d.policy.canvas.DecorationPol
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************/draw2d.SnapToHelper = {};
+ ****************************************/
+draw2d.SnapToHelper = {};
 
 draw2d.SnapToHelper.NORTH   =  1;
 draw2d.SnapToHelper.SOUTH   =  4;
@@ -29344,10 +29532,12 @@ draw2d.policy.canvas.SnapToEditPolicy = draw2d.policy.canvas.CanvasPolicy.extend
         return modifiedPos;
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.ShowGridEditPolicy
  * 
@@ -29461,10 +29651,12 @@ draw2d.policy.canvas.ShowGridEditPolicy = draw2d.policy.canvas.DecorationPolicy.
     }
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.SnapToGridEditPolicy
  * 
@@ -29525,10 +29717,12 @@ draw2d.policy.canvas.SnapToGridEditPolicy = draw2d.policy.canvas.ShowGridEditPol
         return modifiedPos;
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.ShowDotEditPolicy
  * 
@@ -29597,10 +29791,12 @@ draw2d.policy.canvas.ShowDotEditPolicy = draw2d.policy.canvas.DecorationPolicy.e
     
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.canvas.ShowChessboardEditPolicy
  * 
@@ -29689,10 +29885,12 @@ draw2d.policy.canvas.ShowChessboardEditPolicy = draw2d.policy.canvas.DecorationP
     }
   
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 
 /**
  * @class draw2d.policy.canvas.SnapToGeometryEditPolicy
@@ -30151,10 +30349,12 @@ draw2d.policy.canvas.SnapToGeometryEditPolicy = draw2d.policy.canvas.SnapToEditP
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 
 /**
  * @class draw2d.policy.canvas.SnapToVerticesEditPolicy
@@ -30381,10 +30581,12 @@ draw2d.policy.canvas.SnapToVerticesEditPolicy = draw2d.policy.canvas.SnapToEditP
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 
 /**
  * @class draw2d.policy.canvas.SnapToInBetweenEditPolicy
@@ -30939,10 +31141,12 @@ draw2d.policy.canvas.SnapToInBetweenEditPolicy = draw2d.policy.canvas.SnapToEdit
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 
 /**
  * @class draw2d.policy.canvas.SnapToCenterEditPolicy
@@ -31267,10 +31471,12 @@ draw2d.policy.canvas.SnapToCenterEditPolicy = draw2d.policy.canvas.SnapToEditPol
         }
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.policy.canvas.DropInterceptorPolicy
  *
  * Drop interceptors are basically event handlers from which you can return a value
@@ -31367,10 +31573,12 @@ draw2d.policy.canvas.DropInterceptorPolicy = draw2d.policy.canvas.CanvasPolicy.e
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.connection.ConnectionCreatePolicy
  * Base class for connection creation by user interaction.
@@ -31455,10 +31663,12 @@ draw2d.policy.connection.ConnectionCreatePolicy = draw2d.policy.canvas.KeyboardP
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.connection.ComposedConnectionCreatePolicy
  * A composed connection create policy. Use this to install more than one
@@ -31578,10 +31788,12 @@ draw2d.policy.connection.ComposedConnectionCreatePolicy = draw2d.policy.connecti
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.connection.ClickConnectionCreatePolicy
  *
@@ -31843,10 +32055,12 @@ draw2d.policy.connection.ClickConnectionCreatePolicy = draw2d.policy.connection.
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.connection.OrthogonalConnectionCreatePolicy
  *
@@ -32767,10 +32981,12 @@ draw2d.policy.connection.OrthogonalConnectionCreatePolicy = draw2d.policy.connec
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.connection.DragConnectionCreatePolicy
  *
@@ -33050,10 +33266,12 @@ draw2d.policy.connection.DragConnectionCreatePolicy = draw2d.policy.connection.C
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.FigureEditPolicy
  * 
@@ -33096,10 +33314,12 @@ draw2d.policy.figure.FigureEditPolicy = draw2d.policy.EditPolicy.extend({
     {
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.DragDropEditPolicy
  * 
@@ -33241,10 +33461,12 @@ draw2d.policy.figure.DragDropEditPolicy = draw2d.policy.figure.FigureEditPolicy.
     {
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.RegionConstraintPolicy
  * 
@@ -33344,10 +33566,12 @@ draw2d.policy.figure.RegionEditPolicy = draw2d.policy.figure.DragDropEditPolicy.
         return {w:w, h:h};
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.HorizontalEditPolicy
  * 
@@ -33403,10 +33627,12 @@ draw2d.policy.figure.HorizontalEditPolicy = draw2d.policy.figure.DragDropEditPol
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.VerticalEditPolicy
  * 
@@ -33459,10 +33685,12 @@ draw2d.policy.figure.VerticalEditPolicy = draw2d.policy.figure.DragDropEditPolic
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.SelectionFeedbackPolicy
  * 
@@ -33555,10 +33783,12 @@ draw2d.policy.figure.SelectionFeedbackPolicy = draw2d.policy.figure.DragDropEdit
 
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.ResizeSelectionFeedbackPolicy
  * 
@@ -33702,10 +33932,12 @@ draw2d.policy.figure.ResizeSelectionFeedbackPolicy = draw2d.policy.figure.Select
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.RectangleSelectionFeedbackPolicy 
  * 
@@ -33878,10 +34110,12 @@ draw2d.policy.figure.RectangleSelectionFeedbackPolicy = draw2d.policy.figure.Sel
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.BigRectangleSelectionFeedbackPolicy 
  * 
@@ -33931,10 +34165,12 @@ draw2d.policy.figure.BigRectangleSelectionFeedbackPolicy = draw2d.policy.figure.
    }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.RoundRectangleSelectionFeedbackPolicy 
  * 
@@ -33988,10 +34224,12 @@ draw2d.policy.figure.RoundRectangleSelectionFeedbackPolicy = draw2d.policy.figur
    }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.BusSelectionFeedbackPolicy 
  * 
@@ -34076,10 +34314,12 @@ draw2d.policy.figure.BusSelectionFeedbackPolicy = draw2d.policy.figure.Selection
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.WidthSelectionFeedbackPolicy
  * This selection shows only selection handles for the width. It is only possible to change the width
@@ -34169,10 +34409,12 @@ draw2d.policy.figure.WidthSelectionFeedbackPolicy = draw2d.policy.figure.Selecti
      }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.VBusSelectionFeedbackPolicy
  *  
@@ -34222,10 +34464,12 @@ draw2d.policy.figure.VBusSelectionFeedbackPolicy = draw2d.policy.figure.BusSelec
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.HBusSelectionFeedbackPolicy
  * 
@@ -34269,10 +34513,12 @@ draw2d.policy.figure.HBusSelectionFeedbackPolicy = draw2d.policy.figure.BusSelec
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.AntSelectionFeedbackPolicy 
  * 
@@ -34442,10 +34688,12 @@ draw2d.policy.figure.AntSelectionFeedbackPolicy = draw2d.policy.figure.Selection
         }
     }
 }); 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.GlowSelectionFeedbackPolicy
  * 
@@ -34498,10 +34746,12 @@ draw2d.policy.figure.GlowSelectionFeedbackPolicy = draw2d.policy.figure.Selectio
    }
      
 }); 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.SlimSelectionFeedbackPolicy
  * Add only very small resize handles to the figure.
@@ -34559,10 +34809,12 @@ draw2d.policy.figure.SlimSelectionFeedbackPolicy = draw2d.policy.figure.Rectangl
    }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.figure.VertexSelectionFeedbackPolicy
  * 
@@ -34631,10 +34883,12 @@ draw2d.policy.figure.VertexSelectionFeedbackPolicy = draw2d.policy.figure.Select
     
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.line.LineSelectionFeedbackPolicy
  * 
@@ -34693,10 +34947,12 @@ draw2d.policy.line.LineSelectionFeedbackPolicy = draw2d.policy.figure.SelectionF
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.line.VertexSelectionFeedbackPolicy
  * 
@@ -34752,10 +35008,12 @@ draw2d.policy.line.VertexSelectionFeedbackPolicy = draw2d.policy.line.LineSelect
     }   
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.line.OrthogonalSelectionFeedbackPolicy
  * 
@@ -35482,10 +35740,12 @@ draw2d.policy.line.OrthogonalSelectionFeedbackPolicy = draw2d.policy.line.LineSe
         });
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.port.PortFeedbackPolicy
  *
@@ -35533,10 +35793,12 @@ draw2d.policy.port.PortFeedbackPolicy = draw2d.policy.figure.DragDropEditPolicy.
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.port.ElasticStrapFeedbackPolicy
  * 
@@ -35634,10 +35896,12 @@ draw2d.policy.port.ElasticStrapFeedbackPolicy = draw2d.policy.port.PortFeedbackP
         
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.policy.port.IntrusivePortsFeedbackPolicy
  * 
@@ -35781,11 +36045,13 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
         
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************/draw2d.Configuration = {
-    version : "6.1.60",
+ ****************************************/
+draw2d.Configuration = {
+    version : "6.1.64",
     i18n : {
         command : {
             move : "Move Shape",
@@ -35844,10 +36110,12 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
         }
     }
 };
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.HeadlessCanvas
  *
  * Required for Node.js draw2d model read/write operations.
@@ -36180,10 +36448,12 @@ draw2d.HeadlessCanvas = Class.extend(
         return this;
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.Canvas
  * Interactive paint area of the draw2d library.
  * <br>
@@ -37960,10 +38230,12 @@ draw2d.Canvas = Class.extend(
         return this;
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.Selection
  * 
@@ -38139,10 +38411,12 @@ draw2d.Selection = Class.extend({
         return this;
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.Figure
  * A lightweight graphical object. Figures are rendered to a {@link draw2d.Canvas} object.
  * 
@@ -41033,10 +41307,12 @@ draw2d.Figure = Class.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.node.Node
  * 
@@ -41724,10 +42000,12 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.VectorFigure
  * The base class for all vector based figures like {@link draw2d.shape.basic.Rectangle}  or {@link draw2d.shape.basic.Oval} 
@@ -42057,10 +42335,12 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.basic.Rectangle
  * A Rectangle Figure.
@@ -42241,10 +42521,12 @@ draw2d.shape.basic.Rectangle = draw2d.VectorFigure.extend({
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.SetFigure
  * 
@@ -42651,10 +42933,12 @@ draw2d.SetFigure = draw2d.shape.basic.Rectangle.extend({
     }
    
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.SVGFigure
  * Abstract class which can handle plain SVG content. Inherit class must override the method
@@ -43001,10 +43285,12 @@ draw2d.SVGFigure = draw2d.SetFigure.extend({
 
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.node.Hub
  * 
@@ -43225,10 +43511,12 @@ draw2d.shape.node.Hub = draw2d.shape.basic.Rectangle.extend({
      
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.node.HorizontalBus
  * 
@@ -43264,10 +43552,12 @@ draw2d.shape.node.HorizontalBus = draw2d.shape.node.Hub.extend({
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.node.VerticalBus
  * 
@@ -43353,10 +43643,12 @@ draw2d.shape.node.VerticalBus = draw2d.shape.node.Hub.extend({
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.node.Fulcrum
  * 
@@ -43417,10 +43709,12 @@ draw2d.shape.node.Fulcrum = draw2d.shape.node.Hub.extend({
     
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.basic.Arc
  * Oval figure.
@@ -43487,10 +43781,12 @@ draw2d.shape.basic.Arc = draw2d.SetFigure.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.basic.Oval
  * Oval figure.
@@ -43667,10 +43963,12 @@ draw2d.shape.basic.Oval = draw2d.VectorFigure.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 
 /**
  * @class draw2d.shape.basic.Circle
@@ -43775,10 +44073,12 @@ draw2d.shape.basic.Circle = draw2d.shape.basic.Oval.extend({
     }
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.basic.Label
  * Implements a simple text label.
@@ -44550,10 +44850,12 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.basic.Text
  * Implements a simple text with word wrapping.<br>The height of the element is automatic calculated. The widht of
@@ -44743,10 +45045,12 @@ draw2d.shape.basic.Text= draw2d.shape.basic.Label.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.basic.Line
  * The base class for all visible elements inside a canvas.
@@ -46004,10 +46308,12 @@ draw2d.shape.basic.Line.hit= function( coronaWidth, X1, Y1,  X2,  Y2, px, py)
 };
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.basic.PolyLine
  * 
@@ -46641,10 +46947,12 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.basic.Image
  * Simple Image shape.
@@ -46765,10 +47073,12 @@ draw2d.shape.basic.Image = draw2d.shape.node.Node.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.shape.basic.Polygon
  * A Polygon figure.
  * 
@@ -47326,10 +47636,12 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.basic.Diamond
  * A Diamond Figure.
@@ -47381,10 +47693,12 @@ draw2d.shape.basic.Diamond = draw2d.shape.basic.Polygon.extend({
 
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.shape.composite.Composite
  * Base interface for the compiste shapes
  *     
@@ -47468,10 +47782,12 @@ draw2d.shape.composite.Composite = draw2d.SetFigure.extend({
 
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.shape.composite.StrongComposite
  * A StrongComposite is a composite figure with strong assignment of the children and the composite.
  * The child knows everything about the assigned composite and receives events about assignment to a 
@@ -47653,10 +47969,12 @@ draw2d.shape.composite.StrongComposite = draw2d.shape.composite.Composite.extend
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.shape.composite.Group
  * 
  * A group is a figure that acts as a transparent container for other figures. A group 
@@ -47838,10 +48156,12 @@ draw2d.shape.composite.Group = draw2d.shape.composite.StrongComposite.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.shape.composite.Jailhouse
  * 
  * A Jailhouse is a figure that acts as a container for other figures. A Jailhouse 
@@ -48013,10 +48333,12 @@ draw2d.shape.composite.Jailhouse = draw2d.shape.composite.StrongComposite.extend
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.shape.composite.WeakComposite
  * A WeakComposite is a composite figure with loose coupling of the children and the composite.
  * The child didn't know anything about the assigned composite nor did they receive any events
@@ -48050,10 +48372,12 @@ draw2d.shape.composite.WeakComposite = draw2d.shape.composite.Composite.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.shape.composite.Raft
  * Raft figures are shapes, which aggregate multiple figures. It works like a real raft. Aboard figures are 
  * moved if the raft figures moves.
@@ -48277,10 +48601,12 @@ draw2d.shape.composite.Raft = draw2d.shape.composite.WeakComposite.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.Connection
  * See the example:
@@ -49230,10 +49556,12 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
 
 
 draw2d.Connection.DROP_FILTER = null;
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.VectorFigure
  * The base class for all vector based figures like {@link draw2d.shape.basic.Rectangle}  or {@link draw2d.shape.basic.Oval} 
@@ -49563,10 +49891,12 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.ResizeHandle
  * The Resizehandles for Figures.
@@ -50100,10 +50430,12 @@ draw2d.ResizeHandle = draw2d.shape.basic.Rectangle.extend({
 
 
 draw2d.ResizeHandle.DROP_FILTER = null;
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.shape.basic.LineResizeHandle
  * Base class for selection handle for connections and normal lines.
  * 
@@ -50429,10 +50761,12 @@ draw2d.shape.basic.LineResizeHandle = draw2d.shape.basic.Circle.extend({
       this.canvas.onKeyDown(keyCode,ctrl);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.shape.basic.LineStartResizeHandle
  * Selection handle for connections and normal lines.
  * 
@@ -50545,10 +50879,12 @@ draw2d.shape.basic.LineStartResizeHandle = draw2d.shape.basic.LineResizeHandle.e
         return this;
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.basic.LineEndResizeHandle
  * 
@@ -50667,10 +51003,12 @@ draw2d.shape.basic.LineEndResizeHandle = draw2d.shape.basic.LineResizeHandle.ext
         return this;
     }    
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.basic.VertexResizeHandle
  * 
@@ -50860,10 +51198,12 @@ draw2d.shape.basic.VertexResizeHandle = draw2d.ResizeHandle.extend({
     }
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.basic.GhostVertexResizeHandle
  * ResizeHandle for a vertex edit policy. Click of this kind of resize handles
@@ -50984,10 +51324,12 @@ draw2d.shape.basic.GhostVertexResizeHandle = draw2d.shape.basic.LineResizeHandle
 
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.Port
  * A port is an object that is used to establish a connection between a node and a {@link draw2d.Connection}. The port can 
@@ -51720,10 +52062,12 @@ draw2d.Corona = draw2d.shape.basic.Circle.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.InputPort
  * A InputPort is the start anchor for a {@link draw2d.Connection}.
  * 
@@ -51765,10 +52109,12 @@ draw2d.InputPort = draw2d.Port.extend({
        return this._super(request);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.OutputPort
  * A OutputPort is the start anchor for a {@link draw2d.Connection}.
  * 
@@ -51811,10 +52157,12 @@ draw2d.OutputPort = draw2d.Port.extend({
        return this._super(request);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.HybridPort
  * A HybridPort can work as Input and as Output port in the same way for a {@link draw2d.Connection}.
  * 
@@ -51873,10 +52221,12 @@ draw2d.HybridPort = draw2d.Port.extend({
        return this._super(request);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.layout.anchor.ConnectionAnchor
  *  An object to which a {@link draw2d.Connection} will be anchored.
@@ -51964,10 +52314,12 @@ draw2d.layout.anchor.ConnectionAnchor = Class.extend({
        return this.getOwner().getAbsolutePosition();
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.anchor.ChopboxConnectionAnchor
  * 
  * The ChopboxAnchor's location is found by calculating the intersection of a
@@ -52061,10 +52413,12 @@ draw2d.layout.anchor.ChopboxConnectionAnchor = draw2d.layout.anchor.ConnectionAn
 	}
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.anchor.FanConnectionAnchor
  * 
  * The FanConnectionAnchor's location is found by calculating the intersection of a
@@ -52220,10 +52574,12 @@ draw2d.layout.anchor.FanConnectionAnchor = draw2d.layout.anchor.ConnectionAnchor
 	}
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.anchor.ShortesPathConnectionAnchor
  * 
  * The ChopboxAnchor's location is found by calculating the intersection of a
@@ -52334,10 +52690,12 @@ draw2d.layout.anchor.ShortesPathConnectionAnchor = draw2d.layout.anchor.Connecti
 	}
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.layout.anchor.CenterEdgeConnectionAnchor
  * 
  * The CenterEdgeConnectionAnchor's location is found by calculating the intersection of a
@@ -52432,10 +52790,12 @@ draw2d.layout.anchor.CenterEdgeConnectionAnchor = draw2d.layout.anchor.Connectio
 	}
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.arrow.CalligrapherArrowLeft
  * Hand drawn arrow to the left.
@@ -52492,10 +52852,12 @@ draw2d.shape.arrow.CalligrapherArrowLeft = draw2d.SVGFigure.extend({
     }
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.arrow.CalligrapherArrowDownLeft
  * Hand drawn arrow which points down left
@@ -52552,10 +52914,12 @@ draw2d.shape.arrow.CalligrapherArrowDownLeft = draw2d.SVGFigure.extend({
     }
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.node.Start
  * 
@@ -52591,10 +52955,12 @@ draw2d.shape.node.Start = draw2d.shape.basic.Rectangle.extend({
  
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.node.End
  * A simple Node which has a InputPort. Mainly used for demo and examples.
@@ -52630,10 +52996,12 @@ draw2d.shape.node.End = draw2d.shape.basic.Rectangle.extend({
 
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.shape.node.Between
  * A simple Node which has a  InputPort and OutputPort. Mainly used for demo and examples.
  * 
@@ -52667,10 +53035,12 @@ draw2d.shape.node.Between = draw2d.shape.basic.Rectangle.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.note.PostIt
  * 
@@ -52717,10 +53087,12 @@ draw2d.shape.note.PostIt= draw2d.shape.basic.Label.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.shape.flowchart.Document
  * 
  * Typical flowchart <b>Document</b> shape
@@ -52835,10 +53207,12 @@ draw2d.shape.flowchart.Document = draw2d.VectorFigure.extend({
    }*/
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.widget.Widget
  * Base class for all diagrams.
@@ -52851,10 +53225,12 @@ draw2d.shape.widget.Widget = draw2d.SetFigure.extend({
         this._super( attr, setter, getter);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.widget.Slider
  * See the example:
@@ -53160,10 +53536,12 @@ draw2d.shape.widget.Slider = draw2d.shape.widget.Widget.extend({
     }
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.diagram.Diagram
  * 
@@ -53298,10 +53676,12 @@ draw2d.shape.diagram.Diagram = draw2d.SetFigure.extend({
     
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.diagram.Pie
  * 
@@ -53527,10 +53907,12 @@ draw2d.shape.diagram.Pie = draw2d.shape.diagram.Diagram.extend({
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.diagram.Sparkline
  * 
@@ -53658,10 +54040,12 @@ draw2d.shape.diagram.Sparkline = draw2d.shape.diagram.Diagram.extend({
         return this;
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.analog.OpAmp
  * Hand drawn arrow which points down left
@@ -53750,10 +54134,12 @@ draw2d.shape.analog.OpAmp = draw2d.SVGFigure.extend({
      }
 
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.analog.ResistorBridge
  * 
@@ -53842,10 +54228,12 @@ draw2d.shape.analog.ResistorBridge = draw2d.SVGFigure.extend({
                 '</svg>';
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.analog.ResistorVertical
  * 
@@ -53915,10 +54303,12 @@ draw2d.shape.analog.ResistorVertical = draw2d.SetFigure.extend({
     	return set;
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.analog.VoltageSupplyHorizontal
  * 
@@ -53983,10 +54373,12 @@ draw2d.shape.analog.VoltageSupplyHorizontal = draw2d.SVGFigure.extend({
                 '</svg>';
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.analog.VoltageSupplyVertical
  * 
@@ -54055,10 +54447,12 @@ draw2d.shape.analog.VoltageSupplyVertical = draw2d.SVGFigure.extend({
                 '</svg>';
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.layout.Layout
  * 
@@ -54236,10 +54630,12 @@ draw2d.shape.layout.Layout= draw2d.shape.basic.Rectangle.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.layout.HorizontalLayout
  * The HorizontalLayout class arranges the layout elements in a horizontal sequence, 
@@ -54477,10 +54873,12 @@ draw2d.shape.layout.HorizontalLayout= draw2d.shape.layout.Layout.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.layout.VerticalLayout
  * The VerticalLayout class arranges the layout elements in a vertical sequence, 
@@ -54700,10 +55098,12 @@ draw2d.shape.layout.VerticalLayout= draw2d.shape.layout.Layout.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.layout.TableLayout
  * 
@@ -55243,10 +55643,12 @@ draw2d.shape.layout.TableLayout= draw2d.shape.layout.Layout.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.layout.FlexGridLayout
  * 
@@ -55715,10 +56117,12 @@ draw2d.shape.layout.FlexGridLayout= draw2d.shape.layout.Layout.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.layout.StackLayout
  * Using the StackLayout as their layout shape have their children placed on top of one another.
@@ -55867,10 +56271,12 @@ draw2d.shape.layout.StackLayout= draw2d.shape.layout.Layout.extend({
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Icon
  * @inheritable
@@ -55963,10 +56369,12 @@ draw2d.shape.icon.Icon = draw2d.SetFigure.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Thunder
 
@@ -56006,10 +56414,12 @@ draw2d.shape.icon.Thunder = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Snow
 
@@ -56049,10 +56459,12 @@ draw2d.shape.icon.Snow = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Hail
 
@@ -56092,10 +56504,12 @@ draw2d.shape.icon.Hail = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Rain
 
@@ -56135,10 +56549,12 @@ draw2d.shape.icon.Rain = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Cloudy
 
@@ -56178,10 +56594,12 @@ draw2d.shape.icon.Cloudy = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Sun
 
@@ -56221,10 +56639,12 @@ draw2d.shape.icon.Sun = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Undo
 
@@ -56264,10 +56684,12 @@ draw2d.shape.icon.Undo = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Detour
 
@@ -56307,10 +56729,12 @@ draw2d.shape.icon.Detour = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Merge
 
@@ -56350,10 +56774,12 @@ draw2d.shape.icon.Merge = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Split
 
@@ -56393,10 +56819,12 @@ draw2d.shape.icon.Split = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Fork
 
@@ -56436,10 +56864,12 @@ draw2d.shape.icon.Fork = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.ForkAlt
 
@@ -56479,10 +56909,12 @@ draw2d.shape.icon.ForkAlt = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Exchange
 
@@ -56522,10 +56954,12 @@ draw2d.shape.icon.Exchange = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Shuffle
 
@@ -56565,10 +56999,12 @@ draw2d.shape.icon.Shuffle = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Refresh
 
@@ -56608,10 +57044,12 @@ draw2d.shape.icon.Refresh = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Ccw
 
@@ -56651,10 +57089,12 @@ draw2d.shape.icon.Ccw = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Acw
 
@@ -56694,10 +57134,12 @@ draw2d.shape.icon.Acw = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Contract
 
@@ -56737,10 +57179,12 @@ draw2d.shape.icon.Contract = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Expand
 
@@ -56780,10 +57224,12 @@ draw2d.shape.icon.Expand = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Stop
 
@@ -56823,10 +57269,12 @@ draw2d.shape.icon.Stop = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.End
 
@@ -56866,10 +57314,12 @@ draw2d.shape.icon.End = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Start
 
@@ -56909,10 +57359,12 @@ draw2d.shape.icon.Start = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Ff
 
@@ -56952,10 +57404,12 @@ draw2d.shape.icon.Ff = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Rw
 
@@ -56995,10 +57449,12 @@ draw2d.shape.icon.Rw = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.ArrowRight
 
@@ -57038,10 +57494,12 @@ draw2d.shape.icon.ArrowRight = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.ArrowLeft
 
@@ -57081,10 +57539,12 @@ draw2d.shape.icon.ArrowLeft = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.ArrowUp
 
@@ -57124,10 +57584,12 @@ draw2d.shape.icon.ArrowUp = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.ArrowDown
 
@@ -57167,10 +57629,12 @@ draw2d.shape.icon.ArrowDown = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.ArrowLeft2
 
@@ -57210,10 +57674,12 @@ draw2d.shape.icon.ArrowLeft2 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.ArrowRight2
 
@@ -57253,10 +57719,12 @@ draw2d.shape.icon.ArrowRight2 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Smile2
 
@@ -57296,10 +57764,12 @@ draw2d.shape.icon.Smile2 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Smile
 
@@ -57339,10 +57809,12 @@ draw2d.shape.icon.Smile = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Alarm
 
@@ -57382,10 +57854,12 @@ draw2d.shape.icon.Alarm = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Clock
 
@@ -57425,10 +57899,12 @@ draw2d.shape.icon.Clock = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.StopWatch
 
@@ -57468,10 +57944,12 @@ draw2d.shape.icon.StopWatch = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.History
 
@@ -57511,10 +57989,12 @@ draw2d.shape.icon.History = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Future
 
@@ -57554,10 +58034,12 @@ draw2d.shape.icon.Future = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.GlobeAlt2
 
@@ -57597,10 +58079,12 @@ draw2d.shape.icon.GlobeAlt2 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.GlobeAlt
 
@@ -57640,10 +58124,12 @@ draw2d.shape.icon.GlobeAlt = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Globe
 
@@ -57683,10 +58169,12 @@ draw2d.shape.icon.Globe = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Warning
 
@@ -57726,10 +58214,12 @@ draw2d.shape.icon.Warning = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Code
 
@@ -57769,10 +58259,12 @@ draw2d.shape.icon.Code = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Pensil
 
@@ -57812,10 +58304,12 @@ draw2d.shape.icon.Pensil = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Pen
 
@@ -57855,10 +58349,12 @@ draw2d.shape.icon.Pen = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Plus
 
@@ -57898,10 +58394,12 @@ draw2d.shape.icon.Plus = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Minus
 
@@ -57941,10 +58439,12 @@ draw2d.shape.icon.Minus = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.TShirt
 
@@ -57984,10 +58484,12 @@ draw2d.shape.icon.TShirt = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Sticker
 
@@ -58027,10 +58529,12 @@ draw2d.shape.icon.Sticker = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Page2
 
@@ -58070,10 +58574,12 @@ draw2d.shape.icon.Page2 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Page
 
@@ -58113,10 +58619,12 @@ draw2d.shape.icon.Page = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Landscape1
 
@@ -58156,10 +58664,12 @@ draw2d.shape.icon.Landscape1 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Landscape2
 
@@ -58199,10 +58709,12 @@ draw2d.shape.icon.Landscape2 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Plugin
 
@@ -58242,10 +58754,12 @@ draw2d.shape.icon.Plugin = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Bookmark
 
@@ -58285,10 +58799,12 @@ draw2d.shape.icon.Bookmark = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Hammer
 
@@ -58328,10 +58844,12 @@ draw2d.shape.icon.Hammer = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Users
 
@@ -58371,10 +58889,12 @@ draw2d.shape.icon.Users = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.User
 
@@ -58414,10 +58934,12 @@ draw2d.shape.icon.User = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Customer
 
@@ -58457,10 +58979,12 @@ draw2d.shape.icon.Customer = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Employee
 
@@ -58500,10 +59024,12 @@ draw2d.shape.icon.Employee = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Anonymous
 
@@ -58543,10 +59069,12 @@ draw2d.shape.icon.Anonymous = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Skull
 
@@ -58586,10 +59114,12 @@ draw2d.shape.icon.Skull = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Mail
 
@@ -58629,10 +59159,12 @@ draw2d.shape.icon.Mail = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Picture
 
@@ -58672,10 +59204,12 @@ draw2d.shape.icon.Picture = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Bubble
 
@@ -58715,10 +59249,12 @@ draw2d.shape.icon.Bubble = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.CodeTalk
 
@@ -58758,10 +59294,12 @@ draw2d.shape.icon.CodeTalk = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Talkq
 
@@ -58801,10 +59339,12 @@ draw2d.shape.icon.Talkq = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Talke
 
@@ -58844,10 +59384,12 @@ draw2d.shape.icon.Talke = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Home
 
@@ -58887,10 +59429,12 @@ draw2d.shape.icon.Home = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Lock
 
@@ -58930,10 +59474,12 @@ draw2d.shape.icon.Lock = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Clip
 
@@ -58973,10 +59519,12 @@ draw2d.shape.icon.Clip = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Star
 
@@ -59016,10 +59564,12 @@ draw2d.shape.icon.Star = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.StarOff
 
@@ -59059,10 +59609,12 @@ draw2d.shape.icon.StarOff = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Star2
 
@@ -59102,10 +59654,12 @@ draw2d.shape.icon.Star2 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Star2Off
 
@@ -59145,10 +59699,12 @@ draw2d.shape.icon.Star2Off = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Star3
 
@@ -59188,10 +59744,12 @@ draw2d.shape.icon.Star3 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Star3Off
 
@@ -59231,10 +59789,12 @@ draw2d.shape.icon.Star3Off = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Chat
 
@@ -59274,10 +59834,12 @@ draw2d.shape.icon.Chat = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Quote
 
@@ -59317,10 +59879,12 @@ draw2d.shape.icon.Quote = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Gear2
 
@@ -59360,10 +59924,12 @@ draw2d.shape.icon.Gear2 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Gear
 
@@ -59403,10 +59969,12 @@ draw2d.shape.icon.Gear = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Wrench
 
@@ -59446,10 +60014,12 @@ draw2d.shape.icon.Wrench = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Wrench2
 
@@ -59489,10 +60059,12 @@ draw2d.shape.icon.Wrench2 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Wrench3
 
@@ -59532,10 +60104,12 @@ draw2d.shape.icon.Wrench3 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.ScrewDriver
 
@@ -59575,10 +60149,12 @@ draw2d.shape.icon.ScrewDriver = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.HammerAndScrewDriver
 
@@ -59618,10 +60194,12 @@ draw2d.shape.icon.HammerAndScrewDriver = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Magic
 
@@ -59661,10 +60239,12 @@ draw2d.shape.icon.Magic = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Download
 
@@ -59704,10 +60284,12 @@ draw2d.shape.icon.Download = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.View
 
@@ -59747,10 +60329,12 @@ draw2d.shape.icon.View = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Noview
 
@@ -59790,10 +60374,12 @@ draw2d.shape.icon.Noview = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Cloud
 
@@ -59833,10 +60419,12 @@ draw2d.shape.icon.Cloud = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Cloud2
 
@@ -59876,10 +60464,12 @@ draw2d.shape.icon.Cloud2 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.CloudDown
 
@@ -59919,10 +60509,12 @@ draw2d.shape.icon.CloudDown = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.CloudUp
 
@@ -59962,10 +60554,12 @@ draw2d.shape.icon.CloudUp = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Location
 
@@ -60005,10 +60599,12 @@ draw2d.shape.icon.Location = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Volume0
 
@@ -60048,10 +60644,12 @@ draw2d.shape.icon.Volume0 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Volume1
 
@@ -60091,10 +60689,12 @@ draw2d.shape.icon.Volume1 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Volume2
 
@@ -60134,10 +60734,12 @@ draw2d.shape.icon.Volume2 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Volume3
 
@@ -60177,10 +60779,12 @@ draw2d.shape.icon.Volume3 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Key
 
@@ -60220,10 +60824,12 @@ draw2d.shape.icon.Key = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Ruler
 
@@ -60263,10 +60869,12 @@ draw2d.shape.icon.Ruler = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Power
 
@@ -60306,10 +60914,12 @@ draw2d.shape.icon.Power = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Unlock
 
@@ -60349,10 +60959,12 @@ draw2d.shape.icon.Unlock = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Flag
 
@@ -60392,10 +61004,12 @@ draw2d.shape.icon.Flag = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Tag
 
@@ -60435,10 +61049,12 @@ draw2d.shape.icon.Tag = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Search
 
@@ -60478,10 +61094,12 @@ draw2d.shape.icon.Search = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.ZoomOut
 
@@ -60521,10 +61139,12 @@ draw2d.shape.icon.ZoomOut = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.ZoomIn
 
@@ -60564,10 +61184,12 @@ draw2d.shape.icon.ZoomIn = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Cross
 
@@ -60607,10 +61229,12 @@ draw2d.shape.icon.Cross = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Check
 
@@ -60650,10 +61274,12 @@ draw2d.shape.icon.Check = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Settings
 
@@ -60693,10 +61319,12 @@ draw2d.shape.icon.Settings = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.SettingsAlt
 
@@ -60736,10 +61364,12 @@ draw2d.shape.icon.SettingsAlt = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Feed
 
@@ -60779,10 +61409,12 @@ draw2d.shape.icon.Feed = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Bug
 
@@ -60822,10 +61454,12 @@ draw2d.shape.icon.Bug = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Link
 
@@ -60865,10 +61499,12 @@ draw2d.shape.icon.Link = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Calendar
 
@@ -60908,10 +61544,12 @@ draw2d.shape.icon.Calendar = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Picker
 
@@ -60951,10 +61589,12 @@ draw2d.shape.icon.Picker = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.No
 
@@ -60994,10 +61634,12 @@ draw2d.shape.icon.No = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.CommandLine
 
@@ -61037,10 +61679,12 @@ draw2d.shape.icon.CommandLine = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Photo
 
@@ -61080,10 +61724,12 @@ draw2d.shape.icon.Photo = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Printer
 
@@ -61123,10 +61769,12 @@ draw2d.shape.icon.Printer = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Export
 
@@ -61166,10 +61814,12 @@ draw2d.shape.icon.Export = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Import
 
@@ -61209,10 +61859,12 @@ draw2d.shape.icon.Import = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Run
 
@@ -61252,10 +61904,12 @@ draw2d.shape.icon.Run = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Magnet
 
@@ -61295,10 +61949,12 @@ draw2d.shape.icon.Magnet = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.NoMagnet
 
@@ -61338,10 +61994,12 @@ draw2d.shape.icon.NoMagnet = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.ReflectH
 
@@ -61381,10 +62039,12 @@ draw2d.shape.icon.ReflectH = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.ReflectV
 
@@ -61424,10 +62084,12 @@ draw2d.shape.icon.ReflectV = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Resize2
 
@@ -61467,10 +62129,12 @@ draw2d.shape.icon.Resize2 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Rotate
 
@@ -61510,10 +62174,12 @@ draw2d.shape.icon.Rotate = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Connect
 
@@ -61553,10 +62219,12 @@ draw2d.shape.icon.Connect = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Disconnect
 
@@ -61596,10 +62264,12 @@ draw2d.shape.icon.Disconnect = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Folder
 
@@ -61639,10 +62309,12 @@ draw2d.shape.icon.Folder = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Man
 
@@ -61682,10 +62354,12 @@ draw2d.shape.icon.Man = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Woman
 
@@ -61725,10 +62399,12 @@ draw2d.shape.icon.Woman = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.People
 
@@ -61768,10 +62444,12 @@ draw2d.shape.icon.People = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Parent
 
@@ -61811,10 +62489,12 @@ draw2d.shape.icon.Parent = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Notebook
 
@@ -61854,10 +62534,12 @@ draw2d.shape.icon.Notebook = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Diagram
 
@@ -61897,10 +62579,12 @@ draw2d.shape.icon.Diagram = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.BarChart
 
@@ -61940,10 +62624,12 @@ draw2d.shape.icon.BarChart = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.PieChart
 
@@ -61983,10 +62669,12 @@ draw2d.shape.icon.PieChart = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.LineChart
 
@@ -62026,10 +62714,12 @@ draw2d.shape.icon.LineChart = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Apps
 
@@ -62069,10 +62759,12 @@ draw2d.shape.icon.Apps = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Locked
 
@@ -62112,10 +62804,12 @@ draw2d.shape.icon.Locked = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Ppt
 
@@ -62155,10 +62849,12 @@ draw2d.shape.icon.Ppt = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Lab
 
@@ -62198,10 +62894,12 @@ draw2d.shape.icon.Lab = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Umbrella
 
@@ -62241,10 +62939,12 @@ draw2d.shape.icon.Umbrella = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Dry
 
@@ -62284,10 +62984,12 @@ draw2d.shape.icon.Dry = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Ipad
 
@@ -62327,10 +63029,12 @@ draw2d.shape.icon.Ipad = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Iphone
 
@@ -62370,10 +63074,12 @@ draw2d.shape.icon.Iphone = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Jigsaw
 
@@ -62413,10 +63119,12 @@ draw2d.shape.icon.Jigsaw = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Lamp
 
@@ -62456,10 +63164,12 @@ draw2d.shape.icon.Lamp = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Lamp_alt
 
@@ -62499,10 +63209,12 @@ draw2d.shape.icon.Lamp_alt = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Video
 
@@ -62542,10 +63254,12 @@ draw2d.shape.icon.Video = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Palm
 
@@ -62585,10 +63299,12 @@ draw2d.shape.icon.Palm = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Fave
 
@@ -62628,10 +63344,12 @@ draw2d.shape.icon.Fave = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Help
 
@@ -62671,10 +63389,12 @@ draw2d.shape.icon.Help = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Crop
 
@@ -62714,10 +63434,12 @@ draw2d.shape.icon.Crop = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.BioHazard
 
@@ -62757,10 +63479,12 @@ draw2d.shape.icon.BioHazard = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.WheelChair
 
@@ -62800,10 +63524,12 @@ draw2d.shape.icon.WheelChair = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Mic
 
@@ -62843,10 +63569,12 @@ draw2d.shape.icon.Mic = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.MicMute
 
@@ -62886,10 +63614,12 @@ draw2d.shape.icon.MicMute = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.IMac
 
@@ -62929,10 +63659,12 @@ draw2d.shape.icon.IMac = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Pc
 
@@ -62972,10 +63704,12 @@ draw2d.shape.icon.Pc = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Cube
 
@@ -63015,10 +63749,12 @@ draw2d.shape.icon.Cube = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.FullCube
 
@@ -63058,10 +63794,12 @@ draw2d.shape.icon.FullCube = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Font
 
@@ -63101,10 +63839,12 @@ draw2d.shape.icon.Font = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Trash
 
@@ -63144,10 +63884,12 @@ draw2d.shape.icon.Trash = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.NewWindow
 
@@ -63187,10 +63929,12 @@ draw2d.shape.icon.NewWindow = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.DockRight
 
@@ -63230,10 +63974,12 @@ draw2d.shape.icon.DockRight = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.DockLeft
 
@@ -63273,10 +64019,12 @@ draw2d.shape.icon.DockLeft = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.DockBottom
 
@@ -63316,10 +64064,12 @@ draw2d.shape.icon.DockBottom = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.DockTop
 
@@ -63359,10 +64109,12 @@ draw2d.shape.icon.DockTop = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Pallete
 
@@ -63402,10 +64154,12 @@ draw2d.shape.icon.Pallete = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Cart
 
@@ -63445,10 +64199,12 @@ draw2d.shape.icon.Cart = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Glasses
 
@@ -63488,10 +64244,12 @@ draw2d.shape.icon.Glasses = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Package
 
@@ -63531,10 +64289,12 @@ draw2d.shape.icon.Package = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Book
 
@@ -63574,10 +64334,12 @@ draw2d.shape.icon.Book = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Books
 
@@ -63617,10 +64379,12 @@ draw2d.shape.icon.Books = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Icons
 
@@ -63660,10 +64424,12 @@ draw2d.shape.icon.Icons = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.List
 
@@ -63703,10 +64469,12 @@ draw2d.shape.icon.List = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Db
 
@@ -63746,10 +64514,12 @@ draw2d.shape.icon.Db = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Paper
 
@@ -63789,10 +64559,12 @@ draw2d.shape.icon.Paper = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.TakeOff
 
@@ -63832,10 +64604,12 @@ draw2d.shape.icon.TakeOff = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Landing
 
@@ -63875,10 +64649,12 @@ draw2d.shape.icon.Landing = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Plane
 
@@ -63918,10 +64694,12 @@ draw2d.shape.icon.Plane = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Phone
 
@@ -63961,10 +64739,12 @@ draw2d.shape.icon.Phone = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.HangUp
 
@@ -64004,10 +64784,12 @@ draw2d.shape.icon.HangUp = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.SlideShare
 
@@ -64047,10 +64829,12 @@ draw2d.shape.icon.SlideShare = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Twitter
 
@@ -64090,10 +64874,12 @@ draw2d.shape.icon.Twitter = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.TwitterBird
 
@@ -64133,10 +64919,12 @@ draw2d.shape.icon.TwitterBird = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Skype
 
@@ -64176,10 +64964,12 @@ draw2d.shape.icon.Skype = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Windows
 
@@ -64219,10 +65009,12 @@ draw2d.shape.icon.Windows = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Apple
 
@@ -64262,10 +65054,12 @@ draw2d.shape.icon.Apple = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Linux
 
@@ -64305,10 +65099,12 @@ draw2d.shape.icon.Linux = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.NodeJs
 
@@ -64348,10 +65144,12 @@ draw2d.shape.icon.NodeJs = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.JQuery
 
@@ -64391,10 +65189,12 @@ draw2d.shape.icon.JQuery = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Sencha
 
@@ -64434,10 +65234,12 @@ draw2d.shape.icon.Sencha = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Vim
 
@@ -64477,10 +65279,12 @@ draw2d.shape.icon.Vim = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.InkScape
 
@@ -64520,10 +65324,12 @@ draw2d.shape.icon.InkScape = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Aumade
 
@@ -64563,10 +65369,12 @@ draw2d.shape.icon.Aumade = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Firefox
 
@@ -64606,10 +65414,12 @@ draw2d.shape.icon.Firefox = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Ie
 
@@ -64649,10 +65459,12 @@ draw2d.shape.icon.Ie = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Ie9
 
@@ -64692,10 +65504,12 @@ draw2d.shape.icon.Ie9 = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Opera
 
@@ -64735,10 +65549,12 @@ draw2d.shape.icon.Opera = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Chrome
 
@@ -64778,10 +65594,12 @@ draw2d.shape.icon.Chrome = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Safari
 
@@ -64821,10 +65639,12 @@ draw2d.shape.icon.Safari = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.LinkedIn
 
@@ -64864,10 +65684,12 @@ draw2d.shape.icon.LinkedIn = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Flickr
 
@@ -64907,10 +65729,12 @@ draw2d.shape.icon.Flickr = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.GitHub
 
@@ -64950,10 +65774,12 @@ draw2d.shape.icon.GitHub = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.GitHubAlt
 
@@ -64993,10 +65819,12 @@ draw2d.shape.icon.GitHubAlt = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Raphael
 
@@ -65036,10 +65864,12 @@ draw2d.shape.icon.Raphael = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.GRaphael
 
@@ -65079,10 +65909,12 @@ draw2d.shape.icon.GRaphael = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Svg
 
@@ -65122,10 +65954,12 @@ draw2d.shape.icon.Svg = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Usb
 
@@ -65165,10 +65999,12 @@ draw2d.shape.icon.Usb = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.icon.Ethernet
 
@@ -65208,10 +66044,12 @@ draw2d.shape.icon.Ethernet = draw2d.shape.icon.Icon.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.pert.Activity
  * 
@@ -65465,10 +66303,12 @@ draw2d.shape.pert.Activity = draw2d.shape.layout.VerticalLayout.extend({
      }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.pert.Start
  * 
@@ -65683,10 +66523,12 @@ draw2d.shape.pert.Start = draw2d.shape.layout.VerticalLayout.extend({
      }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.state.Start
  * 
@@ -65730,10 +66572,12 @@ draw2d.shape.state.Start = draw2d.shape.basic.Circle.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.state.End
  * 
@@ -65786,10 +66630,12 @@ draw2d.shape.state.End = draw2d.shape.basic.Circle.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.state.State
  * 
@@ -65937,10 +66783,12 @@ draw2d.shape.state.State = draw2d.shape.layout.VerticalLayout.extend({
     }
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.shape.state.Connection
  * 
@@ -66046,10 +66894,12 @@ draw2d.shape.state.Connection = draw2d.Connection.extend({
 
 });
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.ui.LabelEditor
  * Base class for all draw2d.shape.basic.Label editors. The default implementation is to open
  * a simple javascript prompt dialog.<br>
@@ -66111,10 +66961,12 @@ draw2d.ui.LabelEditor = Class.extend({
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.ui.LabelInplaceEditor
  * 
  * Inplace editor for draw2d.shape.base.Label 
@@ -66265,10 +67117,12 @@ draw2d.ui.LabelInplaceEditor =  draw2d.ui.LabelEditor.extend({
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.decoration.connection.Decorator 
  * 
  * 
@@ -66369,10 +67223,12 @@ draw2d.decoration.connection.Decorator = Class.extend({
     }
 	
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.decoration.connection.ArrowDecorator
  * 
  * See the example:
@@ -66459,10 +67315,12 @@ draw2d.decoration.connection.ArrowDecorator = draw2d.decoration.connection.Decor
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.decoration.connection.DiamondDecorator
  * See the example:
  *
@@ -66543,10 +67401,12 @@ draw2d.decoration.connection.DiamondDecorator = draw2d.decoration.connection.Dec
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.decoration.connection.CircleDecorator
  * 
  * See the example:
@@ -66622,10 +67482,12 @@ draw2d.decoration.connection.CircleDecorator = draw2d.decoration.connection.Deco
 
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.decoration.connection.BarDecorator
  * 
  * See the example:
@@ -66702,10 +67564,12 @@ draw2d.decoration.connection.BarDecorator = draw2d.decoration.connection.Decorat
 });
 
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.io.Reader
  * Template class for general import of a document into the canvas.
@@ -66738,10 +67602,12 @@ draw2d.io.Reader = Class.extend({
     }
     
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.io.Writer
  * Serialize the canvas to an external format. This is only a template/interface class.
@@ -66826,10 +67692,12 @@ draw2d.io.Writer = Class.extend({
         return formatted;
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 
 /**
  * @class draw2d.io.svg.Writer
@@ -66893,10 +67761,12 @@ draw2d.io.svg.Writer = draw2d.io.Writer.extend({
     	callback( svg, base64Content);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.io.png.Writer
  * Convert the canvas document into a PNG Image.
  * 
@@ -67028,10 +67898,12 @@ draw2d.io.png.Writer = draw2d.io.Writer.extend({
         }) ;   
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 
 /**
  * @class draw2d.io.json.Writer
@@ -67102,10 +67974,12 @@ draw2d.io.json.Writer = draw2d.io.Writer.extend({
     	resultCallback(result, base64Content);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.io.json.Reader
  * Read a JSON data and import them into the canvas. The JSON must be generated with the
@@ -67251,10 +68125,12 @@ draw2d.io.json.Reader = draw2d.io.Reader.extend({
         return eval("new "+type+"()");
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.storage.FileStorage
  * 
@@ -67380,10 +68256,12 @@ draw2d.storage.FileStorage = Class.extend({
     {
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * <b>BETA: changes can happen without notice</b>
  * <br>
  * <br>
@@ -67850,10 +68728,12 @@ draw2d.storage.GoogleDrive = draw2d.storage.FileStorage.extend({
 draw2d.storage.GoogleDrive.developerKey = "";
 draw2d.storage.GoogleDrive.clientId     = "";   
 
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************//**
+ ****************************************/
+/**
  * @class draw2d.storage.LocalFileStorage
  * 
  * <b>BETA: changes can happen without notice</b>
@@ -68032,10 +68912,12 @@ draw2d.storage.LocalFileStorage = draw2d.storage.FileStorage.extend({
         this.saveFile(fileName, content, contentIsBase64, successCallback);
     }
 });
+
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
+
 /**
  * @class draw2d.storage.TideSDKStorage
  * 
