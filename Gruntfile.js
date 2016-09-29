@@ -9,6 +9,26 @@ module.exports = function (grunt) {
 
         clean: ['dist','server/http/html'],
 
+        bump: {
+            options: {
+                files: ['package.json', "bower.json"],
+                updateConfigs: [],
+                commit: true,
+                commitMessage: 'Release v%VERSION%',
+                commitFiles: ['package.json', 'bower.json', "dist/**/.*"],
+                createTag: true,
+                tagName: 'v%VERSION%',
+                tagMessage: 'Version %VERSION%',
+                push: true,
+                pushTo: 'origin',
+                gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
+                globalReplace: true,
+                prereleaseName: false,
+                metadata: '',
+                regExp: false
+            }
+        },
+
 
         // Task configuration
         concat: {
@@ -145,6 +165,19 @@ module.exports = function (grunt) {
                 cwd: 'bower_components/draw2d-shapes/dist/assets/shapes',
                 src: ['*'],
                 dest: 'server/http/shapes'
+            },
+            nodeMCU: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'nodeMCU/',
+                        src: ['**/*.*'],
+                        dest: 'nodeMCU2',
+                        rename: function(dest, src) {
+                            return dest +"/"+ src+".gz";
+                        }
+                    }
+                ]
             }
 
         },
@@ -233,6 +266,17 @@ module.exports = function (grunt) {
                     clean: true
                 }
             }
+        },
+        uglify: {
+            options: {
+                beautify: true,
+                mangle: false
+            },
+            dist:{
+                files: {
+                    'dist/assets/javascript/all.js': ['dist/assets/javascript/dependencies.js']
+                }
+            }
         }
     });
 
@@ -246,6 +290,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-run');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-mkdocs');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-bump');
 
     // Task definition
     grunt.registerTask('default', [
@@ -257,6 +303,6 @@ module.exports = function (grunt) {
         'copy:socketIO', 'copy:conf','copy:circuit', 'copy:img','copy:ionicons','copy:octicons','copy:application','copy:bootstrap','copy:prettify',
         'copy:server', "copy:shapes"
     ]);
-    grunt.registerTask('publish', ['default','gh-pages']);
+    grunt.registerTask('publish', ['default','gh-pages', 'bump']);
 };
 

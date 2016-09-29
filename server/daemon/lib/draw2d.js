@@ -312,7 +312,8 @@ if (!Object.prototype.unwatch) {
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************/draw2d.util.Base64 = {
+ ****************************************/
+draw2d.util.Base64 = {
 
     /**
      * Maps bytes to characters.
@@ -1559,7 +1560,8 @@ Raphael.fn.polygon = function(pointString) {
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************/draw2d.util.JSON = {
+ ****************************************/
+draw2d.util.JSON = {
 
         /**
          * @method
@@ -13193,7 +13195,8 @@ draw2d.policy.canvas.CoronaDecorationPolicy = draw2d.policy.canvas.DecorationPol
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************/draw2d.SnapToHelper = {};
+ ****************************************/
+draw2d.SnapToHelper = {};
 
 draw2d.SnapToHelper.NORTH   =  1;
 draw2d.SnapToHelper.SOUTH   =  4;
@@ -19704,7 +19707,8 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************/draw2d.Configuration = {
+ ****************************************/
+draw2d.Configuration = {
     version : "6.1.28",
     i18n : {
         command : {
